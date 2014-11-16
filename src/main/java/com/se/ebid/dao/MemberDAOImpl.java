@@ -31,9 +31,9 @@ public class MemberDAOImpl implements MemberDAO {
     @Transactional
     public void save(Member m) {
         Session session = this.sessionFactory.getCurrentSession();
-        Transaction trans = session.beginTransaction();
+        session.getTransaction().begin();
         session.save(m);
-        trans.commit();
+        session.getTransaction().commit();
         //session.persist(m);
     }
 
@@ -42,9 +42,9 @@ public class MemberDAOImpl implements MemberDAO {
     @Transactional
     public List<Member> list() {
         Session session = this.sessionFactory.getCurrentSession();
-        Transaction trans = session.beginTransaction();
+        session.getTransaction().begin();
         List<Member> memberList = session.createQuery("from Member").list();
-        trans.commit();
+        session.getTransaction().commit();
         return memberList;
     }
 
@@ -53,13 +53,13 @@ public class MemberDAOImpl implements MemberDAO {
     @Transactional
     public Member findByUserID(String userID) {
         Session session = this.sessionFactory.getCurrentSession();
-        Transaction trans = session.beginTransaction();
+        session.getTransaction().begin();
         List<Member> members = new ArrayList<Member>();
         members = sessionFactory.getCurrentSession()
                 .createQuery("from Member where userID=?")
                 .setParameter(0, userID)
                 .list();
-        trans.commit();
+        session.getTransaction().commit();
         if (members.size() > 0) {
             return members.get(0);
         } else {

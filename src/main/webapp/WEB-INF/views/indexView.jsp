@@ -3,6 +3,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/indexResponsive.css">
+
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         
@@ -13,6 +15,9 @@
                 the redirection in</i> <tt>redirect.jsp</tt> <i>to point to the new
                 welcome page and also update the welcome-file setting in</i>
             <tt>web.xml</tt>.</p>
+        
+        <img src="${pageContext.request.contextPath}/resources/img/ebay1.png">
+        <img src="${pageContext.request.contextPath}/resources/img/ebay2.gif">
     
     </tiles:putAttribute>
 </tiles:insertDefinition>

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.se.ebid.dao;
+package com.se.ebid.service;
 
 import com.se.ebid.entity.Member;
 import java.util.List;
@@ -13,17 +13,10 @@ import java.util.List;
  *
  * @author Quxiz
  */
-public interface MemberDAO {
- 
-    public void save(Member member);
-     
-    public List<Member> list();
+public interface TestDBService {
     
-    public Member findByUserID(String userID);
-     
-    public Member findByActivateKey(String activateKey);
-    
+    public void saveMember(Member m);
+    public List<Member> listMembers();
     public Member findByMemberID(long memberID);
     
-    public Member findByEmail(String email);
 }

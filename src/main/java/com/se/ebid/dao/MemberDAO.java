@@ -15,8 +15,10 @@ import java.util.List;
  */
 public interface MemberDAO {
  
-    public void save(Member p);
+    public void save(Member m);
      
     public List<Member> list();
+    
+    public Member findByUserID(String userID);
      
 }

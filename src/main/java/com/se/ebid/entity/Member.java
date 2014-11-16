@@ -24,7 +24,7 @@ public class Member {
     @Column(name="memberID")
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long memberID;
-    @Column(name="userID")
+    @Column(name="userID",unique = true, nullable = false)
     private String userID;
     @Column(name="password")
     private String password;

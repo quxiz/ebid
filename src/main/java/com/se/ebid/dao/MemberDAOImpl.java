@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.se.ebid.dao;
 
 import com.se.ebid.entity.Member;
+import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.hibernate.Session;
@@ -20,13 +20,13 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class MemberDAOImpl implements MemberDAO {
- 
+
     private SessionFactory sessionFactory;
- 
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-     
+
     @Override
     @Transactional
     public void save(Member m) {
@@ -36,7 +36,7 @@ public class MemberDAOImpl implements MemberDAO {
         trans.commit();
         //session.persist(m);
     }
- 
+
     @SuppressWarnings("unchecked")
     @Override
     @Transactional
@@ -47,5 +47,24 @@ public class MemberDAOImpl implements MemberDAO {
         trans.commit();
         return memberList;
     }
- 
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @Transactional
+    public Member findByUserID(String userID) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Transaction trans = session.beginTransaction();
+        List<Member> members = new ArrayList<Member>();
+        members = sessionFactory.getCurrentSession()
+                .createQuery("from Member where userID=?")
+                .setParameter(0, userID)
+                .list();
+        trans.commit();
+        if (members.size() > 0) {
+            return members.get(0);
+        } else {
+            return null;
+        }
+    }
+
 }

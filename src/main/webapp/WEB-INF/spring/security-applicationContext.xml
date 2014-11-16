@@ -26,11 +26,8 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     </http>
 
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="123" password="123" authorities="ROLE_USER" />
-                <user name="demo" password="demo" authorities="ROLE_USER" />
-            </user-service>
+        <authentication-provider user-service-ref="myUserDetailsService" >
+            <password-encoder hash="sha-256" />    
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

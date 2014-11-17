@@ -3,10 +3,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/indexResponsive.css">
+<style type="text/css">
+	#carousel{
+		max-height: 500px;
+		max-width: 1140px
+	}
+	.carousel-img {
+		max-height: 500px;
+		margin: 0 auto
+	}
+	.thumbnail a img {
+		max-height: 250px;
+	}
+
+	</style>
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
-        
+        <!--carousel-->
        <div id="carousel" class="carousel slide container" data-ride="carousel">
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
@@ -18,7 +31,7 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
-				<a href="ViewItem.html"><img src="img/1.jpg" alt="..." class="carousel-img">
+				<a href="ViewItem.html"><img src="${pageContext.request.contextPath}/resources/img/1.JPG" alt="..." class="carousel-img">
 				<div class="carousel-caption">
 					<!-- <h3>2038.46 บาท</h3> -->
 					<h4>BRANDIT M-65 Classic Herren Jacke schwarz Feldjacke BW Kapuze Fieldjacket M65</h4>
@@ -26,14 +39,14 @@
 				</a>
 			</div>
 			<div class="item">
-				<img src="img/2.jpg" alt="..." class="carousel-img">
+				<img src="${pageContext.request.contextPath}/resources/img/2.JPG" alt="..." class="carousel-img">
 				<div class="carousel-caption">
 					<!-- <h3>1303.88 บาท</h3> -->
 					<h4>Levis 501 Mens Jeans Stonewashed W30 W32 W34 W36 W38 +</h4>
 				</div>
 			</div>
 			<div class="item">
-				<img src="img/3.jpg" alt="..." class="carousel-img">
+				<img src="${pageContext.request.contextPath}/resources/img/3.JPG" alt="..." class="carousel-img">
 				<div class="carousel-caption">
 					<!-- <h3>1693.84 บาท</h3> -->
 					<h4>Black Rivet Fully Lined Faux-Leather Scuba Jacket w/ Knit Inset</h4>
@@ -51,14 +64,16 @@
 			<span class="sr-only">Next</span>
 		</a>
 	</div>
+
 	<br>
+<!--container-->
 	<div class="container">
 		<h3>สินค้าล่าสุด</h3>
 		<hr>
 		<div class="row">
 			<div class="col-sm-4 col-md-3">
 				<div class="thumbnail">
-					<a href="ViewItem.html"><img src="img/1.jpg" alt="..."></a>
+					<a href="ViewItem.html"><img src="${pageContext.request.contextPath}/resources/img/1.JPG" alt="..."></a>
 					<div class="caption">
 						<h3>2038 บาท</h3><h4>ซื้อทันที</h4>
 						<p>BRANDIT M-65 Classic Herren Jacke schwarz Feldjacke BW Kapuze Fieldjacket M65</p>
@@ -67,7 +82,7 @@
 			</div>
 			<div class="col-sm-4 col-md-3">
 				<div class="thumbnail">
-					<a href="#"><img src="img/2.jpg" alt="..."></a>
+					<a href="#"><img src="${pageContext.request.contextPath}/resources/img/2.JPG" alt="..."></a>
 					<div class="caption">
 						<h3>1303 บาท</h3><h4>ซื้อทันที</h4>
 						<p>Levis 501 Mens Jeans Stonewashed W30 W32 W34 W36 W38 +</p>
@@ -76,7 +91,7 @@
 			</div>
 			<div class="col-sm-4 col-md-3">
 				<div class="thumbnail">
-					<a href="#"><img src="img/3.jpg" alt="..."></a>
+					<a href="#"><img src="${pageContext.request.contextPath}/resources/img/3.JPG" alt="..."></a>
 					<div class="caption">
 						<h3>1693 บาท</h3><h4>ซื้อทันที</h4>
 						<p>Black Rivet Fully Lined Faux-Leather Scuba Jacket w/ Knit Inset</p>
@@ -85,7 +100,7 @@
 			</div>
 			<div class="col-sm-4 col-md-3">
 				<div class="thumbnail">
-					<a href="ViewItem-Bid.html"><img src="img/4.jpg" alt="..."></a>
+					<a href="ViewItem-Bid.html"><img src="${pageContext.request.contextPath}/resources/img/4.JPG" alt="..."></a>
 					<div class="caption">
 						<h3>105 บาท</h3><h4>0 bids</h4>
 						<p>FROM OUT OF THE WEST, COUNTRY , CASSETTE TAPE</p>
@@ -94,9 +109,8 @@
 			</div>
 		</div>
 	</div>
-</div>
-<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+
     
     </tiles:putAttribute>
 </tiles:insertDefinition>

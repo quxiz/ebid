@@ -5,8 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -22,23 +21,7 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-left">
 				<li data-toggle="modal" data-target="#pleaseLogInModal"><a href="#">ประกาศขายสินค้า</a></li>		
-				<div class="modal fade" id="pleaseLogInModal">
-					<div class="modal-dialog modal-sm">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-								<h4 class="modal-title"></h4>
-							</div>
-							<div class="modal-body">
-								<p>กรุณาเข้าสู่ระบบ</p>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-								<a href="LogIn.html" class="btn btn-primary">เข้าสู่ระบบ</a>
-							</div>
-						</div><!-- /.modal-content -->
-					</div><!-- /.modal-dialog -->
-				</div><!-- /.modal -->
+				
 			</ul>
 			<form class="navbar-form navbar-nav" role="search">
 				<div class="input-group">
@@ -55,11 +38,11 @@
 
 					</div>
 				</div>
-				<button type="submit" class="btn btn-default">ค้นหา</button>
+				<a href="${pageContext.request.contextPath}" class="btn btn-default">ค้นหา</a>
 			</form>
 	
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="${pageContext.request.contextPath}/Register.html">สมัครสมาชิก</a></li>
+				<li><a href="${pageContext.request.contextPath}/signInView">สมัครสมาชิก</a></li>
 				<li><a href="${pageContext.request.contextPath}/signIn.do">เข้าสู่ระบบ</a></li>
 			</ul>
 
@@ -69,4 +52,4 @@
         <br>
 	<br>
 	<br>
-</html>
+

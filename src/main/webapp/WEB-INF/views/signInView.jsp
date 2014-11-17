@@ -9,6 +9,7 @@
 
 
         <h1>Sign In</h1>
+        ${pageContext.request.contextPath}
         <form action="${pageContext.request.contextPath}/signIn.do" method="POST">
             <div class="form-group">
                 <input type="text" class="form-control" placeholder="userID" name="userID">

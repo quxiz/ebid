@@ -12,7 +12,7 @@
      
     <!-- Used to serve static resources like css, images and javascript files-->
     <mvc:resources mapping="/resources/**" location="/resources/" />
- 
+<!--    <mvc:view-controller path="/" view-name="homeView"/>-->
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources
         in the /WEB-INF/views directory -->
     <bean

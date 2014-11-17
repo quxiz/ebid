@@ -31,7 +31,7 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
-				<a href="ViewItem.html"><img src="${pageContext.request.contextPath}/resources/img/1.JPG" alt="..." class="carousel-img">
+				<a href="${pageContext.request.contextPath}/viewItem"><img src="${pageContext.request.contextPath}/resources/img/1.JPG" alt="..." class="carousel-img">
 				<div class="carousel-caption">
 					<!-- <h3>2038.46 บาท</h3> -->
 					<h4>BRANDIT M-65 Classic Herren Jacke schwarz Feldjacke BW Kapuze Fieldjacket M65</h4>
@@ -73,7 +73,7 @@
 		<div class="row">
 			<div class="col-sm-4 col-md-3">
 				<div class="thumbnail">
-					<a href="ViewItem.html"><img src="${pageContext.request.contextPath}/resources/img/1.JPG" alt="..."></a>
+					<a href="${pageContext.request.contextPath}/viewItem"><img src="${pageContext.request.contextPath}/resources/img/1.JPG" alt="..."></a>
 					<div class="caption">
 						<h3>2038 บาท</h3><h4>ซื้อทันที</h4>
 						<p>BRANDIT M-65 Classic Herren Jacke schwarz Feldjacke BW Kapuze Fieldjacket M65</p>
@@ -100,7 +100,7 @@
 			</div>
 			<div class="col-sm-4 col-md-3">
 				<div class="thumbnail">
-					<a href="ViewItem-Bid.html"><img src="${pageContext.request.contextPath}/resources/img/4.JPG" alt="..."></a>
+					<a href="${pageContext.request.contextPath}/viewItem-Bid"><img src="${pageContext.request.contextPath}/resources/img/4.JPG" alt="..."></a>
 					<div class="caption">
 						<h3>105 บาท</h3><h4>0 bids</h4>
 						<p>FROM OUT OF THE WEST, COUNTRY , CASSETTE TAPE</p>

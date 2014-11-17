@@ -8,13 +8,13 @@ http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
     <http auto-config='true' use-expressions='true'>
-        <intercept-url pattern="/home*" access="isAnonymous()" />
-        <intercept-url pattern="/home*" access="hasRole('ROLE_USER')" />
+<!--        <intercept-url pattern="/home*" access="isAnonymous()" />-->
+<!--        <intercept-url pattern="/home*" access="hasRole('ROLE_USER')" />-->
         <intercept-url pattern="/**" access="permitAll" />
         <form-login 
             login-page='/signIn' 
             login-processing-url='/signIn.do'
-            default-target-url='/home' 
+            default-target-url='/index' 
             authentication-failure-url='/signIn?error=true'
             username-parameter='userID'
             password-parameter='password'

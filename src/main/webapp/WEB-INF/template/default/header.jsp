@@ -64,6 +64,7 @@
 			</ul>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
@@ -107,6 +108,10 @@
             </sec:authorize>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
+=======
+		</div>
+	</div>
+>>>>>>> f6cb47348836971c1b67cb55132c7566b4113c6d
 =======
 		</div>
 	</div>

@@ -6,6 +6,7 @@
 
 package com.se.ebid.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Photo")
-public class Photo {
+public class Photo implements Serializable {
     @Id
     @Column(name="photoID")
     @GeneratedValue(strategy=GenerationType.AUTO)

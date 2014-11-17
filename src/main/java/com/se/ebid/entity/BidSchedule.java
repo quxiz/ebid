@@ -26,8 +26,8 @@ public class BidSchedule {
     private long itemID;
     @Column(name="endTime")
     private java.sql.Timestamp endTime;
-    @Column(name="complated")
-    private boolean complated;
+    @Column(name="completed")
+    private boolean completed;
 
     public long getItemID() {
         return itemID;
@@ -46,11 +46,11 @@ public class BidSchedule {
     }
 
     public boolean isComplated() {
-        return complated;
+        return completed;
     }
 
     public void setComplated(boolean complated) {
-        this.complated = complated;
+        this.completed = complated;
     }
     
     

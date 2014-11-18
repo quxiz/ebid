@@ -36,4 +36,8 @@ public class SignInController {
         model.addAttribute("title", "Sign In");
         return "signInView";
     }
+    
+    public void onSubmit(SignInForm form){
+        //do something
+    }
 }

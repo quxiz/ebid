@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author mtmmoei
  */
 @Controller
-public class SearchController {
-     @RequestMapping("/search")
-    public String viewSearchResult(Model model) {
-        model.addAttribute("title", "Search Result");
-        return "searchResultView";
+public class SignOutController {
+      @RequestMapping("/signOut")
+     public String viewSignOut(Model model) {
+        model.addAttribute("title", "ebid");
+        return "homeView";
     }
-    public void search(SearchForm form){
-        //do sth
-    }
+     
+     public void signOut(){
+         //do something
+     }
 }

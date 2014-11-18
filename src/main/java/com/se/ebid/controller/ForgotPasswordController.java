@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author mtmmoei
  */
 @Controller
-public class SearchController {
-     @RequestMapping("/search")
-    public String viewSearchResult(Model model) {
-        model.addAttribute("title", "Search Result");
-        return "searchResultView";
+public class ForgotPasswordController {
+      @RequestMapping("/forgotPassword")
+     public String viewForgotPassword(Model model) {
+        model.addAttribute("title", "Forgot Password");
+        return "forgotPasswordView";
     }
-    public void search(SearchForm form){
-        //do sth
-    }
+     
+     public void onSubmit(ForgotPasswordForm form){
+         //do something
+     }
 }

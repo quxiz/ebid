@@ -14,13 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author mtmmoei
  */
 @Controller
-public class SearchController {
-     @RequestMapping("/search")
-    public String viewSearchResult(Model model) {
-        model.addAttribute("title", "Search Result");
-        return "searchResultView";
-    }
-    public void search(SearchForm form){
-        //do sth
-    }
+public class ActivateMemberController {
+    @RequestMapping("/activateMember")
+     public String viewActivateMember(Model model) {
+        model.addAttribute("title", "Activate Account");
+        return "activateMemberView";
+    }  
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class RegisterController {
     @RequestMapping("/register")
      public String viewRegister(Model model) {
+        model.addAttribute("countryList", new CountryList());
         model.addAttribute("title", "Register");
         return "registerView";
     }

@@ -13,10 +13,10 @@
     </head>
     <tiles:insertAttribute name="header" />
     <body>
-
-        <tiles:insertAttribute name="body" />
         <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+        <tiles:insertAttribute name="body" />
+
         <!--    pleaseLogInModal-->
         <div class="modal fade" id="pleaseLogInModal">
             <div class="modal-dialog modal-sm">
@@ -36,7 +36,6 @@
             </div><!-- /.modal-dialog -->
         </div>
     </body>
-
     <footer>
         <tiles:insertAttribute name="footer" />
     </footer>

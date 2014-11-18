@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author Quxiz
  */
-@Repository
+@Repository("MemberDAO")
 public class MemberDAOImpl implements MemberDAO {
 
     private SessionFactory sessionFactory;

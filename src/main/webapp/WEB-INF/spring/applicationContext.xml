@@ -47,7 +47,17 @@
         <property name="dataSource" ref="dataSource" />
         <property name="annotatedClasses">
             <list>
+                <value>com.se.ebid.entity.AutoBid</value>
+                <value>com.se.ebid.entity.BidSchedule</value>
+                <value>com.se.ebid.entity.Blacklist</value>
+                <value>com.se.ebid.entity.Comment</value>
+                <value>com.se.ebid.entity.Complaint</value>
+                <value>com.se.ebid.entity.Feedback</value>
+                <value>com.se.ebid.entity.Item</value>
                 <value>com.se.ebid.entity.Member</value>
+                <value>com.se.ebid.entity.Message</value>
+                <!-- <value>com.se.ebid.entity.Photo</value> composite id error-->
+                <value>com.se.ebid.entity.Transaction</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -59,8 +69,34 @@
         </property>
     </bean>
  
-     
     <bean id="memberDAO" class="com.se.ebid.dao.MemberDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean> 
+    <bean id="autoBidDAO" class="com.se.ebid.dao.AutoBidDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    <bean id="blacklistDAO" class="com.se.ebid.dao.BlacklistDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    <bean id="commentDAO" class="com.se.ebid.dao.CommentDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    <bean id="complaintDAO" class="com.se.ebid.dao.ComplaintDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    <bean id="feedbackDAO" class="com.se.ebid.dao.FeedbackDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    <bean id="itemDAO" class="com.se.ebid.dao.ItemDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    <bean id="messageDAO" class="com.se.ebid.dao.MessageDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean>
+    <!--<bean id="photoDAO" class="com.se.ebid.dao.PhotoDAOImpl">
+        <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </bean> -->
+    <bean id="TransactionDAO" class="com.se.ebid.dao.TransactionDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
     
@@ -74,5 +110,5 @@
           class="com.se.ebid.service.MyUserDetailsService">
         <property name="memberDAO" ref="memberDAO" />
     </bean>
-
+    
 </beans>

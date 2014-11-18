@@ -10,20 +10,25 @@ import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Quxiz
  */
-@Repository
+@Repository("BidScheduleDAO")
 public class BidScheduleDAOImpl implements BidScheduleDAO {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    public void setSessionFactory(SessionFactory sessionFactory) {
+    @Autowired
+    public BidScheduleDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+    /*public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }*/
 
     @Override
     public void save(BidSchedule bidSchedule) {

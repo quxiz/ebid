@@ -6,8 +6,14 @@
 
 package com.se.ebid.controller;
 
+import com.google.common.collect.Lists;
+import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Member;
+import com.se.ebid.entity.Message;
+import com.se.ebid.entity.Photo;
 import com.se.ebid.service.TestDBService;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -35,23 +42,138 @@ public class TestDBController {
     
     @RequestMapping(value = "/testDB", method = RequestMethod.GET)
     public String testDB(Model model) {
+        return "testDBView";
+    }
+    /*
+        ===============================================================
+        ========================== Member =============================
+        ===============================================================
+    */
+    @RequestMapping(value = "/testDB/member", method = RequestMethod.GET)
+    public String testDBMember(Model model) {
         model.addAttribute("member", new Member());
         model.addAttribute("listMembers", this.testDBService.listMembers());
-        return "testDBView";
+        return "testDBMemberView";
     }
      
-    @RequestMapping(value= "/testDB/saveMember", method = RequestMethod.POST)
-    //public String addMember(){
+    @RequestMapping(value= "/testDB/member/saveMember", method = RequestMethod.POST)
     public String saveMember(@ModelAttribute Member m){
         this.testDBService.saveMember(m);
-        return "redirect:/testDB";
+        return "redirect:/testDB/member";
     }
     
-    @RequestMapping(value = "/testDB/viewMember/{memberID}", method = RequestMethod.GET)
+    @RequestMapping(value = "/testDB/member/viewMember/{memberID}", method = RequestMethod.GET)
     public String viewMember(@PathVariable("memberID") long memberID, Model model) {
-        model.addAttribute("member", this.testDBService.findByMemberID(memberID));
+        model.addAttribute("member", this.testDBService.findMemberByMemberID(memberID));
         model.addAttribute("listMembers", this.testDBService.listMembers());
-        return "testDBView";
+        return "testDBMemberView";
     }
+    
+    @RequestMapping(value = "/testDB/member/findByMemberID/{memberID}", method = RequestMethod.GET)
+    public String findMemberByMemberID(@PathVariable("memberID") long memberID, Model model) {
+        model.addAttribute("member", this.testDBService.findMemberByMemberID(memberID));
+        List<Member> listMembers = Arrays.asList(this.testDBService.findMemberByMemberID(memberID));
+        model.addAttribute("listMembers", listMembers);
+        return "testDBMemberView";
+    }
+    
+    @RequestMapping(value = "/testDB/member/findByUserID/{userID}", method = RequestMethod.GET)
+    public String findMemberByUserID(@PathVariable("userID") String userID, Model model) {
+        model.addAttribute("member", this.testDBService.findMemberByUserID(userID));
+        List<Member> listMembers = Arrays.asList(this.testDBService.findMemberByUserID(userID));
+        model.addAttribute("listMembers", listMembers);
+        return "testDBMemberView";
+    }
+    
+    @RequestMapping(value = "/testDB/member/findByActivateKey/{activateKey}", method = RequestMethod.GET)
+    public String findMemberByActivateKey(@PathVariable("activateKey") String activateKey, Model model) {
+        model.addAttribute("member", this.testDBService.findMemberByActivateKey(activateKey));
+        List<Member> listMembers = Arrays.asList(this.testDBService.findMemberByActivateKey(activateKey));
+        model.addAttribute("listMembers", listMembers);
+        return "testDBMemberView";
+    }
+    
+    @RequestMapping(value = "/testDB/member/findByEmail/{email}", method = RequestMethod.GET)
+    public String findMemberByEmail(@PathVariable("email") String email, Model model) {
+        model.addAttribute("member", this.testDBService.findMemberByEmail(email));
+        List<Member> listMembers = Arrays.asList(this.testDBService.findMemberByEmail(email));
+        model.addAttribute("listMembers", listMembers);
+        return "testDBMemberView";
+    }
+    
+    /*
+        ===============================================================
+        ========================== Message =============================
+        ===============================================================
+    */
+    @RequestMapping(value = "/testDB/message", method = RequestMethod.GET)
+    public String testDBMessage(Model model) {
+        model.addAttribute("message", new Message());
+        model.addAttribute("listMessages", this.testDBService.listMessages());
+        return "testDBMessageView";
+    }
+    
+    @RequestMapping(value= "/testDB/message/saveMessage", method = RequestMethod.POST)
+    public String saveMessage(@ModelAttribute Message m){
+        this.testDBService.saveMessage(m);
+        return "redirect:/testDB/message";
+    }
+    
+    @RequestMapping(value = "/testDB/message/findByReceiverID/{receiverID}", method = RequestMethod.GET)
+    public String findMessageByReceiverID(@PathVariable("receiverID") long receiverID, Model model) {
+        model.addAttribute("listMembers", this.testDBService.getMessages(receiverID));
+        return "testDBMessageView";
+    }
+    /*
+        ===============================================================
+        ========================== Item =============================
+        ===============================================================
+    */
+    @RequestMapping(value = "/testDB/item", method = RequestMethod.GET)
+    public String testDBItem(Model model) {
+        model.addAttribute("item", new Item());
+        model.addAttribute("listItems", this.testDBService.listItems());
+        return "testDBItemView";
+    }
+    
+    @RequestMapping(value= "/testDB/item/saveItem", method = RequestMethod.POST)
+    public String saveItem(@ModelAttribute Item m){
+        this.testDBService.saveItem(m);
+        return "redirect:/testDB/item";
+    }
+    
+    @RequestMapping(value = "/testDB/item/findByItemID/{itemID}", method = RequestMethod.GET)
+    public String findItemByItemID(@PathVariable("itemID") long itemID, Model model) {
+        model.addAttribute("item", this.testDBService.findItemByItemID(itemID));
+        List<Item> listItems = Arrays.asList(this.testDBService.findItemByItemID(itemID));
+        model.addAttribute("listItems", listItems);
+        return "testDBMemberView";
+    }
+    /*
+        ===============================================================
+        ========================== Photo =============================
+        ===============================================================
+    */
+    @RequestMapping(value = "/testDB/photo", method = RequestMethod.GET)
+    public String testDBPhoto(Model model) {
+        model.addAttribute("uploadedFile", new UploadedFile());
+        model.addAttribute("listPhotos", this.testDBService.listPhotos());
+        return "testDBPhotoView";
+    }
+    
+    @RequestMapping(value= "/testDB/photo/savePhoto", method = RequestMethod.POST)
+    public String saveMessage(@ModelAttribute UploadedFile m){
+        this.testDBService.savePhoto(m);
+        return "redirect:/testDB/item";
+    }
+    
+    @RequestMapping(value = "/testDB/photo/findByItemID/{itemID}", method = RequestMethod.GET)
+    public String findPhotoByItemID(@PathVariable("itemID") long itemID, Model model) {
+        model.addAttribute("uploadedFile", new UploadedFile());
+        model.addAttribute("listItems", this.testDBService.findPhotoByItemID(itemID));
+        return "testDBPhotoView";
+    }
+    
+    
     
 }

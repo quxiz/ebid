@@ -15,10 +15,10 @@ import java.util.List;
  */
 public interface PhotoDAO {
  
-    public void save(Photo photo);
+    public long save(Photo photo);
      
     public List<Photo> list();
     
-    public Photo findByItemID(long itemID);
+    public List<Photo> findByItemID(long itemID);
      
 }

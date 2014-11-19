@@ -5,8 +5,6 @@
  */
 package com.se.ebid.service;
 
-import com.se.ebid.dao.BidScheduleDAO;
-import com.se.ebid.entity.BidSchedule;
 import com.se.ebid.quartz.QuartzJob;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -31,25 +29,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestQuartzServiceImpl implements TestQuartzService{
     
-    private BidScheduleDAO bidScheduleDAO;
-    
-    @Autowired
-    public void setBidScheduleDAO(BidScheduleDAO bidScheduleDAO) {
-        this.bidScheduleDAO = bidScheduleDAO;
-    }
-
     @Override
     @Transactional
     public void addQuartz() {
-        BidSchedule newQuartz = new BidSchedule();
-        newQuartz.setItemID(1);
         java.util.Date nowDate= new java.util.Date();
         java.util.Date date = new java.util.Date(nowDate.getTime() + (1000 * 60));
         //String cronDate = "" + date.getSeconds() + " " + date.getMinutes() + " " + date.getHours() + " " + date.getDate() + " " + date.getMonth() + " " + "*" + " " + date.getYear();
         SimpleDateFormat formatter = new SimpleDateFormat("ss mm HH dd MM ? yyyy");
         String cronDate = formatter.format(date);
-        newQuartz.setEndTime(new Timestamp(date.getTime()));
-        this.bidScheduleDAO.save(newQuartz);
         try {
             //SchedulerFactory schdFact = new StdSchedulerFactory("quartz.properties");
             //Scheduler scheduler = schdFact.getScheduler();

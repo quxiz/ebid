@@ -7,6 +7,7 @@ package com.se.ebid.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -15,12 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class SearchController {
-     @RequestMapping("/search")
-    public String viewSearchResult(Model model) {
-        model.addAttribute("title", "Search Result");
-        return "searchResultView";
-    }
-    public void search(SearchForm form){
-        //do sth
-    }
+    /*
+    @RequestMapping("/search")
+    public void search(@ModelAttribute SearchForm sf) {
+        new itemService = ItemService();
+        itemService.search(sf);
+    }*/
+    /*
+    @RequestMapping(value= "/testDB/saveMember", method = RequestMethod.POST)
+    //public String addMember(){
+    public String saveMember(@ModelAttribute Member m){
+        this.testDBService.saveMember(m);
+        return "redirect:/testDB";
+    }*/
+    
 }

@@ -11,15 +11,15 @@ package com.se.ebid.controller;
  * @author Quxiz
  */
 public class SearchForm {
-    private String catagory;
+    private String category;
     private String keyword;
 
-    public String getCatagory() {
-        return catagory;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCatagory(String catagory) {
-        this.catagory = catagory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getKeyword() {

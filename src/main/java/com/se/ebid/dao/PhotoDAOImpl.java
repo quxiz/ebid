@@ -26,11 +26,12 @@ public class PhotoDAOImpl implements PhotoDAO {
     }
 
     @Override
-    public void save(Photo photo) {
+    public long save(Photo photo) {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         session.saveOrUpdate(photo);
         session.getTransaction().commit();
+        return photo.getPhotoID();
     }
 
     @SuppressWarnings("unchecked")
@@ -45,20 +46,16 @@ public class PhotoDAOImpl implements PhotoDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Photo findByItemID(long itemID) {
+    public List<Photo> findByItemID(long itemID) {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
-        List<Photo> photos = new ArrayList<Photo>();
-        photos = sessionFactory.getCurrentSession()
+        List<Photo> photoList = new ArrayList<Photo>();
+        photoList = sessionFactory.getCurrentSession()
                 .createQuery("from Photo where itemID=?")
                 .setParameter(0, itemID)
                 .list();
         session.getTransaction().commit();
-        if (photos.size() > 0) {
-            return photos.get(0);
-        } else {
-            return null;
-        }
+        return photoList;
     }
 
 }

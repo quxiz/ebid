@@ -34,6 +34,7 @@
         <property name="password" value="eBid2014" />
     </bean>
     -->
+    
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -41,6 +42,25 @@
         <property name="username" value="ebid" />
         <property name="password" value="eBid2014" />
     </bean>
+    
+    <!--
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://mysql5.000webhost.com:3306/a2905946_ebid" />
+        <property name="username" value="a2905946_ebid" />
+        <property name="password" value="eBid2014" />
+    </bean>
+    -->
+    <!--
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://sql4.freemysqlhosting.net:3306/sql458713" />
+        <property name="username" value="sql458713" />
+        <property name="password" value="lD7*wL9%" />
+    </bean>
+    -->
     <!-- Hibernate 4 SessionFactory Bean definition -->
     <bean id="hibernate4AnnotatedSessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -48,7 +68,6 @@
         <property name="annotatedClasses">
             <list>
                 <value>com.se.ebid.entity.AutoBid</value>
-                <value>com.se.ebid.entity.BidSchedule</value>
                 <value>com.se.ebid.entity.Blacklist</value>
                 <value>com.se.ebid.entity.Comment</value>
                 <value>com.se.ebid.entity.Complaint</value>
@@ -56,7 +75,7 @@
                 <value>com.se.ebid.entity.Item</value>
                 <value>com.se.ebid.entity.Member</value>
                 <value>com.se.ebid.entity.Message</value>
-                <!-- <value>com.se.ebid.entity.Photo</value> composite id error-->
+                <value>com.se.ebid.entity.Photo</value>
                 <value>com.se.ebid.entity.Transaction</value>
             </list>
         </property>
@@ -93,10 +112,10 @@
     <bean id="messageDAO" class="com.se.ebid.dao.MessageDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
-    <!--<bean id="photoDAO" class="com.se.ebid.dao.PhotoDAOImpl">
+    <bean id="photoDAO" class="com.se.ebid.dao.PhotoDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
-    </bean> -->
-    <bean id="TransactionDAO" class="com.se.ebid.dao.TransactionDAOImpl">
+    </bean>
+    <bean id="transactionDAO" class="com.se.ebid.dao.TransactionDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
     

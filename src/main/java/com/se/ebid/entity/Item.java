@@ -27,14 +27,16 @@ public class Item {
     private long itemID;
     @Column(name="sellerID", nullable = false)
     private long sellerID;
+    @Column(name="sellerName")
+    private String sellerName;
     @Column(name="title", columnDefinition="VARCHAR(45)")
     private String title;
-    @Column(name="condition", columnDefinition="VARCHAR(45)")
-    private String condition;
-    @Column(name="specific")
-    private String specific;
+    @Column(name="specifics")
+    private String specifics;
     @Column(name="detail")
     private String detail;
+    @Column(name="category")
+    private String category;
     @Column(name="sellingType")
     private SellingType sellingType;
     @Column(name="price")
@@ -76,6 +78,14 @@ public class Item {
         this.sellerID = sellerID;
     }
 
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -84,20 +94,12 @@ public class Item {
         this.title = title;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getSpecifics() {
+        return specifics;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public String getSpecific() {
-        return specific;
-    }
-
-    public void setSpecific(String specific) {
-        this.specific = specific;
+    public void setSpecifics(String specifics) {
+        this.specifics = specifics;
     }
 
     public String getDetail() {
@@ -106,6 +108,14 @@ public class Item {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public SellingType getSellingType() {
@@ -203,7 +213,7 @@ public class Item {
     public void setDelivery(String delivery) {
         this.delivery = delivery;
     }
-    
+
     
     
 }

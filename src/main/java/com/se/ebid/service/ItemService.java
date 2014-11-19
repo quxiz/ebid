@@ -10,6 +10,7 @@ import com.se.ebid.entity.Member;
 import com.se.ebid.controller.SearchForm;
 import com.se.ebid.controller.BidForm;
 import com.se.ebid.controller.BuyForm;
+import com.se.ebid.controller.Invoice;
 import com.se.ebid.controller.RegisterItemForm;
 import java.util.List;
 

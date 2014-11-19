@@ -45,20 +45,15 @@ public class MessageDAOImpl implements MessageDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Message findByReceiverID(long receiverID) {
+    public List<Message> findByReceiverID(long receiverID) {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
-        List<Message> messages = new ArrayList<Message>();
-        messages = sessionFactory.getCurrentSession()
+        List<Message> messageList = sessionFactory.getCurrentSession()
                 .createQuery("from Message where receiverID=?")
                 .setParameter(0, receiverID)
                 .list();
         session.getTransaction().commit();
-        if (messages.size() > 0) {
-            return messages.get(0);
-        } else {
-            return null;
-        }
+        return messageList;
     }
 
 }

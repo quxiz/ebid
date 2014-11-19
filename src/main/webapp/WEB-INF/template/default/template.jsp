@@ -35,6 +35,8 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
+                    
+       
     </body>
     <footer>
         <tiles:insertAttribute name="footer" />

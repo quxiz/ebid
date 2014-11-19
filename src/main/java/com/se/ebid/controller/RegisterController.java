@@ -5,9 +5,12 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.entity.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -15,14 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class RegisterController {
+
     @RequestMapping("/register")
-     public String viewRegister(Model model) {
+    public String viewRegister(Model model) {
+        model.addAttribute("registrationForm", new RegistrationForm());
         model.addAttribute("countryList", new CountryList());
         model.addAttribute("title", "Register");
         return "registerView";
     }
-    
-     public void onSubmit(RegistrationForm form){
-         //do something
-     }
+
+    @RequestMapping(value = "/register/submit", method = RequestMethod.POST)
+    public String onSubmit(@ModelAttribute RegistrationForm form) {
+//         this.MemberService.register(form);
+        return "redirect:/";
+    }
 }

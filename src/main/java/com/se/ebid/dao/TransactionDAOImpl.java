@@ -64,7 +64,7 @@ public class TransactionDAOImpl implements TransactionDAO {
     
     @SuppressWarnings("unchecked")
     @Override
-    public Transaction findByBuyerID(long buyerID) {
+    public List<Transaction> findByBuyerID(long buyerID) {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Transaction> transactions = new ArrayList<Transaction>();
@@ -73,16 +73,12 @@ public class TransactionDAOImpl implements TransactionDAO {
                 .setParameter(0, buyerID)
                 .list();
         session.getTransaction().commit();
-        if (transactions.size() > 0) {
-            return transactions.get(0);
-        } else {
-            return null;
-        }
+        return transactions;
     }
     
     @SuppressWarnings("unchecked")
     @Override
-    public Transaction findBySellerID(long sellerID) {
+    public List<Transaction> findBySellerID(long sellerID) {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Transaction> transactions = new ArrayList<Transaction>();
@@ -91,11 +87,7 @@ public class TransactionDAOImpl implements TransactionDAO {
                 .setParameter(0, sellerID)
                 .list();
         session.getTransaction().commit();
-        if (transactions.size() > 0) {
-            return transactions.get(0);
-        } else {
-            return null;
-        }
+        return transactions;
     }
 
 }

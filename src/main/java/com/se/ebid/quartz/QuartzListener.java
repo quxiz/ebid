@@ -43,8 +43,8 @@ public class QuartzListener implements ServletContextListener {
 
             // Setup the Job and Trigger with Scheduler & schedule jobs
             scheduler = new StdSchedulerFactory().getScheduler();
-            scheduler.start();
-            scheduler.scheduleJob(job, trigger);
+            //scheduler.start();
+            //scheduler.scheduleJob(job, trigger);
         } catch (SchedulerException e) {
             e.printStackTrace();
         }

@@ -5,6 +5,10 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.dao.MemberDAO;
+import com.se.ebid.dao.MemberDAOImpl;
+import com.se.ebid.entity.Member;
+import com.se.ebid.service.CustomUser;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -43,6 +47,13 @@ public class IndexController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName(); //get logged in username
         model.addAttribute("username", name);
+        
+        //user CustomUser
+        CustomUser customUser = (CustomUser)auth.getPrincipal();
+        String userID = customUser.getUserID();
+        model.addAttribute("userID", userID);
+        long memberID = customUser.getMemberID();
+        model.addAttribute("memberID", memberID);
         model.addAttribute("title", "Index Page");
         return "indexView_bright";
     }

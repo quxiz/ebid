@@ -95,7 +95,7 @@
     <bean id="photoDAO" class="com.se.ebid.dao.PhotoDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
-    <bean id="TransactionDAO" class="com.se.ebid.dao.TransactionDAOImpl">
+    <bean id="transactionDAO" class="com.se.ebid.dao.TransactionDAOImpl">
         <property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </bean>
     

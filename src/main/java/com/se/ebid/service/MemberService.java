@@ -24,6 +24,7 @@ import com.se.ebid.controller.ReceivingInfoForm;
  * @author Quxiz
  */
 public interface MemberService {
+    
     public boolean register(RegistrationForm registrationForm);
     //class diagram - String[]
     public boolean sendActivateEmail(Member member);
@@ -39,8 +40,8 @@ public interface MemberService {
     public boolean editPassword(EditPasswordForm editPasswordForm);
     public boolean editPaymentInfo(PaymentInfoForm paymentInfoForm);
     public boolean editReceivingInfo(ReceivingInfoForm receivingInfoForm);
-    public Member getSeller(String sellerID);
-    public List<Feedback> getSellerFeedback(String sellerID);
+    public Member getSeller(long sellerID);
+    public List<Feedback> getSellerFeedback(long sellerID);
     public List<Transaction> getBuyTransaction(long buyerID);
     public List<Transaction> getSellTransaction(long sellerID);
     public void saveMember(Member m);

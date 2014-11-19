@@ -21,8 +21,8 @@ public interface FeedbackDAO {
     
     public Feedback findByTransactionID(long transactionID);
     
-    public Feedback findByBuyerID(long buyerID);
+    public List<Feedback> findByBuyerID(long buyerID);
     
-    public Feedback findBySellerID(long sellerID);
+    public List<Feedback> findBySellerID(long sellerID);
      
 }

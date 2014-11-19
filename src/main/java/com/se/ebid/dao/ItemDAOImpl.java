@@ -65,14 +65,14 @@ public class ItemDAOImpl implements ItemDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Item> search(SearchForm searchForm) {
-        String catagory = searchForm.getCatagory();
+        String category = searchForm.getCategory();
         String keyword = searchForm.getKeyword();
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Item> items = new ArrayList<Item>();
         items = sessionFactory.getCurrentSession()
-                .createQuery("from Item where (catagory=? and) lower(title) like lower('%\"+ ? +\"%')")
-                .setParameter(0, catagory)
+                .createQuery("from Item where (category=? and) lower(title) like lower('%\"+ ? +\"%')")
+                .setParameter(0, category)
                 .setParameter(1, keyword)
                 .list();
         session.getTransaction().commit();

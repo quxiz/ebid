@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `ebid`.`Item` (
   `condition` VARCHAR(45) NULL,
   `specific` TEXT NULL,
   `detail` TEXT NULL,
-  `catagory` TEXT NULL,
+  `category` TEXT NULL,
   `sellingType` ENUM('BID', 'BUY') NULL,
   `price` DOUBLE NULL,
   `quantity` MEDIUMTEXT NULL,

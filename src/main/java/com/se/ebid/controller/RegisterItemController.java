@@ -7,7 +7,9 @@ package com.se.ebid.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -15,12 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class RegisterItemController {
+    //private ItemService itemService;
+    
     @RequestMapping("/registerItem")
      public String viewRegisterItem(Model model) {
-        model.addAttribute("title", "Register Item");
+        model.addAttribute("form", new RegisterItemForm());
+        
         return "registerItemView";
     }  
-     public void onSubmit(RegisterItemForm form){
-         //do sth
+     
+     @RequestMapping(value= "/registerItem/sentForm", method = RequestMethod.POST)
+     public String onSubmit(@ModelAttribute RegisterItemForm form){
+         //this.itemService.registerItem(form);
+         return "redirect:/registerItem";//รอแก้หน้าแสดง
      }
 }

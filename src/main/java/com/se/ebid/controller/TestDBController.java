@@ -165,7 +165,7 @@ public class TestDBController {
     @RequestMapping(value= "/testDB/photo/savePhoto", method = RequestMethod.POST)
     public String saveMessage(@ModelAttribute UploadedFile m){
         this.testDBService.savePhoto(m);
-        return "redirect:/testDB/item";
+        return "redirect:/testDB/photo";
     }
     
     @RequestMapping(value = "/testDB/photo/findByItemID/{itemID}", method = RequestMethod.GET)

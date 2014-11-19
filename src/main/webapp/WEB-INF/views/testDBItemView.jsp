@@ -27,8 +27,7 @@
                                     <div><form:hidden placeholder="itemID" path="itemID" /></div>
                                     <div><form:input placeholder="sellerID" path="sellerID" /></div>
                                     <div><form:input placeholder="title" path="title" /></div>
-                                    <div><form:input placeholder="condition" path="condition" /></div>
-                                    <div><form:input placeholder="specific" path="specific" /></div>
+                                    <div><form:input placeholder="specifics" path="specifics" /></div>
                                     <div><form:input placeholder="detail" path="detail" /></div>
                                     <div><form:input placeholder="category" path="category" /></div>
                                     <div><form:input placeholder="sellingType" path="sellingType" /></div>
@@ -51,8 +50,7 @@
                                     <th>Item ID</th>
                                     <th>SellerID</th>
                                     <th>title</th>
-                                    <th>condition</th>
-                                    <th>specific</th>
+                                    <th>specifics</th>
                                     <th>detail</th>
                                     <th>category</th>
                                     <th>sellingType</th>
@@ -71,10 +69,9 @@
                                 <c:forEach items="${listItems}" var="item">
                                     <tr>
                                         <td>${item.itemID}</td>
-                                        <td>${item.sellingID}</td>
+                                        <td>${item.sellerID}</td>
                                         <td>${item.title}</td>
-                                        <td>${item.condition}</td>
-                                        <td>${item.specific}</td>
+                                        <td>${item.specifics}</td>
                                         <td>${item.detail}</td>
                                         <td>${item.category}</td>
                                         <td>${item.sellingType}</td>

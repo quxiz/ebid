@@ -121,7 +121,8 @@ public class TestDBController {
     
     @RequestMapping(value = "/testDB/message/findByReceiverID/{receiverID}", method = RequestMethod.GET)
     public String findMessageByReceiverID(@PathVariable("receiverID") long receiverID, Model model) {
-        model.addAttribute("listMembers", this.testDBService.getMessages(receiverID));
+        model.addAttribute("message", new Message());
+        model.addAttribute("listMessages", this.testDBService.getMessages(receiverID));
         return "testDBMessageView";
     }
     /*

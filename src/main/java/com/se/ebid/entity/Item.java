@@ -84,11 +84,11 @@ public class Item {
         this.title = title;
     }
 
-    public String getSpecific() {
+    public String getSpecifics() {
         return specifics;
     }
 
-    public void setSpecific(String specifics) {
+    public void setSpecifics(String specifics) {
         this.specifics = specifics;
     }
 

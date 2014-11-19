@@ -26,7 +26,7 @@ public class Photo implements Serializable {
     @Column(name="photoID")
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long photoID;
-    @Id
+    
     @Column(name="itemID", nullable = false)
     private long itemID;
     @Column(name="photoURL")

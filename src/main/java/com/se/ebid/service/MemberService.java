@@ -28,19 +28,17 @@ public interface MemberService {
     //class diagram - String[]
     public boolean sendActivateEmail(Member member);
     public boolean activateMember(String activateKey);
-    public boolean signIn(SignInForm signInForm);
     public boolean forgotPassword(ForgotPasswordForm forgotPasswordForm);
     //class diagram - String
     public boolean sendResetPasswordEmail(Member member);
     public boolean resetPassword(ResetPasswordForm resetPasswordForm);
-    //????
     public Member getMember();
     public boolean editPersonalInfo(PersonalInfoForm personalInfoForm);
     public boolean editPassword(EditPasswordForm editPasswordForm);
     public boolean editPaymentInfo(PaymentInfoForm paymentInfoForm);
     public boolean editReceivingInfo(ReceivingInfoForm receivingInfoForm);
     public Member getSeller(String sellerID);
-    public List<Feedback> getSellerFeedback(String sellerID);
+    public List<Feedback> getSellerFeedback(long sellerID);
     public List<Transaction> getBuyTransaction(long buyerID);
     public List<Transaction> getSellTransaction(long sellerID);
     public void saveMember(Member m);

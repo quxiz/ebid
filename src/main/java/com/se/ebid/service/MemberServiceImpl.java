@@ -12,7 +12,6 @@ import com.se.ebid.controller.PersonalInfoForm;
 import com.se.ebid.controller.ReceivingInfoForm;
 import com.se.ebid.controller.RegistrationForm;
 import com.se.ebid.controller.ResetPasswordForm;
-import com.se.ebid.controller.SignInForm;
 import com.se.ebid.dao.MemberDAO;
 import com.se.ebid.dao.FeedbackDAO;
 import com.se.ebid.dao.TransactionDAO;
@@ -28,6 +27,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -107,7 +108,7 @@ public class MemberServiceImpl implements MemberService {
 	member.setEmail(registrationForm.getEmail());
 	member.setPhoneNo(registrationForm.getPhoneNo());
 	member.setUserID(registrationForm.getUserID());
-	member.setPassword(registrationForm.getPassword());
+	member.setPassword(toSHA256(registrationForm.getPassword()));
 	member.setTimestamp(new Timestamp((System.currentTimeMillis())));
 	this.sendActivateEmail(member);
         this.memberDAO.save(member);
@@ -126,15 +127,8 @@ public class MemberServiceImpl implements MemberService {
         Member member = this.memberDAO.findByActivateKey(activateKey);
         if(member == null) return false;
         member.setActivated(true);
+        this.memberDAO.save(member);
         return true;
-    }
-
-    @Override
-    @Transactional
-    public boolean signIn(SignInForm signInForm) {
-        Member member = this.memberDAO.findByUserID(signInForm.getUserID());
-        if(member == null) return false;
-        return member.getPassword().equals(signInForm.getPassword());
     }
 
     @Override
@@ -163,17 +157,32 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member getMember() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.memberDAO.findByMemberID(getMemberID());
     }
 
     @Override
+    @Transactional
     public boolean editPersonalInfo(PersonalInfoForm personalInfoForm) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Member member = this.memberDAO.findByMemberID(getMemberID());
+        member.setAddress(personalInfoForm.getAddress());
+        member.setCountry(personalInfoForm.getCountry());
+        member.setFirstName(personalInfoForm.getFirstName());
+        member.setLastName(personalInfoForm.getLastName());
+        member.setPhoneNo(personalInfoForm.getPhoneNo());
+        this.memberDAO.save(member);
+        return true;
     }
 
     @Override
+    @Transactional
     public boolean editPassword(EditPasswordForm editPasswordForm) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Member member = this.memberDAO.findByMemberID(getMemberID());
+        if(member == null) return false;
+        if(member.getPassword().equals(toSHA256(editPasswordForm.getOldPassword()))) return false;
+        //if(editPasswordForm.getNewPassword()!=editPasswordForm.getConformNewPassword()) return false;
+        member.setPassword(toSHA256(editPasswordForm.getNewPassword()));
+        this.memberDAO.save(member);
+        return true;
     }
 
     @Override
@@ -193,7 +202,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Feedback> getSellerFeedback(String sellerID) {
+    public List<Feedback> getSellerFeedback(long sellerID) {
         return this.feedbackDAO.findBySellerID(sellerID);
     }
 
@@ -205,6 +214,12 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Transaction> getSellTransaction(long sellerID) {
         return this.transactionDAO.findBySellerID(sellerID);
+    }
+    
+    private static long getMemberID(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUser customUser = (CustomUser)auth.getPrincipal();
+        return customUser.getMemberID();
     }
 
 }

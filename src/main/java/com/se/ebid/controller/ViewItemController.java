@@ -22,44 +22,46 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class ViewItemController {
+
     private ItemService itemService; //waiting for declaring itemService
     //private CommentService commentService;
-    
-  /*  @Autowired
-    public void setItemService(ItemService itemService){
+
+    @Autowired
+    public void setItemService(ItemService itemService) {
         this.itemService = itemService;
     }
-    
-    @Autowired
-    public void setCommentService(CommentService commentService){
-        this.commentService = commentService;
-    }
-    */
-    @RequestMapping(value = "/viewItem/{itemID}",method = RequestMethod.GET)
-     public String viewItem(@PathVariable("itemID") long itemID, Model model) {
+
+    /*@Autowired
+     public void setCommentService(CommentService commentService) {
+     this.commentService = commentService;
+     }*/
+    @RequestMapping(value = "/viewItem/{itemID}", method = RequestMethod.GET)
+    public String viewItem(@PathVariable("itemID") long itemID, Model model) {
         QuestionForm qform = new QuestionForm();
         qform.setItemID(itemID);
-        model.addAttribute("qform",qform);
-        model.addAttribute("item",this.itemService.getItem(itemID));
-      //  model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
-       // model.addAttribute("listComments",this.itemService.getComment(itemID));
+        model.addAttribute("qform", qform);
+        model.addAttribute("item", this.itemService.getItem(itemID));
+        // model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
+        // model.addAttribute("listComments",this.itemService.getComment(itemID));
         return "viewItemView";
-    }  
-    
-     @RequestMapping(value = "/viewItem/onSubmitQuestionForm",method = RequestMethod.POST)
-     public String onSubmitQuestionForm(@ModelAttribute QuestionForm qform){
-    //     this.commentService.askQuestion(qform);
-    //     return "redirect:/viewItem";
-         return "redirect:/viewItemView";
-     } 
-     public void onSubmitBidForm(BidForm form){
-         //do sth
-     }
-     public void onSubmitBuyForm(BuyForm form){
-         //do sth
-     }
-     public void confirmBuy(){
-         //do sth
-     }
-}
+    }
 
+    @RequestMapping(value = "/viewItem/onSubmitQuestionForm", method = RequestMethod.POST)
+    public String onSubmitQuestionForm(@ModelAttribute QuestionForm qform) {
+        //     this.commentService.askQuestion(qform);
+        //     return "redirect:/viewItem";
+        return "redirect:/viewItemView";
+    }
+
+    public void onSubmitBidForm(BidForm form) {
+        //do sth
+    }
+
+    public void onSubmitBuyForm(BuyForm form) {
+        //do sth
+    }
+
+    public void confirmBuy() {
+        //do sth
+    }
+}

@@ -27,6 +27,8 @@ public class Item {
     private long itemID;
     @Column(name="sellerID", nullable = false)
     private long sellerID;
+    @Column(name="sellerName")
+    private String sellerName;
     @Column(name="title", columnDefinition="VARCHAR(45)")
     private String title;
     @Column(name="specifics")
@@ -74,6 +76,14 @@ public class Item {
 
     public void setSellerID(long sellerID) {
         this.sellerID = sellerID;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
     }
 
     public String getTitle() {
@@ -204,5 +214,6 @@ public class Item {
         this.delivery = delivery;
     }
 
+    
     
 }

@@ -15,6 +15,7 @@ import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
 import com.se.ebid.entity.Photo;
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -45,6 +46,9 @@ public class TestDBServiceImpl implements TestDBService {
     private MessageDAO messageDAO;
     private ItemDAO itemDAO;
     private PhotoDAO photoDAO;
+    
+    @Autowired
+    ServletContext servletContext;
 
     @Autowired
     public void setMemberDAO(MemberDAO memberDAO) {
@@ -198,9 +202,15 @@ public class TestDBServiceImpl implements TestDBService {
         photo.setItemID(1);
         long photoID = this.photoDAO.save(photo);
         MultipartFile multipartFile = uploadedFile.getFile();
-        String photoURL = "/img/" + photoID + multipartFile.getContentType();
+        //String fileExtension = multipartFile.getContentType();
+        int extensionIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
+        String fileExtension = multipartFile.getOriginalFilename().substring(extensionIndex, multipartFile.getOriginalFilename().length());
+        
+        String savePath = servletContext.getRealPath("resources/uploadedImg/") + "\\" + photoID + fileExtension;
+        System.out.println(savePath);
+        String photoURL = "/resources/uploadedImg/" + photoID + fileExtension;
         try {
-            multipartFile.transferTo(new File(photoURL));
+            multipartFile.transferTo(new File(savePath));
         } catch (IOException ex) {
             Logger.getLogger(TestDBServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalStateException ex) {

@@ -63,7 +63,7 @@ public class FeedbackDAOImpl implements FeedbackDAO {
     
     @SuppressWarnings("unchecked")
     @Override
-    public Feedback findByBuyerID(long buyerID) {
+    public List<Feedback> findByBuyerID(long buyerID) {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Feedback> feedbacks = new ArrayList<Feedback>();
@@ -72,16 +72,12 @@ public class FeedbackDAOImpl implements FeedbackDAO {
                 .setParameter(0, buyerID)
                 .list();
         session.getTransaction().commit();
-        if (feedbacks.size() > 0) {
-            return feedbacks.get(0);
-        } else {
-            return null;
-        }
+        return feedbacks;
     }
     
     @SuppressWarnings("unchecked")
     @Override
-    public Feedback findBySellerID(long sellerID) {
+    public List<Feedback> findBySellerID(long sellerID) {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Feedback> feedbacks = new ArrayList<Feedback>();
@@ -90,11 +86,7 @@ public class FeedbackDAOImpl implements FeedbackDAO {
                 .setParameter(0, sellerID)
                 .list();
         session.getTransaction().commit();
-        if (feedbacks.size() > 0) {
-            return feedbacks.get(0);
-        } else {
-            return null;
-        }
+        return feedbacks;
     }
 
 }

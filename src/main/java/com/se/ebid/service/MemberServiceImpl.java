@@ -35,7 +35,7 @@ import java.sql.Timestamp;
  */
 @Service
 public class MemberServiceImpl implements MemberService {
-
+    
     private MemberDAO memberDAO;
     private FeedbackDAO feedbackDAO;
     private TransactionDAO transactionDAO;
@@ -188,12 +188,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public Member getSeller(String sellerID) {
-        return this.memberDAO.findByUserID(sellerID);
+    public Member getSeller(long sellerID) {
+        return this.memberDAO.findByMemberID(sellerID);
     }
 
     @Override
-    public List<Feedback> getSellerFeedback(String sellerID) {
+    public List<Feedback> getSellerFeedback(long sellerID) {
         return this.feedbackDAO.findBySellerID(sellerID);
     }
 
@@ -206,5 +206,5 @@ public class MemberServiceImpl implements MemberService {
     public List<Transaction> getSellTransaction(long sellerID) {
         return this.transactionDAO.findBySellerID(sellerID);
     }
-
+    
 }

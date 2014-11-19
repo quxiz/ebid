@@ -31,6 +31,8 @@ public class Comment {
     private long itemID;
     @Column(name="commenterID", nullable = false)
     private long commenterID;
+    @Column(name="commenterName")
+    private String commenterName;
     @Column(name="commentDetail")
     private String commentDetail;
     @Column(name="timestamp")

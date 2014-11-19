@@ -29,6 +29,10 @@ public class Message {
     private long senderID;
     @Column(name="receiverID", nullable = false)
     private long receiverID;
+    @Column(name="senderName")
+    private String senderName;
+    @Column(name="receiverName")
+    private String receiverName;
     @Column(name="message")
     private String message;
     @Column(name="timestamp")
@@ -60,6 +64,22 @@ public class Message {
         this.receiverID = receiverID;
     }
 
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -83,8 +103,5 @@ public class Message {
     public void setSeen(boolean seen) {
         this.seen = seen;
     }
-
-
-    
     
 }

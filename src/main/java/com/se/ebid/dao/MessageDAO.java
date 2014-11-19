@@ -19,6 +19,6 @@ public interface MessageDAO {
      
     public List<Message> list();
     
-    public Message findByReceiverID(long receiverID);
+    public List<Message> findByReceiverID(long receiverID);
      
 }

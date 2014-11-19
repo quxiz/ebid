@@ -7,8 +7,10 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         
-        ${message}
-        <p>Hello! This is the default welcome page for a Spring Web MVC project.</p>
+        <p>username : ${username}</p>
+        <p>userID : ${userID}</p>
+        <p>memberID : ${memberID}</p>
+        <p>Hello ! This is the default welcome page for a Spring Web MVC project.</p>
         <p><i>To display a different welcome page for this project, modify</i>
             <tt>index.jsp</tt> <i>, or create your own welcome page then change
                 the redirection in</i> <tt>redirect.jsp</tt> <i>to point to the new

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.se.ebid.service;
 
 import com.se.ebid.dao.MemberDAO;
@@ -24,42 +23,45 @@ import org.springframework.stereotype.Service;
  */
 @Service("userDetailsService")
 public class MyUserDetailsService implements UserDetailsService {
- 
-	private MemberDAO memberDAO;
- 
-	@Override
-	public UserDetails loadUserByUsername(final String userID) 
-               throws UsernameNotFoundException {
- 
-		Member member = memberDAO.findByUserID(userID);
-		Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-                authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
- 
-		return buildUserForAuthentication(member, authorities);
-	}
- 
-        /* User(String username,
-                String password, 
-                boolean enabled, 
-                boolean accountNonExpired, 
-                boolean credentialsNonExpired, 
-                boolean accountNonLocked, 
-                Collection<? extends GrantedAuthority> authorities)
-           if implement email activate, can use this function
-        */
-        private User buildUserForAuthentication(Member member, 
-		Collection<GrantedAuthority> authorities) {
-		return new User(member.getUserID(), 
-			member.getPassword(), true, 
-                        true, true, true, authorities);
-	}
- 
-	public MemberDAO getMemberDAO() {
-		return memberDAO;
-	}
- 
-	public void setMemberDAO(MemberDAO memberDAO) {
-		this.memberDAO = memberDAO;
-	}
- 
+
+    private MemberDAO memberDAO;
+
+    @Override
+    public UserDetails loadUserByUsername(final String userID)
+            throws UsernameNotFoundException {
+
+        Member member = memberDAO.findByUserID(userID);
+        Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        CustomUser customUser = buildUserForAuthentication(member, authorities);
+        return customUser;
+    }
+
+    /* User(String username,
+     String password, 
+     boolean enabled, 
+     boolean accountNonExpired, 
+     boolean credentialsNonExpired, 
+     boolean accountNonLocked, 
+     Collection<? extends GrantedAuthority> authorities)
+     if implement email activate, can use this function
+     */
+    private CustomUser buildUserForAuthentication(Member member,
+            Collection<GrantedAuthority> authorities) {
+        /*return new User(member.getUserID(), 
+         member.getPassword(), true, 
+         true, true, true, authorities);*/
+        return new CustomUser(member.getUserID(),
+                member.getPassword(), true,
+                true, true, true, authorities, member.getMemberID());
+    }
+
+    public MemberDAO getMemberDAO() {
+        return memberDAO;
+    }
+
+    public void setMemberDAO(MemberDAO memberDAO) {
+        this.memberDAO = memberDAO;
+    }
+
 }

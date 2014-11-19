@@ -8,6 +8,7 @@ package com.se.ebid.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -21,7 +22,7 @@ public class RegisterController {
         model.addAttribute("title", "Register");
         return "registerView";
     }
-    
+    @RequestMapping(value= "/register/submit", method = RequestMethod.POST)
      public void onSubmit(RegistrationForm form){
          //do something
      }

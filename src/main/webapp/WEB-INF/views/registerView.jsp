@@ -29,23 +29,24 @@
                         <h3 class="panel-title">สมัครสมาชิก</h3>
                     </div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form">
+                        <c:url var="addAction" value="/registration/submit" ></c:url>
+                        <form action="${addAction}" class="form-horizontal" role="form" modelAttribute="registrationForm" method="POST" name="registrationForm">
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label">ชื่อจริง</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="inputName" placeholder="ชื่อ">
+                                    <input type="text" class="form-control" id="inputName" placeholder="ชื่อ" path="firstName">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputSurname" class="col-sm-3 control-label">นามสกุล</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="inputSurname" placeholder="นามสกุล">
+                                    <input type="text" class="form-control" id="inputSurname" placeholder="นามสกุล" path="lastName">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputAddress" class="col-sm-3 control-label">ที่อยู่</label>
                                 <div class="col-sm-8">
-                                    <textarea class="form-control" id="inputAddress" placeholder="ที่อยู่"></textarea>
+                                    <textarea class="form-control" id="inputAddress" placeholder="ที่อยู่" path="address"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -80,25 +81,25 @@
                             <div class="form-group">
                                 <label for="inputTel" class="col-sm-3 control-label">หมายเลขโทรศัพท์</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="inputTel" placeholder="หมายเลขโทรศัพท์">
+                                    <input type="text" class="form-control" id="inputTel" placeholder="หมายเลขโทรศัพท์" path="phoneNo">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputUserID" class="col-sm-3 control-label">ชื่อผู้ใช้</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="inputUserID" placeholder="ชื่อผู้ใช้">
+                                    <input type="text" class="form-control" id="inputUserID" placeholder="ชื่อผู้ใช้" path="userID">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword" class="col-sm-3 control-label">รหัสผ่าน</label>
                                 <div class="col-sm-4">
-                                    <input type="password" class="form-control" id="inputPassword" placeholder="รหัสผ่าน">
+                                    <input type="password" class="form-control" id="inputPassword" placeholder="รหัสผ่าน" path="password">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword2" class="col-sm-3 control-label">ยืนยันรหัสผ่าน</label>
                                 <div class="col-sm-4">
-                                    <input type="password" class="form-control" id="inputPassword2" placeholder="ยืนยันรหัสผ่าน">
+                                    <input type="password" class="form-control" id="inputPassword2" placeholder="ยืนยันรหัสผ่าน" path="confirmPassword">
                                     <br>
                                 </div>
                             </div>
@@ -110,7 +111,7 @@
                                 </div>
                             </div>
                         </form>
-                        
+                    
                     </div>
                 </div>
             </div>

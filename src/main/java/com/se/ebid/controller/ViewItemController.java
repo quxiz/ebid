@@ -25,7 +25,7 @@ public class ViewItemController {
 
     private ItemService itemService; //waiting for declaring itemService
     //private CommentService commentService;
-
+    
     @Autowired
     public void setItemService(ItemService itemService) {
         this.itemService = itemService;
@@ -35,33 +35,55 @@ public class ViewItemController {
      public void setCommentService(CommentService commentService) {
      this.commentService = commentService;
      }*/
+    
     @RequestMapping(value = "/viewItem/{itemID}", method = RequestMethod.GET)
     public String viewItem(@PathVariable("itemID") long itemID, Model model) {
         QuestionForm qform = new QuestionForm();
+        BuyForm buyform=new BuyForm();
         qform.setItemID(itemID);
+        buyform.setItemID(itemID);
+        model.addAttribute("buyform", buyform);
         model.addAttribute("qform", qform);
         model.addAttribute("item", this.itemService.getItem(itemID));
         // model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
         // model.addAttribute("listComments",this.itemService.getComment(itemID));
-        return "viewItemView";
+        return "viewItemView"; //jsp
     }
+    //not sure
+    @RequestMapping(value = "/buyItem/{itemID}/{quantity}", method = RequestMethod.GET)
+    public String buyItem(@PathVariable("itemID") long itemID,@PathVariable("quantity") long quantity, Model model) {
+        BuyForm buyform=new BuyForm();
+        buyform.setItemID(itemID);
+        buyform.setQuantity(quantity);
+        Invoice invoice = this.itemService.buy(buyform);
+        model.addAttribute("invoice", invoice);
+        model.addAttribute("buyform", buyform);
+        model.addAttribute("item", this.itemService.getItem(itemID));
+     //   model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
+        return "buyItemView"; //jsp
+    }
+    
 
     @RequestMapping(value = "/viewItem/onSubmitQuestionForm", method = RequestMethod.POST)
     public String onSubmitQuestionForm(@ModelAttribute QuestionForm qform) {
         //     this.commentService.askQuestion(qform);
-        //     return "redirect:/viewItem";
-        return "redirect:/viewItemView";
+        return "redirect:/viewItem"; //url
     }
 
     public void onSubmitBidForm(BidForm form) {
         //do sth
     }
 
-    public void onSubmitBuyForm(BuyForm form) {
-        //do sth
+    @RequestMapping(value = "/viewItem/onSubmitBuyForm", method = RequestMethod.POST)
+    public String onSubmitBuyForm(@ModelAttribute BuyForm buyform) {
+        
+        return "redirect:/buyItem/"+buyform.getItemID()+"/"+buyform.getQuantity();
     }
 
-    public void confirmBuy() {
-        //do sth
+     @RequestMapping(value = "/buyItem/confirmBuy", method = RequestMethod.POST)
+    public String confirmBuy() {
+        
+        
+        return "";
     }
 }

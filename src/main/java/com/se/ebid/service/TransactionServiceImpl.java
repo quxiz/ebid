@@ -26,8 +26,6 @@ public class TransactionServiceImpl implements TransactionService {
     private MemberDAO memberDAO;
     private MessageDAO messageDAO;
     
-    private static final int ADMIN_ID = -1;
-    
     @Autowired
     public void setTransactionDAO(TransactionDAO transactionDAO){
         this.transactionDAO = transactionDAO;
@@ -72,8 +70,8 @@ public class TransactionServiceImpl implements TransactionService {
         Member buyer = this.memberDAO.findByMemberID(buyerID);
         if(buyer == null){
             Message messageAdmin = new Message();
-            messageAdmin.setSenderID(ADMIN_ID);
-            messageAdmin.setReceiverID(ADMIN_ID);
+            messageAdmin.setSenderID(Common.ADMIN_ID);
+            messageAdmin.setReceiverID(Common.ADMIN_ID);
             messageAdmin.setMessage("ผู้ซื้อหาย");
             messageAdmin.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageAdmin.setSeen(false);
@@ -82,7 +80,7 @@ public class TransactionServiceImpl implements TransactionService {
         else{
             sendBuyerEmail(buyer);
             Message messageBuyer = new Message();
-            messageBuyer.setSenderID(ADMIN_ID);
+            messageBuyer.setSenderID(Common.ADMIN_ID);
             messageBuyer.setReceiverID(buyerID);
             messageBuyer.setMessage("ข้อความผู้ซื้อ");
             messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
@@ -93,8 +91,8 @@ public class TransactionServiceImpl implements TransactionService {
         Member seller = this.memberDAO.findByMemberID(sellerID);
         if(seller == null){
             Message messageAdmin = new Message();
-            messageAdmin.setSenderID(ADMIN_ID);
-            messageAdmin.setReceiverID(ADMIN_ID);
+            messageAdmin.setSenderID(Common.ADMIN_ID);
+            messageAdmin.setReceiverID(Common.ADMIN_ID);
             messageAdmin.setMessage("ผู้ขายหาย");
             messageAdmin.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageAdmin.setSeen(false);
@@ -102,7 +100,7 @@ public class TransactionServiceImpl implements TransactionService {
         }
         else{
             Message messageSeller = new Message();
-            messageSeller.setSenderID(ADMIN_ID);
+            messageSeller.setSenderID(Common.ADMIN_ID);
             messageSeller.setReceiverID(sellerID);
             messageSeller.setMessage("ข้อความผู้ขาย");
             messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));

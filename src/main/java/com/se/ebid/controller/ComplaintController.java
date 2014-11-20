@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author mtmmoei
  */
 @Controller
-public class ComplainController {
+public class ComplaintController {
     @RequestMapping("/complain")
      public String viewComplain(Model model) {
         model.addAttribute("title", "Complain");
@@ -25,7 +25,7 @@ public class ComplainController {
         model.addAttribute("categoryList", categoryList);
         return "complainView";
     }  
-     public void onSubmit(ComplainForm form){
+     public void onSubmit(ComplaintForm form){
          //do sth
      }
 }

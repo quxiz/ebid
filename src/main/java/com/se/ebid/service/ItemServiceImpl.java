@@ -19,7 +19,9 @@ import com.se.ebid.dao.FeedbackDAO;
 import com.se.ebid.dao.MessageDAO;
 import com.se.ebid.dao.PhotoDAO;
 import com.se.ebid.dao.TransactionDAO;
+import com.se.ebid.dao.CommentDAO;
 import com.se.ebid.entity.AutoBid;
+import com.se.ebid.entity.Comment;
 import com.se.ebid.entity.Feedback;
 import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Member;
@@ -34,10 +36,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import javax.servlet.ServletContext;
 
 /**
  *
@@ -53,8 +54,7 @@ public class ItemServiceImpl implements ItemService{
     private TransactionDAO transactionDAO;
     private FeedbackDAO feedbackDAO;
     private PhotoDAO photoDAO;
-    
-    private static final int ADMIN_ID = -1;
+    private CommentDAO commentDAO;
     
     @Autowired
     public void setItemDAO(ItemDAO itemDAO){
@@ -90,6 +90,14 @@ public class ItemServiceImpl implements ItemService{
     public void setPhotoDAO(PhotoDAO photoDAO){
         this.photoDAO = photoDAO;
     }
+    
+    @Autowired
+    public void setCommentDAO(CommentDAO commentDAO){
+        this.commentDAO = commentDAO;
+    }
+    
+    @Autowired
+    ServletContext servletContext;
 
     @Override
     public List<Item> search(SearchForm searchForm) {
@@ -101,11 +109,21 @@ public class ItemServiceImpl implements ItemService{
     public Item getItem(long itemID) {
         return this.itemDAO.findByItemID(itemID);
     }
+    
+    @Override
+    public List<Photo> getPhoto(long itemID) {
+        return this.photoDAO.findByItemID(itemID);
+    }
+
+    @Override
+    public List<Comment> getComment(long itemID) {
+        return this.commentDAO.findByItemID(itemID);
+    }
 
     @Override
     @Transactional
     public boolean bid(BidForm bidForm) {
-        long memberID = getMemberID();
+        long memberID = Common.getMemberID();
         Member member = this.memberDAO.findByMemberID(memberID);
         if(member == null) return false;
         AutoBid autoBid = this.autoBidDAO.findByItemID(bidForm.getItenID());
@@ -136,7 +154,7 @@ public class ItemServiceImpl implements ItemService{
             if(outBidder != null){
                 sendOutbidEmail(outBidder);
                 Message message = new Message();
-                message.setSenderID(ADMIN_ID);
+                message.setSenderID(Common.ADMIN_ID);
                 message.setReceiverID(outBidderID);
                 message.setMessage("outbid");
                 message.setTimestamp(new Timestamp(System.currentTimeMillis()));
@@ -161,7 +179,7 @@ public class ItemServiceImpl implements ItemService{
     @Override
     @Transactional
     public Invoice buy(BuyForm buyForm) {
-        Member member = this.memberDAO.findByMemberID(getMemberID());
+        Member member = this.memberDAO.findByMemberID(Common.getMemberID());
         if(member == null) return null;
         if(member.isBlacklisted()) return null;
         
@@ -184,7 +202,7 @@ public class ItemServiceImpl implements ItemService{
         long itemID = buyForm.getItemID();
         Item item = this.itemDAO.findByItemID(itemID);
         long sellerID = item.getSellerID();
-        long buyerID = getMemberID();
+        long buyerID = Common.getMemberID();
         if(buyForm.getQuantity() > item.getQuantity()) return false;
         
         Transaction transaction = new Transaction();
@@ -213,7 +231,7 @@ public class ItemServiceImpl implements ItemService{
     //unfinish
     public boolean registerItem(RegisterItemForm registerItemForm) {
         Item item = new Item();
-        long memberID = getMemberID();
+        long memberID = Common.getMemberID();
         item.setSellerID(memberID);
         item.setTitle(registerItemForm.getTitle());
         item.setSpecifics(registerItemForm.getSpecific());
@@ -234,21 +252,19 @@ public class ItemServiceImpl implements ItemService{
         this.itemDAO.save(item);
         MultipartFile[] photoList = registerItemForm.getPhotos();
         long itemID = item.getItemID();
-        for(int i=0;i<photoList.length;i++){
+        for (MultipartFile aPhoto : photoList) {
             Photo photo = new Photo();
             photo.setItemID(itemID);
             photo.setPhotoURL(null);
-            
-            // unfinish SAVE_DIR
-            String photoURL = photo.getPhotoURL() + photoList[i].getContentType();
+            long photoID = this.photoDAO.save(photo);
+            String photoURL = servletContext.getRealPath("resources/uploadedImg/") + photoID + aPhoto.getContentType();
             try {
-                photoList[i].transferTo(new File(photoURL));
-            } catch (IOException ex) {
+                aPhoto.transferTo(new File(photoURL));
+            }catch (IOException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalStateException ex) {
+            }catch (IllegalStateException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
             photo.setPhotoURL(photoURL);
             this.photoDAO.save(photo);
         }
@@ -275,12 +291,6 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public boolean sendBuyerEmail(Member member) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    private static long getMemberID(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomUser customUser = (CustomUser)auth.getPrincipal();
-        return customUser.getMemberID();
     }
     
 }

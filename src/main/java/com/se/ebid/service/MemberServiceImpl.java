@@ -27,8 +27,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -157,13 +155,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member getMember() {
-        return this.memberDAO.findByMemberID(getMemberID());
+        return this.memberDAO.findByMemberID(Common.getMemberID());
     }
 
     @Override
     @Transactional
     public boolean editPersonalInfo(PersonalInfoForm personalInfoForm) {
-        Member member = this.memberDAO.findByMemberID(getMemberID());
+        Member member = this.memberDAO.findByMemberID(Common.getMemberID());
         member.setAddress(personalInfoForm.getAddress());
         member.setCountry(personalInfoForm.getCountry());
         member.setFirstName(personalInfoForm.getFirstName());
@@ -176,9 +174,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public boolean editPassword(EditPasswordForm editPasswordForm) {
-        Member member = this.memberDAO.findByMemberID(getMemberID());
+        Member member = this.memberDAO.findByMemberID(Common.getMemberID());
         if(member == null) return false;
-        if(member.getPassword().equals(toSHA256(editPasswordForm.getOldPassword()))) return false;
+        if(!member.getPassword().equals(toSHA256(editPasswordForm.getOldPassword()))) return false;
         //if(editPasswordForm.getNewPassword()!=editPasswordForm.getConformNewPassword()) return false;
         member.setPassword(toSHA256(editPasswordForm.getNewPassword()));
         this.memberDAO.save(member);
@@ -214,12 +212,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Transaction> getSellTransaction(long sellerID) {
         return this.transactionDAO.findBySellerID(sellerID);
-    }
-    
-    private static long getMemberID(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomUser customUser = (CustomUser)auth.getPrincipal();
-        return customUser.getMemberID();
     }
 
 }

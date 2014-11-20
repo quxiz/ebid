@@ -5,10 +5,17 @@
  */
 package com.se.ebid.service;
 
+import com.se.ebid.controller.ComplaintForm;
+import com.se.ebid.controller.SolveComplaintForm;
+import com.se.ebid.entity.Complaint;
+import java.util.List;
+
 /**
  *
  * @author Nuttapong
  */
-public class ComplaintService {
-    
+public interface ComplaintService {
+    public boolean complaint(ComplaintForm complaintForm);
+    public List<Complaint> getComplaint();
+    public boolean solveComplaint(SolveComplaintForm solveComplaintForm);
 }

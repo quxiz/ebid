@@ -9,7 +9,7 @@ package com.se.ebid.controller;
  *
  * @author mtmmoei
  */
-public class ComplainForm {
+public class ComplaintForm {
     private String title;
     private String detail;
 

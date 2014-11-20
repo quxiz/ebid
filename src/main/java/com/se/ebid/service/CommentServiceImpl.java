@@ -14,8 +14,6 @@ import com.se.ebid.dao.CommentDAO;
 import java.sql.Timestamp;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -39,8 +37,8 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public boolean askQuestion(QuestionForm questionForm) {
-        long memberID = getMemberID();
-        String commenterName = getUserID();
+        long memberID = Common.getMemberID();
+        String commenterName = Common.getUserID();
         
         Comment comment = new Comment();
         comment.setItemID(questionForm.getItemID());
@@ -64,7 +62,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public boolean answerQuestion(AnswerForm answerForm) {
-    	long memberID = getMemberID();
+    	long memberID = Common.getMemberID();
         
         Comment comment = new Comment();
 	comment.setParentID(answerForm.getParentID());
@@ -82,17 +80,6 @@ public class CommentServiceImpl implements CommentService{
 	this.messageDAO.save(message);
 	
 	return true;
-    }
-    
-    private static long getMemberID(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomUser customUser = (CustomUser)auth.getPrincipal();
-        return customUser.getMemberID();
-    }
-    private static String getUserID(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomUser customUser = (CustomUser)auth.getPrincipal();
-        return customUser.getUserID();
     }
     
     private static String setAskQuestionMessage(){

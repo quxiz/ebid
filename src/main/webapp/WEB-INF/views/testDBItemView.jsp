@@ -7,11 +7,13 @@
 
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
-        
-        
+
+
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.css">
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.th.js"></script>
+        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
 
         <div role="tabpanel">
 
@@ -32,7 +34,6 @@
                                     <div><form:hidden placeholder="itemID" path="itemID" /></div>
                                     <div><form:input placeholder="sellerID" path="sellerID" /></div>
                                     <div><form:input placeholder="title" path="title" /></div>
-                                    <div><form:input placeholder="specifics" path="specifics" /></div>
                                     <div><form:input placeholder="detail" path="detail" /></div>
                                     <div><form:input placeholder="category" path="category" /></div>
                                     <div><form:input placeholder="sellingType" path="sellingType" /></div>
@@ -51,6 +52,36 @@
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                                         </div>
                                         <form:hidden id="dtp_input1" path="startTime"/><br/>
+                                    </div>
+                                    <div>
+                                        Specifics
+                                        <div id="specifics-form">
+                                            <div class="specifics-condition">condition : <input name="condition" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
+                                            <div class="specifics-something">something : <input name="something" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
+
+                                        </div>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                            Add new specific
+                                        </button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">Add new specific</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Type your new specific name : <input id="specifics-name" value="" placeholder="Specific name">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button id="specifics-add" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form:input id="specifics-json" path="specifics" />
                                     </div>
                                 </div>
                                 <input type="submit" class="btn btn-default" value="save"/>
@@ -130,6 +161,35 @@
                 startView: 2,
                 forceParse: 0,
                 showMeridian: 1
+            });
+        </script>
+
+        <script>
+            $("#specifics-form").keyup(function() {
+                $("#specifics-json").val(JSON.stringify($("#specifics-form :input").serializeArray()));
+            });
+
+            $("#specifics-add").click(function() {
+                var specificName = $("#specifics-name").val();
+                $("#specifics-name").val("");
+                $("#specifics-form").append('<div class="specifics-' + specificName + '">' + specificName + ' : <input name="' + specificName + '" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
+            });
+
+            $(document).on("click", "#specifics-remove", function() {
+                $(this).parent().remove();
+            });
+
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                if ($("#specifics-json").val()) {
+                    $("#specifics-form").empty();
+                    var obj = jQuery.parseJSON($("#specifics-json").val());
+                    $.each(obj, function(key, value) {
+                        $("#specifics-form").append('<div class="specifics-' + value.name + '">' + value.name + ' : <input name="' + value.name + '" value="' + value.value + '"><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
+                    });
+                }
             });
         </script>
     </tiles:putAttribute>

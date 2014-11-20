@@ -24,28 +24,30 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
-               		
-<li data-toggle="modal" data-target="#pleaseLogInModal"><a href="#">ประกาศขายสินค้า</a></li>
+
+                <li data-toggle="modal" data-target="#pleaseLogInModal"><a href="#">ประกาศขายสินค้า</a></li>
             </ul>
-            
-            
-            <form class="navbar-form navbar-nav" role="search">
+
+
+            <form class="navbar-form navbar-nav" role="search" action="${pageContext.request.contextPath}/search" method="POST">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="ค้นหาสินค้า...">
+
+                    <input type="text" class="form-control" placeholder="ค้นหาสินค้า..." name="keyword">
                     <div class="input-group-btn dropdown">
+
                         <!-- Button and dropdown menu -->
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">ทุกประเภท<span class="caret"></span></button>
                         <ul class="dropdown-menu scrollable-menu" role="menu" id="categoryHeader">
-                             <c:forEach items="${categoryList}" var="category">
-                                                <li role="presentation"><a role="menuitem" tabindex="-1">${category.name}</a>
-                                                </li>
-                                            </c:forEach>
+                            <c:forEach items="${categoryList}" var="category">
+                                <li role="presentation"><a role="menuitem" tabindex="-1">${category.name}</a>
+                                </li>
+                            </c:forEach>
                         </ul>
 
                     </div>
-                    <a href="${pageContext.request.contextPath}/search" class="btn btn-default">ค้นหา</a>
+                    <button type="submit" class="btn btn-default">ค้นหา</a>
                 </div>
-                
+
             </form>
 
             <ul class="nav navbar-nav navbar-right">

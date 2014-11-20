@@ -19,10 +19,12 @@ public interface TransactionDAO {
      
     public List<Transaction> list();
     
-    public Transaction findCompletedByTimestamp(java.sql.Timestamp startTime, java.sql.Timestamp endTime);
+    public List<Transaction> findCompletedByTimestamp(java.sql.Timestamp startTime, java.sql.Timestamp endTime);
     
     public List<Transaction> findByBuyerID(long buyerID);
     
     public List<Transaction> findBySellerID(long sellerID);
+    
+    public Transaction findByTransactionID(long transactionID);
      
 }

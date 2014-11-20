@@ -167,7 +167,7 @@ public class TestDBController {
         model.addAttribute("item", this.testDBService.findItemByItemID(itemID));
         List<Item> listItems = Arrays.asList(this.testDBService.findItemByItemID(itemID));
         model.addAttribute("listItems", listItems);
-        return "testDBMemberView";
+        return "testDBItemView";
     }
     /*
         ===============================================================

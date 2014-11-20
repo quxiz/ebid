@@ -21,23 +21,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class RegisterItemController {
     //private ItemService itemService;
-    
+
     @RequestMapping("/registerItem")
-     public String viewRegisterItem(Model model) {
-        List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));    
-        List<SellingType> sellingType = new ArrayList<SellingType>( Arrays.asList(SellingType.values() ));    
-        
+    public String viewRegisterItem(Model model) {
+        List<CategoryType> categoryList = new ArrayList<CategoryType>(Arrays.asList(CategoryType.values()));
+        List<SellingType> sellingType = new ArrayList<SellingType>(Arrays.asList(SellingType.values()));
+
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("sellingType", sellingType);
         model.addAttribute("form", new RegisterItemForm());
         model.addAttribute("title", "Register");
-        
+
         return "registerItemView";
-    }  
-     
-     @RequestMapping(value= "/registerItem/sentForm", method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute RegisterItemForm form){
-         //this.itemService.registerItem(form);
-         return "redirect:/viewItem";//รอแก้หน้าแสดง
-     }
+    }
+
+    @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
+    public String onSubmit(@ModelAttribute RegisterItemForm form) {
+        //this.itemService.registerItem(form);
+        return "redirect:/viewItem";//รอแก้หน้าแสดง
+    }
 }

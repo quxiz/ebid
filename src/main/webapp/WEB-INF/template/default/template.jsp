@@ -5,26 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewpoint" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<<<<<<< HEAD
-<<<<<<< HEAD
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">-->
-=======
-=======
->>>>>>> 218f0ba1ee1d387ef06b2aeccf027dfdbfe8712a
-
-<!--        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">-->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/datepicker.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.css">
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-
-<!--        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">-->
-<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">-->
-
-<<<<<<< HEAD
->>>>>>> 218f0ba1ee1d387ef06b2aeccf027dfdbfe8712a
-=======
->>>>>>> 218f0ba1ee1d387ef06b2aeccf027dfdbfe8712a
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
         <title>${title}</title>
 
@@ -33,23 +15,7 @@
     <body>
         <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>-->
-=======
-=======
->>>>>>> 218f0ba1ee1d387ef06b2aeccf027dfdbfe8712a
-
-        <script src="${pageContext.request.contextPath}/resources/js/moment.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
-
-<!--        bright-->
-<!--        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>-->
-
-<<<<<<< HEAD
->>>>>>> 218f0ba1ee1d387ef06b2aeccf027dfdbfe8712a
-=======
->>>>>>> 218f0ba1ee1d387ef06b2aeccf027dfdbfe8712a
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
         <tiles:insertAttribute name="body" />
 
         <!--    pleaseLogInModal-->
@@ -70,8 +36,8 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
-
-
+                    
+       
     </body>
     <footer>
         <tiles:insertAttribute name="footer" />

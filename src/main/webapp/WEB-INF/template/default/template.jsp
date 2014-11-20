@@ -5,8 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewpoint" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-
+<!--        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/datepicker.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.css">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 
         <title>${title}</title>
 
@@ -15,6 +17,8 @@
     <body>
         <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/moment.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
         <tiles:insertAttribute name="body" />
 
         <!--    pleaseLogInModal-->
@@ -35,8 +39,8 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
-                    
-       
+
+
     </body>
     <footer>
         <tiles:insertAttribute name="footer" />

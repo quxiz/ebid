@@ -61,7 +61,7 @@
                                         <ul id="divNewNotifications" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
                                             <c:forEach items="${countryList.countries}" var="country">
-                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" class="test">${country}</a>
+                                                <li role="presentation"><a role="menuitem" tabindex="-1" class="test">${country}</a>
                                                 </li>
                                             </c:forEach>
 

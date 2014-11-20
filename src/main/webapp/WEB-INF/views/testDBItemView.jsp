@@ -7,6 +7,11 @@
 
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
+        
+        
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.css">
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.th.js"></script>
 
         <div role="tabpanel">
 
@@ -39,6 +44,14 @@
                                     <div><form:input placeholder="packageDetail" path="packageDetail" /></div>
                                     <div><form:input placeholder="returnPolicy" path="returnPolicy" /></div>
                                     <div><form:input placeholder="delivery" path="delivery" /></div>
+                                    <div class="form-group">
+                                        <label for="dtp_input1" class="col-md-2 control-label">Date And Time</label>
+                                        <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
+                                            <input class="form-control" size="16" type="text" value="" readonly>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                        </div>
+                                        <form:hidden id="dtp_input1" path="startTime"/><br/>
+                                    </div>
                                 </div>
                                 <input type="submit" class="btn btn-default" value="save"/>
                             </form:form>
@@ -103,6 +116,21 @@
                 e.preventDefault()
                 $(this).tab('show')
             })
+        </script>
+
+        <script type="text/javascript">
+//in this line of code, to display the datetimepicker, we used ‘form_datetime’ as an argument to be
+//passed in javascript. This is for Date and Time.
+            $('.form_datetime').datetimepicker({
+                language: 'en',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1
+            });
         </script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

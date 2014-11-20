@@ -9,6 +9,8 @@ package com.se.ebid.entity;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,6 +40,7 @@ public class Item {
     @Column(name="category")
     private String category;
     @Column(name="sellingType")
+    @Enumerated(EnumType.STRING)
     private SellingType sellingType;
     @Column(name="price")
     private double price;

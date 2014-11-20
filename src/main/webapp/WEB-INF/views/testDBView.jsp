@@ -11,5 +11,9 @@
         <div><a href="${pageContext.request.contextPath}/testDB/message">${pageContext.request.contextPath}/testDB/message</a></div>
         <div><a href="${pageContext.request.contextPath}/testDB/item">${pageContext.request.contextPath}/testDB/item</a></div>
         <div><a href="${pageContext.request.contextPath}/testDB/photo">${pageContext.request.contextPath}/testDB/photo</a></div>
+        <div><a href="${pageContext.request.contextPath}/testDB/complaint">${pageContext.request.contextPath}/testDB/complaint</a></div>
+        <div><a href="${pageContext.request.contextPath}/testDB/blacklist">${pageContext.request.contextPath}/testDB/blacklist</a></div>
+        <div><a href="${pageContext.request.contextPath}/testDB/comment">${pageContext.request.contextPath}/testDB/comment</a></div>
+        
     </tiles:putAttribute>
 </tiles:insertDefinition>

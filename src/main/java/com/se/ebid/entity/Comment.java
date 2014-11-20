@@ -70,6 +70,14 @@ public class Comment {
         this.commenterID = commenterID;
     }
 
+    public String getCommenterName() {
+        return commenterName;
+    }
+
+    public void setCommenterName(String commenterName) {
+        this.commenterName = commenterName;
+    }
+
     public String getCommentDetail() {
         return commentDetail;
     }
@@ -85,5 +93,6 @@ public class Comment {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
+
     
 }

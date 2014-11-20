@@ -8,6 +8,9 @@ package com.se.ebid.service;
 
 import com.se.ebid.controller.SearchForm;
 import com.se.ebid.controller.UploadedFile;
+import com.se.ebid.entity.Blacklist;
+import com.se.ebid.entity.Comment;
+import com.se.ebid.entity.Complaint;
 import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
@@ -39,4 +42,16 @@ public interface TestDBService {
     public void savePhoto(UploadedFile uploadedFile);
     public List<Photo> listPhotos();
     public List<Photo> findPhotoByItemID(long itemID);
+    
+    public void saveComplaint(Complaint complaint);
+    public List<Complaint> listComplaints();
+    public Complaint findComplaintByComplaintID(long complaintID);
+    public List<Complaint> getComplaint();
+    
+    public void saveBlacklist(Blacklist blacklist);
+    public List<Blacklist> listBlacklists();
+    
+    public void saveComment(Comment comment);
+    public List<Comment> listComments();
+    public List<Comment> findCommentByItemID(long itemID);
 }

@@ -45,7 +45,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Transaction findCompletedByTimestamp(java.sql.Timestamp startTime, java.sql.Timestamp endTime) {
+    public List<Transaction> findCompletedByTimestamp(java.sql.Timestamp startTime, java.sql.Timestamp endTime) {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Transaction> transactions = new ArrayList<Transaction>();
@@ -55,11 +55,7 @@ public class TransactionDAOImpl implements TransactionDAO {
                 .setParameter(1, endTime)
                 .list();
         session.getTransaction().commit();
-        if (transactions.size() > 0) {
-            return transactions.get(0);
-        } else {
-            return null;
-        }
+        return transactions;
     }
     
     @SuppressWarnings("unchecked")
@@ -88,6 +84,24 @@ public class TransactionDAOImpl implements TransactionDAO {
                 .list();
         session.getTransaction().commit();
         return transactions;
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public Transaction findByTransactionID(long transactionID) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.getTransaction().begin();
+        List<Transaction> transactions = new ArrayList<Transaction>();
+        transactions = sessionFactory.getCurrentSession()
+                .createQuery("from Transaction where transactionID=?")
+                .setParameter(0, transactionID)
+                .list();
+        session.getTransaction().commit();
+        if (transactions.size() > 0) {
+            return transactions.get(0);
+        } else {
+            return null;
+        }
     }
 
 }

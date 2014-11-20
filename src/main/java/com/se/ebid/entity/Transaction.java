@@ -40,6 +40,8 @@ public class Transaction {
     private String detail;
     @Column(name="sellingType")
     private SellingType sellingType;
+    @Column(name="delivery")
+    private String delivery;
     @Column(name="timestamp")
     private java.sql.Timestamp timestamp;
     @Column(name="complated")
@@ -109,6 +111,14 @@ public class Transaction {
         this.sellingType = sellingType;
     }
 
+    public String getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
+    }
+
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -124,6 +134,7 @@ public class Transaction {
     public void setComplated(boolean complated) {
         this.complated = complated;
     }
+    
     
     
 }

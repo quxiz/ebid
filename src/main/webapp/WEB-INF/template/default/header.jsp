@@ -25,9 +25,9 @@
             </ul>
             
             
-            <form class="navbar-form navbar-nav" role="search">
+            <form class="navbar-form navbar-nav" role="search" action="${pageContext.request.contextPath}/search" method="POST">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="ค้นหาสินค้า...">
+                    <input type="text" class="form-control" placeholder="ค้นหาสินค้า..." name="keyword">
                     <div class="input-group-btn">
                         <!-- Button and dropdown menu -->
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">ทุกประเภท<span class="caret"></span></button>
@@ -39,7 +39,7 @@
                         </ul>
 
                     </div>
-                    <a href="${pageContext.request.contextPath}/search" class="btn btn-default">ค้นหา</a>
+                    <button type="submit" class="btn btn-default">ค้นหา</a>
                 </div>
                 
             </form>

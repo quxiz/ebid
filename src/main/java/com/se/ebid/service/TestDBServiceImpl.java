@@ -7,14 +7,21 @@ package com.se.ebid.service;
 
 import com.se.ebid.controller.SearchForm;
 import com.se.ebid.controller.UploadedFile;
+import com.se.ebid.dao.BlacklistDAO;
+import com.se.ebid.dao.CommentDAO;
+import com.se.ebid.dao.ComplaintDAO;
 import com.se.ebid.dao.ItemDAO;
 import com.se.ebid.dao.MemberDAO;
 import com.se.ebid.dao.MessageDAO;
 import com.se.ebid.dao.PhotoDAO;
+import com.se.ebid.entity.Blacklist;
+import com.se.ebid.entity.Comment;
+import com.se.ebid.entity.Complaint;
 import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
 import com.se.ebid.entity.Photo;
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -45,6 +52,12 @@ public class TestDBServiceImpl implements TestDBService {
     private MessageDAO messageDAO;
     private ItemDAO itemDAO;
     private PhotoDAO photoDAO;
+    private ComplaintDAO complaintDAO;
+    private BlacklistDAO blacklistDAO;
+    private CommentDAO commentDAO;
+    
+    @Autowired
+    ServletContext servletContext;
 
     @Autowired
     public void setMemberDAO(MemberDAO memberDAO) {
@@ -64,6 +77,21 @@ public class TestDBServiceImpl implements TestDBService {
     @Autowired
     public void setPhotoDAO(PhotoDAO photoDAO) {
         this.photoDAO = photoDAO;
+    }
+    
+    @Autowired
+    public void setComplaintDAO(ComplaintDAO complaintDAO) {
+        this.complaintDAO = complaintDAO;
+    }
+    
+    @Autowired
+    public void setBlacklistDAO(BlacklistDAO blacklistDAO) {
+        this.blacklistDAO = blacklistDAO;
+    }
+    
+    @Autowired
+    public void setCommentDAO(CommentDAO commentDAO) {
+        this.commentDAO = commentDAO;
     }
     /* ============================================================
      ========================== Member ==========================
@@ -198,9 +226,15 @@ public class TestDBServiceImpl implements TestDBService {
         photo.setItemID(1);
         long photoID = this.photoDAO.save(photo);
         MultipartFile multipartFile = uploadedFile.getFile();
-        String photoURL = "/img/" + photoID + multipartFile.getContentType();
+        //String fileExtension = multipartFile.getContentType();
+        int extensionIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
+        String fileExtension = multipartFile.getOriginalFilename().substring(extensionIndex, multipartFile.getOriginalFilename().length());
+        
+        String savePath = servletContext.getRealPath("resources/uploadedImg/") + "\\" + photoID + fileExtension;
+        System.out.println(savePath);
+        String photoURL = "/resources/uploadedImg/" + photoID + fileExtension;
         try {
-            multipartFile.transferTo(new File(photoURL));
+            multipartFile.transferTo(new File(savePath));
         } catch (IOException ex) {
             Logger.getLogger(TestDBServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalStateException ex) {
@@ -221,5 +255,70 @@ public class TestDBServiceImpl implements TestDBService {
     public List<Photo> findPhotoByItemID(long itemID) {
         return this.photoDAO.findByItemID(itemID);
     }
+    
+    /* ============================================================
+     ========================== Complaint ==========================
+     ============================================================
+     */
+    @Override
+    @Transactional
+    public void saveComplaint(Complaint complaint) {
+        this.complaintDAO.save(complaint);
+    }
 
+    @Override
+    @Transactional
+    public List<Complaint> listComplaints() {
+        return this.complaintDAO.list();
+    }
+
+    @Override
+    @Transactional
+    public Complaint findComplaintByComplaintID(long complaintID) {
+        return this.complaintDAO.findByComplaintID(complaintID);
+    }
+
+    @Override
+    @Transactional
+    public List<Complaint> getComplaint() {
+        return this.complaintDAO.getComplaint();
+    }
+
+    /* ============================================================
+     ========================== Blacklist ==========================
+     ============================================================
+     */
+    @Override
+    @Transactional
+    public void saveBlacklist(Blacklist blacklist) {
+        this.blacklistDAO.save(blacklist);
+    }
+
+    @Override
+    @Transactional
+    public List<Blacklist> listBlacklists() {
+        return this.blacklistDAO.list();
+    }
+    
+    /* ============================================================
+     ========================== Comment ==========================
+     ============================================================
+     */
+    @Override
+    @Transactional
+    public void saveComment(Comment comment) {
+        this.commentDAO.save(comment);
+    }
+
+    @Override
+    @Transactional
+    public List<Comment> listComments() {
+        return this.commentDAO.list();
+    }
+
+    @Override
+    @Transactional
+    public List<Comment> findCommentByItemID(long itemID) {
+        return this.commentDAO.findByItemID(itemID);
+    }
 }

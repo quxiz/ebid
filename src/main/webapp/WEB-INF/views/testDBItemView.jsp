@@ -7,6 +7,11 @@
 
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
+        
+        
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.css">
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.th.js"></script>
 
         <div role="tabpanel">
 
@@ -27,8 +32,7 @@
                                     <div><form:hidden placeholder="itemID" path="itemID" /></div>
                                     <div><form:input placeholder="sellerID" path="sellerID" /></div>
                                     <div><form:input placeholder="title" path="title" /></div>
-                                    <div><form:input placeholder="condition" path="condition" /></div>
-                                    <div><form:input placeholder="specific" path="specific" /></div>
+                                    <div><form:input placeholder="specifics" path="specifics" /></div>
                                     <div><form:input placeholder="detail" path="detail" /></div>
                                     <div><form:input placeholder="category" path="category" /></div>
                                     <div><form:input placeholder="sellingType" path="sellingType" /></div>
@@ -40,6 +44,14 @@
                                     <div><form:input placeholder="packageDetail" path="packageDetail" /></div>
                                     <div><form:input placeholder="returnPolicy" path="returnPolicy" /></div>
                                     <div><form:input placeholder="delivery" path="delivery" /></div>
+                                    <div class="form-group">
+                                        <label for="dtp_input1" class="col-md-2 control-label">Date And Time</label>
+                                        <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
+                                            <input class="form-control" size="16" type="text" value="" readonly>
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                        </div>
+                                        <form:hidden id="dtp_input1" path="startTime"/><br/>
+                                    </div>
                                 </div>
                                 <input type="submit" class="btn btn-default" value="save"/>
                             </form:form>
@@ -51,8 +63,7 @@
                                     <th>Item ID</th>
                                     <th>SellerID</th>
                                     <th>title</th>
-                                    <th>condition</th>
-                                    <th>specific</th>
+                                    <th>specifics</th>
                                     <th>detail</th>
                                     <th>category</th>
                                     <th>sellingType</th>
@@ -71,10 +82,9 @@
                                 <c:forEach items="${listItems}" var="item">
                                     <tr>
                                         <td>${item.itemID}</td>
-                                        <td>${item.sellingID}</td>
+                                        <td>${item.sellerID}</td>
                                         <td>${item.title}</td>
-                                        <td>${item.condition}</td>
-                                        <td>${item.specific}</td>
+                                        <td>${item.specifics}</td>
                                         <td>${item.detail}</td>
                                         <td>${item.category}</td>
                                         <td>${item.sellingType}</td>
@@ -106,6 +116,21 @@
                 e.preventDefault()
                 $(this).tab('show')
             })
+        </script>
+
+        <script type="text/javascript">
+//in this line of code, to display the datetimepicker, we used ‘form_datetime’ as an argument to be
+//passed in javascript. This is for Date and Time.
+            $('.form_datetime').datetimepicker({
+                language: 'en',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1
+            });
         </script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

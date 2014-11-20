@@ -34,6 +34,7 @@
         <property name="password" value="eBid2014" />
     </bean>
     -->
+    
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -41,6 +42,25 @@
         <property name="username" value="ebid" />
         <property name="password" value="eBid2014" />
     </bean>
+    
+    <!--
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://mysql5.000webhost.com:3306/a2905946_ebid" />
+        <property name="username" value="a2905946_ebid" />
+        <property name="password" value="eBid2014" />
+    </bean>
+    -->
+    <!--
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://sql4.freemysqlhosting.net:3306/sql458713" />
+        <property name="username" value="sql458713" />
+        <property name="password" value="lD7*wL9%" />
+    </bean>
+    -->
     <!-- Hibernate 4 SessionFactory Bean definition -->
     <bean id="hibernate4AnnotatedSessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

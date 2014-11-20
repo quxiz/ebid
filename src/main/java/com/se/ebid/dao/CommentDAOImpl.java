@@ -28,9 +28,14 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public void save(Comment comment) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.getTransaction().begin();
-        session.saveOrUpdate(comment);
-        session.getTransaction().commit();
+        try {
+            session.getTransaction().begin();
+            session.saveOrUpdate(comment);
+            session.getTransaction().commit();
+        } catch (RuntimeException e) {
+            session.getTransaction().rollback();
+            throw e;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -45,7 +50,7 @@ public class CommentDAOImpl implements CommentDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Comment findByItemID(long itemID) {
+    public List<Comment> findByItemID(long itemID) {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Comment> comments = new ArrayList<Comment>();
@@ -54,11 +59,7 @@ public class CommentDAOImpl implements CommentDAO {
                 .setParameter(0, itemID)
                 .list();
         session.getTransaction().commit();
-        if (comments.size() > 0) {
-            return comments.get(0);
-        } else {
-            return null;
-        }
+        return comments;
     }
 
 }

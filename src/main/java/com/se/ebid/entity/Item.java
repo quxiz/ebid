@@ -10,6 +10,8 @@ import com.se.ebid.controller.SellingType;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,8 @@ public class Item {
     private long itemID;
     @Column(name="sellerID", nullable = false)
     private long sellerID;
+    @Column(name="sellerName")
+    private String sellerName;
     @Column(name="title", columnDefinition="VARCHAR(45)")
     private String title;
     @Column(name="specifics")
@@ -37,6 +41,7 @@ public class Item {
     @Column(name="category")
     private String category;
     @Column(name="sellingType")
+    @Enumerated(EnumType.STRING)
     private SellingType sellingType;
     @Column(name="price")
     private double price;
@@ -77,6 +82,14 @@ public class Item {
         this.sellerID = sellerID;
     }
 
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -85,11 +98,11 @@ public class Item {
         this.title = title;
     }
 
-    public String getSpecific() {
+    public String getSpecifics() {
         return specifics;
     }
 
-    public void setSpecific(String specifics) {
+    public void setSpecifics(String specifics) {
         this.specifics = specifics;
     }
 
@@ -205,5 +218,6 @@ public class Item {
         this.delivery = delivery;
     }
 
+    
     
 }

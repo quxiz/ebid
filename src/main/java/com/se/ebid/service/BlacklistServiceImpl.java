@@ -37,13 +37,13 @@ public class BlacklistServiceImpl implements BlacklistService{
     public boolean blacklist(BlacklistForm blacklistForm) {
         Member member = this.memberDAO.findByUserID(blacklistForm.getUserId());
 	if(member == null) return false;
-	member.setBlacklisted(blacklistForm.getBlacklistStatus());
+	//member.setBlacklisted(blacklistForm.getBlacklistStatus());
 	this.memberDAO.save(member);
 	
 	Blacklist blacklist = new Blacklist();
 	blacklist.setMemberID(member.getMemberID());
 	blacklist.setDetail(blacklistForm.getDetail());
-	blacklist.setStatus(blacklistForm.getBlacklistStatus());
+	//blacklist.setStatus(blacklistForm.getBlacklistStatus());
 	blacklist.setTimestamp(new Timestamp(System.currentTimeMillis()));
 	this.blacklistDAO.save(blacklist);
 	

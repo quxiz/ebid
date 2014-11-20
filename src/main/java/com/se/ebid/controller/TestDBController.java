@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -116,10 +118,24 @@ public class TestDBController {
         return "testDBMessageView";
     }
     
-    @RequestMapping(value= "/testDB/message/saveMessage", method = RequestMethod.POST)
+    /*@RequestMapping(value= "/testDB/message/saveMessage", method = RequestMethod.POST)
     public String saveMessage(@ModelAttribute Message m){
         this.testDBService.saveMessage(m);
         return "redirect:/testDB/message";
+    }*/
+    
+    @RequestMapping(value= "/testDB/message/saveMessage", method = RequestMethod.POST)
+    public String saveMessage(@ModelAttribute Message m, Model model, BindingResult mapping1BindingResult, RedirectAttributes redirectAttributes){
+        this.testDBService.saveMessage(m);
+        redirectAttributes.addFlashAttribute("message", m);
+        return "redirect:/testDB/message/testRedirect";
+    }
+    
+    @RequestMapping(value= "/testDB/message/testRedirect", method = RequestMethod.GET)
+    public String testRedirect(@ModelAttribute Message message, Model model, BindingResult mapping1BindingResult){
+        model.addAttribute("message", message);
+        model.addAttribute("listMessages", this.testDBService.listMessages());
+        return "testDBMessageView";
     }
     
     @RequestMapping(value = "/testDB/message/findByReceiverID/{receiverID}", method = RequestMethod.GET)
@@ -240,7 +256,7 @@ public class TestDBController {
     }
     
     @RequestMapping(value= "/testDB/comment/saveComment", method = RequestMethod.POST)
-    public String saveComplaint(@ModelAttribute Comment m){
+    public String saveComment(@ModelAttribute Comment m){
         this.testDBService.saveComment(m);
         return "redirect:/testDB/comment";
     }

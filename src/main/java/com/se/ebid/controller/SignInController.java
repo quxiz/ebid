@@ -5,6 +5,9 @@
  */
 package com.se.ebid.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
@@ -33,7 +36,9 @@ public class SignInController {
     
     @RequestMapping("/signIn")
     public String viewSignIn(Model model) {
-        model.addAttribute("title", "Sign In");
+        model.addAttribute("title", "เข้าสู่ระบบ");
+         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+        model.addAttribute("categoryList", categoryList);
         return "signInView";
     }
     

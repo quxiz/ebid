@@ -8,6 +8,9 @@ package com.se.ebid.controller;
 import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Photo;
 import com.se.ebid.service.ItemService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,6 +46,9 @@ public class ViewItemController {
         model.addAttribute("item", this.itemService.getItem(itemID));
         // model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
         // model.addAttribute("listComments",this.itemService.getComment(itemID));
+         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("title", this.itemService.getItem(itemID).getTitle());
         return "viewItemView";
     }
 

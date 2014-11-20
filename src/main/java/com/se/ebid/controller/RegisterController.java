@@ -6,6 +6,9 @@
 package com.se.ebid.controller;
 
 import com.se.ebid.entity.Member;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,7 +26,9 @@ public class RegisterController {
     public String viewRegister(Model model) {
         model.addAttribute("registrationForm", new RegistrationForm());
         model.addAttribute("countryList", new CountryList());
-        model.addAttribute("title", "Register");
+        model.addAttribute("title", "สมัครสมาชิก");
+         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+        model.addAttribute("categoryList", categoryList);
         return "registerView";
     }
 

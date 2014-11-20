@@ -10,7 +10,10 @@ import com.se.ebid.dao.MemberDAOImpl;
 import com.se.ebid.entity.Member;
 import com.se.ebid.service.CustomUser;
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
  
 import org.slf4j.Logger;
@@ -55,6 +58,9 @@ public class IndexController {
         long memberID = customUser.getMemberID();
         model.addAttribute("memberID", memberID);
         model.addAttribute("title", "Index Page");
+        
+         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+        model.addAttribute("categoryList", categoryList);
         return "indexView_bright";
     }
 }

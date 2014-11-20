@@ -15,20 +15,12 @@
 <!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">-->
 
 
-        <title>${title}</title>
+        <title>${title} - ebid</title>
 
     </head>
     <tiles:insertAttribute name="header" />
     <body>
-        <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-
-        <script src="${pageContext.request.contextPath}/resources/js/moment.js"></script>
-        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
-
-<!--        bright-->
-<!--        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>-->
-
+      
         <tiles:insertAttribute name="body" />
 
         <!--    pleaseLogInModal-->
@@ -49,8 +41,29 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div>
+  <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
+        <script src="${pageContext.request.contextPath}/resources/js/moment.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
 
+<!--        bright-->
+<!--        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>-->
+
+<script>
+            $(function () {
+
+                $("#categoryHeader li a").click(function () {
+                    var selText = $(this).text();
+                    $(this).parents('.dropdown').find('.dropdown-toggle').html(selText + "&nbsp;&nbsp;" + '<span class="caret"></span>');
+
+                    //                    var registerAttributes = model.get("RegistrationForm");
+                    //                    registerAttributes.country = selText;
+                    //                    model.set("RegistrationForm", registerAttributes);
+                });
+                
+            });
+        </script>
     </body>
     <footer>
         <tiles:insertAttribute name="footer" />

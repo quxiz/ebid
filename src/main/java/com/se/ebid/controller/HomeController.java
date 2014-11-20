@@ -7,7 +7,10 @@
 package com.se.ebid.controller;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
  
 import org.slf4j.Logger;
@@ -49,7 +52,11 @@ public class HomeController {
 //    }
        @RequestMapping("/")
     public String viewHome(Model model) {
-        model.addAttribute("title", "ebid");
+        model.addAttribute("title", "หน้าหลัก");
+        
+        List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+        model.addAttribute("categoryList", categoryList);
+           
         return "homeView";
     }
 }

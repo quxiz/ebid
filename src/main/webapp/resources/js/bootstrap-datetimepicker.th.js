@@ -2,7 +2,7 @@
  * Thai translation for bootstrap-datetimepicker
  * Suchau Jiraprapot <seroz24@gmail.com>
  */
-;(function($){
+(function($){
 	$.fn.datetimepicker.dates['th'] = {
 		days: ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์", "อาทิตย์"],
 		daysShort: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส", "อา"],

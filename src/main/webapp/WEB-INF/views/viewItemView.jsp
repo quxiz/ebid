@@ -28,8 +28,8 @@
 
         <div class="container">
             <ol class="breadcrumb">
-                <li><a href="${pageContext.request.contextPath}">ebid</a><p>/</p></li>
-                <li class="active">สินค้า /</li>
+                <li><a href="${pageContext.request.contextPath}">ebid</a></li>
+                <li class="active">สินค้า</li>
                 <li class="active">เสื้อผ้า</li> <!--ติดไว้ก่อนรอ search-->
             </ol>
 
@@ -80,17 +80,35 @@
                     </div>
 
 
-                    <!--bid or buy form-->
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label for="inputQuantity" class="col-xs-2 control-label">จำนวน</label>
-                            <div class="col-xs-4">
-                                <input type="text" class="form-control" id="inputQuantity" placeholder="จำนวน" value="1">
-                            </div>
-                            <label for="inputQuantity" class="col-xs-2 control-label">/20</label>
-                        </div>
-                    </form>
-                    <button type="button" class="btn btn-primary center-block" style="width:160px">${item.sellingType}</button>
+                    <!--buy form-->
+                    <c:if test="${item.sellingType==BUY}"> 
+                        <c:url var="addAction" value="/viewItem/onSubmitBuyForm" ></c:url>
+                        <form:form action="${addAction}" modelAttribute="buyform" method="POST" name="buyform">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="inputQuantity" class="col-xs-2 control-label">จำนวน</label>
+                                    <div class="col-xs-4">
+                                        <form:input type="text" class="form-control" id="inputQuantity" placeholder="จำนวน" value="1" path="quantity"/>
+                                    </div>
+                                    <label for="inputQuantity" class="col-xs-2 control-label">/${item.quantity}</label>
+                                </div>
+                            </form>
+                            <input type="submit" class="btn btn-default" value="ซื้นทันที"/>
+                        </form:form>
+                    </c:if>
+                    <!--bid form-->
+                    <c:if test="${item.sellingType==BID}">
+
+
+                        <c:url var="addAction" value="/viewItem/onSubmitBidForm" ></c:url>
+                        <form:form action="${addAction}" modelAttribute="bidform" method="POST" name="bidform">
+
+                        </form:form>
+
+                    </c:if>
+
+
+
 
 
                     <hr>
@@ -187,7 +205,8 @@
 
 
             <h4>${item.title}</h4>
-
+            
+            <!--addaction link profile-->
             <a href="SellerProfile.html">${item.sellerID}</a> <!--name-->
 
             <br>
@@ -233,6 +252,7 @@
                                         <form:textarea class="form-control" rows="3" path="question" />
                                     </div>
                                     <div class="modal-footer">
+                                        <!--แก้เป็น link-->
                                         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                                         <input type="submit" class="btn btn-default" value="ส่งคำถาม"/>
                                     </div>

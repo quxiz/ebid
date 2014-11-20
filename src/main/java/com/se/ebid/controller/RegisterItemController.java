@@ -5,6 +5,9 @@
  */
 package com.se.ebid.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,7 +24,13 @@ public class RegisterItemController {
     
     @RequestMapping("/registerItem")
      public String viewRegisterItem(Model model) {
+        List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));    
+        List<SellingType> sellingType = new ArrayList<SellingType>( Arrays.asList(SellingType.values() ));    
+        
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("sellingType", sellingType);
         model.addAttribute("form", new RegisterItemForm());
+        model.addAttribute("title", "Register");
         
         return "registerItemView";
     }  
@@ -29,6 +38,6 @@ public class RegisterItemController {
      @RequestMapping(value= "/registerItem/sentForm", method = RequestMethod.POST)
      public String onSubmit(@ModelAttribute RegisterItemForm form){
          //this.itemService.registerItem(form);
-         return "redirect:/registerItem";//รอแก้หน้าแสดง
+         return "redirect:/viewItem";//รอแก้หน้าแสดง
      }
 }

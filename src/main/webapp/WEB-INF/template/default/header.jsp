@@ -39,8 +39,9 @@
                         </ul>
 
                     </div>
+                    <a href="${pageContext.request.contextPath}/search" class="btn btn-default">ค้นหา</a>
                 </div>
-                <a href="${pageContext.request.contextPath}/search" class="btn btn-default">ค้นหา</a>
+                
             </form>
 
             <ul class="nav navbar-nav navbar-right">

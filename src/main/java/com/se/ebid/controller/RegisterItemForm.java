@@ -5,7 +5,6 @@
  */
 package com.se.ebid.controller;
 
-import com.se.ebid.entity.SellingType;
 import java.sql.Timestamp;
 import org.springframework.web.multipart.MultipartFile;
 

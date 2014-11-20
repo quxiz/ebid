@@ -40,20 +40,22 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     public boolean askQuestion(QuestionForm questionForm) {
         long memberID = getMemberID();
-        Comment comment = new Comment();
-        //Comment comment = new Comment(questionForm.getItemID());
-        comment.setCommenterID(memberID);
-        comment.setCommentDetail(questionForm.getQuestion());
-        comment.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        this.commentDAO.save(comment);
-        
-        Message message = new Message();
-        message.setSenderID(memberID);
-        message.setReceiverID(questionForm.getSellerID());
-        //message.setMessage(ASK_QUESTION_MESSAGE);
-        message.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        message.setSeen(false);
-        this.messageDAO.save(message);
+
+//        
+//        Comment comment = new Comment(questionForm.getItemID());
+//        comment.setCommenterID(memberID);
+//        comment.setCommentDetail(questionForm.getQuestion());
+//        comment.setTimestamp(new Timestamp(System.currentTimeMillis()));
+//        this.commentDAO.save(comment);
+//        
+//        Message message = new Message();
+//        message.setSenderID(memberID);
+//        message.setReceiverID(questionForm.getSellerID());
+//        message.setMessage(ASK_QUESTION_MESSAGE);
+//        message.setTimestamp(new Timestamp(System.currentTimeMillis()));
+//        message.setSeen(false);
+//        this.messageDAO.save(message);
+
         
         return true;
     }
@@ -73,7 +75,9 @@ public class CommentServiceImpl implements CommentService{
 	Message message = new Message();
 	message.setSenderID(memberID);
 	message.setReceiverID(answerForm.getAskerID());
-	//message.setMessage(ANSWER_QUESTION_MESSAGE);
+
+//	message.setMessage(ANSWER_QUESTION_MESSAGE);
+
 	message.setTimestamp(new Timestamp(System.currentTimeMillis()));
 	message.setSeen(false);
 	this.messageDAO.save(message);

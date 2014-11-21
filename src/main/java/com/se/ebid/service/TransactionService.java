@@ -16,6 +16,6 @@ public interface TransactionService {
     public Transaction getTransaction(long transactionID);
     public Transaction setShippingService(long transactionID, String shippingService);
     public boolean checkOutTransaction(long transactionID);
-    public boolean sendSellerEmail(Member member);
-    public boolean sendBuyerEmail(Member member);
+    public boolean sendSellerEmail(Member member, Transaction transaction);
+    public boolean sendBuyerEmail(Member member, Transaction transaction);
 }

@@ -120,7 +120,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean sendActivateEmail(Member member) {
         String activateURL = null;
-        Common.sendMail(member.getEmail(), "[ebid] Signup confirmation",
+        return Common.sendMail(member.getEmail(), "[ebid] Signup confirmation",
                 "Hello " + member.getFirstName() + ",\n"
                 + "You have requested a new user account on ebid:\n"
                 + "User name:     " + member.getUserID() + "\n"
@@ -132,7 +132,6 @@ public class MemberServiceImpl implements MemberService {
                 + "Regards,\n"
                 + "ebid Staff"
         );
-        return true;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

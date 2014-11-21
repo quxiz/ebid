@@ -24,12 +24,12 @@ public class RegisterItemForm {
     private long quantity;
     private Timestamp startTime;
     private Timestamp endTime;
-    private String paymentMethod;
+//    private String paymentMethod;
     private String shippingService;
     private double shippingCost;
     private String packageDetail;
     private String returnPolicy;
-    private String delivery;
+//    private String delivery;
 
     public String getTitle() {
         return title;
@@ -119,13 +119,13 @@ public class RegisterItemForm {
         this.endTime = endTime;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
+//    public String getPaymentMethod() {
+//        return paymentMethod;
+//    }
+//
+//    public void setPaymentMethod(String paymentMethod) {
+//        this.paymentMethod = paymentMethod;
+//    }
 
     public String getShippingService() {
         return shippingService;
@@ -159,12 +159,12 @@ public class RegisterItemForm {
         this.returnPolicy = returnPolicy;
     }
 
-    public String getDelivery() {
-        return delivery;
-    }
-
-    public void setDelivery(String delivery) {
-        this.delivery = delivery;
-    }
+//    public String getDelivery() {
+//        return delivery;
+//    }
+//
+//    public void setDelivery(String delivery) {
+//        this.delivery = delivery;
+//    }
     
 }

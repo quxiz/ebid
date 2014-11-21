@@ -14,7 +14,7 @@ import com.se.ebid.entity.Transaction;
  */
 public interface TransactionService {
     public Transaction getTransaction(long transactionID);
-    public Transaction setDelivery(long transactionID, String delivery);
+    public Transaction setShippingService(long transactionID, String shippingService);
     public boolean checkOutTransaction(long transactionID);
     public boolean sendSellerEmail(Member member);
     public boolean sendBuyerEmail(Member member);

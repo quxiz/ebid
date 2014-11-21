@@ -32,11 +32,11 @@
                 <li a href="#">สินค้า</li>
                 <li a href="#" class="active">เสื้อผ้า</li> <!--ติดไว้ก่อนรอ search-->
             </ol>
-                
-           <h4>${item.title}</h4>
-           <!--addaction link profile-->
-            <a href="${pageContext.request.contextPath}/viewSeller">${item.sellerID}</a> <!--name-->
-    
+
+            <h4>${item.title}</h4>
+            <!--addaction link profile-->
+            <a href="${pageContext.request.contextPath}/viewSeller">${item.sellerName}</a> <!--name-->
+
             <br>
             <br>
             <div class="row">
@@ -80,35 +80,57 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
+
                 <div class="col-sm-5 col">
                     <div class="text-center">
                         <h3>${item.price} บาท</h3>
                     </div>
-
+                    <br>
 
                     <!--buy form-->
-                    <c:if test="${item.sellingType==BUY}"> 
+                    <c:if test="${item.sellingType=='BUY'}"> 
                         <c:url var="addAction" value="/viewItem/onSubmitBuyForm" ></c:url>
-                        <form:form action="${addAction}" modelAttribute="buyform" method="POST" name="buyform">
-                            <form class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label for="inputQuantity" class="col-xs-2 control-label">จำนวน</label>
-                                    <div class="col-xs-4">
-                                        <form:input type="text" class="form-control" id="inputQuantity" placeholder="จำนวน" value="1" path="quantity"/>
-                                    </div>
-                                    <label for="inputQuantity" class="col-xs-2 control-label">/${item.quantity}</label>
-                                </div>
-                            </form>
-                            <input type="submit" class="btn btn-default" value="ซื้นทันที"/>
+                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="buyform" method="POST" name="buyform">
+                            <label for="inputQuantity" class="col-xs-2 control-label">จำนวน</label>
+                            <div class="input-group col-xs-4">
+                                <form:input type="text" class="form-control" id="inputQuantity" placeholder="จำนวน" value="1" path="quantity"/>
+                                <span class="input-group-addon">/${item.quantity}</span>
+<!--                                    <label for="inputQuantity" class="col-xs-2 control-label">/${item.quantity}</label>-->
+                            </div>
+
+                            <input type="submit" class="btn btn-primary center-block" style="width:160px" value="ซื้อทันที"/>
                         </form:form>
                     </c:if>
                     <!--bid form-->
-                    <c:if test="${item.sellingType==BID}">
+                    <c:if test="${item.sellingType=='BID'}">
+                        <div class="text-center">
+                            <h4>เวลาที่เหลือ</h4>
+                        </div> 
+                        <div class="text-center">
+                            <h3>57 นาที 34 วินาที</h3>
+                        </div>
+
 
 
                         <c:url var="addAction" value="/viewItem/onSubmitBidForm" ></c:url>
-                        <form:form action="${addAction}" modelAttribute="bidform" method="POST" name="bidform">
+                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="bidform" method="POST" name="bidform">
 
+                            <div class="form-group">
+                                <label for="maxBid" class="col-xs-8 control-label">จำนวนเงินสูงสุด</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="maxBid" path="maxBid">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="bidIncrement" class="col-xs-8 control-label">จำนวนเงินเพิ่มแต่ละครั้ง</label>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" id="bidIncrement" path="bidIncrement">
+                                </div>
+                            </div>
+
+                            <input type="submit" class="btn btn-primary center-block" style="width:160px">ประมูล</button>
                         </form:form>
 
                     </c:if>
@@ -168,10 +190,6 @@
                             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                 <div class="panel-body">
                                     <dl class="dl-horizontal">
-                                        <dt>รูปแบบการชำระเงิน</dt>
-                                        <dd>${item.paymentMethod}</dd>
-                                    </dl>
-                                    <dl class="dl-horizontal">
                                         <dt>นโยบายการรับสินค้าคืน</dt>
                                         <dd>${item.returnPolicy}</dd>
                                     </dl>
@@ -189,10 +207,11 @@
                             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                 <div class="panel-body">
                                     <dl class="dl-horizontal">
-                                        <dl class="dl-horizontal">
-                                            <dt>การบรรจุหีบห่อ</dt>
-                                            <dd>${item.packageDetail}</dd>
-                                        </dl>
+                                        <dt>การบรรจุหีบห่อ</dt>
+                                        <dd>${item.packageDetail}</dd>
+                                    </dl>
+                                    <dl class="dl-horizontal">
+
                                         <dt>วิธีการจัดส่ง</dt>
                                         <dd>${item.shippingService}</dd>
                                     </dl>
@@ -210,9 +229,9 @@
             </div> <!-- row -->
 
 
-            
 
-            
+
+
 
             <br>
             <br>

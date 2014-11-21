@@ -40,8 +40,8 @@ public class Transaction {
     private String detail;
     @Column(name="sellingType")
     private SellingType sellingType;
-    @Column(name="delivery")
-    private String delivery;
+    @Column(name="shippingService")
+    private String shippingService;
     @Column(name="timestamp")
     private java.sql.Timestamp timestamp;
     @Column(name="complated")
@@ -111,12 +111,12 @@ public class Transaction {
         this.sellingType = sellingType;
     }
 
-    public String getDelivery() {
-        return delivery;
+    public String getShippingService() {
+        return shippingService;
     }
 
-    public void setDelivery(String delivery) {
-        this.delivery = delivery;
+    public void setShippingService(String shippingService) {
+        this.shippingService = shippingService;
     }
 
     public Timestamp getTimestamp() {

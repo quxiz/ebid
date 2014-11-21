@@ -48,10 +48,10 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public Transaction setDelivery(long transactionID, String delivery) {
+    public Transaction setShippingService(long transactionID, String shippingService) {
         Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
         if(transaction == null) return null;
-        transaction.setDelivery(delivery);
+        transaction.setShippingService(shippingService);
         this.transactionDAO.save(transaction);
         return transaction;
     }

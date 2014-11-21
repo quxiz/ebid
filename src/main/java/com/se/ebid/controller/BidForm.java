@@ -10,16 +10,16 @@ package com.se.ebid.controller;
  * @author mtmmoei
  */
 public class BidForm {
-    private long itenID;
+    private long itemID;
     private double maxBid;
     private double bidIncrement;
 
-    public long getItenID() {
-        return itenID;
+    public long getItemID() {
+        return itemID;
     }
 
-    public void setItenID(long itenID) {
-        this.itenID = itenID;
+    public void setItemID(long itenID) {
+        this.itemID = itenID;
     }
 
     public double getMaxBid() {

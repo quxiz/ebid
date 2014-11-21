@@ -51,8 +51,8 @@ public class Item {
     private java.sql.Timestamp startTime;
     @Column(name="endTime")
     private java.sql.Timestamp endTime;
-    @Column(name="paymentMethod")
-    private String paymentMethod;
+//    @Column(name="paymentMethod")
+//    private String paymentMethod;
     @Column(name="shippingService")
     private String shippingService;
     @Column(name="shippingCost")
@@ -63,8 +63,8 @@ public class Item {
     private String returnPolicy;
     @Column(name="timestamp")
     private java.sql.Timestamp timestamp;
-    @Column(name="delivery")
-    private String delivery;
+//    @Column(name="delivery")
+//    private String delivery;
 
     public long getItemID() {
         return itemID;
@@ -162,13 +162,13 @@ public class Item {
         this.endTime = endTime;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
+//    public String getPaymentMethod() {
+//        return paymentMethod;
+//    }
+//
+//    public void setPaymentMethod(String paymentMethod) {
+//        this.paymentMethod = paymentMethod;
+//    }
 
     public String getShippingService() {
         return shippingService;
@@ -210,13 +210,13 @@ public class Item {
         this.timestamp = timestamp;
     }
 
-    public String getDelivery() {
-        return delivery;
-    }
-
-    public void setDelivery(String delivery) {
-        this.delivery = delivery;
-    }
+//    public String getDelivery() {
+//        return delivery;
+//    }
+//
+//    public void setDelivery(String delivery) {
+//        this.delivery = delivery;
+//    }
 
     
     

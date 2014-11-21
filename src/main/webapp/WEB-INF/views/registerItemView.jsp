@@ -133,13 +133,13 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label for="input8" class="col-sm-3 control-label">วิธีการจ่ายเงิน</label>
                                 <div class="col-sm-6">
                                     <form:input type="text" class="form-control" id="input8" placeholder="วิธีการจ่ายเงิน" path="paymentMethod"/>
 
                                 </div>
-                            </div>
+                            </div>-->
 
                             <div class="form-group">
                                 <label for="shippingService" class="col-sm-3 control-label">วิธีการจัดส่ง</label>
@@ -169,13 +169,7 @@
 
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="delivery" class="col-sm-3 control-label">บริการพิเศษ</label>
-                                <div class="col-sm-6">
-                                    <form:input type="text" class="form-control" id="delivery" placeholder="บริการพิเศษ" path="delivery"/>
-
-                                </div>
-                            </div>
+                            
                             <br>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">

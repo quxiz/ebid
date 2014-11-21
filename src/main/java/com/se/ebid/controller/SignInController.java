@@ -37,7 +37,7 @@ public class SignInController {
     public String viewSignIn(Model model) {
         model.addAttribute("title", "เข้าสู่ระบบ");
         
-        List<CategoryType> categoryList = new ArrayList<CategoryType>(Arrays.asList(CategoryType.values()));
+        List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
         model.addAttribute("categoryList", categoryList);
         
         SignInForm signInForm = new SignInForm();

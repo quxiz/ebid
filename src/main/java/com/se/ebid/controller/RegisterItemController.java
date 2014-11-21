@@ -5,9 +5,11 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.service.ItemService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,12 +22,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class RegisterItemController {
-    //private ItemService itemService;
+
+    private ItemService itemService;
+
+    @Autowired
+    public void setItemService(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
     @RequestMapping("/registerItem")
     public String viewRegisterItem(Model model) {
-        List<CategoryType> categoryList = new ArrayList<CategoryType>(Arrays.asList(CategoryType.values()));
-        List<SellingType> sellingType = new ArrayList<SellingType>(Arrays.asList(SellingType.values()));
+        List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
+        List<SellingType> sellingType = new ArrayList<>(Arrays.asList(SellingType.values()));
 
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("sellingType", sellingType);
@@ -37,7 +45,7 @@ public class RegisterItemController {
 
     @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
     public String onSubmit(@ModelAttribute RegisterItemForm form) {
-        //this.itemService.registerItem(form);
+        this.itemService.registerItem(form);
         return "redirect:/viewItem";//รอแก้หน้าแสดง
     }
 }

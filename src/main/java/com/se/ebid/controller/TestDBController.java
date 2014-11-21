@@ -7,13 +7,16 @@
 package com.se.ebid.controller;
 
 import com.google.common.collect.Lists;
+import com.se.ebid.entity.AutoBid;
 import com.se.ebid.entity.Blacklist;
 import com.se.ebid.entity.Comment;
 import com.se.ebid.entity.Complaint;
+import com.se.ebid.entity.Feedback;
 import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
 import com.se.ebid.entity.Photo;
+import com.se.ebid.entity.Transaction;
 import com.se.ebid.service.TestDBService;
 import java.util.Arrays;
 import java.util.List;
@@ -266,6 +269,127 @@ public class TestDBController {
         model.addAttribute("Comment", new Comment());
         model.addAttribute("listComments", this.testDBService.findCommentByItemID(itemID));
         return "testDBCommentView";
+    }
+    
+    /*
+        ===============================================================
+        ========================== Feedback =============================
+        ===============================================================
+    */
+    @RequestMapping(value = "/testDB/feedback", method = RequestMethod.GET)
+    public String testDBFeedback(Model model) {
+        model.addAttribute("feedback", new Feedback());
+        model.addAttribute("listFeedbacks", this.testDBService.listFeedbacks());
+        return "testDBFeedbackView";
+    }
+    
+    @RequestMapping(value= "/testDB/feedback/saveFeedback", method = RequestMethod.POST)
+    public String saveFeedback(@ModelAttribute Feedback m){
+        this.testDBService.saveFeedback(m);
+        return "redirect:/testDB/feedback";
+    }
+    
+    @RequestMapping(value = "/testDB/feedback/findByTransactionID/{transactionID}", method = RequestMethod.GET)
+    public String findFeedbackByFeedbackID(@PathVariable("transactionID") long transactionID, Model model) {
+        model.addAttribute("feedback", this.testDBService.findFeedbackByTransactionID(transactionID));
+        List<Feedback> listFeedbacks = Arrays.asList(this.testDBService.findFeedbackByTransactionID(transactionID));
+        model.addAttribute("listFeedbacks", listFeedbacks);
+        return "testDBFeedbackView";
+    }
+    
+    @RequestMapping(value = "/testDB/feedback/findBySellerID/{sellerID}", method = RequestMethod.GET)
+    public String findFeedbackBySellerID(@PathVariable("sellerID") long sellerID, Model model) {
+        model.addAttribute("feedback", new Feedback());
+        model.addAttribute("listFeedbacks", this.testDBService.findFeedbackBySellerID(sellerID));
+        return "testDBFeedbackView";
+    }
+    
+    @RequestMapping(value = "/testDB/feedback/findByBuyerID/{buyerID}", method = RequestMethod.GET)
+    public String findFeedbackByBuyerID(@PathVariable("buyerID") long buyerID, Model model) {
+        model.addAttribute("feedback", new Feedback());
+        model.addAttribute("listFeedbacks", this.testDBService.findFeedbackByBuyerID(buyerID));
+        return "testDBFeedbackView";
+    }
+    
+    /*
+        ===============================================================
+        ========================== Transaction =============================
+        ===============================================================
+    */
+    @RequestMapping(value = "/testDB/transaction", method = RequestMethod.GET)
+    public String testDBTransaction(Model model) {
+        model.addAttribute("transaction", new Transaction());
+        model.addAttribute("listTransactions", this.testDBService.listTransactions());
+        return "testDBTransactionView";
+    }
+    
+    @RequestMapping(value= "/testDB/transaction/saveTransaction", method = RequestMethod.POST)
+    public String saveTransaction(@ModelAttribute Transaction m){
+        this.testDBService.saveTransaction(m);
+        return "redirect:/testDB/transaction";
+    }
+    
+    @RequestMapping(value = "/testDB/transaction/viewTransaction/{transactionID}", method = RequestMethod.GET)
+    public String viewTransaction(@PathVariable("transactionID") long transactionID, Model model) {
+        model.addAttribute("transaction", this.testDBService.findTransactionByTransactionID(transactionID));
+        List<Transaction> listTransactions = Arrays.asList(this.testDBService.findTransactionByTransactionID(transactionID));
+        model.addAttribute("listTransactions", listTransactions);
+        return "testDBTransactionView";
+    }
+    
+    @RequestMapping(value = "/testDB/transaction/findByTransactionID/{transactionID}", method = RequestMethod.GET)
+    public String findTransactionByTransactionID(@PathVariable("transactionID") long transactionID, Model model) {
+        model.addAttribute("transaction", this.testDBService.findTransactionByTransactionID(transactionID));
+        List<Transaction> listTransactions = Arrays.asList(this.testDBService.findTransactionByTransactionID(transactionID));
+        model.addAttribute("listTransactions", listTransactions);
+        return "testDBTransactionView";
+    }
+    
+    @RequestMapping(value = "/testDB/transaction/findBySellerID/{sellerID}", method = RequestMethod.GET)
+    public String findTransactionBySellerID(@PathVariable("sellerID") long sellerID, Model model) {
+        model.addAttribute("transaction", new Transaction());
+        model.addAttribute("listTransactions", this.testDBService.findTransactionBySellerID(sellerID));
+        return "testDBTransactionView";
+    }
+    
+    @RequestMapping(value = "/testDB/transaction/findByBuyerID/{buyerID}", method = RequestMethod.GET)
+    public String findTransactionByBuyerID(@PathVariable("buyerID") long buyerID, Model model) {
+        model.addAttribute("transaction", new Transaction());
+        model.addAttribute("listTransactions", this.testDBService.findTransactionByBuyerID(buyerID));
+        return "testDBTransactionView";
+    }
+    
+    @RequestMapping(value = "/testDB/transaction/findCompletedByTimestamp", method = RequestMethod.GET)
+    public String findCompletedByTimestamp(Model model) {
+        model.addAttribute("transaction", new Transaction());
+        model.addAttribute("listTransactions", this.testDBService.findCompletedByTimestamp());
+        return "testDBTransactionView";
+    }
+    
+    /*
+        ===============================================================
+        ========================== AutoBid =============================
+        ===============================================================
+    */
+    @RequestMapping(value = "/testDB/autoBid", method = RequestMethod.GET)
+    public String testDBAutoBid(Model model) {
+        model.addAttribute("autoBid", new AutoBid());
+        model.addAttribute("listAutoBids", this.testDBService.listAutoBids());
+        return "testDBAutoBidView";
+    }
+    
+    @RequestMapping(value= "/testDB/autoBid/saveAutoBid", method = RequestMethod.POST)
+    public String saveAutoBid(@ModelAttribute AutoBid m){
+        this.testDBService.saveAutoBid(m);
+        return "redirect:/testDB/autoBid";
+    }
+    
+    @RequestMapping(value = "/testDB/autoBid/findByItemID/{itemID}", method = RequestMethod.GET)
+    public String findAutoBidByItemID(@PathVariable("itemID") long itemID, Model model) {
+        model.addAttribute("autoBid", this.testDBService.findAutoBidByItemID(itemID));
+        List<AutoBid> listAutoBids = Arrays.asList(this.testDBService.findAutoBidByItemID(itemID));
+        model.addAttribute("listAutoBids", listAutoBids);
+        return "testDBAutoBidView";
     }
     
     

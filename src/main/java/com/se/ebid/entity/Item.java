@@ -51,8 +51,6 @@ public class Item {
     private java.sql.Timestamp startTime;
     @Column(name="endTime")
     private java.sql.Timestamp endTime;
-    @Column(name="paymentMethod")
-    private String paymentMethod;
     @Column(name="shippingService")
     private String shippingService;
     @Column(name="shippingCost")
@@ -158,14 +156,6 @@ public class Item {
 
     public void setEndTime(Timestamp endTime) {
         this.endTime = endTime;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
     }
 
     public String getShippingService() {

@@ -35,6 +35,9 @@ import javax.mail.internet.MimeMultipart;
 public class Common {
     
     static final int ADMIN_ID = -1;
+    static final String BASE_URL = "localhost:8080/";
+    static final String VIEW_ITEM_URL = "viewItem/";
+    static final String RESET_PASSWORD_URL = null;
     
     static final long getMemberID(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -48,36 +51,6 @@ public class Common {
         return customUser.getUserID();
     }
     
-    public static void sendEmail(Session session, String toEmail, String subject, String body){
-        try
-        {
-          MimeMessage msg = new MimeMessage(session);
-          //set message headers
-          msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-          msg.addHeader("format", "flowed");
-          msg.addHeader("Content-Transfer-Encoding", "8bit");
- 
-          msg.setFrom(new InternetAddress("no_reply@journaldev.com", "NoReply-JD"));
-          msg.setReplyTo(InternetAddress.parse("no_reply@journaldev.com", false));
- 
-          msg.setSubject(subject, "UTF-8");
- 
-          msg.setText(body, "UTF-8");
- 
- 
-          msg.setSentDate(new Date());
- 
-          msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-          System.out.println("Message is ready");
-          Transport.send(msg); 
- 
-          System.out.println("EMail Sent Successfully!!");
-        }
-        catch (Exception e) {
-          e.printStackTrace();
-        }
-    }
- 
     public static final boolean sendMail(String to, String subject, String text) {
         System.out.println("!!!!!!!!!!!!!!!!!!! test send email !!!!!!!!!!!!!!!!!!!");
         String host = "smtp.gmail.com";

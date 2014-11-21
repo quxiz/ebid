@@ -14,10 +14,12 @@ import com.se.ebid.entity.BlacklistStatus;
 import java.sql.Timestamp;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 /**
  *
  * @author Nuttapong
  */
+@Service
 public class BlacklistServiceImpl implements BlacklistService{
 
     private MemberDAO memberDAO;

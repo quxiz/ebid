@@ -14,11 +14,14 @@ import java.sql.Timestamp;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Nuttapong
  */
+
+@Service
 public class ReportServiceImpl implements ReportService{
 
     private TransactionDAO transactionDAO;
@@ -72,15 +75,20 @@ public class ReportServiceImpl implements ReportService{
     }
 
     private Timestamp monthToStartTime(int month, int year) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new Timestamp(year-1990,month-1,0,0,0,0,0);
     }
 
     private Timestamp monthToEndTime(int month, int year) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(month==12){
+            month = 0;
+            year += 1;
+        }
+        Timestamp t = new Timestamp(year,month,0,0,0,0,0);
+        return new Timestamp(t.getTime()-1);
     }
 
     private double priceToChargeAmount(double price) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return price*0.07;
     }
     
 }

@@ -152,7 +152,7 @@ public class ItemServiceImpl implements ItemService{
             
             Member outBidder = this.memberDAO.findByMemberID(outBidderID);
             if(outBidder != null){
-                sendOutbidEmail(outBidder);
+                sendOutbidEmail(outBidder, item);
                 Message message = new Message();
                 message.setSenderID(Common.ADMIN_ID);
                 message.setReceiverID(outBidderID);
@@ -172,8 +172,14 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public boolean sendOutbidEmail(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean sendOutbidEmail(Member member, Item item) {
+        return Common.sendMail(member.getEmail(), "[ebid] Outbid notification",
+        "You were outbitted at " + item.getTitle() + "\n" +
+        "Current price: " + item.getPrice() + "\n"+
+        "\n"+
+        "Beat it now!!!\n" +
+        Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID()
+        );
     }
 
     @Override

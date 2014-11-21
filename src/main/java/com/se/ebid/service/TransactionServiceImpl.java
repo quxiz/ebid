@@ -14,12 +14,13 @@ import com.se.ebid.dao.MessageDAO;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Timestamp;
+import org.springframework.stereotype.Service;
 /**
  *
  * @author Nuttapong
  */
 
-
+@Service
 public class TransactionServiceImpl implements TransactionService {
 
     private TransactionDAO transactionDAO;

@@ -10,10 +10,13 @@ import com.se.ebid.dao.FeedbackDAO;
 import com.se.ebid.entity.Feedback;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 /**
  *
  * @author Nuttapong
  */
+
+@Service
 public class FeedbackServiceImpl implements FeedbackService{
 
     private FeedbackDAO feedbackDAO;

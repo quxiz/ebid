@@ -25,9 +25,14 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-left">
-                <li data-toggle="modal" data-target="#pleaseLogInModal"><a href="#">ประกาศขายสินค้า</a></li>
-            </ul>
+                <sec:authorize access="isAuthenticated()">
+                    <li><a href="${pageContext.request.contextPath}/registerItem">ประกาศขายสินค้า</a></li>
+                </sec:authorize>
+                <sec:authorize access="isAnonymous()">
+                    <li data-toggle="modal" data-target="#pleaseLogInModal"><a href="#">ประกาศขายสินค้า</a></li>
+                </sec:authorize>
 
+            </ul>
             <form class="navbar-form navbar-nav" role="search" action="${pageContext.request.contextPath}/search" method="POST">
                 <div class="input-group">
 
@@ -46,9 +51,9 @@
                     </div>
                     <button type="submit" class="btn btn-default">ค้นหา</a>
                 </div>
- 
+
             </form>
-               
+
             <sec:authorize access="isAnonymous()">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="${pageContext.request.contextPath}/register">สมัครสมาชิก</a></li>

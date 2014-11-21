@@ -7,6 +7,7 @@ package com.se.ebid.service;
 
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Transaction;
+import java.util.List;
 
 /**
  *
@@ -18,4 +19,6 @@ public interface TransactionService {
     public boolean checkOutTransaction(long transactionID);
     public boolean sendSellerEmail(Member member, Transaction transaction);
     public boolean sendBuyerEmail(Member member, Transaction transaction);
+    public List<Transaction> getBuyTransaction();
+    public List<Transaction> getSellTransaction();
 }

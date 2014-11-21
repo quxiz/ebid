@@ -11,7 +11,6 @@ import com.se.ebid.entity.Feedback;
 import com.se.ebid.entity.Transaction;
 import java.util.List;
 import com.se.ebid.controller.RegistrationForm;
-import com.se.ebid.controller.SignInForm;
 import com.se.ebid.controller.ForgotPasswordForm;
 import com.se.ebid.controller.ResetPasswordForm;
 import com.se.ebid.controller.PersonalInfoForm;

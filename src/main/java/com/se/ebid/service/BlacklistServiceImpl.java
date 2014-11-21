@@ -10,6 +10,7 @@ import com.se.ebid.dao.BlacklistDAO;
 import com.se.ebid.controller.BlacklistForm;
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Blacklist;
+import com.se.ebid.entity.BlacklistStatus;
 import java.sql.Timestamp;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +38,27 @@ public class BlacklistServiceImpl implements BlacklistService{
     public boolean blacklist(BlacklistForm blacklistForm) {
         Member member = this.memberDAO.findByUserID(blacklistForm.getUserId());
 	if(member == null) return false;
-
-	//member.setBlacklisted(blacklistForm.getBlacklistStatus());
-
+        boolean blacklistStatus;
+        switch(blacklistForm.getBlacklistStatus()){
+            case "NORMAL":
+                blacklistStatus = false;
+                break;
+            case "BLACKLIST":
+                blacklistStatus = true;
+                break;
+            default:
+                return false;
+        }
+        member.setBlacklisted(blacklistStatus);
 	this.memberDAO.save(member);
 	
 	Blacklist blacklist = new Blacklist();
 	blacklist.setMemberID(member.getMemberID());
 	blacklist.setDetail(blacklistForm.getDetail());
-
-//	blacklist.setStatus(blacklistForm.getBlacklistStatus());
-
+        if(blacklistStatus == false)
+            blacklist.setStatus(BlacklistStatus.NORMAL);
+        else
+            blacklist.setStatus(BlacklistStatus.BLACKLIST);
 	blacklist.setTimestamp(new Timestamp(System.currentTimeMillis()));
 	this.blacklistDAO.save(blacklist);
 	

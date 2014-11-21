@@ -14,8 +14,6 @@ import com.se.ebid.dao.CommentDAO;
 import java.sql.Timestamp;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  *
@@ -39,23 +37,24 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public boolean askQuestion(QuestionForm questionForm) {
-        long memberID = getMemberID();
-
-//        
-//        Comment comment = new Comment(questionForm.getItemID());
-//        comment.setCommenterID(memberID);
-//        comment.setCommentDetail(questionForm.getQuestion());
-//        comment.setTimestamp(new Timestamp(System.currentTimeMillis()));
-//        this.commentDAO.save(comment);
-//        
-//        Message message = new Message();
-//        message.setSenderID(memberID);
-//        message.setReceiverID(questionForm.getSellerID());
-//        message.setMessage(ASK_QUESTION_MESSAGE);
-//        message.setTimestamp(new Timestamp(System.currentTimeMillis()));
-//        message.setSeen(false);
-//        this.messageDAO.save(message);
-
+        long memberID = Common.getMemberID();
+        String commenterName = Common.getUserID();
+        
+        Comment comment = new Comment();
+        comment.setItemID(questionForm.getItemID());
+        comment.setCommenterID(memberID);
+        comment.setCommenterName(commenterName);
+        comment.setCommentDetail(questionForm.getQuestion());
+        comment.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        this.commentDAO.save(comment);
+        
+        Message message = new Message();
+        message.setSenderID(memberID);
+        message.setReceiverID(questionForm.getSellerID());
+        message.setMessage("ถาม");
+        message.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        message.setSeen(false);
+        this.messageDAO.save(message);
         
         return true;
     }
@@ -63,7 +62,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public boolean answerQuestion(AnswerForm answerForm) {
-    	long memberID = getMemberID();
+    	long memberID = Common.getMemberID();
         
         Comment comment = new Comment();
 	comment.setParentID(answerForm.getParentID());
@@ -75,9 +74,7 @@ public class CommentServiceImpl implements CommentService{
 	Message message = new Message();
 	message.setSenderID(memberID);
 	message.setReceiverID(answerForm.getAskerID());
-
-//	message.setMessage(ANSWER_QUESTION_MESSAGE);
-
+	message.setMessage("ตอบ");
 	message.setTimestamp(new Timestamp(System.currentTimeMillis()));
 	message.setSeen(false);
 	this.messageDAO.save(message);
@@ -85,9 +82,8 @@ public class CommentServiceImpl implements CommentService{
 	return true;
     }
     
-    private static long getMemberID(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        CustomUser customUser = (CustomUser)auth.getPrincipal();
-        return customUser.getMemberID();
+    private static String setAskQuestionMessage(){
+        return null;
     }
+    
 }

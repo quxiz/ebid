@@ -28,11 +28,17 @@
 
         <div class="container">
             <ol class="breadcrumb">
-                <li><a href="${pageContext.request.contextPath}">ebid</a></li>
-                <li class="active">สินค้า</li>
-                <li class="active">เสื้อผ้า</li> <!--ติดไว้ก่อนรอ search-->
+                <li><a href="${pageContext.request.contextPath}">หน้าแรก</a></li>
+                <li a href="#">สินค้า</li>
+                <li a href="#" class="active">เสื้อผ้า</li> <!--ติดไว้ก่อนรอ search-->
             </ol>
-
+                
+           <h4>${item.title}</h4>
+           <!--addaction link profile-->
+            <a href="${pageContext.request.contextPath}/viewSeller">${item.sellerID}</a> <!--name-->
+    
+            <br>
+            <br>
             <div class="row">
 
                 <div id="carousel" class="carousel slide container col-sm-7" data-ride="carousel">
@@ -204,10 +210,9 @@
             </div> <!-- row -->
 
 
-            <h4>${item.title}</h4>
             
-            <!--addaction link profile-->
-            <a href="SellerProfile.html">${item.sellerID}</a> <!--name-->
+
+            
 
             <br>
             <br>
@@ -265,8 +270,5 @@
             </div>
 
         </div>
-        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-
     </tiles:putAttribute>
 </tiles:insertDefinition>

@@ -14,7 +14,7 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
         <form-login 
             login-page='/signIn' 
             login-processing-url='/signIn.do'
-            default-target-url='/index' 
+            default-target-url='/' 
             authentication-failure-url='/signIn?error=true'
             username-parameter='userID'
             password-parameter='password'
@@ -23,11 +23,16 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
             logout-url="/signOut"
             logout-success-url='/' 
         />  
+<!--        <remember-me 
+        token-validity-seconds="1209600"
+	remember-me-parameter="remember-me" 
+	data-source-ref="dataSource" />-->
     </http>
-
+ 
     <authentication-manager>
         <authentication-provider user-service-ref="myUserDetailsService" >
-            <password-encoder hash="sha-256" />    
+            <password-encoder hash="sha-256" /> 
+               
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

@@ -41,18 +41,12 @@
                 <h3>ข้อมูลผู้ขาย</h3>
                 <hr>
                 <div class = "row">
-                    <div class="col-sm-4 col-md-4">
-                        <div class="thumbnail">
-                            <a href="ViewItem.html"><img src="${pageContext.request.contextPath}/resources/img/Seller.jpg" alt="..."></a>
-                        </div>
-                    </div>
-
                     <div class="col-sm-8 col-md-8">	
 
                         <div class="caption">	
-                            <p>UserId:<a href="#">SoulOfNature</a></p>
+                            <h2><a href="#">SoulOfNature</a></h2>
                             <p>Thailand</p>
-                            <p>You can find the best clothes at my shop.</p>
+                            <h4>You can find the best clothes at my shop.</h4>
                         </div>
 
                     </div>
@@ -66,14 +60,14 @@
                             <p>ส่งของตรงเวลาดีครับ</p>
                         </div>
                     </div>
-
+                    <br>
                     <div class="col-sm-12 col-md-12">
                         <div class="thumbnail">
                             <a href="#">moei</a><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></p>
                             <p>สีเพี้ยนไปจากรูปนิดหน่อย แต่แบบสวยตามรูปเลย</p>
                         </div>
                     </div>
-
+                    <br>
                     <div class="col-sm-12 col-md-12">
                         <div class="thumbnail">
                             <a href="#">kawin</a><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></p>

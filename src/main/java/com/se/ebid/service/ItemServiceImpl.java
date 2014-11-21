@@ -241,12 +241,15 @@ public class ItemServiceImpl implements ItemService{
         item.setQuantity(registerItemForm.getQuantity());
         item.setStartTime(registerItemForm.getStartTime());
         item.setEndTime(registerItemForm.getEndTime());
-//        item.setPaymentMethod(registerItemForm.getPaymentMethod());
+
+       // item.setPaymentMethod(registerItemForm.getPaymentMethod());
+
         item.setShippingService(registerItemForm.getShippingService());
         item.setShippingCost(registerItemForm.getShippingCost());
         item.setPackageDetail(registerItemForm.getPackageDetail());
         item.setReturnPolicy(registerItemForm.getReturnPolicy());
         item.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
         this.itemDAO.save(item);
         MultipartFile[] photoList = registerItemForm.getPhotos();
         long itemID = item.getItemID();

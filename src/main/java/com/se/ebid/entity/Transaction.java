@@ -10,6 +10,8 @@ import com.se.ebid.controller.SellingType;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,6 +41,7 @@ public class Transaction {
     @Column(name="detail")
     private String detail;
     @Column(name="sellingType")
+    @Enumerated(EnumType.STRING)
     private SellingType sellingType;
     @Column(name="shippingService")
     private String shippingService;
@@ -134,7 +137,7 @@ public class Transaction {
     public void setComplated(boolean complated) {
         this.complated = complated;
     }
-    
+
     
     
 }

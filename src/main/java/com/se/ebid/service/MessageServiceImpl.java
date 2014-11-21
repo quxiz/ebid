@@ -9,11 +9,13 @@ import com.se.ebid.dao.MessageDAO;
 import com.se.ebid.entity.Message;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Nuttapong
  */
+@Service
 public class MessageServiceImpl implements MessageService{
 
     private MessageDAO messageDAO;

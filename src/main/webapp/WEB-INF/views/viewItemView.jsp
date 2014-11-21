@@ -21,6 +21,7 @@
         overflow-x: hidden;
     }
 
+
 </style>
 
 <tiles:insertDefinition name="defaultTemplate">
@@ -98,46 +99,47 @@
 <!--                                    <label for="inputQuantity" class="col-xs-2 control-label">/${item.quantity}</label>-->
                             </div>
 
-                            <input type="submit" class="btn btn-primary center-block" style="width:160px" value="ซื้อทันที"/>
+                            <input type="submit" class="btn btn-primary" style="width:160px" value="ซื้อทันที"/>
+
                         </form:form>
                     </c:if>
                     <!--bid form-->
                     <c:if test="${item.sellingType=='BID'}">
-                        <div class="text-center">
-                            <h4>เวลาที่เหลือ</h4>
-                        </div> 
-                        <div class="text-center">
-                            <h3>57 นาที 34 วินาที</h3>
-                        </div>
 
+                        <div class="text-center">
+                            <div class="countdown">
+                                <h4>เวลาที่เหลือ</h4>
+                                <h3><span id="clock"></span></h3>
+                            </div>
+                        </div>
+                        <br>
 
 
                         <c:url var="addAction" value="/viewItem/onSubmitBidForm" ></c:url>
                         <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="bidform" method="POST" name="bidform">
 
                             <div class="form-group">
-                                <label for="maxBid" class="col-xs-8 control-label">จำนวนเงินสูงสุด</label>
-                                <div class="col-xs-4">
+                                <label for="maxBid" class="col-sm-5 control-label">จำนวนเงินสูงสุด</label>
+                                <div class="input-group col-sm-4">
                                     <input type="text" class="form-control" id="maxBid" path="maxBid">
+                                    <span class="input-group-addon">บาท</span>
                                 </div>
                             </div>
 
 
                             <div class="form-group">
-                                <label for="bidIncrement" class="col-xs-8 control-label">จำนวนเงินเพิ่มแต่ละครั้ง</label>
-                                <div class="col-xs-4">
+                                <label for="bidIncrement" class="col-sm-5 control-label">จำนวนเงินเพิ่มแต่ละครั้ง</label>
+                                <div class="input-group col-sm-4">
                                     <input type="text" class="form-control" id="bidIncrement" path="bidIncrement">
+                                    <span class="input-group-addon">บาท</span>
                                 </div>
                             </div>
-
-                            <input type="submit" class="btn btn-primary center-block" style="width:160px">ประมูล</button>
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-primary" style="width:160px" value="ประมูล">
+                            </div>
                         </form:form>
 
                     </c:if>
-
-
-
-
 
                     <hr>
 
@@ -278,7 +280,7 @@
                                     <div class="modal-footer">
                                         <!--แก้เป็น link-->
                                         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                        <input type="submit" class="btn btn-default" value="ส่งคำถาม"/>
+                                        <input type="submit" class="btn btn-primary" value="ส่งคำถาม"/>
                                     </div>
                                 </form:form>
 
@@ -289,5 +291,27 @@
             </div>
 
         </div>
+
+        <script>
+            $(function () {
+//ต้องผูกกับ timestamp
+                $('#clock').countdown('2014/12/21 22:34:56')
+                        .on('update.countdown', function (event) {
+                            var format = '%H:%M:%S';
+                            if (event.offset.days > 0) {
+                                format = '%-d วัน ' + format;
+                            }
+                            if (event.offset.weeks > 0) {
+                                format = '%-w สัปดาห์ ' + format;
+                            }
+                            $(this).html(event.strftime(format));
+                        })
+                        .on('finish.countdown', function (event) {
+                            $(this).html('หมดเวลาประมูล');
+                            $('.countdown').addClass('disabled')
+                        });
+
+            });
+        </script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

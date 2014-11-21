@@ -47,8 +47,8 @@ public class Transaction {
     private String shippingService;
     @Column(name="timestamp")
     private java.sql.Timestamp timestamp;
-    @Column(name="complated")
-    private boolean complated;
+    @Column(name="completed")
+    private boolean completed;
 
     public long getTransactionID() {
         return transactionID;
@@ -130,12 +130,12 @@ public class Transaction {
         this.timestamp = timestamp;
     }
 
-    public boolean isComplated() {
-        return complated;
+    public boolean isCompleted() {
+        return completed;
     }
 
-    public void setComplated(boolean complated) {
-        this.complated = complated;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     

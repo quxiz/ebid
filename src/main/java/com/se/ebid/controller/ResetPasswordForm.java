@@ -11,6 +11,8 @@ package com.se.ebid.controller;
  */
 public class ResetPasswordForm {
     private String email;
+    // secret = key for reset password
+    private String secret;
     private String newPassword;
     private String confirmNewPassword;
 
@@ -20,6 +22,14 @@ public class ResetPasswordForm {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public String getSecret(){
+        return this.secret;
+    }
+    
+    public void setSecret(){
+        this.secret = secret;
     }
 
     public String getNewPassword() {

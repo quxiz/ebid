@@ -14,12 +14,13 @@ import com.se.ebid.dao.MessageDAO;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Timestamp;
+import org.springframework.stereotype.Service;
 /**
  *
  * @author Nuttapong
  */
 
-
+@Service
 public class TransactionServiceImpl implements TransactionService {
 
     private TransactionDAO transactionDAO;
@@ -61,7 +62,7 @@ public class TransactionServiceImpl implements TransactionService {
     public boolean checkOutTransaction(long transactionID) {
         Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
         if(transaction == null) return false;
-        transaction.setComplated(true);
+        transaction.setCompleted(true);
         this.transactionDAO.save(transaction);
         
         long sellerID = transaction.getSellerID();
@@ -78,7 +79,7 @@ public class TransactionServiceImpl implements TransactionService {
             this.messageDAO.save(messageAdmin);
         }
         else{
-            sendBuyerEmail(buyer);
+            sendBuyerEmail(buyer, transaction);
             Message messageBuyer = new Message();
             messageBuyer.setSenderID(Common.ADMIN_ID);
             messageBuyer.setReceiverID(buyerID);
@@ -111,12 +112,12 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public boolean sendSellerEmail(Member member) {
+    public boolean sendSellerEmail(Member member, Transaction transaction) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean sendBuyerEmail(Member member) {
+    public boolean sendBuyerEmail(Member member, Transaction transaction) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

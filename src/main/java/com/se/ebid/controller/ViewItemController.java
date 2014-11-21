@@ -7,6 +7,7 @@ package com.se.ebid.controller;
 
 import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Photo;
+import com.se.ebid.service.CommentService;
 import com.se.ebid.service.ItemService;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,18 +29,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ViewItemController {
 
     private ItemService itemService; //waiting for declaring itemService
-    //private CommentService commentService;
+    private CommentService commentService;
 
     @Autowired
     public void setItemService(ItemService itemService) {
         this.itemService = itemService;
     }
 
-    /*@Autowired
+    @Autowired
      public void setCommentService(CommentService commentService) {
      this.commentService = commentService;
-     }*/
-    @RequestMapping(value = "/viewItem/{itemID}", method = RequestMethod.GET)
+     }
+    @RequestMapping(value = "/viewItem/{itemID}" )
     public String viewItem(@PathVariable("itemID") long itemID, Model model) {
         QuestionForm qform = new QuestionForm();
         BuyForm buyform = new BuyForm();
@@ -48,10 +49,10 @@ public class ViewItemController {
         model.addAttribute("buyform", buyform);
         model.addAttribute("qform", qform);
         model.addAttribute("item", this.itemService.getItem(itemID));
-        // model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
-        // model.addAttribute("listComments",this.itemService.getComment(itemID));
+        model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
+        model.addAttribute("listComments",this.itemService.getComment(itemID));
 
-        List<CategoryType> categoryList = new ArrayList<CategoryType>(Arrays.asList(CategoryType.values()));
+        List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("title", this.itemService.getItem(itemID).getTitle());
         return "viewItemView";
@@ -60,7 +61,7 @@ public class ViewItemController {
 
     @RequestMapping(value = "/viewItem/onSubmitQuestionForm", method = RequestMethod.POST)
     public String onSubmitQuestionForm(@ModelAttribute QuestionForm qform) {
-        //     this.commentService.askQuestion(qform);
+             this.commentService.askQuestion(qform);
         return "redirect:/viewItem"; //url
     }
 

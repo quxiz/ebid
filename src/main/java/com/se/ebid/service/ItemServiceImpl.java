@@ -212,7 +212,6 @@ public class ItemServiceImpl implements ItemService{
         transaction.setQuantity(buyForm.getQuantity());
         transaction.setPrice(item.getPrice() * buyForm.getQuantity());
         transaction.setDetail(item.getDetail());
-        transaction.setDelivery(item.getDelivery());
         transaction.setTimestamp(new Timestamp(System.currentTimeMillis()));
         this.transactionDAO.save(transaction);
         
@@ -242,13 +241,13 @@ public class ItemServiceImpl implements ItemService{
         item.setQuantity(registerItemForm.getQuantity());
         item.setStartTime(registerItemForm.getStartTime());
         item.setEndTime(registerItemForm.getEndTime());
-        item.setPaymentMethod(registerItemForm.getPaymentMethod());
+       // item.setPaymentMethod(registerItemForm.getPaymentMethod());
         item.setShippingService(registerItemForm.getShippingService());
         item.setShippingCost(registerItemForm.getShippingCost());
         item.setPackageDetail(registerItemForm.getPackageDetail());
         item.setReturnPolicy(registerItemForm.getReturnPolicy());
         item.setTimestamp(new Timestamp(System.currentTimeMillis()));
-        item.setDelivery(registerItemForm.getDelivery());
+     
         this.itemDAO.save(item);
         MultipartFile[] photoList = registerItemForm.getPhotos();
         long itemID = item.getItemID();

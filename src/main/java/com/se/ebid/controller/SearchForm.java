@@ -6,6 +6,8 @@
 
 package com.se.ebid.controller;
 
+import java.util.Locale;
+
 /**
  *
  * @author Quxiz
@@ -28,6 +30,10 @@ public class SearchForm {
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+//เตรียมเปลี่ยน Category เป็น enumaration
+    void setCategory(Locale.Category category) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

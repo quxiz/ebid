@@ -51,7 +51,7 @@ public class TransactionServiceImpl implements TransactionService {
     public Transaction setDelivery(long transactionID, String delivery) {
         Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
         if(transaction == null) return null;
-        transaction.setDelivery(delivery);
+        
         this.transactionDAO.save(transaction);
         return transaction;
     }

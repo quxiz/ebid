@@ -12,6 +12,8 @@ import com.se.ebid.controller.BidForm;
 import com.se.ebid.controller.BuyForm;
 import com.se.ebid.controller.Invoice;
 import com.se.ebid.controller.RegisterItemForm;
+import com.se.ebid.entity.Comment;
+import com.se.ebid.entity.Photo;
 import java.util.List;
 
 /**
@@ -21,6 +23,8 @@ import java.util.List;
 public interface ItemService {
     public List<Item> search(SearchForm searchForm);
     public Item getItem(long itemID);
+    public List<Photo> getPhoto(long itemID);
+    public List<Comment> getComment(long itemID);
     public boolean bid(BidForm bidForm);
     public boolean sendOutbidEmail(Member member);
     public Invoice buy(BuyForm buyForm);

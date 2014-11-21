@@ -63,8 +63,6 @@ public class Item {
     private String returnPolicy;
     @Column(name="timestamp")
     private java.sql.Timestamp timestamp;
-    @Column(name="delivery")
-    private String delivery;
 
     public long getItemID() {
         return itemID;
@@ -208,14 +206,6 @@ public class Item {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getDelivery() {
-        return delivery;
-    }
-
-    public void setDelivery(String delivery) {
-        this.delivery = delivery;
     }
 
     

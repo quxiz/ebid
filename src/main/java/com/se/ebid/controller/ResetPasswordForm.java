@@ -28,7 +28,7 @@ public class ResetPasswordForm {
         return this.secret;
     }
     
-    public void setSecret(){
+    public void setSecret(String secret){
         this.secret = secret;
     }
 

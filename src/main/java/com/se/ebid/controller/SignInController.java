@@ -33,16 +33,20 @@ public class SignInController {
 //        model.addAttribute("title", "SignIn");
 //        return "signInView";
 //    }
-    
-    @RequestMapping("/signIn")
+    @RequestMapping(value = "/signIn", method = RequestMethod.GET)
     public String viewSignIn(Model model) {
         model.addAttribute("title", "เข้าสู่ระบบ");
-         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+        
+        List<CategoryType> categoryList = new ArrayList<CategoryType>(Arrays.asList(CategoryType.values()));
         model.addAttribute("categoryList", categoryList);
+        
+        SignInForm signInForm = new SignInForm();
+        model.addAttribute("signInForm", signInForm);
+        
         return "signInView";
     }
-    
-    public void onSubmit(SignInForm form){
+
+    public void onSubmit(SignInForm form) {
         //do something
     }
 }

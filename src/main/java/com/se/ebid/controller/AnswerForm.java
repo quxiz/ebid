@@ -5,14 +5,19 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author mtmmoei
  */
 public class AnswerForm {
+    
     private long itemID;
     private long parentID;
     private long askerID;
+    
+    @Size(min=1,message="please answer the question")
     private String answer;
 
     public long getItemID() {

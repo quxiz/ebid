@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.validation.Valid;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,7 +49,7 @@ public class RegisterController {
 
     @RequestMapping(value = "/register/submit", method = RequestMethod.POST)
     public String onSubmitRegistration(@Valid @ModelAttribute("registrationForm") RegistrationForm registrationForm, BindingResult result, Model model,RedirectAttributes redirectAttributes) {
-        System.out.println(result.hasErrors());
+        //System.out.println(result.hasErrors());
         if (result.hasErrors()) {
             //return "registerView";
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registrationForm", result);
@@ -56,8 +57,15 @@ public class RegisterController {
             return "redirect:/register";
 
         } else {
+            
+            try{
+                boolean successStatus = this.memberService.register(registrationForm);
+            }catch(ConstraintViolationException e){
+                System.out.println("รหัสผ่านไม่ตรงกัน หรือ email หรือ userID มีอยู่ในระบบอยู่แล้ว");
+                System.out.println(e.getCause());
+            }
             return "homeView";
-            //boolean successStatus = this.memberService.register(form);
+            //
 
             //if (successStatus) {
             //    return "redirect:/registerSuccess";

@@ -37,17 +37,25 @@
             </ul>
             <c:url var="addAction" value="/search" ></c:url>
             <form:form action="${addAction}" class="navbar-form navbar-nav" role="search" modelAttribute="searchForm" method="POST" name="searchForm">
-                <div class="form-group">
-                    <div class="input-group">
+                <div class="input-group">
 
-                        <form:input class="form-control" placeholder="ค้นหาสินค้า..." path="keyword" />
-                        <select class="form-control" name="category">
+                    
+                    <form:input class="form-control" placeholder="ค้นหาสินค้า..." path="keyword" />
+                    
+
+                    <div class="input-group-btn dropdown">
+
+                        <!-- Button and dropdown menu -->
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">ทุกประเภท<span class="caret"></span></button>
+                        <ul class="dropdown-menu scrollable-menu" role="menu" id="categoryHeader">
                             <c:forEach items="${categoryList}" var="category">
-                                <option value="${category}">${category.name}</option>
+                                <li onclick="$('#category-hidden').val('${category}')" role="presentation" class="category-item"><a role="menuitem" tabindex="-1">${category.name}</a>
+                                </li>
                             </c:forEach>
-                        </select>
-                        <button type="submit" class="btn btn-default">ค้นหา</a>
+                        </ul>
+                        <form:hidden id="category-hidden" path="category" />
                     </div>
+                    <button type="submit" class="btn btn-default">ค้นหา</a>
                 </div>
 
             </form:form>
@@ -81,11 +89,3 @@
 <br>
 <br>
 
-<script>
-    $(document).on('click', '.category-item', function() {
-        alert("OK");
-        //var selText = $(this a).text();
-        //alert(selText);
-        //$("#category-hidden").val(selText);
-    });
-</script>

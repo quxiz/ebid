@@ -217,13 +217,23 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public boolean editPaymentInfo(PaymentInfoForm paymentInfoForm) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	Member member = this.memberDAO.findByMemberID(Common.getMemberID());
+	if(member == null) return false;
+	member.setPaymentAccount(paymentInfoForm.getPayPalAccount());
+	this.memberDAO.save(member);
+	return true;
     }
 
     @Override
+    @Transactional
     public boolean editReceivingInfo(ReceivingInfoForm receivingInfoForm) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	Member member = this.memberDAO.findByMemberID(Common.getMemberID());
+	if(member == null) return false;
+	member.setReceivingAccount(receivingInfoForm.getPayPalAccount());
+	this.memberDAO.save(member);
+	return true;
     }
 
     @Override

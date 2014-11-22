@@ -7,6 +7,7 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
  
+    
     <mvc:annotation-driven />
     <context:component-scan base-package="com.se.ebid" />
     
@@ -43,4 +44,12 @@
         </property>
     </bean>
  
+ 
+    <!-- bind your messages.properties -->
+    <bean class="org.springframework.context.support.ResourceBundleMessageSource"
+          id="messageSource">
+        <property name="basename" value="messages" />
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+        
 </beans>

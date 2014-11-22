@@ -14,18 +14,19 @@
         <title>${title} - ebid</title>
 
     </head>
-    <tiles:insertAttribute name="header" />
+
     <body>
         <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 
         <script src="${pageContext.request.contextPath}/resources/js/moment.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/jquery.countdown.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/jquery.countdown.js"></script>
+
 <!--        <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>-->
-
+        <tiles:insertAttribute name="header" />
         <tiles:insertAttribute name="body" />
 
         <!--    pleaseLogInModal-->

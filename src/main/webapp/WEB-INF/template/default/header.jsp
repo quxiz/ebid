@@ -39,9 +39,9 @@
             <form:form action="${addAction}" class="navbar-form navbar-nav" role="search" modelAttribute="searchForm" method="POST" name="searchForm">
                 <div class="input-group">
 
-                    
+
                     <form:input class="form-control" placeholder="ค้นหาสินค้า..." path="keyword" />
-                    
+
 
                     <div class="input-group-btn dropdown">
 

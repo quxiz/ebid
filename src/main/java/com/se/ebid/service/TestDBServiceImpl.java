@@ -28,6 +28,7 @@ import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
 import com.se.ebid.entity.Photo;
 import com.se.ebid.entity.Transaction;
+import com.se.ebid.quartz.ReportBidResultJob;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.File;
 import java.io.IOException;
@@ -37,13 +38,24 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Formatter;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 import org.hibernate.exception.ConstraintViolationException;
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+import static org.quartz.JobBuilder.newJob;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import static org.quartz.TriggerBuilder.newTrigger;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -222,6 +234,33 @@ public class TestDBServiceImpl implements TestDBService {
     @Transactional
     public void saveItem(Item item) {
         this.itemDAO.save(item);
+
+        Date date = new Date(item.getEndTime().getTime());
+
+        SimpleDateFormat formatter = new SimpleDateFormat("ss mm HH dd MM ? yyyy");
+        String cronDate = formatter.format(date);
+        try {
+            //SchedulerFactory schdFact = new StdSchedulerFactory("quartz.properties");
+            //Scheduler scheduler = schdFact.getScheduler();
+            Scheduler scheduler;
+            // Setup the Job class and the Job group
+            JobDetail job = newJob(ReportBidResultJob.class).withIdentity(
+                    "CronQuartzJob" + new Timestamp(date.getTime()), "Group").build();
+
+            job.getJobDataMap().put("itemID", item.getItemID());
+            // Create a Trigger that fires every 5 minutes.
+            Trigger trigger = newTrigger()
+                    .withIdentity("" + new Timestamp(date.getTime()), "Group")
+                    .withSchedule(cronSchedule(cronDate).inTimeZone(TimeZone.getTimeZone("Asia/Bangkok")))
+                    .build();
+
+            // Setup the Job and Trigger with Scheduler & schedule jobs
+            scheduler = new StdSchedulerFactory().getScheduler();
+            scheduler.start();
+            scheduler.scheduleJob(job, trigger);
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

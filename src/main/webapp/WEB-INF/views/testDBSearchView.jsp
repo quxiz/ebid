@@ -12,7 +12,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.css">
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.th.js"></script>
-        
+        <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>    
+
         <div role="tabpanel">
 
             <!-- Nav tabs -->
@@ -26,62 +27,29 @@
                     <div class="container">
                         <h4>Add a Item</h4>
                         <div>
-                            <c:url var="addAction" value="/testDB/item/saveItem" ></c:url>
-                            <form:form action="${addAction}" modelAttribute="item" method="POST" name="item">
-                                <div class="form-group">
-                                    <div><form:hidden placeholder="itemID" path="itemID" /></div>
-                                    <div><form:input placeholder="sellerID" path="sellerID" /></div>
-                                    <div><form:input placeholder="title" path="title" /></div>
-                                    <div><form:input placeholder="detail" path="detail" /></div>
-                                    <div><form:input placeholder="category" path="category" /></div>
-                                    <div><form:input placeholder="sellingType" path="sellingType" /></div>
-                                    <div><form:input placeholder="price" path="price" /></div>
-                                    <div><form:input placeholder="quantity" path="quantity" /></div>
-                                    <div><form:input placeholder="shippingService" path="shippingService" /></div>
-                                    <div><form:input placeholder="shippingCost" path="shippingCost" /></div>
-                                    <div><form:input placeholder="packageDetail" path="packageDetail" /></div>
-                                    <div><form:input placeholder="returnPolicy" path="returnPolicy" /></div>
+                            <c:url var="addAction" value="/testDB/item/search/submit" ></c:url>
+                            <form:form action="${addAction}" class="navbar-form navbar-nav" role="search" modelAttribute="searchForm" method="POST" name="searchForm">
+                                <div class="input-group">
 
-                                    <div class="form-group">
-                                        <label for="dtp_input1" class="col-md-2 control-label">Date And Time</label>
-                                        <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
-                                            <input class="form-control" size="16" type="text" value="" readonly>
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                                        </div>
-                                        <form:hidden id="dtp_input1" path="endTime"/><br/>
-                                    </div>
-                                    <div>
-                                        Specifics
-                                        <div id="specifics-form">
-                                            <div class="specifics-condition">condition : <input name="condition" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
-                                            <div class="specifics-something">something : <input name="something" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
 
-                                        </div>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                            Add new specific
-                                        </button>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">Add new specific</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Type your new specific name : <input id="specifics-name" value="" placeholder="Specific name">
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button id="specifics-add" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <form:input id="specifics-json" path="specifics" />
+                                    <form:input class="form-control" placeholder="ค้นหาสินค้า..." path="keyword" />
+
+
+                                    <div class="input-group-btn dropdown">
+
+                                        <!-- Button and dropdown menu -->
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">ทุกประเภท<span class="caret"></span></button>
+                                        <ul class="dropdown-menu scrollable-menu" role="menu" id="categoryHeader">
+                                            <c:forEach items="${categoryList}" var="category">
+                                                <li onclick="$('#category-hidden2').val('${category}')" role="presentation" class="category-item"><a role="menuitem" tabindex="-1">${category.name}</a>
+                                                </li>
+                                            </c:forEach>
+                                        </ul>
+                                        <form:hidden id="category-hidden2" path="category" />
                                     </div>
+                                    <button type="submit" class="btn btn-default">ค้นหา</button>
                                 </div>
-                                <input type="submit" class="btn btn-default" value="save"/>
+
                             </form:form>
                         </div>
                         <h4>Items List</h4>

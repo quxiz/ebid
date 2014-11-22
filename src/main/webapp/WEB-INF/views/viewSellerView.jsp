@@ -44,16 +44,26 @@
                     <div class="col-sm-8 col-md-8">	
 
                         <div class="caption">	
-                            <h2><a href="#">SoulOfNature</a></h2>
-                            <p>Thailand</p>
-                            <h4>You can find the best clothes at my shop.</h4>
+                            <h2><a href="#">${seller.userID}</a></h2>
+                            <p>${seller.country}</p>
+                            <!--                            <h4>You can find the best clothes at my shop.</h4>-->
                         </div>
 
                     </div>
                 </div>
-                <h3>Rating 3.0/5.0 </h3>
+                <h3>Rating ${sellerRating}/5.0 </h3>
                 <hr>
                 <div class = "row">
+                    <c:forEach items="${sellerFeedback}" var="feedback">
+                        <li role="presentation"><a role="menuitem" tabindex="-1">${category.name}</a>
+                        </li>
+                        <div class="col-sm-12 col-md-12">
+                            <div class="thumbnail">
+                                <a href="#">${feedback.sellerID}</a><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></p>
+                                <p>ส่งของตรงเวลาดีครับ</p>
+                            </div>
+                        </div>
+                    </c:forEach>
                     <div class="col-sm-12 col-md-12">
                         <div class="thumbnail">
                             <a href="#">petch</a><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></p>

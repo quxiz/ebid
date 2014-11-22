@@ -183,9 +183,17 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public Member getMember() {
         return this.memberDAO.findByMemberID(Common.getMemberID());
     }
+    
+    @Override
+    @Transactional
+    public Member getMemberByUserID(String userID) {
+        return this.memberDAO.findByUserID(userID);
+    }
+
 
     @Override
     @Transactional

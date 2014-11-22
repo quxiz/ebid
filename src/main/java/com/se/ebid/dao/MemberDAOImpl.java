@@ -5,11 +5,14 @@
  */
 package com.se.ebid.dao;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.se.ebid.entity.Member;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,10 +30,15 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public void save(Member member) {
+        //try {
         Session session = this.sessionFactory.getCurrentSession();
-        session.getTransaction().begin();
-        session.saveOrUpdate(member);
-        session.getTransaction().commit();
+            session.getTransaction().begin();
+            session.saveOrUpdate(member);
+            session.getTransaction().commit();
+        /*} catch (ConstraintViolationException e) {
+            System.out.println("catch 4 success");
+            System.out.println(e.getCause());
+        }*/
     }
 
     @SuppressWarnings("unchecked")

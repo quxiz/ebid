@@ -71,16 +71,24 @@ public class ItemDAOImpl implements ItemDAO {
         if (searchForm.getCategory() != null) {
             category = searchForm.getCategory().toString();
         }
+        System.out.println(searchForm.getCategory());
 
         String keyword = searchForm.getKeyword();
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Item> items = new ArrayList<Item>();
-        items = sessionFactory.getCurrentSession()
-                .createQuery("from Item where (category=? and) lower(title) like lower('%\"+ ? +\"%')")
-                .setParameter(0, category)
-                .setParameter(1, keyword)
-                .list();
+        if(category =="" || category =="All") {
+            items = sessionFactory.getCurrentSession()
+                    .createQuery("from Item as item where lower(item.title) like lower(:keyword) order by item.timestamp desc")
+                    .setParameter("keyword", "%" + keyword + "%")
+                    .list();
+        } else {
+            items = sessionFactory.getCurrentSession()
+                    .createQuery("from Item where (category=:category and lower(title) like lower(:keyword)) order by timestamp desc")
+                    .setParameter("category", searchForm.getCategory())
+                    .setParameter("keyword", "%" + keyword + "%")
+                    .list();
+        }
         session.getTransaction().commit();
         return items;
     }

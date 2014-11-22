@@ -5,6 +5,7 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.entity.Feedback;
 import com.se.ebid.service.MemberService;
 import com.sun.corba.se.impl.interceptors.PINoOpHandlerImpl;
 import java.util.ArrayList;
@@ -32,12 +33,16 @@ public class ViewSellerController {
     }
 
     @RequestMapping(value = "/viewSeller/{sellerID}", method = RequestMethod.GET)
+    @SuppressWarnings("empty-statement")
     public String viewSeller(@PathVariable("sellerID") long sellerID, String sellerName, Model model) {
         model.addAttribute("title", "ข้อมูลผู้ขาย");
         model.addAttribute("seller", this.memberService.getSeller(sellerName));
-        model.addAttribute("sellerFeedBack", this.memberService.getSellerFeedback(sellerID));
-        List<CategoryType> categoryList = new ArrayList<CategoryType>(Arrays.asList(CategoryType.values()));
-        model.addAttribute("categoryList", categoryList);
+        List<Feedback> sellerFeedback = this.memberService.getSellerFeedback(sellerID);
+        long sellerRating=0;
+        for(int i=0; i<sellerFeedback.size();i++)sellerRating +=sellerFeedback.get(i).getSellerRating();                ;
+        sellerRating = sellerRating/sellerFeedback.size();
+        model.addAttribute("sellerFeedBack", sellerFeedback);
+        model.addAttribute("sellerRating", sellerRating);
         return "viewSellerView";
     }
 }

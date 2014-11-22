@@ -15,17 +15,17 @@ import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-import javax.mail.BodyPart;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+//import javax.mail.BodyPart;
+//import javax.mail.Message;
+//import javax.mail.MessagingException;
+//import javax.mail.Multipart;
+//import javax.mail.PasswordAuthentication;
+//import javax.mail.Session;
+//import javax.mail.Transport;
+//import javax.mail.internet.InternetAddress;
+//import javax.mail.internet.MimeBodyPart;
+//import javax.mail.internet.MimeMessage;
+//import javax.mail.internet.MimeMultipart;
 
 
 /**
@@ -68,26 +68,26 @@ public class Common {
 	props.put("mail.smtp.socketFactory.class",
 				"javax.net.ssl.SSLSocketFactory");
   
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(user, password);
-                    }
-                });
+//        Session session = Session.getInstance(props,
+//                new javax.mail.Authenticator() {
+//                    protected PasswordAuthentication getPasswordAuthentication() {
+//                        return new PasswordAuthentication(user, password);
+//                    }
+//                });
        
         //Compose the message  
         System.out.println("!!!!!! connect success");
         try {
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(user));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-            //message.setSubject("javatpoint");
-            message.setSubject(subject);
-            //message.setText("This is simple program of sending email using JavaMail API");
-            message.setText(text);
-            System.out.println("!!!!! initialize message success !!!!!!!!!");
-            //send the message  
-            Transport.send(message);
+//            MimeMessage message = new MimeMessage(session);
+//            message.setFrom(new InternetAddress(user));
+//            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+//            //message.setSubject("javatpoint");
+//            message.setSubject(subject);
+//            //message.setText("This is simple program of sending email using JavaMail API");
+//            message.setText(text);
+//            System.out.println("!!!!! initialize message success !!!!!!!!!");
+//            //send the message  
+//            Transport.send(message);
 
             System.out.println("message sent successfully...");
 

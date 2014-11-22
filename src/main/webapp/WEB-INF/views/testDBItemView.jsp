@@ -48,7 +48,7 @@
                                             <input class="form-control" size="16" type="text" value="" readonly>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                                         </div>
-                                        <form:hidden id="dtp_input1" path="startTime"/><br/>
+                                        <form:hidden id="dtp_input1" path="endTime"/><br/>
                                     </div>
                                     <div>
                                         Specifics

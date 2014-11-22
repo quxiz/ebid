@@ -27,10 +27,15 @@ import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
 import com.se.ebid.entity.Photo;
 import com.se.ebid.entity.Transaction;
+import com.se.ebid.quartz.QuartzJob;
+import com.se.ebid.quartz.ReportBidResultJob;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.transaction.Transactional;
@@ -38,6 +43,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+import static org.quartz.JobBuilder.newJob;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import static org.quartz.TriggerBuilder.newTrigger;
+import org.quartz.impl.StdSchedulerFactory;
 
 /**
  *
@@ -303,13 +316,40 @@ public class ItemServiceImpl implements ItemService {
             autoBid.setBidIncrement(0);
             autoBid.setTimestamp(new Timestamp(System.currentTimeMillis()));
             this.autoBidDAO.save(autoBid);
+            
+            
+            Date date = new Date(registerItemForm.getEndTime().getTime());
+            
+            SimpleDateFormat formatter = new SimpleDateFormat("ss mm HH dd MM ? yyyy");
+            String cronDate = formatter.format(date);
+            try {
+            //SchedulerFactory schdFact = new StdSchedulerFactory("quartz.properties");
+                //Scheduler scheduler = schdFact.getScheduler();
+                Scheduler scheduler;
+                // Setup the Job class and the Job group
+                JobDetail job = newJob(ReportBidResultJob.class).withIdentity(
+                        "CronQuartzJob" + new Timestamp(date.getTime()), "Group").build();
 
-            // unfinish bidSchedule
+                job.getJobDataMap().put("itemID", itemID);
+                // Create a Trigger that fires every 5 minutes.
+                Trigger trigger = newTrigger()
+                        .withIdentity("" + new Timestamp(date.getTime()), "Group")
+                        .withSchedule(cronSchedule(cronDate).inTimeZone(TimeZone.getTimeZone("Asia/Bangkok")))
+                        .build();
+
+                // Setup the Job and Trigger with Scheduler & schedule jobs
+                scheduler = new StdSchedulerFactory().getScheduler();
+                scheduler.start();
+                scheduler.scheduleJob(job, trigger);
+            } catch (SchedulerException e) {
+                e.printStackTrace();
+            }
         }
         return true;
     }
 
     public boolean reportBidResult(long itemID) {
+        System.out.println("Activate reportBidResult : " + itemID);
         Item item = this.itemDAO.findByItemID(itemID);
         if (item == null) {
             return false;

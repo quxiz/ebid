@@ -132,4 +132,17 @@
         <property name="memberDAO" ref="memberDAO" />
     </bean>
     
+    
+    <bean id="itemService" class="com.se.ebid.service.ItemServiceImpl">
+    </bean>
+
+    
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="schedulerContextAsMap">
+        <map>
+            <entry key="itemService" value-ref="itemService" />
+        </map>
+    </property>
+    </bean>
+    
 </beans>

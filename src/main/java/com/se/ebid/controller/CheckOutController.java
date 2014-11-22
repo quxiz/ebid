@@ -50,22 +50,21 @@ public class CheckOutController {
 
     @RequestMapping(value = "/checkOut/{transactionID}", method = RequestMethod.GET)
     public String viewCheckout(@PathVariable("transactionID") long transactionID, Model model) {
-        model.addAttribute("title", "Check Out");
-        List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
-        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("title", "ชำระค่าสินค้า");
         Transaction transaction = this.transactionService.getTransaction(transactionID);
         Member member = this.memberService.getMember();
         Item item = this.itemService.getItem(transaction.getTransactionID());
         TransactionForm transactionForm = new TransactionForm();
         transactionForm.setTransactionID(transactionID);
-        model.addAttribute("transactionFrom", transactionForm);
+        transactionForm.setAddress(member.getAddress());
+        model.addAttribute("transactionForm", transactionForm);
         model.addAttribute("member", member);
         model.addAttribute("transaction", transaction);
         model.addAttribute("item", item);
         return "checkOutView";
     }
 
-    @RequestMapping(value = "/checkOut/onSubmit", method = RequestMethod.POST)
+    @RequestMapping(value = "/checkOut/submit", method = RequestMethod.POST)
     public String onSubmitCheckout(@ModelAttribute TransactionForm transactionForm) {
         Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
     //    transaction.setShippingAddress(transactionForm.getAddress());

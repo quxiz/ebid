@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -35,53 +38,22 @@ public class RegisterController {
 
     @RequestMapping("/register")
     public String viewRegister(Model model) {
-        model.addAttribute("registrationForm", new RegistrationForm());
+        if (!model.containsAttribute("registrationForm")) {
+            model.addAttribute("registrationForm", new RegistrationForm());
+        }
         model.addAttribute("countryList", new CountryList());
         model.addAttribute("title", "สมัครสมาชิก");
-        List<CategoryType> categoryList = new ArrayList<CategoryType>(Arrays.asList(CategoryType.values()));
-        model.addAttribute("categoryList", categoryList);
         return "registerView";
     }
-    /*
-     <<<<<<< HEAD
-     <<<<<<< HEAD
-
-     @RequestMapping("/register")
-     public String viewRegister(Model model) {
-     model.addAttribute("registrationForm", new RegistrationForm());
-     model.addAttribute("countryList", new CountryList());
-     model.addAttribute("title", "สมัครสมาชิก");
-     List<CategoryType> categoryList = new ArrayList<CategoryType>(Arrays.asList(CategoryType.values()));
-     model.addAttribute("categoryList", categoryList);
-     return "registerView";
-     =======
-     @RequestMapping(value="/register{fail}",method= RequestMethod.GET)
-     public String viewRegister(@PathVariable("fail") String fail,Model model) {
-     model.addAttribute("registrationForm", new RegistrationForm());
-     model.addAttribute("title", "สมัครสมาชิก");
-     =======
-     @RequestMapping(value="/register{fail}",method= RequestMethod.GET)
-     public String viewRegister(@PathVariable("fail") String fail,Model model) {
-     model.addAttribute("registrationForm", new RegistrationForm());
-     model.addAttribute("countryList", new CountryList());
-     model.addAttribute("title", "สมัครสมาชิก");
-     >>>>>>> 4934d2486afea9fe6bb8cf84132ef1136d7119fe
-     //         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
-     //        model.addAttribute("categoryList", categoryList);
-     return "registerView"; 
-     >>>>>>> 4934d2486afea9fe6bb8cf84132ef1136d7119fe
-     }
-     */
 
     @RequestMapping(value = "/register/submit", method = RequestMethod.POST)
-    public String onSubmitRegistration(@Valid
-            @ModelAttribute("form") RegistrationForm form, BindingResult result, Model model
-    ) {
-        System.out.println("first name = " + form.getFirstName());
+    public String onSubmitRegistration(@Valid @ModelAttribute("registrationForm") RegistrationForm registrationForm, BindingResult result, Model model,RedirectAttributes redirectAttributes) {
         System.out.println(result.hasErrors());
         if (result.hasErrors()) {
-            return "registerView";
-            //return "redirect:/register";
+            //return "registerView";
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registrationForm", result);
+            redirectAttributes.addFlashAttribute("registrationForm", registrationForm);
+            return "redirect:/register";
 
         } else {
             return "homeView";

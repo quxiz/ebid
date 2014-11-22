@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -33,7 +32,7 @@ public class SearchController {
     @Autowired
     public void setItemService(ItemService itemService){
         this.itemService = itemService;
-    }   
+    } 
     
     @RequestMapping(value="/search", method = RequestMethod.POST)
     public String search(@ModelAttribute SearchForm searchForm, Model model) {
@@ -45,11 +44,9 @@ public class SearchController {
         } else {
             model.addAttribute("category","null");
         }
-        
-        model.addAttribute("keyword", keyword); 
-        List<Item> listItems;
-     //   listItems = this.itemService.search(searchForm);
-      //  model.addAttribute("listItems",listItems);
+        List<Item> listItems = itemService.search(searchForm);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("listItems", listItems);
         return "searchResultView";
     }
     

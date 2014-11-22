@@ -65,6 +65,7 @@
                                 <label for="inputAddress" class="col-sm-3 control-label">ที่อยู่</label>
                                 <div class="col-sm-8">
                                     <form:textarea class="form-control" id="inputAddress" placeholder="ที่อยู่" path="address"></form:textarea>
+                                    <form:errors path="address" cssClass="error" />
                                 </div>
                             </div>
                             <div class="form-group">

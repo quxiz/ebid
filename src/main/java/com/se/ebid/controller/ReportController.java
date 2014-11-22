@@ -5,9 +5,11 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.service.ReportService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,15 +23,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  */
 @Controller
 public class ReportController {
-    //comment ให้รันผ่านเฉยๆเพราะกุยังไม่มี service
-  /*  private ReportService reportService;
+    private ReportService reportService;
     
     @Autowired
      public void setReportService(ReportService reportService) {
         this.reportService = reportService;
     }
      
-    @RequestMapping(value = "/report/", method = RequestMethod.GET)
+    @RequestMapping(value = "/report", method = RequestMethod.GET)
      public String viewReport(Model model) {
         model.addAttribute("title", "Report");
         List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
@@ -42,8 +43,7 @@ public class ReportController {
      @RequestMapping(value = "/report/printReport", method = RequestMethod.POST)
      public String printReport(@ModelAttribute("report") Report report,@ModelAttribute ReportForm reportForm,
             Model model, RedirectAttributes redirectAttributes){
-         //do sth
-         report = this.reportService.printReport(reportForm.getReportType(),reportForm.getMonth(),reportForm.getYear());
+         report = this.reportService.printReport(reportForm.getReportType().toString(),reportForm.getMonth(),reportForm.getYear());
          redirectAttributes.addFlashAttribute("report", report);
          return "redirect:/repoer/showReportView";
      }
@@ -52,5 +52,5 @@ public class ReportController {
      public String showReport(@ModelAttribute("report") Report report, Model model){
          model.addAttribute("report",report);
          return "reportView";
-     } */
+     } 
 }

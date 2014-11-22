@@ -7,26 +7,13 @@ package com.se.ebid.service;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
 import java.util.Properties;
- 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
-import javax.activation.FileDataSource;
-
-import javax.mail.BodyPart;
 import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart; 
 
 
 
@@ -38,6 +25,7 @@ public class Common {
     
     static final int ADMIN_ID = -1;
     static final String BASE_URL = "localhost:8080/";
+    static final String VIEW_MESSAGE_URL = "viewMessage/";
     static final String VIEW_ITEM_URL = "viewItem/";
     static final String RESET_PASSWORD_URL = null;
     

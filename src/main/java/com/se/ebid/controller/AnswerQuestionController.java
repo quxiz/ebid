@@ -5,12 +5,17 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.service.CommentService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -18,14 +23,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class AnswerQuestionController {
-    @RequestMapping("/answerQuestion")
-     public String viewAnswerQuestion(Model model) {
+    
+    private CommentService commentService;
+    
+    @Autowired
+    public void setCommentService(CommentService commentService){
+        this.commentService = commentService;
+    }
+    
+    @RequestMapping(value = "/answerQuestion/{parentID}", method = RequestMethod.GET)
+     public String viewAnswerQuestion(@PathVariable ("parentID") long parentID, Model model) {
         model.addAttribute("title", "ตอบคำถาม");
-         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
-        model.addAttribute("categoryList", categoryList);
+        AnswerForm answerForm = new AnswerForm();
+        answerForm.setParentID(parentID);
+        model.addAttribute("answerForm",answerForm);
         return "answerQuestionView";
     }  
-     public void onSubmit(AnswerForm form){
-         //do sth
+     
+     @RequestMapping(value = "/answerQuestion/onSubmit",method = RequestMethod.POST)
+     public String onSubmit(@ModelAttribute AnswerForm answerForm){
+         this.commentService.answerQuestion(answerForm);
+         return "redirect:/viewMessage";// ไปหน้าไหนไม่รุดี หน้าตอบคำถามเสร็จสิ้น?
      }
 }

@@ -7,7 +7,6 @@ package com.se.ebid.service;
 
 import static com.se.ebid.controller.SellingType.BID;
 import static com.se.ebid.controller.SellingType.BUY;
-import com.se.ebid.dao.FeedbackDAO;
 import com.se.ebid.dao.ItemDAO;
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
@@ -34,7 +33,6 @@ public class TransactionServiceImpl implements TransactionService {
     private MemberDAO memberDAO;
     private MessageDAO messageDAO;
     private ItemDAO itemDAO;
-    private FeedbackDAO feedbackDAO; 
 
     @Autowired
     public void setTransactionDAO(TransactionDAO transactionDAO) {
@@ -91,7 +89,7 @@ public class TransactionServiceImpl implements TransactionService {
             messageAdmin.setSeen(false);
             this.messageDAO.save(messageAdmin);
         } else {
-            sendBuyerEmail(buyer, transaction);
+            sendBuyerEmail(buyer);
             Message messageBuyer = new Message();
             messageBuyer.setSenderID(Common.ADMIN_ID);
             messageBuyer.setReceiverID(buyerID);
@@ -127,10 +125,10 @@ public class TransactionServiceImpl implements TransactionService {
         long itemID = transaction.getItemID();
         Item item = this.itemDAO.findByItemID(itemID);
         if(item.getSellingType() == BUY){
-            String feedbackURL = "mock";
             return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
                 "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + feedbackURL);
+                + Common.BASE_URL
+                + Common.VIEW_MESSAGE_URL);
         }
         if(item.getSellingType() == BID){
             return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
@@ -141,11 +139,11 @@ public class TransactionServiceImpl implements TransactionService {
         return false;
     }
 
-    private boolean sendBuyerEmail(Member member, Transaction transaction) {
-        String feedbackURL = "mock";
+    private boolean sendBuyerEmail(Member member) {
         return Common.sendMail(member.getEmail(), "[ebid] Transaction is completed!",
                 "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + feedbackURL);
+                + Common.BASE_URL
+                + Common.VIEW_MESSAGE_URL);
     }
 
     @Override

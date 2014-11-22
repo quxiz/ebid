@@ -30,6 +30,7 @@
                                     <div><form:input placeholder="complaintDetail" path="complaintDetail" /></div>
                                     <div><form:input placeholder="solverID" path="solverID" /></div>
                                     <div><form:input placeholder="solveDetail" path="solveDetail" /></div>
+                                    <div><form:input placeholder="solved" path="solved" /></div>
                                 </div>
                                 <input type="submit" class="btn btn-default" value="save"/>
                             </form:form>
@@ -46,6 +47,7 @@
                                     <th>solverID</th>
                                     <th>solveDetail</th>
                                     <th>solveTimestamp</th>
+                                    <th>solved</th>
                                 </tr>
                                 <c:forEach items="${listComplaints}" var="complaint">
                                     <tr>
@@ -57,6 +59,7 @@
                                         <td>${complaint.solverID}</td>
                                         <td>${complaint.solveDetail}</td>
                                         <td>${complaint.solveTimestamp}</td>
+                                        <td>${complaint.solved}</td>
                                         <td><a href="${pageContext.request.contextPath}/testDB/complaint/findByComplaintID/${complaint.complaintID}">findByComplaintID/${complaint.complaintID}</a></td>
                                         <td><a href="${pageContext.request.contextPath}/testDB/complaint/getComplaint">getComplaint</a></td>
                                     </tr>

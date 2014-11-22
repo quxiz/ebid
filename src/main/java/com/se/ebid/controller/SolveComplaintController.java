@@ -5,12 +5,18 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.entity.Complaint;
+import com.se.ebid.service.ComplaintService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -18,17 +24,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class SolveComplaintController {
+    
+    private ComplaintService complaintService;
+    
+    @Autowired
+    public void setComplaintService(ComplaintService complaintService){
+        this.complaintService=complaintService;
+    }
+    
     @RequestMapping("/solveComplaint")
      public String viewSolveComplaint(Model model) {
         model.addAttribute("title", "ตอบข้อร้องเรียน");
-         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
-        model.addAttribute("categoryList", categoryList);
+        List<Complaint> listComplaints = this.complaintService.getComplaint();
+        model.addAttribute("listComplaints", listComplaints);
+        SolveComplaintForm solveComplaintForm = new SolveComplaintForm();
+        model.addAttribute("solveComplaintForm",solveComplaintForm);
         return "solveComplaintView";
     }  
-     public void onSubmit(SolveComplaintForm form){
-         //do sth
-     }
-     public void selectComplaint(long complaintID){
-         
+     
+     @RequestMapping(value = "/solveComplaint/onSubmit", method = RequestMethod.POST)
+     public String onSubmit(@ModelAttribute SolveComplaintForm solveComplaintForm){
+        boolean success = this.complaintService.solveComplaint(solveComplaintForm);
+        if(success)return "redirect:/solveComplaint";
+        else return "redirect:/solveComplaint";//notfound     
      }
 }

@@ -30,13 +30,13 @@ public class RegisterController {
     public void setMemberService(MemberService memberService){
         this.memberService = memberService;
     }
-    @RequestMapping("/register")
+    @RequestMapping(value="/register{fail}",method= RequestMethod.GET)
     public String viewRegister(@PathVariable("fail") String fail,Model model) {
         model.addAttribute("registrationForm", new RegistrationForm());
         model.addAttribute("countryList", new CountryList());
         model.addAttribute("title", "สมัครสมาชิก");
-         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
-        model.addAttribute("categoryList", categoryList);
+//         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+//        model.addAttribute("categoryList", categoryList);
         return "registerView"; 
     }
 

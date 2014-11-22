@@ -44,9 +44,9 @@ public class SearchController {
         } else {
             model.addAttribute("category","null");
         }
-        List<Item> listItems = itemService.search(searchForm);
+//        List<Item> listItems = itemService.search(searchForm);
         model.addAttribute("keyword", keyword);
-        model.addAttribute("listItems", listItems);
+//        model.addAttribute("listItems", listItems);
         return "searchResultView";
     }
     

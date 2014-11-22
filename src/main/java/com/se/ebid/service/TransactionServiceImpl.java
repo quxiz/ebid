@@ -5,17 +5,22 @@
  */
 package com.se.ebid.service;
 
+import static com.se.ebid.controller.SellingType.BID;
+import static com.se.ebid.controller.SellingType.BUY;
+import com.se.ebid.dao.ItemDAO;
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
 import com.se.ebid.entity.Transaction;
 import com.se.ebid.dao.TransactionDAO;
 import com.se.ebid.dao.MemberDAO;
 import com.se.ebid.dao.MessageDAO;
+import com.se.ebid.entity.Item;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Timestamp;
 import java.util.List;
 import org.springframework.stereotype.Service;
+
 /**
  *
  * @author Nuttapong
@@ -27,34 +32,35 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionDAO transactionDAO;
     private MemberDAO memberDAO;
     private MessageDAO messageDAO;
-    
+    private ItemDAO itemDAO;
+
     @Autowired
-    public void setTransactionDAO(TransactionDAO transactionDAO){
+    public void setTransactionDAO(TransactionDAO transactionDAO) {
         this.transactionDAO = transactionDAO;
     }
-    
+
     @Autowired
-    public void setMemberDAO(MemberDAO memberDAO){
+    public void setMemberDAO(MemberDAO memberDAO) {
         this.memberDAO = memberDAO;
     }
-    
+
     @Autowired
-    public void setMessageDAO(MessageDAO messageDAO){
+    public void setMessageDAO(MessageDAO messageDAO) {
         this.messageDAO = messageDAO;
     }
-    
+
     @Override
     public Transaction getTransaction(long transactionID) {
         return this.transactionDAO.findByTransactionID(transactionID);
     }
-    
-    
 
     @Override
     @Transactional
     public Transaction setShippingService(long transactionID, String shippingService) {
         Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
-        if(transaction == null) return null;
+        if (transaction == null) {
+            return null;
+        }
         transaction.setShippingService(shippingService);
         this.transactionDAO.save(transaction);
         return transaction;
@@ -64,15 +70,17 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     public boolean checkOutTransaction(long transactionID) {
         Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
-        if(transaction == null) return false;
+        if (transaction == null) {
+            return false;
+        }
         transaction.setCompleted(true);
         this.transactionDAO.save(transaction);
-        
+
         long sellerID = transaction.getSellerID();
         long buyerID = transaction.getBuyerID();
-        
+
         Member buyer = this.memberDAO.findByMemberID(buyerID);
-        if(buyer == null){
+        if (buyer == null) {
             Message messageAdmin = new Message();
             messageAdmin.setSenderID(Common.ADMIN_ID);
             messageAdmin.setReceiverID(Common.ADMIN_ID);
@@ -80,9 +88,8 @@ public class TransactionServiceImpl implements TransactionService {
             messageAdmin.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageAdmin.setSeen(false);
             this.messageDAO.save(messageAdmin);
-        }
-        else{
-            sendBuyerEmail(buyer, transaction);
+        } else {
+            sendBuyerEmail(buyer);
             Message messageBuyer = new Message();
             messageBuyer.setSenderID(Common.ADMIN_ID);
             messageBuyer.setReceiverID(buyerID);
@@ -91,9 +98,9 @@ public class TransactionServiceImpl implements TransactionService {
             messageBuyer.setSeen(false);
             this.messageDAO.save(messageBuyer);
         }
-        
+
         Member seller = this.memberDAO.findByMemberID(sellerID);
-        if(seller == null){
+        if (seller == null) {
             Message messageAdmin = new Message();
             messageAdmin.setSenderID(Common.ADMIN_ID);
             messageAdmin.setReceiverID(Common.ADMIN_ID);
@@ -101,8 +108,8 @@ public class TransactionServiceImpl implements TransactionService {
             messageAdmin.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageAdmin.setSeen(false);
             this.messageDAO.save(messageAdmin);
-        }
-        else{
+        } else {
+            sendSellerEmail(seller, transaction);
             Message messageSeller = new Message();
             messageSeller.setSenderID(Common.ADMIN_ID);
             messageSeller.setReceiverID(sellerID);
@@ -114,14 +121,29 @@ public class TransactionServiceImpl implements TransactionService {
         return true;
     }
 
-    @Override
-    public boolean sendSellerEmail(Member member, Transaction transaction) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private boolean sendSellerEmail(Member member, Transaction transaction) {
+        long itemID = transaction.getItemID();
+        Item item = this.itemDAO.findByItemID(itemID);
+        if(item.getSellingType() == BUY){
+            return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
+                "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
+                + Common.BASE_URL
+                + Common.VIEW_MESSAGE_URL);
+        }
+        if(item.getSellingType() == BID){
+            return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
+                "The transaction ID "
+                + transaction.getTransactionID()
+                + " is completed.");
+        }
+        return false;
     }
 
-    @Override
-    public boolean sendBuyerEmail(Member member, Transaction transaction) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private boolean sendBuyerEmail(Member member) {
+        return Common.sendMail(member.getEmail(), "[ebid] Transaction is completed!",
+                "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
+                + Common.BASE_URL
+                + Common.VIEW_MESSAGE_URL);
     }
 
     @Override

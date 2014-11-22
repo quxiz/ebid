@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  *
@@ -32,8 +33,13 @@ public class HeaderModelInterceptor extends HandlerInterceptorAdapter {
             categoryList = new ArrayList<CategoryType>(Arrays.asList(CategoryType.values()));
         }
         try {
-            modelAndView.addObject("categoryList", categoryList);
-            modelAndView.addObject("searchForm", new SearchForm());
+            if (modelAndView.getView() instanceof RedirectView || modelAndView.getViewName().startsWith("redirect:")) {
+                // Do something
+            } else {
+
+                modelAndView.addObject("categoryList", categoryList);
+                modelAndView.addObject("searchForm", new SearchForm());
+            }
         } catch (NullPointerException e) {
             System.out.print("NullPointerException caught");
         }

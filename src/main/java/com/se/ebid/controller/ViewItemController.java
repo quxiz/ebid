@@ -52,8 +52,8 @@ public class ViewItemController {
         model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
         model.addAttribute("listComments",this.itemService.getComment(itemID));
 
-        List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
-        model.addAttribute("categoryList", categoryList);
+//        List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
+//        model.addAttribute("categoryList", categoryList);
         model.addAttribute("title", this.itemService.getItem(itemID).getTitle());
         return "viewItemView";
 

@@ -40,7 +40,7 @@ public class EditPaymentInfoController {
     }  
      
      @RequestMapping(value = "/editPaymentInfo/onSubmit",method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute PaymentInfoForm paymentInfoForm){
+     public String onSubmitEditPaymentInfo(@ModelAttribute PaymentInfoForm paymentInfoForm){
          this.memberService.editPaymentInfo(paymentInfoForm);
          return "redirect:/";//หน้าแก้ไขสำเร็จ
      }

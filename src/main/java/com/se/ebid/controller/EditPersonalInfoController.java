@@ -5,6 +5,7 @@
  */
 package com.se.ebid.controller;
 
+
 import com.se.ebid.entity.Member;
 import com.se.ebid.service.MemberService;
 import java.util.ArrayList;
@@ -53,5 +54,6 @@ public class EditPersonalInfoController {
     public String onSubmitEditPassword(@ModelAttribute EditPasswordForm editPasswordInfoForm) {
         this.memberService.editPassword(editPasswordInfoForm);
         return "redirect:/";//หน้าแก้ไขพาสเรียบร้อย
+
     }
 }

@@ -37,7 +37,10 @@
                                     <div><form:input placeholder="price" path="price" /></div>
                                     <div><form:input placeholder="detail" path="detail" /></div>
                                     <div><form:input placeholder="sellingType" path="sellingType" /></div>
-                                    <div><form:input placeholder="shippingService" path="shippingService" /></div><div class="form-group">
+                                    <div><form:input placeholder="shippingService" path="shippingService" /></div>
+                                    <div><form:input placeholder="shippingAddress" path="shippingAddress" /></div>
+                                    
+                                    <div class="form-group">
                                         <label for="dtp_input1" class="col-md-2 control-label">timestamp</label>
                                         <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
                                             <input class="form-control" size="16" type="text" value="" readonly>
@@ -76,6 +79,8 @@
                                         <td>${transaction.price}</td>
                                         <td>${transaction.detail}</td>
                                         <td>${transaction.sellingType}</td>
+                                        <td>${transaction.shippingService}</td>
+                                        <td>${transaction.shippingAddress}</td>
                                         <td>${transaction.timestamp}</td>
                                         <td>${transaction.completed}</td>
                                         <td><a href="${pageContext.request.contextPath}/testDB/transaction/viewTransaction/${transaction.transactionID}"><i class="glyphicon glyphicon-wrench" aria-hidden="true"></i></a></td>

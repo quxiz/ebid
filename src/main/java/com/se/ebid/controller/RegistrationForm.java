@@ -5,7 +5,9 @@
  */
 package com.se.ebid.controller;
 
+import java.io.Serializable;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -17,6 +19,8 @@ public class RegistrationForm {
     
     @NotNull
     private String lastName;
+    
+    @Size(min = 5, message = "address error")
     private String address;
     private String country;
     private String email;

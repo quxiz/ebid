@@ -5,13 +5,57 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
-</html>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<tiles:insertDefinition name="defaultTemplate">
+    <tiles:putAttribute name="body">
+        <div class="container">
+            <div class="col-sm-8 col-md-6" style="float:none; margin-left:auto; margin-right:auto">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">ให้ Feedback</h3>
+                    </div>
+                    <div class="panel-body">
+                        <c:url var="addAction" value="/giveFeedback/submit" ></c:url>
+                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="feedbackForm" method="POST" name="feedbackForm">
+                            <div class="form-group">
+                                <label for="memberName" class="col-sm-3 control-label">ชื่อสมาชิก</label>
+                                <div class="col-sm-9">
+                                    <input id="memberName" class="form-control" value="SoulOfNature" disabled="true">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="rating" class="col-sm-3 control-label">Rating</label>
+                                <div class="col-sm-9">
+                                    <form:input id="rating" class="rating" data-min="0" data-max="5" data-step="1" path="rating"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="comment" class="col-sm-3 control-label">ความคิดเห็น</label>
+                                <div class="col-sm-9">
+                                    <form:textarea type="text" class="form-control" id="comment" placeholder="ความคิดเห็น" path="comment"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <input type="submit" id="submit" class="btn btn-primary" value="ส่งคะแนน">
+                                </div>
+                            </div>
+                        </form:form>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </tiles:putAttribute>
+</tiles:insertDefinition>

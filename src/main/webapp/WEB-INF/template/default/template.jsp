@@ -10,6 +10,8 @@
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/datepicker.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/star-rating.css">
+
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
         <title>${title} - ebid</title>
 
@@ -22,6 +24,7 @@
         <script src="${pageContext.request.contextPath}/resources/js/moment.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/jquery.countdown.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
 
 <!--        <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
@@ -29,7 +32,7 @@
         <tiles:insertAttribute name="header" />
         <tiles:insertAttribute name="body" />
 
-        
+
 
 
 

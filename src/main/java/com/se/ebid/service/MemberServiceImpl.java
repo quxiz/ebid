@@ -43,17 +43,16 @@ public class MemberServiceImpl implements MemberService {
     public void setPersonDAO(MemberDAO memberDAO) {
         this.memberDAO = memberDAO;
     }
-    
+
     @Autowired
-    public void setFeedbackDAO(FeedbackDAO feedbackDAO){
+    public void setFeedbackDAO(FeedbackDAO feedbackDAO) {
         this.feedbackDAO = feedbackDAO;
     }
-    
+
     @Autowired
-    public void setTransactionDAO(TransactionDAO transactionDAO){
+    public void setTransactionDAO(TransactionDAO transactionDAO) {
         this.transactionDAO = transactionDAO;
     }
-    
 
     @Override
     @Transactional
@@ -96,34 +95,53 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public boolean register(RegistrationForm registrationForm) {
-        if(this.memberDAO.findByUserID(registrationForm.getUserID()) != null) return false;
-        if(this.memberDAO.findByEmail(registrationForm.getEmail()) != null) return false;
+        if (this.memberDAO.findByUserID(registrationForm.getUserID()) != null) {
+            return false;
+        }
+        if (this.memberDAO.findByEmail(registrationForm.getEmail()) != null) {
+            return false;
+        }
         Member member = new Member();
-	member.setFirstName(registrationForm.getFirstName());
-	member.setLastName(registrationForm.getLastName());
-	member.setAddress(registrationForm.getAddress());
-	member.setCountry(registrationForm.getCountry());
-	member.setEmail(registrationForm.getEmail());
-	member.setPhoneNo(registrationForm.getPhoneNo());
-	member.setUserID(registrationForm.getUserID());
-	member.setPassword(toSHA256(registrationForm.getPassword()));
-	member.setTimestamp(new Timestamp((System.currentTimeMillis())));
-	this.sendActivateEmail(member);
+        member.setFirstName(registrationForm.getFirstName());
+        member.setLastName(registrationForm.getLastName());
+        member.setAddress(registrationForm.getAddress());
+        member.setCountry(registrationForm.getCountry());
+        member.setEmail(registrationForm.getEmail());
+        member.setPhoneNo(registrationForm.getPhoneNo());
+        member.setUserID(registrationForm.getUserID());
+        member.setPassword(toSHA256(registrationForm.getPassword()));
+        member.setTimestamp(new Timestamp((System.currentTimeMillis())));
+        this.sendActivateEmail(member);
         this.memberDAO.save(member);
-	
-	return true;
+
+        return true;
     }
 
     @Override
     public boolean sendActivateEmail(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String activateURL = null;
+        return Common.sendMail(member.getEmail(), "[ebid] Signup confirmation",
+                "Hello " + member.getFirstName() + ",\n"
+                + "You have requested a new user account on ebid:\n"
+                + "User name:     " + member.getUserID() + "\n"
+                + "\n"
+                + "-------------------------------------\n"
+                + "To confirm your user registration, you have to follow this link\n:"
+                + activateURL + "\n"
+                + "\n"
+                + "Regards,\n"
+                + "ebid Staff"
+        );
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     @Transactional
     public boolean activateMember(String activateKey) {
         Member member = this.memberDAO.findByActivateKey(activateKey);
-        if(member == null) return false;
+        if (member == null) {
+            return false;
+        }
         member.setActivated(true);
         this.memberDAO.save(member);
         return true;
@@ -133,21 +151,32 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public boolean forgotPassword(ForgotPasswordForm forgotPasswordForm) {
         Member member = this.memberDAO.findByEmail(forgotPasswordForm.getEmail());
-        if(member == null) return false;
+        if (member == null) {
+            return false;
+        }
         this.sendResetPasswordEmail(member);
         return true;
     }
 
     @Override
     public boolean sendResetPasswordEmail(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Common.sendMail(member.getEmail(), "[ebid] Reset your account password",
+        "ebid received a request to resset the password for your account\n" +
+        "\n" +
+        "To reset your password, click on the link below (or copy and paste the URL into your browser): \n" +
+        Common.BASE_URL + Common.RESET_PASSWORD_URL);
+        
     }
 
     @Override
     @Transactional
     public boolean resetPassword(ResetPasswordForm resetPasswordForm) {
+        if(!resetPasswordForm.getSecret().equals(encodeEmail(resetPasswordForm.getEmail()))) return false;
         Member member = this.memberDAO.findByEmail(resetPasswordForm.getEmail());
-        if(member == null) return false;
+        
+        if (member == null) {
+            return false;
+        }
         member.setPassword(resetPasswordForm.getNewPassword());
         this.memberDAO.save(member);
         return true;
@@ -175,8 +204,12 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public boolean editPassword(EditPasswordForm editPasswordForm) {
         Member member = this.memberDAO.findByMemberID(Common.getMemberID());
-        if(member == null) return false;
-        if(!member.getPassword().equals(toSHA256(editPasswordForm.getOldPassword()))) return false;
+        if (member == null) {
+            return false;
+        }
+        if (!member.getPassword().equals(toSHA256(editPasswordForm.getOldPassword()))) {
+            return false;
+        }
         //if(editPasswordForm.getNewPassword()!=editPasswordForm.getConformNewPassword()) return false;
         member.setPassword(toSHA256(editPasswordForm.getNewPassword()));
         this.memberDAO.save(member);
@@ -212,6 +245,15 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public List<Transaction> getSellTransaction(long sellerID) {
         return this.transactionDAO.findBySellerID(sellerID);
+    }
+    
+    private String encodeEmail(String email){
+        char[] charArray = email.toCharArray();
+        char[] encodeArray = new char[30];
+        for(int i=0;i<charArray.length;i++){
+            encodeArray[i] = (char)((((int)charArray[i])+(i%9)*9+3-33)%90+33);
+        }
+        return new String(encodeArray);
     }
 
 }

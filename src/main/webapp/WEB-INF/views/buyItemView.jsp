@@ -91,10 +91,7 @@
                                 <dt>ค่าส่ง</dt>
                                 <dd>${item.shippingCost}</dd>
                             </dl>
-                            <dl class="dl-horizontal">
-                                <dt>รูปแบบการชำระเงิน</dt>
-                                <dd>${item.paymentMethod}</dd>
-                            </dl>
+                
                         </div>
                     </div>
                 </div>

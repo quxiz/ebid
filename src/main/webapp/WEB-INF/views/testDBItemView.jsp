@@ -12,9 +12,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap-datetimepicker.min.css">
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.th.js"></script>
-        <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-
+        
         <div role="tabpanel">
 
             <!-- Nav tabs -->
@@ -39,12 +37,11 @@
                                     <div><form:input placeholder="sellingType" path="sellingType" /></div>
                                     <div><form:input placeholder="price" path="price" /></div>
                                     <div><form:input placeholder="quantity" path="quantity" /></div>
-                                    <div><form:input placeholder="paymentMethod" path="paymentMethod" /></div>
                                     <div><form:input placeholder="shippingService" path="shippingService" /></div>
                                     <div><form:input placeholder="shippingCost" path="shippingCost" /></div>
                                     <div><form:input placeholder="packageDetail" path="packageDetail" /></div>
                                     <div><form:input placeholder="returnPolicy" path="returnPolicy" /></div>
-                                    <div><form:input placeholder="delivery" path="delivery" /></div>
+
                                     <div class="form-group">
                                         <label for="dtp_input1" class="col-md-2 control-label">Date And Time</label>
                                         <div class="input-group date form_datetime col-md-5" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="dtp_input1">
@@ -102,13 +99,12 @@
                                     <th>quantity</th>
                                     <th>startTime</th>
                                     <th>endTime</th>
-                                    <th>paymentMethod</th>
                                     <th>shippingService</th>
                                     <th>shippingCost</th>
                                     <th>packageDetail</th>
                                     <th>returnPolicy</th>
                                     <th>timestamp</th>
-                                    <th>delivery</th>
+
                                 </tr>
                                 <c:forEach items="${listItems}" var="item">
                                     <tr>
@@ -123,13 +119,12 @@
                                         <td>${item.quantity}</td>
                                         <td>${item.startTime}</td>
                                         <td>${item.endTime}</td>
-                                        <td>${item.paymentMethod}</td>
                                         <td>${item.shippingService}</td>
                                         <td>${item.shippingCost}</td>
                                         <td>${item.packageDetail}</td>
                                         <td>${item.returnPolicy}</td>
                                         <td>${item.timestamp}</td>
-                                        <td>${item.delivery}</td>
+
                                         <td><a href="${pageContext.request.contextPath}/testDB/item/findByItemID/${item.itemID}">findByItemID/${item.itemID}</a></td>
                                     </tr>
                                 </c:forEach>

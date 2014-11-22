@@ -5,12 +5,16 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.entity.Message;
+import com.se.ebid.service.MessageService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -18,11 +22,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class ViewMessageController {
-    @RequestMapping("/viewMessage")
+    
+    private MessageService messageService;
+    
+    @Autowired
+    public void setMessageService(MessageService messageService){
+     this.messageService = messageService;
+    }
+    
+    @RequestMapping(value = "/viewMessage", method = RequestMethod.GET)
      public String viewMessgae(Model model) {
         model.addAttribute("title", "ข้อความ");
-         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+        List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
         model.addAttribute("categoryList", categoryList);
+        List<Message> listMessages = this.messageService.getMessage();
+        model.addAttribute("listMessages",listMessages); 
         return "viewMessageView";
     }  
  

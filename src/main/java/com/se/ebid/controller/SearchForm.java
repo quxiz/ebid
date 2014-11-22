@@ -6,19 +6,21 @@
 
 package com.se.ebid.controller;
 
+import java.util.Locale;
+
 /**
  *
  * @author Quxiz
  */
 public class SearchForm {
-    private String category;
+    private CategoryType category;
     private String keyword;
 
-    public String getCategory() {
+    public CategoryType getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(CategoryType category) {
         this.category = category;
     }
 

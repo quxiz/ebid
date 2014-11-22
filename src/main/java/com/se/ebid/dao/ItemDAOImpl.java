@@ -65,7 +65,10 @@ public class ItemDAOImpl implements ItemDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Item> search(SearchForm searchForm) {
-        String category = searchForm.getCategory();
+        String category = "";
+        if (searchForm.getCategory() != null) {
+            category = searchForm.getCategory().toString();
+        }
         String keyword = searchForm.getKeyword();
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();

@@ -6,6 +6,7 @@
 
 package com.se.ebid.entity;
 
+import com.se.ebid.controller.CategoryType;
 import com.se.ebid.controller.SellingType;
 import java.sql.Timestamp;
 import javax.persistence.Column;
@@ -39,7 +40,8 @@ public class Item {
     @Column(name="detail")
     private String detail;
     @Column(name="category")
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private CategoryType category;
     @Column(name="sellingType")
     @Enumerated(EnumType.STRING)
     private SellingType sellingType;
@@ -110,11 +112,11 @@ public class Item {
         this.detail = detail;
     }
 
-    public String getCategory() {
+    public CategoryType getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(CategoryType category) {
         this.category = category;
     }
 
@@ -197,7 +199,6 @@ public class Item {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
-
     
     
 }

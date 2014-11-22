@@ -26,7 +26,7 @@ public interface ItemService {
     public List<Photo> getPhoto(long itemID);
     public List<Comment> getComment(long itemID);
     public boolean bid(BidForm bidForm);
-    public boolean sendOutbidEmail(Member member);
+    public boolean sendOutbidEmail(Member member,Item item);
     public Invoice buy(BuyForm buyForm);
     public boolean confirmBuy(BuyForm buyForm);
     public boolean registerItem(RegisterItemForm registerItemForm);

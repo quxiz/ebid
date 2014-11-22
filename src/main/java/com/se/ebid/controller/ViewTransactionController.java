@@ -44,8 +44,8 @@ public class ViewTransactionController {
          
      model.addAttribute("title", "ประวัติการซื้อสินค้า");
          List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
-        model.addAttribute("categoryList", categoryList);
-        //model.addAttribute("listTransactions",this.transactionService.getBuyTransaction());
+//        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("listTransactions",this.transactionService.getBuyTransaction());
         return "viewTransactionView";
      
      }
@@ -54,8 +54,8 @@ public class ViewTransactionController {
      public String selectSellTransaction(Model model){
          model.addAttribute("title", "ประวัติการขายสินค้า");
          List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
-        model.addAttribute("categoryList", categoryList);
-        //model.addAttribute("listTransactions",this.transactionService.getSellTransaction());
+//        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("listTransactions",this.transactionService.getSellTransaction());
         return "viewTransactionView";
      }
 }

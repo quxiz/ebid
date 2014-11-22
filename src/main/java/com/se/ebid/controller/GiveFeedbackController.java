@@ -32,7 +32,7 @@ public class GiveFeedbackController {
     
     @RequestMapping("/giveFeedback")
      public String viewGiveFeedback(Model model) {
-        model.addAttribute("title", "Give Feedback");
+        model.addAttribute("title", "ให้ Feedback");
          List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
         model.addAttribute("categoryList", categoryList);
         FeedbackForm feedbackForm = new FeedbackForm();
@@ -40,8 +40,8 @@ public class GiveFeedbackController {
         return "giveFeedbackView";
     }  
      
-     @RequestMapping(value = "/giveFeedback/onSubmit", method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute FeedbackForm feedbackForm){
+     @RequestMapping(value = "/giveFeedback/submit", method = RequestMethod.POST)
+     public String onSubmitFeedback(@ModelAttribute FeedbackForm feedbackForm){
          this.feedbackService.giveFeedback(feedbackForm);
          return "redirect:/"; //ไปหน้าโง่บอกว่าสำเร็จแล้วหรือล้มเหลว
      }

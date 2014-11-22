@@ -43,7 +43,7 @@ public class EditReceivingInfoController {
         return "editRecievingInfoView";
     }  
      @RequestMapping(value = "/editReceivingInfo/onSubmit", method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute ReceivingInfoForm receivingInfoForm){
+     public String onSubmitRecievingInfo(@ModelAttribute ReceivingInfoForm receivingInfoForm){
          this.memberService.editReceivingInfo(receivingInfoForm);
          return "redirect:/";//เปลี่ยนข้อมูลการรับเงินสำเร็จ
      }

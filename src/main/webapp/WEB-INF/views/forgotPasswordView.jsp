@@ -15,7 +15,7 @@
             <div class="col-sm-8 col-md-6" style="float:none; margin-left:auto; margin-right:auto">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">ลืมรหัสผ่าน?</h3>
+                        <h3 class="panel-title">ลืมรหัสผ่าน</h3>
                     </div>
                     <div class="panel-body">
                         <c:url var="addAction" value="/register/submit" ></c:url>

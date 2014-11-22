@@ -71,6 +71,12 @@ public class CheckOutController {
         return "redirect:/payment/"+transactionForm.getTransactionID();
     }
     
+    @RequestMapping(value = "/payment/{transactionID}", method = RequestMethod.GET)
+    public String finishCheckout(@PathVariable("transactionID") long transactionID,Model model) {
+        model.addAttribute("transactionID", transactionID);    
+        return "paymentView";//ชำระค่าสินค้าเรียบร้อยแล้ว
+    }
+    
     @RequestMapping(value = "/checkOut/checkoutTransaction/{transactionID}", method = RequestMethod.GET)
     public String finishCheckout(@PathVariable("transactionID") long transactionID) {
         this.transactionService.checkOutTransaction(transactionID);        

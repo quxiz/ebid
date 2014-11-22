@@ -39,6 +39,8 @@ public class Complaint {
     private String solveDetail;
     @Column(name="solveTimestamp")
     private java.sql.Timestamp solveTimestamp;
+    @Column(name="solved")
+    private boolean solved;
 
     public long getComplaintID() {
         return complaintID;
@@ -102,6 +104,14 @@ public class Complaint {
 
     public void setSolveTimestamp(Timestamp solveTimestamp) {
         this.solveTimestamp = solveTimestamp;
+    }
+
+    public boolean isSolved() {
+        return solved;
+    }
+
+    public void setSolved(boolean solved) {
+        this.solved = solved;
     }
 
 }

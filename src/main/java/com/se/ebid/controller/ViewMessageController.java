@@ -30,14 +30,11 @@ public class ViewMessageController {
      this.messageService = messageService;
     }
     
-    @RequestMapping(value = "/viewMessage", method = RequestMethod.GET)
+    @RequestMapping("/viewMessage")
      public String viewMessage(Model model) {
         model.addAttribute("title", "ข้อความ");
-        List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
-        model.addAttribute("categoryList", categoryList);
         List<Message> listMessages = this.messageService.getMessage();
         model.addAttribute("listMessages",listMessages); 
         return "viewMessageView";
     }  
- 
 }

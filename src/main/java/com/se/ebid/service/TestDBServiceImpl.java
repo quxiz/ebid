@@ -5,6 +5,7 @@
  */
 package com.se.ebid.service;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.se.ebid.controller.SearchForm;
 import com.se.ebid.controller.UploadedFile;
 import com.se.ebid.dao.AutoBidDAO;
@@ -42,7 +43,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -64,7 +67,7 @@ public class TestDBServiceImpl implements TestDBService {
     private FeedbackDAO feedbackDAO;
     private TransactionDAO transactionDAO;
     private AutoBidDAO autoBidDAO;
-    
+
     @Autowired
     ServletContext servletContext;
 
@@ -87,17 +90,17 @@ public class TestDBServiceImpl implements TestDBService {
     public void setPhotoDAO(PhotoDAO photoDAO) {
         this.photoDAO = photoDAO;
     }
-    
+
     @Autowired
     public void setComplaintDAO(ComplaintDAO complaintDAO) {
         this.complaintDAO = complaintDAO;
     }
-    
+
     @Autowired
     public void setBlacklistDAO(BlacklistDAO blacklistDAO) {
         this.blacklistDAO = blacklistDAO;
     }
-    
+
     @Autowired
     public void setCommentDAO(CommentDAO commentDAO) {
         this.commentDAO = commentDAO;
@@ -117,13 +120,11 @@ public class TestDBServiceImpl implements TestDBService {
     public void setAutoBidDAO(AutoBidDAO autoBidDAO) {
         this.autoBidDAO = autoBidDAO;
     }
-    
-    
+
     /* ============================================================
      ========================== Member ==========================
      ============================================================
      */
-
     @Override
     @Transactional
     public void saveMember(Member m) {
@@ -255,7 +256,7 @@ public class TestDBServiceImpl implements TestDBService {
         //String fileExtension = multipartFile.getContentType();
         int extensionIndex = multipartFile.getOriginalFilename().lastIndexOf(".");
         String fileExtension = multipartFile.getOriginalFilename().substring(extensionIndex, multipartFile.getOriginalFilename().length());
-        
+
         String savePath = servletContext.getRealPath("resources/uploadedImg/") + "\\" + photoID + fileExtension;
         System.out.println(savePath);
         String photoURL = "/resources/uploadedImg/" + photoID + fileExtension;
@@ -281,7 +282,7 @@ public class TestDBServiceImpl implements TestDBService {
     public List<Photo> findPhotoByItemID(long itemID) {
         return this.photoDAO.findByItemID(itemID);
     }
-    
+
     /* ============================================================
      ========================== Complaint ==========================
      ============================================================
@@ -325,7 +326,7 @@ public class TestDBServiceImpl implements TestDBService {
     public List<Blacklist> listBlacklists() {
         return this.blacklistDAO.list();
     }
-    
+
     /* ============================================================
      ========================== Comment ==========================
      ============================================================
@@ -347,7 +348,7 @@ public class TestDBServiceImpl implements TestDBService {
     public List<Comment> findCommentByItemID(long itemID) {
         return this.commentDAO.findByItemID(itemID);
     }
-    
+
     /* ============================================================
      ========================== Feedback ==========================
      ============================================================
@@ -369,19 +370,19 @@ public class TestDBServiceImpl implements TestDBService {
     public Feedback findFeedbackByTransactionID(long transactionID) {
         return this.feedbackDAO.findByTransactionID(transactionID);
     }
-    
+
     @Override
     @Transactional
     public List<Feedback> findFeedbackBySellerID(long sellerID) {
         return this.feedbackDAO.findBySellerID(sellerID);
     }
-    
+
     @Override
     @Transactional
     public List<Feedback> findFeedbackByBuyerID(long buyerID) {
         return this.feedbackDAO.findByBuyerID(buyerID);
     }
-    
+
     /* ============================================================
      ========================== Transaction ==========================
      ============================================================
@@ -403,33 +404,33 @@ public class TestDBServiceImpl implements TestDBService {
     public Transaction findTransactionByTransactionID(long transactionID) {
         return this.transactionDAO.findByTransactionID(transactionID);
     }
-    
+
     @Override
     @Transactional
     public List<Transaction> findTransactionBySellerID(long sellerID) {
         return this.transactionDAO.findBySellerID(sellerID);
     }
-    
+
     @Override
     @Transactional
     public List<Transaction> findTransactionByBuyerID(long buyerID) {
         return this.transactionDAO.findByBuyerID(buyerID);
     }
-    
+
     @Override
     @Transactional
     public List<Transaction> findCompletedByTimestamp() {
-        java.util.Date nowDate= new java.util.Date();
+        java.util.Date nowDate = new java.util.Date();
         java.util.Date startDate = new java.util.Date(nowDate.getTime() - (1000 * 60 * 60 * 24));
         java.util.Date endDate = new java.util.Date(nowDate.getTime());
         Timestamp startTime = new Timestamp(startDate.getTime());
         Timestamp endTime = new Timestamp(endDate.getTime());
         System.out.println("startTime : " + startTime);
         System.out.println("endTime : " + endTime);
-        
-        return this.transactionDAO.findCompletedByTimestamp(startTime,endTime);
+
+        return this.transactionDAO.findCompletedByTimestamp(startTime, endTime);
     }
-    
+
     /* ============================================================
      ========================== AutoBid ==========================
      ============================================================

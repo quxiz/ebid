@@ -6,6 +6,8 @@
 
 package com.se.ebid.controller;
 
+import com.se.ebid.entity.Item;
+import com.se.ebid.service.ItemService;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +17,7 @@ import java.util.Locale;
  
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -50,10 +53,22 @@ public class HomeController {
 //        model.addAttribute("title", "Home Page");
 //        return "homeView";
 //    }
+    private ItemService itemService;
+    
+    @Autowired
+    public void setItemService(ItemService itemService){
+        this.itemService = itemService;
+    }
+    
        @RequestMapping("/")
     public String viewHome(Model model) {
         model.addAttribute("title", "หน้าหลัก");
-        
+        SearchForm searchForm = new SearchForm();
+        searchForm.setCategory(CategoryType.All);
+        searchForm.setKeyword(null);
+        List<Item> listRecentItems= new ArrayList<>();
+        //List<Item> listRecentItems = this.itemService.search(null);
+        model.addAttribute("listRecentItem",listRecentItems);
         return "homeView";
     }
 }

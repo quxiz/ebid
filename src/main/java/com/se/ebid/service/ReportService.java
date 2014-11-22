@@ -6,6 +6,7 @@
 package com.se.ebid.service;
 
 import com.se.ebid.controller.Report;
+import com.se.ebid.controller.ReportType;
 import java.sql.Timestamp;
 
 /**

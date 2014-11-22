@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -30,12 +31,15 @@ public class GiveFeedbackController {
         this.feedbackService = feedbackService; 
     }
     
-    @RequestMapping("/giveFeedback")
-     public String viewGiveFeedback(Model model) {
+    @RequestMapping(value = "/giveFeedback/{transactionID}",method = RequestMethod.GET)
+     public String viewGiveFeedback(@PathVariable("transactionID") long transactionID,Model model) {
         model.addAttribute("title", "ให้ Feedback");
+
+
          List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
         model.addAttribute("categoryList", categoryList);
         FeedbackForm feedbackForm = new FeedbackForm();
+        feedbackForm.setTransactionID(transactionID);
         model.addAttribute("feedbackForm", feedbackForm);
         return "giveFeedbackView";
     }  

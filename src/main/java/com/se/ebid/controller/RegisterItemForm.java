@@ -17,7 +17,7 @@ public class RegisterItemForm {
     private String condition;
     private String specific;
     private String detail;
-    private String category;
+    private CategoryType category;
     private MultipartFile[] photos;
     private SellingType sellingType;
     private double price;
@@ -63,11 +63,11 @@ public class RegisterItemForm {
         this.detail = detail;
     }
 
-    public String getCategory() {
+    public CategoryType getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(CategoryType category) {
         this.category = category;
     }
 

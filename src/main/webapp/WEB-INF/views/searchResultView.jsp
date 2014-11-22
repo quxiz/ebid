@@ -39,8 +39,6 @@
 </style>
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
-        ${keyword}
-        ${category}
         <div class="container">
             <h3>ผลการค้นหาสินค้า</h3>
             <hr>

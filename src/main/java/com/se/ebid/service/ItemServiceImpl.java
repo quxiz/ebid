@@ -268,7 +268,7 @@ public class ItemServiceImpl implements ItemService {
         item.setStartTime(registerItemForm.getStartTime());
         item.setEndTime(registerItemForm.getEndTime());
 
-       // item.setPaymentMethod(registerItemForm.getPaymentMethod());
+        // item.setPaymentMethod(registerItemForm.getPaymentMethod());
         item.setShippingService(registerItemForm.getShippingService());
         item.setShippingCost(registerItemForm.getShippingCost());
         item.setPackageDetail(registerItemForm.getPackageDetail());
@@ -311,88 +311,97 @@ public class ItemServiceImpl implements ItemService {
 
     public boolean reportBidResult(long itemID) {
         Item item = this.itemDAO.findByItemID(itemID);
-	if(item == null) return false;
-	
-	AutoBid autoBid = this.autoBidDAO.findByItemID(itemID);
-	if(autoBid == null) return false;
-	if(autoBid.getBidderID() == -1){
-            String itemURL = "mock";
-            sendNoBidderSellerEmail(this.memberDAO.findByMemberID(item.getSellerID()), itemURL);
+        if (item == null) {
+            return false;
+        }
+
+        AutoBid autoBid = this.autoBidDAO.findByItemID(itemID);
+        if (autoBid == null) {
+            return false;
+        }
+        if (autoBid.getBidderID() == -1) {
+            sendNoBidderSellerEmail(this.memberDAO.findByMemberID(item.getSellerID()), item.getItemID());
             return false;
         } // no one bid
-	long sellerID = item.getSellerID();
-	long buyerID = autoBid.getBidderID();
-	
-	Transaction transaction = new Transaction();
-	transaction.setSellerID(sellerID);
-	transaction.setBuyerID(buyerID);
-	transaction.setItemID(itemID);
-	transaction.setQuantity(item.getQuantity());
-	transaction.setPrice(item.getPrice());
-	transaction.setDetail(item.getDetail());
-	//transaction.setDelivery(item.getDelivery()); ???
-	transaction.setTimestamp(autoBid.getTimestamp());
-	this.transactionDAO.save(transaction);
-	
-	Feedback feedback = new Feedback();
-	feedback.setTransactionID(transaction.getTransactionID());
-	feedback.setSellerID(sellerID);
-	feedback.setBuyerID(buyerID);
-	feedback.setItemID(itemID);
-	this.feedbackDAO.save(feedback);
-	
-	Member buyer = this.memberDAO.findByMemberID(buyerID);
-	if(buyer == null) return false;
-        String paymentURL = "mock";
-	if(!sendBuyerEmail(buyer, paymentURL)) return false;
-	
-	Message messageBuyer = new Message();
-	messageBuyer.setSenderID(Common.ADMIN_ID);
-	messageBuyer.setReceiverID(buyerID);
-	messageBuyer.setMessage("ข้อความผู้ซื้อ");
-	messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
-	this.messageDAO.save(messageBuyer);
-	
-	Member seller = this.memberDAO.findByMemberID(sellerID);
-	if(seller == null) return false;
-        String feedbackURL = "mock";
-	if(!sendSellerEmail(seller, feedbackURL)) return false;
-	
-	Message messageSeller = new Message();
-	messageSeller.setSenderID(Common.ADMIN_ID);
-	messageSeller.setReceiverID(sellerID);
-	messageSeller.setMessage("ข้อความผู้ขาย");
-	messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
-	this.messageDAO.save(messageSeller);
-	
-	/*BidSchedule bidSchedule = BidScheduleDAO.findByItemID(itemID);
-	if(bidSchedule == null) return false;
-	bidSchedule.setCompleted(true);
-	BidScheduleDAO.save(bidSchedule);*/
-	
-	//return reScheduler();
+        long sellerID = item.getSellerID();
+        long buyerID = autoBid.getBidderID();
+
+        Transaction transaction = new Transaction();
+        transaction.setSellerID(sellerID);
+        transaction.setBuyerID(buyerID);
+        transaction.setItemID(itemID);
+        transaction.setQuantity(item.getQuantity());
+        transaction.setPrice(item.getPrice());
+        transaction.setDetail(item.getDetail());
+        //transaction.setDelivery(item.getDelivery()); ???
+        transaction.setTimestamp(autoBid.getTimestamp());
+        this.transactionDAO.save(transaction);
+
+        Feedback feedback = new Feedback();
+        feedback.setTransactionID(transaction.getTransactionID());
+        feedback.setSellerID(sellerID);
+        feedback.setBuyerID(buyerID);
+        feedback.setItemID(itemID);
+        this.feedbackDAO.save(feedback);
+
+        Member buyer = this.memberDAO.findByMemberID(buyerID);
+        if (buyer == null) {
+            return false;
+        }
+        if (!sendBuyerEmail(buyer)) {
+            return false;
+        }
+
+        Message messageBuyer = new Message();
+        messageBuyer.setSenderID(Common.ADMIN_ID);
+        messageBuyer.setReceiverID(buyerID);
+        messageBuyer.setMessage("ข้อความผู้ซื้อ");
+        messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        this.messageDAO.save(messageBuyer);
+
+        Member seller = this.memberDAO.findByMemberID(sellerID);
+        if (seller == null) {
+            return false;
+        }
+        if (!sendSellerEmail(seller)) {
+            return false;
+        }
+
+        Message messageSeller = new Message();
+        messageSeller.setSenderID(Common.ADMIN_ID);
+        messageSeller.setReceiverID(sellerID);
+        messageSeller.setMessage("ข้อความผู้ขาย");
+        messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        this.messageDAO.save(messageSeller);
+
+        /*BidSchedule bidSchedule = BidScheduleDAO.findByItemID(itemID);
+         if(bidSchedule == null) return false;
+         bidSchedule.setCompleted(true);
+         BidScheduleDAO.save(bidSchedule);*/
+        //return reScheduler();
         return false;
     }
 
-    private boolean sendNoBidderSellerEmail(Member member, String itemURL) {
+    private boolean sendNoBidderSellerEmail(Member member, long itemID) {
         return Common.sendMail(member.getEmail(), "[ebid] Your auction item is timed out!",
-                "No one bid for your auction item.\n"
-                + "\n"
-                + "If you want to reopen the auction, please register your auction item again.\n"
-                + "To see your auction item information, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + itemURL);
+                "No one bid for your auction item ID: "
+                + itemID
+                + ".\n\n"
+                + "If you want to reopen the auction, please register your auction item again.");
     }
 
-    private boolean sendSellerEmail(Member member, String feedbackURL) {
+    private boolean sendSellerEmail(Member member) {
         return Common.sendMail(member.getEmail(), "[ebid] There is a winner for your auction item!",
                 "To enter the feedback for your buyer, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + feedbackURL);
+                + Common.BASE_URL
+                + Common.VIEW_MESSAGE_URL);
     }
 
-    private boolean sendBuyerEmail(Member member, String paymentURL) {
+    private boolean sendBuyerEmail(Member member) {
         return Common.sendMail(member.getEmail(), "[ebid] Congratulations, you won the auction!",
                 "To complete transaction, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + paymentURL);
+                + Common.BASE_URL
+                + Common.VIEW_MESSAGE_URL);
     }
 
 }

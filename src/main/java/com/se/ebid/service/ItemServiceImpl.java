@@ -241,7 +241,7 @@ public class ItemServiceImpl implements ItemService{
         item.setTitle(registerItemForm.getTitle());
         item.setSpecifics(registerItemForm.getSpecific());
         item.setDetail(registerItemForm.getDetail());
-//        item.setCategory(registerItemForm.getCategory());
+        item.setCategory(registerItemForm.getCategory());
         item.setSellingType(registerItemForm.getSellingType());
         item.setPrice(registerItemForm.getPrice());
         item.setQuantity(registerItemForm.getQuantity());

@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
-        
+
 
 <style type="text/css">
     .scrollable-menu {
@@ -44,25 +44,33 @@
                                     <form:input type="text" class="form-control" id="input1" placeholder="ชื่อสินค้า" path="title"/>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="input2" class="col-sm-3 control-label">สภาพสินค้า</label>
-                                <div class="col-sm-6">
-                                    <form:input type="text" class="form-control" id="input2" placeholder="สภาพสินค้า" path="condition"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="input3" class="col-sm-3 control-label">จุดบกพร่อง</label>
-                                <div class="col-sm-6">
-                                    <form:input type="text" class="form-control" id="input3" placeholder="จุดบกพร่อง" path="specific"/>
-                                </div>
 
-                            </div>
                             <div class="form-group">
                                 <label for="input4" class="col-sm-3 control-label">รายละเอียดสินค้า</label>
                                 <div class="col-sm-6">
                                     <form:textarea type="text" class="form-control" id="input4" placeholder="รายละเอียดสินค้า" path="detail"/>
                                 </div>
                             </div>
+                            <div id="specifics-form">
+                                <div class="form-group">
+                                    <label for="condition" class="col-sm-3 control-label">สภาพสินค้า</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="condition" placeholder="สภาพสินค้า"/>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="fault" class="col-sm-3 control-label">จุดบกพร่อง</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="something" placeholder="จุดบกพร่อง"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            ${form.specifics}
+                            <form:hidden id="specificsJson" placeholder="itemID" path="specifics" value=""/>
+
+
 
                             <div class="form-group">
                                 <label for="category" class="col-sm-3 control-label">ประเภทสินค้า</label>
@@ -127,17 +135,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="quantity" class="col-sm-3 control-label">ปริมาณ</label>
+                                <label for="quantity" class="col-sm-3 control-label">จำนวน</label>
                                 <div class="input-group col-sm-3">
                                     <form:input type="text" class="form-control" id="quantity" placeholder="ปริมาณ" path="quantity"/>
                                     <span class="input-group-addon">ชิ้น</span>
                                 </div>
                             </div>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> f7f785ef1dd2f8a9cb7ceb13e8be398020a7c444
                             <div class="form-group">
                                 <label for="shippingService" class="col-sm-3 control-label">วิธีการจัดส่ง</label>
                                 <div class="col-sm-6">
@@ -166,7 +170,7 @@
 
                                 </div>
                             </div>
-                            
+
                             <br>
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
@@ -209,7 +213,7 @@
                     //                    model.set("RegistrationForm", registerAttributes);
                     if (selText == "ประมูล") {
                         $("#auction").show();
-//                        $("#priceLabel").text = "ราคาเริ่มต้น";
+                        //                        $("#priceLabel").text = "ราคาเริ่มต้น";
                         document.getElementById('priceLabel').innerHTML = 'ราคาเริ่มต้น';
                     } else {
                         $("#auction").hide();
@@ -217,9 +221,38 @@
                     }
                 });
                 $('#datetimepicker1').datetimepicker();
-//                ($('#datetimepicker1').data("DateTimePicker").getDate()
-//              
+                //                ($('#datetimepicker1').data("DateTimePicker").getDate()
+                //              
 
+            });
+        </script>
+        <script>
+            $("#specifics-form").keyup(function () {
+                $("#specificsJson").val(JSON.stringify($("#specifics-form :input").serializeArray()));
+
+            });
+
+            $("#specifics-add").click(function () {
+                var specificName = $("#specifics-name").val();
+                $("#specifics-name").val("");
+                $("#specifics-form").append('<div class="specifics-' + specificName + '">' + specificName + ' : <input name="' + specificName + '" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
+            });
+
+            $(document).on("click", "#specifics-remove", function () {
+                $(this).parent().remove();
+            });
+
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                if ($("#specifics-json").val()) {
+                    $("#specifics-form").empty();
+                    var obj = jQuery.parseJSON($("#specifics-json").val());
+                    $.each(obj, function (key, value) {
+                        $("#specifics-form").append('<div class="specifics-' + value.name + '">' + value.name + ' : <input name="' + value.name + '" value="' + value.value + '"><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
+                    });
+                }
             });
         </script>
     </tiles:putAttribute>

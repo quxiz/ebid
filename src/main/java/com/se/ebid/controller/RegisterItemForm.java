@@ -14,8 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class RegisterItemForm {
     private String title;
-    private String condition;
-    private String specific;
+    private String specifics;
     private String detail;
     private CategoryType category;
     private MultipartFile[] photos;
@@ -39,20 +38,12 @@ public class RegisterItemForm {
         this.title = title;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getSpecifics() {
+        return specifics;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
-    }
-
-    public String getSpecific() {
-        return specific;
-    }
-
-    public void setSpecific(String specific) {
-        this.specific = specific;
+    public void setSpecifics(String specifics) {
+        this.specifics = specifics;
     }
 
     public String getDetail() {
@@ -158,13 +149,5 @@ public class RegisterItemForm {
     public void setReturnPolicy(String returnPolicy) {
         this.returnPolicy = returnPolicy;
     }
-
-//    public String getDelivery() {
-//        return delivery;
-//    }
-//
-//    public void setDelivery(String delivery) {
-//        this.delivery = delivery;
-//    }
     
 }

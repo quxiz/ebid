@@ -54,7 +54,7 @@ public class HomeController {
     public String viewHome(Model model) {
         model.addAttribute("title", "หน้าหลัก");
         
-        List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+        List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
         model.addAttribute("categoryList", categoryList);
            
         return "homeView";

@@ -8,13 +8,16 @@ package com.se.ebid.service;
 
 import com.se.ebid.controller.SearchForm;
 import com.se.ebid.controller.UploadedFile;
+import com.se.ebid.entity.AutoBid;
 import com.se.ebid.entity.Blacklist;
 import com.se.ebid.entity.Comment;
 import com.se.ebid.entity.Complaint;
+import com.se.ebid.entity.Feedback;
 import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
 import com.se.ebid.entity.Photo;
+import com.se.ebid.entity.Transaction;
 import java.util.List;
 
 /**
@@ -54,4 +57,21 @@ public interface TestDBService {
     public void saveComment(Comment comment);
     public List<Comment> listComments();
     public List<Comment> findCommentByItemID(long itemID);
+
+    public List<Feedback> listFeedbacks();
+    public void saveFeedback(Feedback m);
+    public Feedback findFeedbackByTransactionID(long transactionID);
+    public List<Feedback> findFeedbackBySellerID(long sellerID);
+    public List<Feedback> findFeedbackByBuyerID(long buyerID);
+    
+    public List<Transaction> listTransactions();
+    public void saveTransaction(Transaction m);
+    public Transaction findTransactionByTransactionID(long transactionID);
+    public List<Transaction> findTransactionBySellerID(long sellerID);
+    public List<Transaction> findTransactionByBuyerID(long buyerID);
+    public List<Transaction> findCompletedByTimestamp();
+
+    public List<AutoBid> listAutoBids();
+    public void saveAutoBid(AutoBid m);
+    public AutoBid findAutoBidByItemID(long itemID);
 }

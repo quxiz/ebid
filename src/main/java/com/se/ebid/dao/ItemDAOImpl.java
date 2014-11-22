@@ -5,6 +5,7 @@
  */
 package com.se.ebid.dao;
 
+import com.se.ebid.controller.CategoryType;
 import com.se.ebid.controller.SearchForm;
 import com.se.ebid.entity.Item;
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class ItemDAOImpl implements ItemDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Item> search(SearchForm searchForm) {
-        String category = searchForm.getCategory();
+        CategoryType category = searchForm.getCategory();
         String keyword = searchForm.getKeyword();
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();

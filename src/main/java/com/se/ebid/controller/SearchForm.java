@@ -13,14 +13,14 @@ import java.util.Locale;
  * @author Quxiz
  */
 public class SearchForm {
-    private String category;
+    private CategoryType category;
     private String keyword;
 
-    public String getCategory() {
+    public CategoryType getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(CategoryType category) {
         this.category = category;
     }
 
@@ -30,10 +30,6 @@ public class SearchForm {
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
-    }
-//เตรียมเปลี่ยน Category เป็น enumaration
-    void setCategory(Locale.Category category) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

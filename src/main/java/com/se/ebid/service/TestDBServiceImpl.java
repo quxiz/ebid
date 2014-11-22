@@ -7,20 +7,26 @@ package com.se.ebid.service;
 
 import com.se.ebid.controller.SearchForm;
 import com.se.ebid.controller.UploadedFile;
+import com.se.ebid.dao.AutoBidDAO;
 import com.se.ebid.dao.BlacklistDAO;
 import com.se.ebid.dao.CommentDAO;
 import com.se.ebid.dao.ComplaintDAO;
+import com.se.ebid.dao.FeedbackDAO;
 import com.se.ebid.dao.ItemDAO;
 import com.se.ebid.dao.MemberDAO;
 import com.se.ebid.dao.MessageDAO;
 import com.se.ebid.dao.PhotoDAO;
+import com.se.ebid.dao.TransactionDAO;
+import com.se.ebid.entity.AutoBid;
 import com.se.ebid.entity.Blacklist;
 import com.se.ebid.entity.Comment;
 import com.se.ebid.entity.Complaint;
+import com.se.ebid.entity.Feedback;
 import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
 import com.se.ebid.entity.Photo;
+import com.se.ebid.entity.Transaction;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.File;
 import java.io.IOException;
@@ -55,6 +61,9 @@ public class TestDBServiceImpl implements TestDBService {
     private ComplaintDAO complaintDAO;
     private BlacklistDAO blacklistDAO;
     private CommentDAO commentDAO;
+    private FeedbackDAO feedbackDAO;
+    private TransactionDAO transactionDAO;
+    private AutoBidDAO autoBidDAO;
     
     @Autowired
     ServletContext servletContext;
@@ -93,6 +102,23 @@ public class TestDBServiceImpl implements TestDBService {
     public void setCommentDAO(CommentDAO commentDAO) {
         this.commentDAO = commentDAO;
     }
+
+    @Autowired
+    public void setFeedbackDAO(FeedbackDAO feedbackDAO) {
+        this.feedbackDAO = feedbackDAO;
+    }
+
+    @Autowired
+    public void setTransactionDAO(TransactionDAO transactionDAO) {
+        this.transactionDAO = transactionDAO;
+    }
+
+    @Autowired
+    public void setAutoBidDAO(AutoBidDAO autoBidDAO) {
+        this.autoBidDAO = autoBidDAO;
+    }
+    
+    
     /* ============================================================
      ========================== Member ==========================
      ============================================================
@@ -320,5 +346,109 @@ public class TestDBServiceImpl implements TestDBService {
     @Transactional
     public List<Comment> findCommentByItemID(long itemID) {
         return this.commentDAO.findByItemID(itemID);
+    }
+    
+    /* ============================================================
+     ========================== Feedback ==========================
+     ============================================================
+     */
+    @Override
+    @Transactional
+    public void saveFeedback(Feedback feedback) {
+        this.feedbackDAO.save(feedback);
+    }
+
+    @Override
+    @Transactional
+    public List<Feedback> listFeedbacks() {
+        return this.feedbackDAO.list();
+    }
+
+    @Override
+    @Transactional
+    public Feedback findFeedbackByTransactionID(long transactionID) {
+        return this.feedbackDAO.findByTransactionID(transactionID);
+    }
+    
+    @Override
+    @Transactional
+    public List<Feedback> findFeedbackBySellerID(long sellerID) {
+        return this.feedbackDAO.findBySellerID(sellerID);
+    }
+    
+    @Override
+    @Transactional
+    public List<Feedback> findFeedbackByBuyerID(long buyerID) {
+        return this.feedbackDAO.findByBuyerID(buyerID);
+    }
+    
+    /* ============================================================
+     ========================== Transaction ==========================
+     ============================================================
+     */
+    @Override
+    @Transactional
+    public void saveTransaction(Transaction transaction) {
+        this.transactionDAO.save(transaction);
+    }
+
+    @Override
+    @Transactional
+    public List<Transaction> listTransactions() {
+        return this.transactionDAO.list();
+    }
+
+    @Override
+    @Transactional
+    public Transaction findTransactionByTransactionID(long transactionID) {
+        return this.transactionDAO.findByTransactionID(transactionID);
+    }
+    
+    @Override
+    @Transactional
+    public List<Transaction> findTransactionBySellerID(long sellerID) {
+        return this.transactionDAO.findBySellerID(sellerID);
+    }
+    
+    @Override
+    @Transactional
+    public List<Transaction> findTransactionByBuyerID(long buyerID) {
+        return this.transactionDAO.findByBuyerID(buyerID);
+    }
+    
+    @Override
+    @Transactional
+    public List<Transaction> findCompletedByTimestamp() {
+        java.util.Date nowDate= new java.util.Date();
+        java.util.Date startDate = new java.util.Date(nowDate.getTime() - (1000 * 60 * 60 * 24));
+        java.util.Date endDate = new java.util.Date(nowDate.getTime());
+        Timestamp startTime = new Timestamp(startDate.getTime());
+        Timestamp endTime = new Timestamp(endDate.getTime());
+        System.out.println("startTime : " + startTime);
+        System.out.println("endTime : " + endTime);
+        
+        return this.transactionDAO.findCompletedByTimestamp(startTime,endTime);
+    }
+    
+    /* ============================================================
+     ========================== AutoBid ==========================
+     ============================================================
+     */
+    @Override
+    @Transactional
+    public void saveAutoBid(AutoBid autoBid) {
+        this.autoBidDAO.save(autoBid);
+    }
+
+    @Override
+    @Transactional
+    public List<AutoBid> listAutoBids() {
+        return this.autoBidDAO.list();
+    }
+
+    @Override
+    @Transactional
+    public AutoBid findAutoBidByItemID(long autoBidID) {
+        return this.autoBidDAO.findByItemID(autoBidID);
     }
 }

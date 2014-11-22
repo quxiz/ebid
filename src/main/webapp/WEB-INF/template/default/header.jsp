@@ -10,6 +10,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
+
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container-fluid">
@@ -27,32 +29,28 @@
             <ul class="nav navbar-nav navbar-left">
                 <sec:authorize access="isAuthenticated()">
                     <li><a href="${pageContext.request.contextPath}/registerItem">ประกาศขายสินค้า</a></li>
-                </sec:authorize>
-                <sec:authorize access="isAnonymous()">
+                    </sec:authorize>
+                    <sec:authorize access="isAnonymous()">
                     <li data-toggle="modal" data-target="#pleaseLogInModal"><a href="#">ประกาศขายสินค้า</a></li>
-                </sec:authorize>
+                    </sec:authorize>
 
             </ul>
-            <form class="navbar-form navbar-nav" role="search" action="${pageContext.request.contextPath}/search" method="POST">
-                <div class="input-group">
+            <c:url var="addAction" value="/search" ></c:url>
+            <form:form action="${addAction}" class="navbar-form navbar-nav" role="search" modelAttribute="searchForm" method="POST" name="searchForm">
+                <div class="form-group">
+                    <div class="input-group">
 
-                    <input type="text" class="form-control" placeholder="ค้นหาสินค้า..." name="keyword">
-                    <div class="input-group-btn dropdown">
-
-                        <!-- Button and dropdown menu -->
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">ทุกประเภท<span class="caret"></span></button>
-                        <ul class="dropdown-menu scrollable-menu" role="menu" id="categoryHeader">
+                        <form:input class="form-control" placeholder="ค้นหาสินค้า..." path="keyword" />
+                        <select class="form-control" name="category">
                             <c:forEach items="${categoryList}" var="category">
-                                <li role="presentation"><a role="menuitem" tabindex="-1">${category.name}</a>
-                                </li>
+                                <option value="${category}">${category.name}</option>
                             </c:forEach>
-                        </ul>
-
+                        </select>
+                        <button type="submit" class="btn btn-default">ค้นหา</a>
                     </div>
-                    <button type="submit" class="btn btn-default">ค้นหา</a>
                 </div>
 
-            </form>
+            </form:form>
 
             <sec:authorize access="isAnonymous()">
                 <ul class="nav navbar-nav navbar-right">
@@ -83,3 +81,11 @@
 <br>
 <br>
 
+<script>
+    $(document).on('click', '.category-item', function() {
+        alert("OK");
+        //var selText = $(this a).text();
+        //alert(selText);
+        //$("#category-hidden").val(selText);
+    });
+</script>

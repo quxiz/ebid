@@ -8,6 +8,7 @@
     <tiles:putAttribute name="body">
 
         ${keyword}
+        ${category}
         
 
     </tiles:putAttribute>

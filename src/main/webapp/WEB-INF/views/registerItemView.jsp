@@ -12,7 +12,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-
+<script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
+        
 
 <style type="text/css">
     .scrollable-menu {
@@ -133,6 +134,10 @@
                                 </div>
                             </div>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f7f785ef1dd2f8a9cb7ceb13e8be398020a7c444
                             <div class="form-group">
                                 <label for="shippingService" class="col-sm-3 control-label">วิธีการจัดส่ง</label>
                                 <div class="col-sm-6">

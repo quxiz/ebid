@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -30,18 +31,21 @@ public class RegisterController {
         this.memberService = memberService;
     }
     @RequestMapping("/register")
-    public String viewRegister(Model model) {
+    public String viewRegister(@PathVariable("fail") String fail,Model model) {
         model.addAttribute("registrationForm", new RegistrationForm());
         model.addAttribute("countryList", new CountryList());
         model.addAttribute("title", "สมัครสมาชิก");
          List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
         model.addAttribute("categoryList", categoryList);
-        return "registerView";
+        return "registerView"; 
     }
 
     @RequestMapping(value = "/register/submit", method = RequestMethod.POST)
-    public String onSubmitRegistration(@ModelAttribute RegistrationForm form) {
-        this.memberService.register(form);
-        return "redirect:/activateMember";
+    public String onSubmitRegistration(@ModelAttribute RegistrationForm form,Model model) {
+        boolean successStatus = this.memberService.register(form);
+        
+        if(successStatus)return "redirect:/registerSuccess/";
+        else return "redirect:/register#";
     }
+    
 }

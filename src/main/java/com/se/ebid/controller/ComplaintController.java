@@ -31,18 +31,18 @@ public class ComplaintController {
           this.complaintService = complaintService;
       }
        
-    @RequestMapping(value = "/complaint", method = RequestMethod.GET)
+    @RequestMapping(value = "/complaint")
      public String viewComplaint(Model model) {
         model.addAttribute("title", "Complaint");
-         List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
-        model.addAttribute("categoryList", categoryList);
+//         List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
+//        model.addAttribute("categoryList", categoryList);
         ComplaintForm complaintForm = new ComplaintForm();
         model.addAttribute("complaintForm", complaintForm);
-        return "homeView";
+        return "complaintView";
     }  
      
-     @RequestMapping(value = "/complaint", method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute ComplaintForm complaintForm){
+     @RequestMapping(value = "/complaint/submit", method = RequestMethod.POST)
+     public String onSubmitComplaint(@ModelAttribute ComplaintForm complaintForm){
          this.complaintService.complaint(complaintForm);
          return "redirect:/";
      }

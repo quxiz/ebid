@@ -12,7 +12,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -20,25 +22,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class GiveFeedbackController {
-
+    
     private FeedbackService feedbackService;
-
+        
     @Autowired
-    public void setFeedbackService(FeedbackService feedbackService) {
-        this.feedbackService = feedbackService;
+    public void setFeedbackService(FeedbackService feedbackService){
+        this.feedbackService = feedbackService; 
     }
-
+    
     @RequestMapping("/giveFeedback")
-    public String viewGiveFeedback(Model model) {
+     public String viewGiveFeedback(Model model) {
         model.addAttribute("title", "ให้ Feedback");
-        model.addAttribute("feedbackForm", new FeedbackForm());
-//         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
-//        model.addAttribute("categoryList", categoryList);
-
+         List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
+        model.addAttribute("categoryList", categoryList);
+        FeedbackForm feedbackForm = new FeedbackForm();
+        model.addAttribute("feedbackForm", feedbackForm);
         return "giveFeedbackView";
-    }
-
-    public void onSubmit(FeedbackForm form) {
-        //do sth
-    }
+    }  
+     
+     @RequestMapping(value = "/giveFeedback/submit", method = RequestMethod.POST)
+     public String onSubmitFeedback(@ModelAttribute FeedbackForm feedbackForm){
+         this.feedbackService.giveFeedback(feedbackForm);
+         return "redirect:/"; //ไปหน้าโง่บอกว่าสำเร็จแล้วหรือล้มเหลว
+     }
 }

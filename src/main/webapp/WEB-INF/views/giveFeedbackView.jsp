@@ -17,24 +17,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">ให้ Feedback</h3>
                     </div>
-                    <div class="panel-body">
-                        <c:url var="addAction" value="/giveFeedback/submit" ></c:url>
-                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="forgotPasswordForm" method="POST" name="forgotPasswordForm">
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">อีเมล</label>
-                                <div class="col-sm-9">
-                                    <form:input type="email" class="form-control" id="inputEmail3" placeholder="อีเมล" path="email"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <input type="submit" id="submit" class="btn btn-primary" value="ตกลง">
-                                </div>
-                            </div>
-                        </form:form>
-
-
-                    </div>
+                  
 
 
                 </div>

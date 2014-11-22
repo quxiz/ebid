@@ -5,12 +5,17 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.entity.Member;
+import com.se.ebid.service.MemberService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -18,14 +23,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class EditReceivingInfoController {
-    @RequestMapping("/editRecievingInfo")
-     public String viewEditPaymentInfo(Model model) {
+    
+    private MemberService memberService;
+    
+    @Autowired
+    public void setMemberService(MemberService memberService){
+        this.memberService=memberService;
+    }
+    
+    @RequestMapping("/editReceivingInfo")
+     public String viewEditReceivingInfo(Model model) {
         model.addAttribute("title", "Edit Recieving Info");
-         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+         List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
         model.addAttribute("categoryList", categoryList);
+        Member member = this.memberService.getMember();
+        ReceivingInfoForm receivingInfoForm = new ReceivingInfoForm();
+        model.addAttribute("member", member);
+        model.addAttribute("receivingInfoForm", receivingInfoForm);
         return "editRecievingInfoView";
     }  
-     public void onSubmit(PaymentInfoForm form){
-         //do sth
+     @RequestMapping(value = "/editReceivingInfo/onSubmit", method = RequestMethod.POST)
+     public String onSubmitRecievingInfo(@ModelAttribute ReceivingInfoForm receivingInfoForm){
+         this.memberService.editReceivingInfo(receivingInfoForm);
+         return "redirect:/";//เปลี่ยนข้อมูลการรับเงินสำเร็จ
      }
 }

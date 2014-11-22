@@ -21,6 +21,20 @@
     }
 
 </style>
+
+<style>
+.error {
+	color: #ff0000;
+}
+ 
+.errorblock {
+	color: #000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding: 8px;
+	margin: 16px;
+}
+</style>
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
 
@@ -37,12 +51,14 @@
                                 <label for="inputName" class="col-sm-3 control-label">ชื่อจริง</label>
                                 <div class="col-sm-4">
                                     <form:input type="text" class="form-control" id="inputName" placeholder="ชื่อ" path="firstName"/>
+                                    <form:errors path="firstName" cssClass="error" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputSurname" class="col-sm-3 control-label">นามสกุล</label>
                                 <div class="col-sm-4">
                                     <form:input type="text" class="form-control" id="inputSurname" placeholder="นามสกุล" path="lastName"/>
+                                    <form:errors path="lastName" cssClass="error" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -104,6 +120,7 @@
                                 </div>
                             </div>
 
+                            <form:errors path="*" cssClass="errorblock" element="div" />
 
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">

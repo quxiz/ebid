@@ -74,7 +74,7 @@
                             <li><a href="${pageContext.request.contextPath}/viewMessage">กล่องข้อความ</a></li>
                             <li><a href="${pageContext.request.contextPath}/viewBuyTransaction">ประวัติการซื้อ</a></li>
                             <li><a href="${pageContext.request.contextPath}/viewSellTransaction">ประวัติการขาย</a></li>
-                            <li><a href="${pageContext.request.contextPath}/editInfo">แก้ไขข้อมูลส่วนตัว</a></li>
+                            <li><a href="${pageContext.request.contextPath}/editPersonalInfo">แก้ไขข้อมูลส่วนตัว</a></li>
                             <li class="divider"></li>
                             <li><a href="${pageContext.request.contextPath}/signOut">ออกจากระบบ</a></li>
                         </ul>

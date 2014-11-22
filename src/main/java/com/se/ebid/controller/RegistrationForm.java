@@ -5,12 +5,17 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.NotNull;
+
 /**
  *
  * @author mtmmoei
  */
 public class RegistrationForm {
+    @NotNull(message = "First name is a required field")
     private String firstName;
+    
+    @NotNull
     private String lastName;
     private String address;
     private String country;

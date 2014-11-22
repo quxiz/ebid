@@ -7,7 +7,11 @@ package com.se.ebid.controller;
 
 import com.se.ebid.entity.Item;
 import com.se.ebid.service.ItemService;
+import static java.rmi.Naming.list;
+import java.util.ArrayList;
+import static java.util.Collections.list;
 import java.util.List;
+import java.util.Locale.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -5,12 +5,22 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.entity.Item;
+import com.se.ebid.entity.Member;
+import com.se.ebid.entity.Transaction;
+import com.se.ebid.service.ItemService;
+import com.se.ebid.service.MemberService;
+import com.se.ebid.service.TransactionService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -18,21 +28,54 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class CheckOutController {
-    @RequestMapping("/checkOut")
-     public String viewCheckout(Model model) {
-        model.addAttribute("title", "Check Out");
-         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
-        model.addAttribute("categoryList", categoryList);
-        return "checkOutView";
-    }  
-     public void onSubmit(String s){
-         //do sth
-     }
-     public void confirmAddress(){
-         //do sth
-     }
 
-public void checkOut(){
-//do sth
-}
+    private TransactionService transactionService;
+    private ItemService itemService;
+    private MemberService memberService;
+
+    @Autowired
+    public void setTransactionService(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
+
+    @Autowired
+    public void setItemService(ItemService itemService) {
+        this.itemService = itemService;
+    }
+
+    @Autowired
+    public void setMemberService(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
+    @RequestMapping(value = "/checkOut/{transactionID}", method = RequestMethod.GET)
+    public String viewCheckout(@PathVariable("transactionID") long transactionID, Model model) {
+        model.addAttribute("title", "Check Out");
+        List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
+        model.addAttribute("categoryList", categoryList);
+        Transaction transaction = this.transactionService.getTransaction(transactionID);
+        Member member = this.memberService.getMember();
+        Item item = this.itemService.getItem(transaction.getTransactionID());
+        TransactionForm transactionForm = new TransactionForm();
+        transactionForm.setTransactionID(transactionID);
+        model.addAttribute("transactionFrom", transactionForm);
+        model.addAttribute("member", member);
+        model.addAttribute("transaction", transaction);
+        model.addAttribute("item", item);
+        return "checkOutView";
+    }
+
+    @RequestMapping(value = "/checkOut/onSubmit", method = RequestMethod.POST)
+    public String onSubmit(@ModelAttribute TransactionForm transactionForm) {
+        Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
+    //    transaction.setShippingAddress(transactionForm.getAddress());
+        return "redirect:/payment/"+transactionForm.getTransactionID();
+    }
+    
+    @RequestMapping(value = "/checkOut/checkoutTransaction/{transactionID}", method = RequestMethod.GET)
+    public String finishCheckout(@PathVariable("transactionID") long transactionID) {
+        this.transactionService.checkOutTransaction(transactionID);        
+        return "redirect:/";//ชำระค่าสินค้าเรียบร้อยแล้ว
+    }
+    
 }

@@ -10,7 +10,7 @@ package com.se.ebid.controller;
  * @author mtmmoei
  */
 public enum CategoryType {
-    Antiques("ของเก่า"), Art("ศิลปะ"), Baby("เด็ก"), Books("หนังสือ"), Camera("กล้องและรูปถ่าย"), 
+    All("ทุกประเภท"),Antiques("ของเก่า"), Art("ศิลปะ"), Baby("เด็ก"), Books("หนังสือ"), Camera("กล้องและรูปถ่าย"), 
     CellPhones("โทรศัพท์มือถือ"), Clothing("เสื้อผ้า"), Music("เพลง"), MusicalInstruments("เครื่องดนตรี"),
     Pets("สัตว์เลี้ยง"), VideoGame("วิดีโอเกม"), Other("อื่นๆ");
      private String name;

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -32,7 +33,25 @@ public class SearchController {
         this.itemService = itemService;
     }   */ 
     
-    @RequestMapping("/search")
+    @RequestMapping(value="/search", method = RequestMethod.POST)
+    public String search(@ModelAttribute SearchForm searchForm, Model model) {
+        //new itemService = ItemService();
+        String keyword = searchForm.getKeyword();
+        if (searchForm.getCategory() != null) {
+            String category = searchForm.getCategory().toString();
+            model.addAttribute("category",category);
+        } else {
+            model.addAttribute("category","null");
+        }
+        
+        model.addAttribute("keyword", keyword); 
+        List<Item> listItems;
+     //   listItems = this.itemService.search(searchForm);
+      //  model.addAttribute("listItems",listItems);
+        return "searchResultView";
+    }
+    
+    /*@RequestMapping("/search")
     public String search(@RequestParam(value = "keyword", required = false) String keyword,@RequestParam(value = "category", required = false) Category category, Model model) {
         //new itemService = ItemService();
         model.addAttribute("keyword", keyword);
@@ -44,6 +63,6 @@ public class SearchController {
      //   listItems = this.itemService.search(searchForm);
       //  model.addAttribute("listItems",listItems);
         return "searchResultView";
-    }
+    }*/
    
 }

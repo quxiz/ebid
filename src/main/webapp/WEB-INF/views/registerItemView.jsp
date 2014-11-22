@@ -12,7 +12,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-
+<script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
+        
 
 <style type="text/css">
     .scrollable-menu {
@@ -133,13 +134,6 @@
                                 </div>
                             </div>
 
-<!--                            <div class="form-group">
-                                <label for="input8" class="col-sm-3 control-label">วิธีการจ่ายเงิน</label>
-                                <div class="col-sm-6">
-                                    <form:input type="text" class="form-control" id="input8" placeholder="วิธีการจ่ายเงิน" path="paymentMethod"/>
-
-                                </div>
-                            </div>-->
 
                             <div class="form-group">
                                 <label for="shippingService" class="col-sm-3 control-label">วิธีการจัดส่ง</label>

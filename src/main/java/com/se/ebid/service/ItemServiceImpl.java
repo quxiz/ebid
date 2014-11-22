@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.se.ebid.service;
 
 import com.se.ebid.controller.BidForm;
@@ -45,8 +44,8 @@ import javax.servlet.ServletContext;
  * @author Quxiz
  */
 @Service
-public class ItemServiceImpl implements ItemService{
-    
+public class ItemServiceImpl implements ItemService {
+
     private ItemDAO itemDAO;
     private MemberDAO memberDAO;
     private AutoBidDAO autoBidDAO;
@@ -55,47 +54,47 @@ public class ItemServiceImpl implements ItemService{
     private FeedbackDAO feedbackDAO;
     private PhotoDAO photoDAO;
     private CommentDAO commentDAO;
-    
+
     @Autowired
-    public void setItemDAO(ItemDAO itemDAO){
+    public void setItemDAO(ItemDAO itemDAO) {
         this.itemDAO = itemDAO;
     }
-    
+
     @Autowired
-    public void setMemberDAO(MemberDAO memberDAO){
+    public void setMemberDAO(MemberDAO memberDAO) {
         this.memberDAO = memberDAO;
     }
-    
+
     @Autowired
-    public void setAutoBidDAO(AutoBidDAO autoBidDAO){
+    public void setAutoBidDAO(AutoBidDAO autoBidDAO) {
         this.autoBidDAO = autoBidDAO;
     }
-    
+
     @Autowired
-    public void setMessageDAO(MessageDAO messageDAO){
+    public void setMessageDAO(MessageDAO messageDAO) {
         this.messageDAO = messageDAO;
     }
-    
+
     @Autowired
-    public void setTransactionDAO(TransactionDAO transactionDAO){
+    public void setTransactionDAO(TransactionDAO transactionDAO) {
         this.transactionDAO = transactionDAO;
     }
-    
+
     @Autowired
-    public void setFeedbackDAO(FeedbackDAO feedbackDAO){
+    public void setFeedbackDAO(FeedbackDAO feedbackDAO) {
         this.feedbackDAO = feedbackDAO;
     }
-    
+
     @Autowired
-    public void setPhotoDAO(PhotoDAO photoDAO){
+    public void setPhotoDAO(PhotoDAO photoDAO) {
         this.photoDAO = photoDAO;
     }
-    
+
     @Autowired
-    public void setCommentDAO(CommentDAO commentDAO){
+    public void setCommentDAO(CommentDAO commentDAO) {
         this.commentDAO = commentDAO;
     }
-    
+
     @Autowired
     ServletContext servletContext;
 
@@ -109,7 +108,7 @@ public class ItemServiceImpl implements ItemService{
     public Item getItem(long itemID) {
         return this.itemDAO.findByItemID(itemID);
     }
-    
+
     @Override
     public List<Photo> getPhoto(long itemID) {
         return this.photoDAO.findByItemID(itemID);
@@ -125,33 +124,43 @@ public class ItemServiceImpl implements ItemService{
     public boolean bid(BidForm bidForm) {
         long memberID = Common.getMemberID();
         Member member = this.memberDAO.findByMemberID(memberID);
-        if(member == null) return false;
+        if (member == null) {
+            return false;
+        }
         AutoBid autoBid = this.autoBidDAO.findByItemID(bidForm.getItemID());
-        if(autoBid == null) return false;
+        if (autoBid == null) {
+            return false;
+        }
         Item item = this.itemDAO.findByItemID(bidForm.getItemID());
-        if(item == null) return false;
-        
+        if (item == null) {
+            return false;
+        }
+
         double newMaxBid = bidForm.getMaxBid();
-        if(newMaxBid < item.getPrice()) return false;
+        if (newMaxBid < item.getPrice()) {
+            return false;
+        }
         double oldMaxBid = autoBid.getMaxBid();
         double newBidIncrement = bidForm.getBidIncrement();
         double oldBidIncrement = autoBid.getBidIncrement();
-        
-        if(newMaxBid > oldMaxBid){
+
+        if (newMaxBid > oldMaxBid) {
             double price = oldMaxBid + newBidIncrement;
-            if(price > newMaxBid) price = newMaxBid;
+            if (price > newMaxBid) {
+                price = newMaxBid;
+            }
             item.setPrice(price);
             this.itemDAO.save(item);
-            
+
             long outBidderID = autoBid.getBidderID();
             autoBid.setBidderID(memberID);
             autoBid.setMaxBid(newMaxBid);
             autoBid.setBidIncrement(newBidIncrement);
             autoBid.setTimestamp(new Timestamp(System.currentTimeMillis()));
             this.autoBidDAO.save(autoBid);
-            
+
             Member outBidder = this.memberDAO.findByMemberID(outBidderID);
-            if(outBidder != null){
+            if (outBidder != null) {
                 sendOutbidEmail(outBidder, item);
                 Message message = new Message();
                 message.setSenderID(Common.ADMIN_ID);
@@ -159,12 +168,13 @@ public class ItemServiceImpl implements ItemService{
                 message.setMessage("outbid");
                 message.setTimestamp(new Timestamp(System.currentTimeMillis()));
                 message.setSeen(false);
-                this.messageDAO.save(message);          
+                this.messageDAO.save(message);
             }
-        }
-        else{
+        } else {
             double price = newMaxBid + oldBidIncrement;
-            if(price > oldMaxBid) price = oldMaxBid;
+            if (price > oldMaxBid) {
+                price = oldMaxBid;
+            }
             item.setPrice(price);
             this.itemDAO.save(item);
         }
@@ -174,11 +184,11 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public boolean sendOutbidEmail(Member member, Item item) {
         return Common.sendMail(member.getEmail(), "[ebid] Outbid notification",
-        "You were outbitted at " + item.getTitle() + "\n" +
-        "Current price: " + item.getPrice() + "\n"+
-        "\n"+
-        "Beat it now!!!\n" +
-        Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID()
+                "You were outbitted at " + item.getTitle() + "\n"
+                + "Current price: " + item.getPrice() + "\n"
+                + "\n"
+                + "Beat it now!!!\n"
+                + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID()
         );
     }
 
@@ -186,19 +196,27 @@ public class ItemServiceImpl implements ItemService{
     @Transactional
     public Invoice buy(BuyForm buyForm) {
         Member member = this.memberDAO.findByMemberID(Common.getMemberID());
-        if(member == null) return null;
-        if(member.isBlacklisted()) return null;
-        
+        if (member == null) {
+            return null;
+        }
+        if (member.isBlacklisted()) {
+            return null;
+        }
+
         long itemID = buyForm.getItemID();
         Item item = this.itemDAO.findByItemID(itemID);
-        if(item == null) return null;
-        if(item.getQuantity() < buyForm.getQuantity()) return null;
-        
+        if (item == null) {
+            return null;
+        }
+        if (item.getQuantity() < buyForm.getQuantity()) {
+            return null;
+        }
+
         Invoice invoice = new Invoice();
         invoice.setItemID(itemID);
         invoice.setQuantity(buyForm.getQuantity());
         invoice.setTotal(buyForm.getQuantity() * item.getPrice());
-        
+
         return invoice;
     }
 
@@ -209,8 +227,10 @@ public class ItemServiceImpl implements ItemService{
         Item item = this.itemDAO.findByItemID(itemID);
         long sellerID = item.getSellerID();
         long buyerID = Common.getMemberID();
-        if(buyForm.getQuantity() > item.getQuantity()) return false;
-        
+        if (buyForm.getQuantity() > item.getQuantity()) {
+            return false;
+        }
+
         Transaction transaction = new Transaction();
         transaction.setSellerID(sellerID);
         transaction.setBuyerID(buyerID);
@@ -220,14 +240,14 @@ public class ItemServiceImpl implements ItemService{
         transaction.setDetail(item.getDetail());
         transaction.setTimestamp(new Timestamp(System.currentTimeMillis()));
         this.transactionDAO.save(transaction);
-        
+
         Feedback feedback = new Feedback();
         feedback.setTransactionID(transaction.getTransactionID());
         feedback.setSellerID(sellerID);
         feedback.setBuyerID(buyerID);
         feedback.setItemID(itemID);
         this.feedbackDAO.save(feedback);
-        
+
         return true;
     }
 
@@ -249,7 +269,6 @@ public class ItemServiceImpl implements ItemService{
         item.setEndTime(registerItemForm.getEndTime());
 
        // item.setPaymentMethod(registerItemForm.getPaymentMethod());
-
         item.setShippingService(registerItemForm.getShippingService());
         item.setShippingCost(registerItemForm.getShippingCost());
         item.setPackageDetail(registerItemForm.getPackageDetail());
@@ -267,16 +286,16 @@ public class ItemServiceImpl implements ItemService{
             String photoURL = servletContext.getRealPath("resources/uploadedImg/") + photoID + aPhoto.getContentType();
             try {
                 aPhoto.transferTo(new File(photoURL));
-            }catch (IOException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-            }catch (IllegalStateException ex) {
+            } catch (IllegalStateException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
             photo.setPhotoURL(photoURL);
             this.photoDAO.save(photo);
         }
-        
-        if(registerItemForm.getSellingType() == SellingType.BID){
+
+        if (registerItemForm.getSellingType() == SellingType.BID) {
             AutoBid autoBid = new AutoBid();
             autoBid.setItemID(itemID);
             autoBid.setBidderID(-1);
@@ -284,20 +303,96 @@ public class ItemServiceImpl implements ItemService{
             autoBid.setBidIncrement(0);
             autoBid.setTimestamp(new Timestamp(System.currentTimeMillis()));
             this.autoBidDAO.save(autoBid);
-            
+
             // unfinish bidSchedule
         }
         return true;
     }
 
-    @Override
-    public boolean sendSellerEmail(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean reportBidResult(long itemID) {
+        Item item = this.itemDAO.findByItemID(itemID);
+	if(item == null) return false;
+	
+	AutoBid autoBid = this.autoBidDAO.findByItemID(itemID);
+	if(autoBid == null) return false;
+	if(autoBid.getBidderID() == -1){
+            String itemURL = "mock";
+            sendNoBidderSellerEmail(this.memberDAO.findByMemberID(item.getSellerID()), itemURL);
+            return false;
+        } // no one bid
+	long sellerID = item.getSellerID();
+	long buyerID = autoBid.getBidderID();
+	
+	Transaction transaction = new Transaction();
+	transaction.setSellerID(sellerID);
+	transaction.setBuyerID(buyerID);
+	transaction.setItemID(itemID);
+	transaction.setQuantity(item.getQuantity());
+	transaction.setPrice(item.getPrice());
+	transaction.setDetail(item.getDetail());
+	//transaction.setDelivery(item.getDelivery()); ???
+	transaction.setTimestamp(autoBid.getTimestamp());
+	this.transactionDAO.save(transaction);
+	
+	Feedback feedback = new Feedback();
+	feedback.setTransactionID(transaction.getTransactionID());
+	feedback.setSellerID(sellerID);
+	feedback.setBuyerID(buyerID);
+	feedback.setItemID(itemID);
+	this.feedbackDAO.save(feedback);
+	
+	Member buyer = this.memberDAO.findByMemberID(buyerID);
+	if(buyer == null) return false;
+        String paymentURL = "mock";
+	if(!sendBuyerEmail(buyer, paymentURL)) return false;
+	
+	Message messageBuyer = new Message();
+	messageBuyer.setSenderID(Common.ADMIN_ID);
+	messageBuyer.setReceiverID(buyerID);
+	messageBuyer.setMessage("ข้อความผู้ซื้อ");
+	messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
+	this.messageDAO.save(messageBuyer);
+	
+	Member seller = this.memberDAO.findByMemberID(sellerID);
+	if(seller == null) return false;
+        String feedbackURL = "mock";
+	if(!sendSellerEmail(seller, feedbackURL)) return false;
+	
+	Message messageSeller = new Message();
+	messageSeller.setSenderID(Common.ADMIN_ID);
+	messageSeller.setReceiverID(sellerID);
+	messageSeller.setMessage("ข้อความผู้ขาย");
+	messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
+	this.messageDAO.save(messageSeller);
+	
+	/*BidSchedule bidSchedule = BidScheduleDAO.findByItemID(itemID);
+	if(bidSchedule == null) return false;
+	bidSchedule.setCompleted(true);
+	BidScheduleDAO.save(bidSchedule);*/
+	
+	//return reScheduler();
+        return false;
     }
 
-    @Override
-    public boolean sendBuyerEmail(Member member) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private boolean sendNoBidderSellerEmail(Member member, String itemURL) {
+        return Common.sendMail(member.getEmail(), "[ebid] Your auction item is timed out!",
+                "No one bid for your auction item.\n"
+                + "\n"
+                + "If you want to reopen the auction, please register your auction item again.\n"
+                + "To see your auction item information, click on the link below (or copy and paste the URL into your browser): \n"
+                + Common.BASE_URL + itemURL);
     }
-    
+
+    private boolean sendSellerEmail(Member member, String feedbackURL) {
+        return Common.sendMail(member.getEmail(), "[ebid] There is a winner for your auction item!",
+                "To enter the feedback for your buyer, click on the link below (or copy and paste the URL into your browser): \n"
+                + Common.BASE_URL + feedbackURL);
+    }
+
+    private boolean sendBuyerEmail(Member member, String paymentURL) {
+        return Common.sendMail(member.getEmail(), "[ebid] Congratulations, you won the auction!",
+                "To complete transaction, click on the link below (or copy and paste the URL into your browser): \n"
+                + Common.BASE_URL + paymentURL);
+    }
+
 }

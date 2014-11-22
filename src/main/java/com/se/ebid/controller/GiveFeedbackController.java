@@ -35,6 +35,7 @@ public class GiveFeedbackController {
      public String viewGiveFeedback(@PathVariable("transactionID") long transactionID,Model model) {
         model.addAttribute("title", "ให้ Feedback");
 
+
          List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
         model.addAttribute("categoryList", categoryList);
         FeedbackForm feedbackForm = new FeedbackForm();

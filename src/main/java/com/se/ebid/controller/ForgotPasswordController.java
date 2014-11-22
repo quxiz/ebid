@@ -22,27 +22,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class ForgotPasswordController {
-    
-    private MemberService memberService;
+
+      private MemberService memberService;
     
     @Autowired
     public void setMemberService(MemberService memberService){
         this.memberService = memberService;
     }
     
-    @RequestMapping("/forgotPassword")
+
+      @RequestMapping("/forgotPassword")
+
      public String viewForgotPassword(Model model) {
         model.addAttribute("title", "Forgot Password");
          List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
         model.addAttribute("categoryList", categoryList);
-        ForgotPasswordForm forgotPasswordForm = new ForgotPasswordForm();
-        model.addAttribute("forgorPasswordForm",forgotPasswordForm);
+        model.addAttribute("forgotPasswordForm", new ForgotPasswordForm());
         return "forgotPasswordView";
     }
-     
-     @RequestMapping(value="/forgotPassword/onSubmit",method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute ForgotPasswordForm forgotPasswordForm){
-         this.memberService.forgotPassword(forgotPasswordForm);
-         return "redirect:/forgotPassword"; // ทำหน้าส่งคำขอเปลี่ยนเสร็จสิ้น
+  
+     @RequestMapping(value = "/forgotPassword/submit", method = RequestMethod.POST)
+     public String onSubmitForgotPassword(ForgotPasswordForm form){
+         this.memberService.forgotPassword(form);
+         return "redirect:/";
      }
 }

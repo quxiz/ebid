@@ -10,7 +10,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
+<!--<script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>-->
 
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -39,9 +39,9 @@
             <form:form action="${addAction}" class="navbar-form navbar-nav" role="search" modelAttribute="searchForm" method="POST" name="searchForm">
                 <div class="input-group">
 
-                    
+
                     <form:input class="form-control" placeholder="ค้นหาสินค้า..." path="keyword" />
-                    
+
 
                     <div class="input-group-btn dropdown">
 

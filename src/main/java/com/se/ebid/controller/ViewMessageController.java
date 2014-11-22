@@ -31,7 +31,7 @@ public class ViewMessageController {
     }
     
     @RequestMapping(value = "/viewMessage", method = RequestMethod.GET)
-     public String viewMessgae(Model model) {
+     public String viewMessage(Model model) {
         model.addAttribute("title", "ข้อความ");
         List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
         model.addAttribute("categoryList", categoryList);

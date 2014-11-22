@@ -161,7 +161,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean sendResetPasswordEmail(Member member) {
         return Common.sendMail(member.getEmail(), "[ebid] Reset your account password",
-        "ebid received a request to resset the password for your account\n" +
+        "ebid received a request to reset the password for your account\n" +
         "\n" +
         "To reset your password, click on the link below (or copy and paste the URL into your browser): \n" +
         Common.BASE_URL + Common.RESET_PASSWORD_URL);
@@ -217,13 +217,23 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public boolean editPaymentInfo(PaymentInfoForm paymentInfoForm) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	Member member = this.memberDAO.findByMemberID(Common.getMemberID());
+	if(member == null) return false;
+	member.setPaymentAccount(paymentInfoForm.getPayPalAccount());
+	this.memberDAO.save(member);
+	return true;
     }
 
     @Override
+    @Transactional
     public boolean editReceivingInfo(ReceivingInfoForm receivingInfoForm) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	Member member = this.memberDAO.findByMemberID(Common.getMemberID());
+	if(member == null) return false;
+	member.setReceivingAccount(receivingInfoForm.getPayPalAccount());
+	this.memberDAO.save(member);
+	return true;
     }
 
     @Override

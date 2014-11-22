@@ -1,6 +1,6 @@
 <%-- 
-    Document   : forgotPasswordView
-    Created on : Nov 18, 2014, 6:20:18 PM
+    Document   : complaintView
+    Created on : Nov 22, 2014, 12:33:02 PM
     Author     : mtmmoei
 --%>
 
@@ -15,17 +15,21 @@
             <div class="col-sm-8 col-md-6" style="float:none; margin-left:auto; margin-right:auto">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">ลืมรหัสผ่าน?</h3>
+                        <h3 class="panel-title">ร้องเรียน</h3>
                     </div>
                     <div class="panel-body">
-                        <c:url var="addAction" value="/register/submit" ></c:url>
-                            <p>กรุณากรอกอีเมลที่ใช้ในการลงทะเบียนเพื่อรอรับลิงค์สำหรับเปลี่ยนรหัสผ่าน</p>
-                            <br>
-                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="forgotPasswordForm" method="POST" name="forgotPasswordForm">
+                        <c:url var="addAction" value="/complaint" ></c:url>
+                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="complaintForm" method="POST" name="complaintForm">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">อีเมล</label>
+                                <label for="title" class="col-sm-3 control-label">หัวข้อ</label>
                                 <div class="col-sm-9">
-                                    <form:input type="email" class="form-control" id="inputEmail3" placeholder="อีเมล" path="email"/>
+                                    <form:input type="text" class="form-control" id="title" placeholder="หัวข้อ" path="title"/>
+                                </div>
+                            </div> 
+                                <div class="form-group">
+                                <label for="detail" class="col-sm-3 control-label">รายละเอียด</label>
+                                <div class="col-sm-9">
+                                    <form:textarea type="text" class="form-control" id="detail" placeholder="รายละเอียด" path="detail"/>
                                 </div>
                             </div>
                             <div class="form-group">

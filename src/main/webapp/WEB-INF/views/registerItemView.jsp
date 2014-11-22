@@ -134,7 +134,10 @@
                                 </div>
                             </div>
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> f7f785ef1dd2f8a9cb7ceb13e8be398020a7c444
                             <div class="form-group">
                                 <label for="shippingService" class="col-sm-3 control-label">วิธีการจัดส่ง</label>
                                 <div class="col-sm-6">

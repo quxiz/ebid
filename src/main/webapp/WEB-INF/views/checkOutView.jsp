@@ -71,7 +71,7 @@
                                         <tbody>
                                             <tr>
                                                 <td colspan="2">ค่าส่งสินค้า</td>
-                                                <td>${transaction.shippingCost}</td>
+                                                <td>${item.shippingCost}</td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
@@ -91,7 +91,7 @@
                                     </dl>
                                     <div class="col-md-8 col-sm-offset-2 text-center">
                                         <input type="submit" class=" btn btn-primary" value="ชำระเงิน"/>
-                                        <a class="btn btn-default" href="#">ยกเลิก</a>
+                                        <a class="btn btn-default" id="cancel">ยกเลิก</a>
                                     </div>
                                 </div>
 
@@ -126,6 +126,14 @@
                 $("#transaction").show();
                 document.getElementById('next').disabled = true;
                 document.getElementById('sendingMethod').disabled = true;
+            });
+            $("#cancel").click(function () {
+                $(".shipping").hide();
+                $("#transaction").hide();
+                document.getElementById('inputAddress').disabled = false;
+                document.getElementById('confirmAddress').disabled = false;
+                document.getElementById('next').disabled = false;
+                document.getElementById('sendingMethod').disabled = false;
             });
         </script>
     </tiles:putAttribute>

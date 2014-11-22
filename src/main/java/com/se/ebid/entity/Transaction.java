@@ -45,6 +45,8 @@ public class Transaction {
     private SellingType sellingType;
     @Column(name="shippingService")
     private String shippingService;
+    @Column(name="shippingAddress")
+    private String shippingAddress;
     @Column(name="timestamp")
     private java.sql.Timestamp timestamp;
     @Column(name="completed")
@@ -120,6 +122,14 @@ public class Transaction {
 
     public void setShippingService(String shippingService) {
         this.shippingService = shippingService;
+    }
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 
     public Timestamp getTimestamp() {

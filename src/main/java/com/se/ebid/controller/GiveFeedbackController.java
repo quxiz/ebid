@@ -5,9 +5,11 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.service.FeedbackService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,14 +20,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class GiveFeedbackController {
+
+    private FeedbackService feedbackService;
+
+    @Autowired
+    public void setFeedbackService(FeedbackService feedbackService) {
+        this.feedbackService = feedbackService;
+    }
+
     @RequestMapping("/giveFeedback")
-     public String viewGiveFeedback(Model model) {
-        model.addAttribute("title", "Give Feedback");
-         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
-        model.addAttribute("categoryList", categoryList);
+    public String viewGiveFeedback(Model model) {
+        model.addAttribute("title", "ให้ Feedback");
+        model.addAttribute("feedbackForm", new FeedbackForm());
+//         List<CategoryType> categoryList = new ArrayList<CategoryType>( Arrays.asList(CategoryType.values() ));  
+//        model.addAttribute("categoryList", categoryList);
+
         return "giveFeedbackView";
-    }  
-     public void onSubmit(FeedbackForm form){
-         //do sth
-     }
+    }
+
+    public void onSubmit(FeedbackForm form) {
+        //do sth
+    }
 }

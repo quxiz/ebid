@@ -69,12 +69,12 @@
             <sec:authorize access="isAuthenticated()">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><sec:authentication property="principal.username" /><span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">ยินดีต้อนรับ <sec:authentication property="principal.username" /><span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">กล่องข้อความ</a></li>
-                            <li><a href="#">ประวัติการซื้อ</a></li>
-                            <li><a href="#">ประวัติการขาย</a></li>
-                            <li><a href="#">แก้ไขข้อมูลส่วนตัว</a></li>
+                            <li><a href="${pageContext.request.contextPath}/viewMessage">กล่องข้อความ</a></li>
+                            <li><a href="${pageContext.request.contextPath}/viewBuyTransaction">ประวัติการซื้อ</a></li>
+                            <li><a href="${pageContext.request.contextPath}/viewSellTransaction">ประวัติการขาย</a></li>
+                            <li><a href="${pageContext.request.contextPath}/editInfo">แก้ไขข้อมูลส่วนตัว</a></li>
                             <li class="divider"></li>
                             <li><a href="${pageContext.request.contextPath}/signOut">ออกจากระบบ</a></li>
                         </ul>

@@ -135,20 +135,23 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public boolean bid(BidForm bidForm) {
+        System.out.println("step1");
         long memberID = Common.getMemberID();
         Member member = this.memberDAO.findByMemberID(memberID);
         if (member == null) {
             return false;
         }
+        System.out.println("step1.1");
         AutoBid autoBid = this.autoBidDAO.findByItemID(bidForm.getItemID());
         if (autoBid == null) {
             return false;
         }
+        System.out.println("step1.2");
         Item item = this.itemDAO.findByItemID(bidForm.getItemID());
         if (item == null) {
             return false;
         }
-
+        System.out.println("step2");
         double newMaxBid = bidForm.getMaxBid();
         if (newMaxBid < item.getPrice()) {
             return false;
@@ -156,7 +159,7 @@ public class ItemServiceImpl implements ItemService {
         double oldMaxBid = autoBid.getMaxBid();
         double newBidIncrement = bidForm.getBidIncrement();
         double oldBidIncrement = autoBid.getBidIncrement();
-
+System.out.println("step3");
         if (newMaxBid > oldMaxBid) {
             double price = oldMaxBid + newBidIncrement;
             if (price > newMaxBid) {
@@ -171,12 +174,13 @@ public class ItemServiceImpl implements ItemService {
             autoBid.setBidIncrement(newBidIncrement);
             autoBid.setTimestamp(new Timestamp(System.currentTimeMillis()));
             this.autoBidDAO.save(autoBid);
-
+System.out.println("step4");
             Member outBidder = this.memberDAO.findByMemberID(outBidderID);
             if (outBidder != null) {
                 sendOutbidEmail(outBidder, item);
                 Message message = new Message();
-                message.setSenderID(Common.ADMIN_ID);
+                //message.setSenderID(Common.ADMIN_ID);
+                message.setSenderID(1);
                 message.setReceiverID(outBidderID);
                 message.setMessage("You were outbitted at " + item.getTitle() + "\n"
                         + "Current price: " + item.getPrice() + "\n"
@@ -195,6 +199,7 @@ public class ItemServiceImpl implements ItemService {
             item.setPrice(price);
             this.itemDAO.save(item);
         }
+        System.out.println("step5");
         return true;
     }
 

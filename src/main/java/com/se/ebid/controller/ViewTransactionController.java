@@ -5,6 +5,9 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.entity.Item;
+import com.se.ebid.entity.Transaction;
+import com.se.ebid.service.ItemService;
 import com.se.ebid.service.TransactionService;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +25,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ViewTransactionController {
      
+    private ItemService itemService;
+    
+    @Autowired()
+    public void setItemService(ItemService itemService){
+        this.itemService=itemService;
+    }
     private TransactionService transactionService;
     
     @Autowired()
@@ -39,23 +48,35 @@ public class ViewTransactionController {
         return "viewTransactionView";
     }*/
      
-     @RequestMapping("/viewBuyTransaction")
-     public String selectBuyTransaction(Model model){
+     @RequestMapping("/viewTransaction")
+     public String selectTransaction(Model model){
          
-     model.addAttribute("title", "ประวัติการซื้อสินค้า");
-         List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
-//        model.addAttribute("categoryList", categoryList);
-        model.addAttribute("listTransactions",this.transactionService.getBuyTransaction());
+     model.addAttribute("title", "ประวัติการซื้อขายสินค้า");
+         List<Transaction> listSellTransactions = this.transactionService.getSellTransaction();
+         List<Transaction> listBuyTransactions = this.transactionService.getBuyTransaction();
+        model.addAttribute("listBuyTransactions",listBuyTransactions);
+        model.addAttribute("listSellTransactions",listSellTransactions);
+        List<Item> listSoldItems = null;
+        List<Item> listBoughtItems = null;
+
+//        for (Transaction listSellTransaction : listSellTransactions) {
+//            listSoldItems.add(this.itemService.getItem(listSellTransaction.getItemID()));
+//        }
+//        for (Transaction listBuyTransaction : listBuyTransactions) {
+//            listBoughtItems.add(this.itemService.getItem(listBuyTransaction.getItemID()));
+//        }
+        model.addAttribute("listSoldItems",listSoldItems);
+        model.addAttribute("listBoughtItems",listBoughtItems);
         return "viewTransactionView";
      
      }
      
-     @RequestMapping("/viewSellTransaction")
-     public String selectSellTransaction(Model model){
-         model.addAttribute("title", "ประวัติการขายสินค้า");
-         List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
-//        model.addAttribute("categoryList", categoryList);
-        model.addAttribute("listTransactions",this.transactionService.getSellTransaction());
-        return "viewTransactionView";
-     }
+//     @RequestMapping("/viewSellTransaction")
+//     public String selectSellTransaction(Model model){
+//         model.addAttribute("title", "ประวัติการขายสินค้า");
+//         List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
+////        model.addAttribute("categoryList", categoryList);
+//        model.addAttribute("listTransactions",this.transactionService.getSellTransaction());
+//        return "viewTransactionView";
+//     }
 }

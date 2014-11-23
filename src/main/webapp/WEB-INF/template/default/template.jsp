@@ -25,7 +25,7 @@
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/jquery.countdown.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
-         <script src="${pageContext.request.contextPath}/resources/js/SimpleDateFormat.js"></script>
+        
 
 <!--        <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>

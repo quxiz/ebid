@@ -33,6 +33,10 @@ public class MyUserDetailsService implements UserDetailsService {
         Member member = memberDAO.findByUserID(userID);
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        if(userID.equals("demo")) {
+            System.out.println("ADMIN");
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
         CustomUser customUser = buildUserForAuthentication(member, authorities);
         return customUser;
     }

@@ -19,12 +19,12 @@ public class BidForm {
     
     @DecimalMin(value = "0.01", message = "Maxbid must be greater than or equal to 0.01")
     @Size(min = 1, message = "Maxbid must not be empty")
-    @Digits(integer=20, fraction=2)
+    @Digits(integer = 20, fraction = 2, message = "Maxbid is invalid")
     private BigDecimal maxBid;
     
     @DecimalMin(value = "0.01", message = "Bid increment must be greater than or equal to 0.01")
     @Size(min = 1, message = "Bid increment must not be empty")
-    @Digits(integer=20, fraction=2)
+    @Digits(integer = 20, fraction = 2, message = "Bid increment is invalid")
     private BigDecimal bidIncrement;
     
     public long getItemID() {

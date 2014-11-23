@@ -28,7 +28,7 @@ public interface ItemService {
     public boolean bid(BidForm bidForm);
     public boolean sendOutbidEmail(Member member,Item item);
     public Invoice buy(BuyForm buyForm);
-    public boolean confirmBuy(BuyForm buyForm);
+    public long confirmBuy(BuyForm buyForm);
     public boolean registerItem(RegisterItemForm registerItemForm);
     public boolean reportBidResult(long itemID);
 }

@@ -15,10 +15,10 @@ import javax.validation.constraints.Size;
  */
 public class SignInForm {
     @Pattern(regexp = "[A-Za-z0-9]+", message = "User ID is invalid")
-    @Size(min = 5, max = 20, message = "User ID requires at least 5 characters and at most 20 characters")
+    @Size(min = 5, max = 20, message = "User ID is invalid")
     private String userID;
     
-    @Size(min = 6, max = 20, message = "Password requires at least 6 characters and at most 20 characters")
+    @Size(min = 6, max = 20, message = "Password is invalid")
     private String password;
 
     public String getUserID() {

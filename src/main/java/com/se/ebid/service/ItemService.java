@@ -21,11 +21,19 @@ import java.util.List;
  * @author Nuttapong
  */
 public interface ItemService {
+    public static final int ERR_MISSING_MEMBER = -1;
+    public static final int ERR_MISSING_ITEM = -2;
+    public static final int ERR_MISSING_AUTOBID = -3;
+    public static final int ERR_LOW_PRICE = -4;
+    public static final int ERR_BLACKLIST = -5;
+    public static final int ERR_NO_PAY_ACC = -6;
+    public static final int ERR_NOT_ENOUGH_QTY = -7;
+    
     public List<Item> search(SearchForm searchForm);
     public Item getItem(long itemID);
     public List<Photo> getPhoto(long itemID);
     public List<Comment> getComment(long itemID);
-    public boolean bid(BidForm bidForm);
+    public int bid(BidForm bidForm);
     public boolean sendOutbidEmail(Member member,Item item);
     public Invoice buy(BuyForm buyForm);
     public long confirmBuy(BuyForm buyForm);

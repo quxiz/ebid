@@ -21,27 +21,27 @@ import org.springframework.stereotype.Service;
  * @author Nuttapong
  */
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     private CommentDAO commentDAO;
     private MessageDAO messageDAO;
-    
+
     @Autowired
-    public void setCommentDAO(CommentDAO commentDAO){
+    public void setCommentDAO(CommentDAO commentDAO) {
         this.commentDAO = commentDAO;
     }
-    
+
     @Autowired
-    public void setMessageDAO(MessageDAO messageDAO){
+    public void setMessageDAO(MessageDAO messageDAO) {
         this.messageDAO = messageDAO;
     }
-    
+
     @Override
     @Transactional
     public boolean askQuestion(QuestionForm questionForm) {
         long memberID = Common.getMemberID();
         String commenterName = Common.getUserID();
-        
+
         Comment comment = new Comment();
         comment.setItemID(questionForm.getItemID());
         comment.setCommenterID(memberID);
@@ -49,43 +49,43 @@ public class CommentServiceImpl implements CommentService{
         comment.setCommentDetail(questionForm.getQuestion());
         comment.setTimestamp(new Timestamp(System.currentTimeMillis()));
         this.commentDAO.save(comment);
-        
+
         Message message = new Message();
         message.setSenderID(memberID);
         message.setReceiverID(questionForm.getSellerID());
-        message.setMessage("ถาม");
+        message.setMessage("There is a question for you.<br/>"
+                + "To answer your question, click on the link below (or copy and paste the URL into your browser):<br/>"
+                + Common.BASE_URL + "/answerQuestion/" + questionForm.getItemID() + "_" + comment.getCommentID());
         message.setTimestamp(new Timestamp(System.currentTimeMillis()));
         message.setSeen(false);
         this.messageDAO.save(message);
-        
+
         return true;
     }
 
     @Override
     @Transactional
     public boolean answerQuestion(AnswerForm answerForm) {
-    	long memberID = Common.getMemberID();
-        
+        long memberID = Common.getMemberID();
+
         Comment comment = new Comment();
-	comment.setParentID(answerForm.getParentID());
-	comment.setCommenterID(memberID);
-	comment.setCommentDetail(answerForm.getAnswer());
-	comment.setTimestamp(new Timestamp((System.currentTimeMillis())));
-	this.commentDAO.save(comment);
-	
-	Message message = new Message();
-	message.setSenderID(memberID);
-	message.setReceiverID(answerForm.getAskerID());
-	message.setMessage("ตอบ");
-	message.setTimestamp(new Timestamp(System.currentTimeMillis()));
-	message.setSeen(false);
-	this.messageDAO.save(message);
-	
-	return true;
+        comment.setParentID(answerForm.getParentID());
+        comment.setCommenterID(memberID);
+        comment.setCommentDetail(answerForm.getAnswer());
+        comment.setTimestamp(new Timestamp((System.currentTimeMillis())));
+        this.commentDAO.save(comment);
+
+        Message message = new Message();
+        message.setSenderID(memberID);
+        message.setReceiverID(answerForm.getAskerID());
+        message.setMessage("Your question has been answered.<br/>"
+                + "To see the answer, click on the link below (or copy and paste the URL into your browser):<br/>"
+                + "/viewItem/" + comment.getItemID());
+        message.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        message.setSeen(false);
+        this.messageDAO.save(message);
+
+        return true;
     }
-    
-    private static String setAskQuestionMessage(){
-        return null;
-    }
-    
+
 }

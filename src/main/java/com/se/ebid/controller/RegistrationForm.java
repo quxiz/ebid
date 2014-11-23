@@ -34,7 +34,7 @@ public class RegistrationForm {
     @Size(min = 6, max = 20, message = "Phone number is invalid")
     @Pattern(regexp = "[0-9]+")
     private String phoneNo;
-
+    
     @Pattern(regexp = "[A-Za-z0-9]+", message = "User ID is invalid. It must contain only alphanumeric character")
     @Size(min = 5, max = 20, message = "User ID requires at least 5 characters and at most 20 characters")
     private String userID;

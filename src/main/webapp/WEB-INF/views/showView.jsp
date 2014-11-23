@@ -1,10 +1,8 @@
 <%-- 
-    Document   : payment
-    Created on : Nov 22, 2014, 2:55:11 PM
+    Document   : showView
+    Created on : Nov 23, 2014, 2:44:51 PM
     Author     : Kawin
 --%>
-
-
 
 <%@page import="com.se.ebid.controller.CountryList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -40,14 +38,19 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <div class="container">
-                <h3>Paypal (dummy)</h3>
+            <c:if test ="${isSuccess}">
+                <h3>Success!</h3>
+            </c:if>
+            <c:if test ="${!isSuccess}">
+                <h3>Error found</h3>
+            </c:if>
                 <hr>               
                 <div>
-                <a href ="${pageContext.request.contextPath}/checkOut/checkoutTransaction/{transactionID}" type = "button" class="btn btn-primary">ตกลง</a>
-                <a href ="${pageContext.request.contextPath}/error/you don't have enough money in your account" type = "button" class="btn btn-primary" >มีเงินในบัญชีไม่พอ</a>
-                <a href ="${pageContext.request.contextPath}/checkOut/{transactionID}" type = "button" class="btn btn-primary">ยกเลิก</a>
+                <h2>${text}</h2>
+                <a href ="${pageContext.request.contextPath}" type = "button" class="btn btn-primary">กลับหน้าหลัก</a>
                 </div>                       
         </div>
     </tiles:putAttribute>
 </tiles:insertDefinition>
+
 

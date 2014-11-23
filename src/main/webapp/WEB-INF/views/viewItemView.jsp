@@ -90,7 +90,7 @@
 
                     <!--buy form-->
                     <c:if test="${item.sellingType=='BUY'}"> 
-                        <c:url var="addAction" value="/viewItem/onSubmitBuyForm" ></c:url>
+                        <c:url var="addAction" value="/viewItem/${item.itemID}/onSubmitBuyForm" ></c:url>
                         <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="buyForm" method="POST" name="buyForm">
                             <label for="inputQuantity" class="col-xs-2 control-label">จำนวน</label>
                             <div class="input-group col-xs-4">
@@ -145,38 +145,31 @@
 
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingZero">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+                                        คำอธิบายสินค้า
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
+                                <div class="panel-body">
+                                    ${item.detail}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <a  class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                         รายละเอียดสินค้า
                                     </a>
                                 </h4>
                             </div>
 
                             <!-- ยังไม่รุมีไรมั่ง -->
-                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body">
-                                    <dl class="dl-horizontal">
-                                        <dt>ยี่ห้อ</dt>
-                                        <dd>BRANDIT</dd>
-                                    </dl>
-                                    <dl class="dl-horizontal">
-                                        <dt>คุณสมบัติ</dt>
-                                        <dd>โพลีเอสเตอร์</dd>
-                                    </dl>
-                                    <dl class="dl-horizontal">
-                                        <dt>ขนาด</dt>
-                                        <dd>M</dd>
-                                    </dl>
-                                    <dl class="dl-horizontal">
-                                        <dt>สภาพสินค้า</dt>
-                                        <dd>ใหม่</dd>
-                                    </dl>
-                                    <dl class="dl-horizontal">
-                                        <dt>จุดบกพร่อง</dt>
-                                        <dd>ไม่มี</dd>
-                                    </dl>
-
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body" id="specifics-div">
 
                                 </div>
                             </div>
@@ -207,19 +200,18 @@
                                 </h4>
                             </div>
                             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                <div class="panel-body">
+                                <div class="panel-body" id="shipping-div">
                                     <dl class="dl-horizontal">
                                         <dt>การบรรจุหีบห่อ</dt>
                                         <dd>${item.packageDetail}</dd>
                                     </dl>
                                     <dl class="dl-horizontal">
-
-                                        <dt>วิธีการจัดส่ง</dt>
-                                        <dd>${item.shippingService}</dd>
+                                        <dt> </dt>
+                                        <dd> </dd>
                                     </dl>
                                     <dl class="dl-horizontal">
-                                        <dt>ค่าส่ง</dt>
-                                        <dd>${item.shippingCost} บาท</dd>
+                                        <dt>วิธีการจัดส่ง</dt>
+                                        <dd>ค่าส่ง</dd>
                                     </dl>
 
                                 </div>
@@ -293,10 +285,12 @@
         </div>
 
         <script>
-            $(function () {
+            $(function() {
 //ต้องผูกกับ timestamp
-                $('#clock').countdown('2014/12/21 22:34:56')
-                        .on('update.countdown', function (event) {
+                var timestamp = '${item.endTime}';
+                var newTimestamp = timestamp.replace("-", "/").replace(".0", "");
+                $('#clock').countdown(newTimestamp)
+                        .on('update.countdown', function(event) {
                             var format = '%H:%M:%S';
                             if (event.offset.days > 0) {
                                 format = '%-d วัน ' + format;
@@ -306,11 +300,31 @@
                             }
                             $(this).html(event.strftime(format));
                         })
-                        .on('finish.countdown', function (event) {
+                        .on('finish.countdown', function(event) {
                             $(this).html('หมดเวลาประมูล');
                             $('.countdown').addClass('disabled')
                         });
 
+            });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                var specificsJson = '${item.specifics}';
+                var obj = jQuery.parseJSON(specificsJson);
+                $.each(obj, function(key, value) {
+                    $("#specifics-div").append('<dl class="dl-horizontal"><dt>' + value.name + '</dt><dd>' + value.value + '</dd></dl>');
+                });
+                
+                var shippingService = '${item.shippingService}';
+                var shippingCost = '${item.shippingCost}';
+                var delimiter = ' ';
+                var shippingServiceArr = shippingService.split(delimiter);
+                var shippingCostArr = shippingCost.split(delimiter);
+                $.each(shippingServiceArr, function(key, value) {
+                    $("#shipping-div").append('<dl class="dl-horizontal"><dt>' + value + '</dt><dd>' + shippingCostArr[key] + '</dd></dl>');
+                });
+                
             });
         </script>
     </tiles:putAttribute>

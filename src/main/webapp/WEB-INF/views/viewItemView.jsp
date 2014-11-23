@@ -116,12 +116,12 @@
 
 
                         <c:url var="addAction" value="/viewItem/${item.itemID}/onSubmitBidForm" ></c:url>
-                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="bidform" method="POST" name="bidform">
+                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="bidForm" method="POST" name="bidForm">
 
                             <div class="form-group">
                                 <label for="maxBid" class="col-sm-5 control-label">จำนวนเงินสูงสุด</label>
                                 <div class="input-group col-sm-4">
-                                    <input type="text" class="form-control" id="maxBid" path="maxBid">
+                                    <form:input type="text" class="form-control" id="maxBid" path="maxBid" />
                                     <span class="input-group-addon">บาท</span>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
                             <div class="form-group">
                                 <label for="bidIncrement" class="col-sm-5 control-label">จำนวนเงินเพิ่มแต่ละครั้ง</label>
                                 <div class="input-group col-sm-4">
-                                    <input type="text" class="form-control" id="bidIncrement" path="bidIncrement">
+                                    <form:input type="text" class="form-control" id="bidIncrement" path="bidIncrement" />
                                     <span class="input-group-addon">บาท</span>
                                 </div>
                             </div>

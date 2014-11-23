@@ -74,7 +74,7 @@ public class CheckOutController {
     @RequestMapping(value = "/payment/{transactionID}", method = RequestMethod.GET)
     public String finishCheckout(@PathVariable("transactionID") long transactionID,Model model) {
         model.addAttribute("transactionID", transactionID);    
-        return "paymentView";//ชำระค่าสินค้าเรียบร้อยแล้ว
+        return "paymentView";//ไปยังหน้าpaypal
     }
     
     @RequestMapping(value = "/checkOut/checkoutTransaction/{transactionID}", method = RequestMethod.GET)

@@ -5,50 +5,50 @@
  */
 package com.se.ebid.controller;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-import java.io.Serializable;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import org.apache.velocity.tools.generic.LoopTool.Equals;
 import org.hibernate.validator.constraints.Email;
 
 /**
  *
  * @author mtmmoei
  */
-
-
 public class RegistrationForm {
-    @Size(min = 1,message = "First name is a required field")
+
+    @Size(min = 1, max = 45, message = "First name must not be empty or longer than 45 characters")
     private String firstName;
-    
-    @Size(min = 1,message = "last name is a required field")
+
+    @Size(min = 1, max = 45, message = "Last name must not be empty or longer than 45 characters")
     private String lastName;
-    
-    @Size(min = 5, message = "address error")
+
     private String address;
-    
-    @Size(min = 1,message = "country is a required field")
+
+    @Size(min = 1, max = 45, message = "Country must not be empty or longer than 45 characters")
     private String country;
-    
-    @Email
-    @Size(min = 1,message = "last name is a required field")
+
+    @Email(message = "Email is invalid")
+    @Size(min = 1, max = 45, message = "Email must not be empty and must not be longer than 45 characters")
     private String email;
-    
-    @Size(max=20,min=6)
-    @Pattern(regexp="[0-9]+")
+
+    @Size(min = 6, max = 20, message = "Phone number is invalid")
+    @Pattern(regexp = "[0-9]+")
     private String phoneNo;
     
-    @Pattern(regexp="[A-Za-z0-9]+",message = "invalid userID pattern" )
-    @Size(min=5, message = "userID requires at least 5 characters")
+    @Pattern(regexp = "[A-Za-z0-9]+", message = "User ID is invalid. It must contain only alphanumeric character")
+    @Size(min = 5, max = 20, message = "User ID requires at least 5 characters and at most 20 characters")
     private String userID;
-    
-    @Size(min=6,message= "password requires at least 6 characters")
+
+    @Size(min = 6, max = 20, message = "Password requires at least 6 characters and at most 20 characters")
     private String password;
-    
-    @Size(min=6,message= "password requires at least 6 characters")
+
+    @Size(min = 6, max = 20, message = "Confirm password requires at least 6 characters and at most 20 characters")
     private String confirmPassword;
+
+    @AssertTrue(message = "Password must be as same as confirm password")
+    private boolean isValid() {
+        return this.password.equals(this.confirmPassword);
+    }
 
     public String getFirstName() {
         return firstName;
@@ -121,5 +121,5 @@ public class RegistrationForm {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
-    
+
 }

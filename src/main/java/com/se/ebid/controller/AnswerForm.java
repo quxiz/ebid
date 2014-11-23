@@ -17,7 +17,7 @@ public class AnswerForm {
     private long parentID;
     private long askerID;
     
-    @Size(min=1,message="please answer the question")
+    @Size(min = 1, message = "Answer must not be empty")
     private String answer;
 
     public long getItemID() {

@@ -34,9 +34,10 @@ public class ViewSellerController {
 
     @RequestMapping(value = "/viewSeller/{sellerID}", method = RequestMethod.GET)
     @SuppressWarnings("empty-statement")
-    public String viewSeller(@PathVariable("sellerID") long sellerID, String sellerName, Model model) {
+    public String viewSeller(@PathVariable("sellerID") String sellerName, Model model) {
         model.addAttribute("title", "ข้อมูลผู้ขาย");
         model.addAttribute("seller", this.memberService.getSeller(sellerName));
+        long sellerID = this.memberService.getSeller(sellerName).getMemberID();
         List<Feedback> sellerFeedback = this.memberService.getSellerFeedback(sellerID);
         long sellerRating=0;
         for(int i=0; i<sellerFeedback.size();i++)sellerRating +=sellerFeedback.get(i).getSellerRating();                ;

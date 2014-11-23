@@ -180,6 +180,20 @@ public class TestDBController {
         model.addAttribute("listItems", listItems);
         return "testDBItemView";
     }
+    
+    @RequestMapping(value = "/testDB/item/search", method = RequestMethod.GET)
+    public String viewSearch(Model model) {
+        model.addAttribute("searchForm", new SearchForm());
+        //model.addAttribute("listItems", null);
+        return "testDBSearchView";
+    }
+    
+    @RequestMapping(value = "/testDB/item/search/submit", method = RequestMethod.POST)
+    public String itemSearch(@ModelAttribute("searchForm") SearchForm searchForm, Model model) {
+        model.addAttribute("item", this.testDBService.searchItem(searchForm));
+        model.addAttribute("listItems", this.testDBService.searchItem(searchForm));
+        return "testDBSearchView";
+    }
     /*
      ===============================================================
      ========================== Photo =============================

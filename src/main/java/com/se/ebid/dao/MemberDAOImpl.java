@@ -30,15 +30,10 @@ public class MemberDAOImpl implements MemberDAO {
 
     @Override
     public void save(Member member) {
-        //try {
         Session session = this.sessionFactory.getCurrentSession();
-            session.getTransaction().begin();
-            session.saveOrUpdate(member);
-            session.getTransaction().commit();
-        /*} catch (ConstraintViolationException e) {
-            System.out.println("catch 4 success");
-            System.out.println(e.getCause());
-        }*/
+        session.getTransaction().begin();
+        session.saveOrUpdate(member);
+        session.getTransaction().commit();
     }
 
     @SuppressWarnings("unchecked")
@@ -104,7 +99,7 @@ public class MemberDAOImpl implements MemberDAO {
             return null;
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public Member findByEmail(String email) {
@@ -122,6 +117,5 @@ public class MemberDAOImpl implements MemberDAO {
             return null;
         }
     }
-    
 
 }

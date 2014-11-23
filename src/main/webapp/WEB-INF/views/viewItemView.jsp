@@ -30,13 +30,13 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}">หน้าแรก</a></li>
-                <li a href="#">สินค้า</li>
-                <li a href="#" class="active">เสื้อผ้า</li> <!--ติดไว้ก่อนรอ search-->
+                <li><a href="${pageContext.request.contextPath}/search?category=All">สินค้า</a></li>
+                <li><a href="${pageContext.request.contextPath}/search?category=${item.category}" class="active">${item.category.name}</a></li> <!--ติดไว้ก่อนรอ search-->
             </ol>
 
             <h4>${item.title}</h4>
             <!--addaction link profile-->
-            <a href="${pageContext.request.contextPath}/viewSeller">${item.sellerName}</a> <!--name-->
+            <a href="${pageContext.request.contextPath}/viewSeller/${item.sellerID}">${item.sellerName}</a> <!--name-->
 
             <br>
             <br>
@@ -54,14 +54,14 @@
 
                         <c:if test = "${fn:length(listPhotos)>0}"> 
                             <div class="item active">
-                                <img src="img/${listPhotos[0].photoURL}" alt="..." class="carousel-img">
+                                <img src="${listPhotos[0].photoURL}" alt="..." class="carousel-img">
                                 <div class="carousel-caption">
                                 </div>
                             </div>
                             <c:if test = "${fn:length(listPhotos)>1}">
                                 <c:forEach var="i" begin="1" end="${fn:length(listPhotos)}">
                                     <div class="item">
-                                        <img src="img/${listPhotos[i].photoURL}" alt="..." class="carousel-img">
+                                        <img src="${listPhotos[i].photoURL}" alt="..." class="carousel-img">
                                         <div class="carousel-caption">
                                         </div>
                                     </div>
@@ -115,13 +115,13 @@
                         <br>
 
 
-                        <c:url var="addAction" value="/viewItem/onSubmitBidForm" ></c:url>
-                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="bidform" method="POST" name="bidform">
+                        <c:url var="addAction" value="/viewItem/${item.itemID}/onSubmitBidForm" ></c:url>
+                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="bidForm" method="POST" name="bidForm">
 
                             <div class="form-group">
                                 <label for="maxBid" class="col-sm-5 control-label">จำนวนเงินสูงสุด</label>
                                 <div class="input-group col-sm-4">
-                                    <input type="text" class="form-control" id="maxBid" path="maxBid">
+                                    <form:input type="text" class="form-control" id="maxBid" path="maxBid" />
                                     <span class="input-group-addon">บาท</span>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
                             <div class="form-group">
                                 <label for="bidIncrement" class="col-sm-5 control-label">จำนวนเงินเพิ่มแต่ละครั้ง</label>
                                 <div class="input-group col-sm-4">
-                                    <input type="text" class="form-control" id="bidIncrement" path="bidIncrement">
+                                    <form:input type="text" class="form-control" id="bidIncrement" path="bidIncrement" />
                                     <span class="input-group-addon">บาท</span>
                                 </div>
                             </div>

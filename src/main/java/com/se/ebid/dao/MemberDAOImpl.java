@@ -53,8 +53,8 @@ public class MemberDAOImpl implements MemberDAO {
         session.getTransaction().begin();
         List<Member> members = new ArrayList<Member>();
         members = sessionFactory.getCurrentSession()
-                .createQuery("from Member where userID=?")
-                .setParameter(0, userID)
+                .createQuery("from Member where userID=:userID")
+                .setParameter("userID", userID)
                 .list();
         session.getTransaction().commit();
         if (members.size() > 0) {
@@ -71,8 +71,8 @@ public class MemberDAOImpl implements MemberDAO {
         session.getTransaction().begin();
         List<Member> members = new ArrayList<Member>();
         members = sessionFactory.getCurrentSession()
-                .createQuery("from Member where activateKey=?")
-                .setParameter(0, activateKey)
+                .createQuery("from Member where activateKey=:activateKey")
+                .setParameter("activateKey", activateKey)
                 .list();
         session.getTransaction().commit();
         if (members.size() > 0) {
@@ -89,8 +89,8 @@ public class MemberDAOImpl implements MemberDAO {
         session.getTransaction().begin();
         List<Member> members = new ArrayList<Member>();
         members = sessionFactory.getCurrentSession()
-                .createQuery("from Member where memberID=?")
-                .setParameter(0, memberID)
+                .createQuery("from Member where memberID=:memberID")
+                .setParameter("memberID", memberID)
                 .list();
         session.getTransaction().commit();
         if (members.size() > 0) {
@@ -107,8 +107,8 @@ public class MemberDAOImpl implements MemberDAO {
         session.getTransaction().begin();
         List<Member> members = new ArrayList<Member>();
         members = sessionFactory.getCurrentSession()
-                .createQuery("from Member where email=?")
-                .setParameter(0, email)
+                .createQuery("from Member where email=:email")
+                .setParameter("email", email)
                 .list();
         session.getTransaction().commit();
         if (members.size() > 0) {

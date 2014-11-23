@@ -53,7 +53,7 @@ public class CheckOutController {
         model.addAttribute("title", "ชำระค่าสินค้า");
         Transaction transaction = this.transactionService.getTransaction(transactionID);
         Member member = this.memberService.getMember();
-        Item item = this.itemService.getItem(transaction.getTransactionID());
+        Item item = this.itemService.getItem(transactionID);
         TransactionForm transactionForm = new TransactionForm();
         transactionForm.setTransactionID(transactionID);
         transactionForm.setAddress(member.getAddress());
@@ -65,7 +65,7 @@ public class CheckOutController {
     }
 
     @RequestMapping(value = "/checkOut/submit", method = RequestMethod.POST)
-    public String onSubmitCheckout(@ModelAttribute TransactionForm transactionForm) {
+    public String onSubmitCheckout(@ModelAttribute ("transactionForm") TransactionForm transactionForm) {
         Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
     //    transaction.setShippingAddress(transactionForm.getAddress());
         return "redirect:/payment/"+transactionForm.getTransactionID();

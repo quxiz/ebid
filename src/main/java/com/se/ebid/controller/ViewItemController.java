@@ -43,51 +43,56 @@ public class ViewItemController {
      
     @RequestMapping(value = "/viewItem/{itemID}",method = RequestMethod.GET)
     public String viewItem(@PathVariable("itemID") long itemID, Model model) {
-        QuestionForm questionForm = new QuestionForm();
+        QuestionForm questionForm = new QuestionForm();        
+        Item item = this.itemService.getItem(itemID);        
         BuyForm buyForm = new BuyForm();
+        BidForm bidForm = new BidForm();
         questionForm.setItemID(itemID);
-        buyForm.setItemID(itemID);
-        
+        buyForm.setItemID(itemID);       
         model.addAttribute("buyForm", buyForm);
+        model.addAttribute("bidForm",bidForm);
         model.addAttribute("questionForm", questionForm);
-        model.addAttribute("item", this.itemService.getItem(itemID));
+        model.addAttribute("item",item);
         model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
         model.addAttribute("listComments",this.itemService.getComment(itemID));
-        model.addAttribute("title", this.itemService.getItem(itemID).getTitle());
+        model.addAttribute("title", item.getTitle());
         return "viewItemView";
 
     }
 
     @RequestMapping(value = "/viewItem/{itemID}/onSubmitQuestionForm", method = RequestMethod.POST)
-    public String onSubmitQuestionForm(@PathVariable ("itemID") long itemID,@ModelAttribute QuestionForm questionForm) {
+    public String onSubmitQuestionForm(@PathVariable ("itemID") long itemID,@ModelAttribute("questionForm") QuestionForm questionForm) {
              this.commentService.askQuestion(questionForm);
         return "redirect:/viewItem/{itemID}"; //url item
     }
 
-    public void onSubmitBidForm(BidForm form) {
-        //do sth
+    @RequestMapping(value = "/viewItem/{itemID}/onSubmitBidForm", method = RequestMethod.POST)
+    public String onSubmitBidForm(@PathVariable ("itemID") long itemID,@ModelAttribute ("bidForm") BidForm bidForm) {
+        this.itemService.bid(bidForm);
+        return "redirect:/viewItem/"+itemID;
     }
 
     @RequestMapping(value = {"/viewItem/{itemID}/onSubmitBuyForm"}, method = RequestMethod.POST)
-    public String onSubmitBuyForm(@PathVariable ("itemID") long itemID,@ModelAttribute("buyform") BuyForm buyForm,Model model, RedirectAttributes redirectAttributes) {
+    public String onSubmitBuyForm(@PathVariable ("itemID") long itemID,@ModelAttribute("buyForm") BuyForm buyForm,Model model, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("buyForm", buyForm);
         return "redirect:/buyItem/"+itemID;
 
     }
 
     @RequestMapping(value = "/buyItem/{itemID}", method = RequestMethod.GET)
-    public String buyItem(@ModelAttribute("buyform") BuyForm buyform, @PathVariable("itemID") long itemID, Model model) {
-        Invoice invoice = this.itemService.buy(buyform);
-        model.addAttribute("buyform", buyform);
+    public String buyItem(@ModelAttribute("buyForm") BuyForm buyForm,@PathVariable("itemID") long itemID, Model model) {
+        Invoice invoice = this.itemService.buy(buyForm);
+        if(invoice ==null) return "redirect:/error/Blacklisted userID can't buy any items.";
         model.addAttribute("invoice", invoice);
-        model.addAttribute("item", this.itemService.getItem(buyform.getItemID()));
-        // model.addAttribute("listPhotos", this.itemService.getItem(buyform.getItemID()).getPhoto());
+        model.addAttribute("item", this.itemService.getItem(itemID));
+        model.addAttribute("listPhotos", this.itemService.getPhoto(itemID));
         return "buyItemView";
     }
 
-    @RequestMapping(value = "/buyItem/confirmBuy", method = RequestMethod.POST)
-    public String confirmBuy(@ModelAttribute BuyForm buyform) {
-
-        return "";
+    @RequestMapping(value = "/buyItem/{itemID}/confirmBuy", method = RequestMethod.POST)
+    public String confirmBuy(@PathVariable("itemID") long itemID ,@ModelAttribute("buyForm") BuyForm buyForm) {
+        long transactionID = this.itemService.confirmBuy(buyForm);
+        if(transactionID<0) return "/viewItem/"+itemID;
+        return "redirect:/checkOut/"+transactionID;
     }
 }

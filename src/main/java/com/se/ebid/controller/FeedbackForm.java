@@ -5,13 +5,22 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author mtmmoei
  */
 public class FeedbackForm {
     private long transactionID;
+    
+    @Min(value = 1, message = "Rating must be at least 1")
+    @Max(value = 5, message = "Rating must be at most 5")
     private int rating;
+    
+    @Size(min = 1, message = "Comment must not be empty")
     private String comment;
 
     public long getTransactionID() {

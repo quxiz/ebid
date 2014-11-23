@@ -5,6 +5,8 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author mtmmoei
@@ -12,6 +14,8 @@ package com.se.ebid.controller;
 public class QuestionForm {
     private long itemID;
     private long sellerID;
+    
+    @Size(min = 1, message = "Question must not be empty")
     private String question;
 
     public long getItemID() {

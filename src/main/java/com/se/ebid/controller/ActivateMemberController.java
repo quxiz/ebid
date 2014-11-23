@@ -33,9 +33,11 @@ public class ActivateMemberController {
      public String viewActivateMember(@PathVariable ("activateKey") String activateKey,Model model) {
         model.addAttribute("title", "Activate Account");
         
-        boolean success = this.memberService.activateMember(activateKey);
-        model.addAttribute("success", success);
-        
-        return "activateMemberView";
+        boolean isSuccess = this.memberService.activateMember(activateKey);
+        model.addAttribute("isSuccess", isSuccess);
+        if(isSuccess){
+            model.addAttribute("text", "You have finished userID activation.");
+        }else {model.addAttribute("text", "There is a problem when you tried to activate userID.");}
+        return "showView";
     }  
 }

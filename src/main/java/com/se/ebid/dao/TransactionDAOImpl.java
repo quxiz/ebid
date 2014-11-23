@@ -50,9 +50,9 @@ public class TransactionDAOImpl implements TransactionDAO {
         session.getTransaction().begin();
         List<Transaction> transactions = new ArrayList<Transaction>();
         transactions = sessionFactory.getCurrentSession()
-                .createQuery("from Transaction where (completed=true and timestamp between ? and ?)")
-                .setParameter(0, startTime)
-                .setParameter(1, endTime)
+                .createQuery("from Transaction where (completed=true and timestamp between :startTime and :endTime)")
+                .setParameter("startTime", startTime)
+                .setParameter("endTime", endTime)
                 .list();
         session.getTransaction().commit();
         return transactions;

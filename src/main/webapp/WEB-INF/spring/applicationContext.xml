@@ -133,16 +133,16 @@
     </bean>
     
     
-    <bean id="itemService" class="com.se.ebid.service.ItemServiceImpl">
+    <bean id="itemServiceImpl" class="com.se.ebid.service.ItemServiceImpl">
     </bean>
-
+    
     
     <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="schedulerContextAsMap">
         <map>
-            <entry key="itemService" value-ref="itemService" />
+            <entry key="itemService" value-ref="itemServiceImpl" />
         </map>
     </property>
-    </bean>
+    </bean> 
     
 </beans>

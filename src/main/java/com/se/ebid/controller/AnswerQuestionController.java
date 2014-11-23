@@ -31,18 +31,19 @@ public class AnswerQuestionController {
         this.commentService = commentService;
     }
     
-    @RequestMapping(value = "/answerQuestion/{parentID}", method = RequestMethod.GET)
-     public String viewAnswerQuestion(@PathVariable ("parentID") long parentID, Model model) {
+    @RequestMapping(value = "/answerQuestion/{itemID}_{parentID}", method = RequestMethod.GET)
+     public String viewAnswerQuestion(@PathVariable ("itemID") long itemID,@PathVariable ("parentID") long parentID, Model model) {
         model.addAttribute("title", "ตอบคำถาม");
         AnswerForm answerForm = new AnswerForm();
         answerForm.setParentID(parentID);
+        answerForm.setItemID(itemID);
         model.addAttribute("answerForm",answerForm);
         return "answerQuestionView";
     }  
      
      @RequestMapping(value = "/answerQuestion/onSubmit",method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute AnswerForm answerForm){
-         this.commentService.answerQuestion(answerForm);
-         return "redirect:/viewMessage";// ไปหน้าไหนไม่รุดี หน้าตอบคำถามเสร็จสิ้น?
+     public String onSubmit(@ModelAttribute ("answerForm") AnswerForm answerForm){
+         if(this.commentService.answerQuestion(answerForm))return "redirect:/viewItem/"+answerForm.getItemID();
+        return "";
      }
 }

@@ -40,230 +40,24 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <div class="container">
-            <h3>ผลการค้นหาสินค้า</h3>
+            <h3>ผลการค้นหาคำว่า ${keyword} จาก ${category}</h3>
             <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/1.jpg" alt="..."></a>
+            <c:forEach items="${listItems}" var = "item">
+                <div class = "row">
+                    <div class="col-sm-4 col-md-4">
+                        <div class="thumbnail">
+                            <a href="viewItem/${item.itemID}"><img src="item.img.jpg" alt="..."></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-8 col-md-8">	
+                        <div class="caption">	
+                            <a href="viewItem/${item.itemID}"><p>${item.title}</p></a>
+                            <h3>${item.price} บาท</h3><h4>${item.sellingType}</h4>
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-sm-8 col-md-8">	
-
-                    <div class="caption">	
-                        <a href="ViewItem.html"><p>BRANDIT M-65 Classic Herren Jacke schwarz Feldjacke BW Kapuze Fieldjacket M65</p></a>
-                        <h3>2038 บาท</h3><h4>ซื้อทันที</h4>
-
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/2.jpg" alt="..."></a>
-                    </div></div>
-
-                <div class="col-sm-8 col-md-8">	
-
-                    <div class="caption">
-                        <p>Levis 501 Mens Jeans Stonewashed W30 W32 W34 W36 W38 +</p>
-                        <h3>1303 บาท</h3><h4>ซื้อทันที</h4>
-
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/3.jpg" alt="..."></a>
-                    </div>
-                </div>
-                <div class="col-sm-8 col-md-8">	
-                    <div class="caption">
-                        <p>Black Rivet Fully Lined Faux-Leather Scuba Jacket w/ Knit Inset</p>
-                        <h3>1693 บาท</h3><h4>ซื้อทันที</h4>
-                    </div>
-                </div>
-            </div>
-            <hr>
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/4.jpg" alt="..."></a>
-                    </div>
-                </div>
-                <div class="col-sm-8 col-md-8">	
-                    <div class="caption">
-                        <p>FROM OUT OF THE WEST, COUNTRY , CASSETTE TAPE</p>
-                        <h3>105 บาท</h3><h4>0 bids</h4>
-                    </div>
-                </div>
-            </div>
-            <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/1.jpg" alt="..."></a>
-                    </div>
-                </div>
-
-                <div class="col-sm-8 col-md-8">	
-
-                    <div class="caption">	
-                        <p>BRANDIT M-65 Classic Herren Jacke schwarz Feldjacke BW Kapuze Fieldjacket M65</p>
-                        <h3>2038 บาท</h3><h4>ซื้อทันที</h4>
-
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/2.jpg" alt="..."></a>
-                    </div>
-                </div>
-
-                <div class="col-sm-8 col-md-8">	
-
-                    <div class="caption">
-                        <p>Levis 501 Mens Jeans Stonewashed W30 W32 W34 W36 W38 +</p>
-                        <h3>1303 บาท</h3><h4>ซื้อทันที</h4>
-
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/3.jpg" alt="..."></a>
-                    </div>
-                </div>
-
-                <div class="col-sm-8 col-md-8">	
-
-                    <div class="caption">
-                        <p>Black Rivet Fully Lined Faux-Leather Scuba Jacket w/ Knit Inset</p>
-                        <h3>1693 บาท</h3><h4>ซื้อทันที</h4>
-
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/4.jpg" alt="..."></a>
-                    </div>
-                </div>
-
-                <div class="col-sm-8 col-md-8">	
-
-                    <div class="caption">
-                        <p>FROM OUT OF THE WEST, COUNTRY , CASSETTE TAPE</p>
-                        <h3>105 บาท</h3><h4>0 bids</h4>
-
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/1.jpg" alt="..."></a>
-                    </div>
-                </div>
-
-                <div class="col-sm-8 col-md-8">	
-
-                    <div class="caption">	
-                        <p>BRANDIT M-65 Classic Herren Jacke schwarz Feldjacke BW Kapuze Fieldjacket M65</p>
-                        <h3>2038 บาท</h3><h4>ซื้อทันที</h4>
-
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/2.jpg" alt="..."></a>
-                    </div>
-                </div>
-
-                <div class="col-sm-8 col-md-8">	
-
-                    <div class="caption">
-                        <p>Levis 501 Mens Jeans Stonewashed W30 W32 W34 W36 W38 +</p>
-                        <h3>1303 บาท</h3><h4>ซื้อทันที</h4>
-
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/3.jpg" alt="..."></a>
-                    </div>
-                </div>
-
-                <div class="col-sm-8 col-md-8">	
-
-                    <div class="caption">
-                        <p>Black Rivet Fully Lined Faux-Leather Scuba Jacket w/ Knit Inset</p>
-                        <h3>1693 บาท</h3><h4>ซื้อทันที</h4>
-
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-
-            <div class = "row">
-                <div class="col-sm-4 col-md-4">
-                    <div class="thumbnail">
-                        <a href="ViewItem.html"><img src="img/4.jpg" alt="..."></a>
-                    </div>
-                </div>
-
-                <div class="col-sm-8 col-md-8">	
-
-                    <div class="caption">
-                        <p>FROM OUT OF THE WEST, COUNTRY , CASSETTE TAPE</p>
-                        <h3>105 บาท</h3><h4>0 bids</h4>
-
-                    </div>
-
-                </div>
-            </div>
-            <hr>
-
-
-
+                <hr>
+            </c:forEach>
         </div>
-    </div>
-</tiles:putAttribute>
+    </tiles:putAttribute>
 </tiles:insertDefinition>

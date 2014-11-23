@@ -20,12 +20,12 @@ public class BidForm {
     @DecimalMin(value = "0.01", message = "Maxbid must be greater than or equal to 0.01")
     @Size(min = 1, message = "Maxbid must not be empty")
     @Digits(integer = 20, fraction = 2, message = "Maxbid is invalid")
-    private BigDecimal maxBid;
+    private double maxBid;
     
     @DecimalMin(value = "0.01", message = "Bid increment must be greater than or equal to 0.01")
     @Size(min = 1, message = "Bid increment must not be empty")
     @Digits(integer = 20, fraction = 2, message = "Bid increment is invalid")
-    private BigDecimal bidIncrement;
+    private double bidIncrement;
     
     public long getItemID() {
         return itemID;
@@ -36,19 +36,19 @@ public class BidForm {
     }
 
     public double getMaxBid() {
-        return maxBid.doubleValue();
+        return maxBid;
     }
 
     public void setMaxBid(double maxBid) {
-        this.maxBid = BigDecimal.valueOf(maxBid);
+        this.maxBid = maxBid;
     }
 
     public double getBidIncrement() {
-        return bidIncrement.doubleValue();
+        return bidIncrement;
     }
 
     public void setBidIncrement(double bidIncrement) {
-        this.bidIncrement = BigDecimal.valueOf(bidIncrement);
+        this.bidIncrement = bidIncrement;
     }
     
 }

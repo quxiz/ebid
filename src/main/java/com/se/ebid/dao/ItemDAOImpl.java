@@ -71,8 +71,6 @@ public class ItemDAOImpl implements ItemDAO {
         if (searchForm.getCategory() != null) {
             category = searchForm.getCategory().toString();
         }
-        System.out.println(searchForm.getCategory());
-
         String keyword = searchForm.getKeyword();
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();

@@ -43,7 +43,7 @@ public class SolveComplaintController {
     }  
      
      @RequestMapping(value = "/solveComplaint/onSubmit", method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute SolveComplaintForm solveComplaintForm){
+     public String onSubmit(@ModelAttribute ("solveComplaintForm") SolveComplaintForm solveComplaintForm){
         boolean success = this.complaintService.solveComplaint(solveComplaintForm);
         if(success)return "redirect:/solveComplaint";
         else return "redirect:/solveComplaint";//notfound     

@@ -91,7 +91,7 @@
                     <!--buy form-->
                     <c:if test="${item.sellingType=='BUY'}"> 
                         <c:url var="addAction" value="/viewItem/onSubmitBuyForm" ></c:url>
-                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="buyform" method="POST" name="buyform">
+                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="buyForm" method="POST" name="buyForm">
                             <label for="inputQuantity" class="col-xs-2 control-label">จำนวน</label>
                             <div class="input-group col-xs-4">
                                 <form:input type="text" class="form-control" id="inputQuantity" placeholder="จำนวน" value="1" path="quantity"/>
@@ -272,7 +272,7 @@
 
 
                                 <c:url var="addAction" value="/viewItem/onSubmitQuestionForm" ></c:url>
-                                <form:form action="${addAction}" modelAttribute="qform" method="POST" name="qform">
+                                <form:form action="${addAction}" modelAttribute="questionForm" method="POST" name="questionForm">
                                     <div class="modal-body">
                                         <h4>คำถาม</h4>                                   
                                         <form:textarea class="form-control" rows="3" path="question" />

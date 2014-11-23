@@ -40,42 +40,38 @@ public class ViewItemController {
      public void setCommentService(CommentService commentService) {
      this.commentService = commentService;
      }
-    @RequestMapping(value = "/viewItem/{itemID}" )
+     
+    @RequestMapping(value = "/viewItem/{itemID}",method = RequestMethod.GET)
     public String viewItem(@PathVariable("itemID") long itemID, Model model) {
-        QuestionForm qform = new QuestionForm();
-        BuyForm buyform = new BuyForm();
-        qform.setItemID(itemID);
-        buyform.setItemID(itemID);
-        model.addAttribute("buyform", buyform);
-        model.addAttribute("qform", qform);
+        QuestionForm questionForm = new QuestionForm();
+        BuyForm buyForm = new BuyForm();
+        questionForm.setItemID(itemID);
+        buyForm.setItemID(itemID);
+        
+        model.addAttribute("buyForm", buyForm);
+        model.addAttribute("questionForm", questionForm);
         model.addAttribute("item", this.itemService.getItem(itemID));
         model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
         model.addAttribute("listComments",this.itemService.getComment(itemID));
-
-//        List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
-//        model.addAttribute("categoryList", categoryList);
         model.addAttribute("title", this.itemService.getItem(itemID).getTitle());
         return "viewItemView";
 
     }
 
-    @RequestMapping(value = "/viewItem/onSubmitQuestionForm", method = RequestMethod.POST)
-    public String onSubmitQuestionForm(@ModelAttribute QuestionForm qform) {
-             this.commentService.askQuestion(qform);
-        return "redirect:/viewItem"; //url
+    @RequestMapping(value = "/viewItem/{itemID}/onSubmitQuestionForm", method = RequestMethod.POST)
+    public String onSubmitQuestionForm(@PathVariable ("itemID") long itemID,@ModelAttribute QuestionForm questionForm) {
+             this.commentService.askQuestion(questionForm);
+        return "redirect:/viewItem/{itemID}"; //url item
     }
 
     public void onSubmitBidForm(BidForm form) {
         //do sth
     }
 
-    @RequestMapping(value = {"/viewItem/onSubmitBuyForm"}, method = RequestMethod.POST)
-    public String onSubmitBuyForm(@ModelAttribute("buyform") BuyForm buyform,
-            Model model, RedirectAttributes redirectAttributes) {
-
-        redirectAttributes.addFlashAttribute("buyform", buyform);
-
-        return "redirect:/buyItem/" + buyform.getItemID();
+    @RequestMapping(value = {"/viewItem/{itemID}/onSubmitBuyForm"}, method = RequestMethod.POST)
+    public String onSubmitBuyForm(@PathVariable ("itemID") long itemID,@ModelAttribute("buyform") BuyForm buyForm,Model model, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("buyForm", buyForm);
+        return "redirect:/buyItem/"+itemID;
 
     }
 
@@ -88,21 +84,6 @@ public class ViewItemController {
         // model.addAttribute("listPhotos", this.itemService.getItem(buyform.getItemID()).getPhoto());
         return "buyItemView";
     }
-    /*
-    
-     //not sure
-     @RequestMapping(value = "/buyItem/{itemID}/{quantity}", method = RequestMethod.GET)
-     public String buyItem(@PathVariable("itemID") long itemID,@PathVariable("quantity") long quantity, Model model) {
-     BuyForm buyform=new BuyForm();
-     buyform.setItemID(itemID);
-     buyform.setQuantity(quantity);
-     Invoice invoice = this.itemService.buy(buyform);
-     model.addAttribute("invoice", invoice);
-     model.addAttribute("buyform", buyform);
-     model.addAttribute("item", this.itemService.getItem(itemID));
-     //   model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
-     return "buyItemView"; //jsp
-     }*/
 
     @RequestMapping(value = "/buyItem/confirmBuy", method = RequestMethod.POST)
     public String confirmBuy(@ModelAttribute BuyForm buyform) {

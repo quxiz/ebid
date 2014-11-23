@@ -25,7 +25,7 @@ public class RegisterItemForm {
     private Timestamp endTime;
 //    private String paymentMethod;
     private String shippingService;
-    private double shippingCost;
+    private String shippingCost;
     private String packageDetail;
     private String returnPolicy;
 //    private String delivery;
@@ -126,11 +126,11 @@ public class RegisterItemForm {
         this.shippingService = shippingService;
     }
 
-    public double getShippingCost() {
+    public String getShippingCost() {
         return shippingCost;
     }
 
-    public void setShippingCost(double shippingCost) {
+    public void setShippingCost(String shippingCost) {
         this.shippingCost = shippingCost;
     }
 

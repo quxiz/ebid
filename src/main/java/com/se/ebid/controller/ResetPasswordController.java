@@ -44,9 +44,14 @@ public class ResetPasswordController {
     }
      @RequestMapping(value="/resetPassword/onSubmit",method = RequestMethod.POST)
      public String onSubmit(@ModelAttribute ResetPasswordForm resetPasswordForm){
-         boolean success = this.memberService.resetPassword(resetPasswordForm);
-         if(success)
-         return "redirect:/signIn";//หน้าเปลี่ยนรหัสผ่านสำเร็จ
+         
+         if(resetPasswordForm.getNewPassword() == resetPasswordForm.getConfirmNewPassword()){
+            boolean success = this.memberService.resetPassword(resetPasswordForm);
+            if(success)
+                return "redirect:/signIn";//หน้าเปลี่ยนรหัสผ่านสำเร็จ
+            else
+                return "redirect:/"; //ไม่มีอีเมล์อยู่
+         }
          return "redirect:/signIn";//หน้าเปลี่ยนรหัสผ่านผิดพลาด
      }
 }

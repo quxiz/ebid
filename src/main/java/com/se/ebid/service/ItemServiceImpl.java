@@ -134,27 +134,33 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public boolean bid(BidForm bidForm) {
+    public int bid(BidForm bidForm) {
         System.out.println("step1");
         long memberID = Common.getMemberID();
         Member member = this.memberDAO.findByMemberID(memberID);
         if (member == null) {
-            return false;
+            return ItemService.ERR_MISSING_MEMBER;
+        }
+        if (member.isBlacklisted()){
+            return ItemService.ERR_BLACKLIST;
+        }
+        if (member.getPaymentAccount() == null){
+            return ItemService.ERR_NO_PAY_ACC;
         }
         System.out.println("step1.1");
         AutoBid autoBid = this.autoBidDAO.findByItemID(bidForm.getItemID());
         if (autoBid == null) {
-            return false;
+            return ItemService.ERR_MISSING_AUTOBID;
         }
         System.out.println("step1.2");
         Item item = this.itemDAO.findByItemID(bidForm.getItemID());
         if (item == null) {
-            return false;
+            return ItemService.ERR_MISSING_ITEM;
         }
         System.out.println("step2");
         double newMaxBid = bidForm.getMaxBid();
         if (newMaxBid < item.getPrice()) {
-            return false;
+            return ItemService.ERR_LOW_PRICE;
         }
         double oldMaxBid = autoBid.getMaxBid();
         double newBidIncrement = bidForm.getBidIncrement();
@@ -200,7 +206,7 @@ System.out.println("step4");
             this.itemDAO.save(item);
         }
         System.out.println("step5");
-        return true;
+        return 1;
     }
 
     @Override
@@ -220,21 +226,26 @@ System.out.println("step4");
         Member member = this.memberDAO.findByMemberID(Common.getMemberID());
         Invoice invoice = new Invoice();
         if (member == null) {
-            return null;
+            invoice.setItemID(ItemService.ERR_MISSING_MEMBER);
+            return invoice;
         }
         if (member.isBlacklisted()) {
-            invoice.setItemID(-1);
+            invoice.setItemID(ItemService.ERR_BLACKLIST);
+            return invoice;
+        }
+        if (member.getPaymentAccount() == null){
+            invoice.setItemID(ItemService.ERR_NO_PAY_ACC);
             return invoice;
         }
 
         long itemID = buyForm.getItemID();
         Item item = this.itemDAO.findByItemID(itemID);
         if (item == null) {
-            return null;
+            invoice.setItemID(ItemService.ERR_MISSING_ITEM);
+            return invoice;
         }
         if (item.getQuantity() < buyForm.getQuantity()) {
-            
-            invoice.setItemID(-2);
+            invoice.setItemID(ItemService.ERR_NOT_ENOUGH_QTY);
             return invoice;
         }
 

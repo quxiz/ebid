@@ -23,7 +23,11 @@ import com.se.ebid.controller.ReceivingInfoForm;
  * @author Quxiz
  */
 public interface MemberService {
-    public boolean register(RegistrationForm registrationForm);
+    public static final int ERR_DUP_EMAIL = -1;
+    public static final int ERR_DUP_USER = -2;
+    public static final int ERR_FAIL_SEND_EMAIL = -3;
+    
+    public int register(RegistrationForm registrationForm);
     //class diagram - String[]
     public boolean sendActivateEmail(Member member);
     public boolean activateMember(String activateKey);

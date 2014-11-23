@@ -94,12 +94,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public boolean register(RegistrationForm registrationForm) {
+    public int register(RegistrationForm registrationForm) {
         if (this.memberDAO.findByUserID(registrationForm.getUserID()) != null) {
-            return false;
+            return -2;
         }
         if (this.memberDAO.findByEmail(registrationForm.getEmail()) != null) {
-            return false;
+            return -1;
         }
         Member member = new Member();
         member.setFirstName(registrationForm.getFirstName());
@@ -112,10 +112,10 @@ public class MemberServiceImpl implements MemberService {
         member.setPassword(toSHA256(registrationForm.getPassword()));
         member.setTimestamp(new Timestamp((System.currentTimeMillis())));
         member.setActivateKey(generateActivateKey());
-        if(!this.sendActivateEmail(member)) return false;
+        if(!this.sendActivateEmail(member)) return -3;
         this.memberDAO.save(member);
 
-        return true;
+        return 1;
     }
 
     @Override

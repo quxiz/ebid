@@ -74,13 +74,18 @@ public class CheckOutController {
     @RequestMapping(value = "/payment/{transactionID}", method = RequestMethod.GET)
     public String finishCheckout(@PathVariable("transactionID") long transactionID,Model model) {
         model.addAttribute("transactionID", transactionID);    
-        return "paymentView";//ไปยังหน้าpaypal
+        return "paymentView";
     }
     
     @RequestMapping(value = "/checkOut/checkoutTransaction/{transactionID}", method = RequestMethod.GET)
     public String finishCheckout(@PathVariable("transactionID") long transactionID) {
-        this.transactionService.checkOutTransaction(transactionID);        
-        return "redirect:/";//ชำระค่าสินค้าเรียบร้อยแล้ว
+        if(this.transactionService.checkOutTransaction(transactionID)){        
+            return "redirect:/";
+        }
+        else
+        {
+            return "";
+        }
     }
     
 }

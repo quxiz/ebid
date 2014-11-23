@@ -6,6 +6,7 @@
 package com.se.ebid.controller;
 
 import com.se.ebid.entity.Item;
+import com.se.ebid.entity.Photo;
 import com.se.ebid.service.ItemService;
 import static java.rmi.Naming.list;
 import java.util.ArrayList;
@@ -44,9 +45,19 @@ public class SearchController {
         } else {
             model.addAttribute("category","null");
         }
-//        List<Item> listItems = itemService.search(searchForm);
+        List<Item> listItems = itemService.search(searchForm);
         model.addAttribute("keyword", keyword);
-//        model.addAttribute("listItems", listItems);
+        model.addAttribute("listItems", listItems);
+        List<Photo> listPhotos = null;
+        for(int i=0;i<listItems.size();i++){
+            if(this.itemService.getPhoto(listItems.get(i).getItemID()).isEmpty()){
+                Photo tmp = new Photo();
+                boolean add = listPhotos.add(tmp);
+            }else{
+                boolean add = listPhotos.add(this.itemService.getPhoto(listItems.get(i).getItemID()).get(0));
+            }
+        
+            }
         return "searchResultView";
     }
     

@@ -60,15 +60,15 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="fault" class="col-sm-3 control-label">จุดบกพร่อง</label>
+                                    <label for="something" class="col-sm-3 control-label">จุดบกพร่อง</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control" name="something" placeholder="จุดบกพร่อง"/>
                                     </div>
 
                                 </div>
                             </div>
-                            ${form.specifics}
-                            <form:hidden id="specificsJson" placeholder="itemID" path="specifics" value=""/>
+
+                            <form:hidden id="specifics-json" placeholder="itemID" path="specifics" value=""/>
 
 
 
@@ -81,7 +81,7 @@
                                         </button>
                                         <ul id="category" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
-                                            <c:forEach items="${categoryList}" var="category">
+                                            <c:forEach items="${categoryList}" var="category" begin="1">
                                                 <li role="presentation"><a role="menuitem" tabindex="-1">${category.name}</a>
                                                 </li>
                                             </c:forEach>
@@ -117,16 +117,19 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="form-group" id="auction" hidden="true">
                                 <label for="datetimepicker1" class="col-sm-3 control-label">เวลาสิ้นสุดการประมูล</label>
 
                                 <div class="col-sm-3">
                                     <div class='input-group date' id='datetimepicker1'>
-                                        <input type="text" class="form-control" id="endTime"/>
+                                        <form:input type="text" class="form-control" id="endTime" path="endTime"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label for="price" class="col-sm-3 control-label" id="priceLabel">ราคา</label>
                                 <div class="input-group col-sm-3">
@@ -143,19 +146,59 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="shippingService" class="col-sm-3 control-label">วิธีการจัดส่ง</label>
-                                <div class="col-sm-6">
-                                    <form:input type="text" class="form-control" id="shippingService" placeholder="วิธีการจัดส่ง" path="shippingService"/>
+                                <label class="col-sm-3 control-label">วิธีการจัดส่ง</label>
+                                <div class="col-sm-1">
+                                    <div class="checkbox" >
+                                        <label>
+                                            <input id="shippingService1" type="checkbox" value="" onclick="validate()">
+                                            ด่วน
+                                        </label>
+                                    </div>
 
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="shippingCost" class="col-sm-3 control-label">ค่าส่ง</label>
-                                <div class="input-group col-sm-3">
-                                    <form:input type="text" class="form-control" id="shippingCost" placeholder="ค่าส่ง" path="shippingCost"/>
-                                    <span class="input-group-addon">บาท</span>
+                                <div class="col-sm-8">
+                                    <label for="shippingServicePrice1" class="col-sm-1 control-label">ราคา</label>
+                                    <div class="input-group col-sm-3">
+                                        <input type="text" class="form-control" id="shippingServicePrice1" onkeyup="savePrice()" disabled="true" value="0"/>
+                                        <span class="input-group-addon">บาท</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1 col-sm-offset-3">
+                                    <div class="checkbox" >
+                                        <label>
+                                            <input id="shippingService2" type="checkbox" value="" onclick="validate()">
+                                            มาตรฐาน
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-8">
+                                    <label for="shippingServicePrice2" class="col-sm-1 control-label">ราคา</label>
+                                    <div class="input-group col-sm-3">
+                                        <input type="text" class="form-control" id="shippingServicePrice2" disabled="true" onkeyup="savePrice()" value="0"/>
+                                        <span class ="input-group-addon">บาท</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1 col-sm-offset-3">
+                                    <div class="checkbox" >
+                                        <label>
+                                            <input id="shippingService3" type="checkbox" value="" onclick="validate()">
+                                            ประหยัด
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-8">
+                                    <label for="shippingServicePrice3" class="col-sm-1 control-label">ราคา</label>
+                                    <div class="input-group col-sm-3">
+                                        <input type="text" class="form-control" id="shippingServicePrice3" disabled="true" onkeyup="savePrice()" value="0"/>
+                                        <span class ="input-group-addon">บาท</span>
+                                    </div>
                                 </div>
                             </div>
+                            <form:hidden id="shippingService" path="shippingService"/>
+                            <form:hidden id="shippingCost" path="shippingCost"/>
+
                             <div class="form-group">
                                 <label for="packageDetail" class="col-sm-3 control-label">วิธีการจัดส่งหีบห่อ</label>
                                 <div class="col-sm-6">
@@ -195,19 +238,13 @@
 
         <script>
             $(function () {
-
                 $("#category li a").click(function () {
                     var selText = $(this).text();
                     $(this).parents('.dropdown').find('.dropdown-toggle').html(selText + "&nbsp;&nbsp;" + '<span class="caret"></span>');
-
-                    //                    var registerAttributes = model.get("RegistrationForm");
-                    //                    registerAttributes.country = selText;
-                    //                    model.set("RegistrationForm", registerAttributes);
                 });
                 $("#sellingType li a").click(function () {
                     var selText = $(this).text();
                     $(this).parents('.dropdown').find('.dropdown-toggle').html(selText + "&nbsp;&nbsp;" + '<span class="caret"></span>');
-
                     //                    var registerAttributes = model.get("RegistrationForm");
                     //                    registerAttributes.country = selText;
                     //                    model.set("RegistrationForm", registerAttributes);
@@ -221,28 +258,86 @@
                     }
                 });
                 $('#datetimepicker1').datetimepicker();
-                //                ($('#datetimepicker1').data("DateTimePicker").getDate()
-                //              
+//                $('#endTimeInput').keyup(function () {
+//                    try {
+//                    var dateFormat = new simpleDateFormat();
+//                            dateFormat.applyPattern('dd/MM/yyyy h:mm a');
+//                            Date parsedDate = dateFormat.parse($('#endTimeInput').text());
+//                            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+//                            $('#endTime').val(timestamp);
+//                } catch (e) {//this generic but you csan control another types of exception
+//                }
+//            });
 
-            });
+            });</script>
+        <script>
+            function validate() {
+                var shippingService = "";
+                if (document.getElementById('shippingService1').checked) {
+                    document.getElementById('shippingServicePrice1').disabled = false;
+                    shippingService += "ด่วน ";
+                } else if (!document.getElementById('shippingService1').checked) {
+                    document.getElementById('shippingServicePrice1').disabled = true;
+                    $("#shippingServicePrice1").val("0");
+               
+                }
+                ;
+                if (document.getElementById('shippingService2').checked) {
+                    document.getElementById('shippingServicePrice2').disabled = false;
+                    shippingService += "มาตรฐาน "
+                } else if (!document.getElementById('shippingService2').checked) {
+                    document.getElementById('shippingServicePrice2').disabled = true;
+                    $("#shippingServicePrice2").val("0");
+                
+                }
+                ;
+                if (document.getElementById('shippingService3').checked) {
+                    document.getElementById('shippingServicePrice3').disabled = false;
+                    shippingService += "ประหยัด"
+                } else if (!document.getElementById('shippingService3').checked) {
+                    document.getElementById('shippingServicePrice3').disabled = true;
+                    $("#shippingServicePrice3").val("0");
+            
+                }
+                ;
+                $("#shippingService").val(shippingService);
+                savePrice();
+            }
+
+            function savePrice() {
+                var shippingCost = "";
+                if (document.getElementById('shippingService1').checked) {
+
+                    shippingCost += $("#shippingServicePrice1").val() + " ";
+
+                }
+                ;
+                if (document.getElementById('shippingService2').checked) {
+
+                    shippingCost += $("#shippingServicePrice2").val() + " ";
+
+                }
+                ;
+                if (document.getElementById('shippingService3').checked) {
+
+                    shippingCost += $("#shippingServicePrice3").val().toString();
+                }
+                ;
+                $("#shippingCost").val(shippingCost);
+            }
         </script>
         <script>
             $("#specifics-form").keyup(function () {
-                $("#specificsJson").val(JSON.stringify($("#specifics-form :input").serializeArray()));
-
+                $("#specifics-json").val(JSON.stringify($("#specifics-form :input").serializeArray()));
             });
-
             $("#specifics-add").click(function () {
                 var specificName = $("#specifics-name").val();
                 $("#specifics-name").val("");
                 $("#specifics-form").append('<div class="specifics-' + specificName + '">' + specificName + ' : <input name="' + specificName + '" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
             });
-
             $(document).on("click", "#specifics-remove", function () {
                 $(this).parent().remove();
-            });
-
-        </script>
+            });</script>
 
         <script>
             $(document).ready(function () {
@@ -253,7 +348,8 @@
                         $("#specifics-form").append('<div class="specifics-' + value.name + '">' + value.name + ' : <input name="' + value.name + '" value="' + value.value + '"><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
                     });
                 }
-            });
+            }
+            );
         </script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

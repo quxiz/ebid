@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `ebid`.`Item` (
   `endTime` TIMESTAMP NULL,
 --   `paymentMethod` TEXT NULL,
   `shippingService` TEXT NULL,
-  `shippingCost` DOUBLE NULL,
+  `shippingCost` TEXT NULL,
   `packageDetail` TEXT NULL,
   `returnPolicy` TEXT NULL,
   `timestamp` TIMESTAMP NULL,

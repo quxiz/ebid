@@ -5,11 +5,16 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+
 /**
  *
  * @author mtmmoei
  */
 public class ForgotPasswordForm {
+    @Email(message = "Email is invalid")
+    @Size(min = 1, max = 45, message = "Email must not be empty and must not be longer than 45 characters")
     private String email;
 
     public String getEmail() {

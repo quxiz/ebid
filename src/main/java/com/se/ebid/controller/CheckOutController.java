@@ -63,11 +63,12 @@ public class CheckOutController {
         model.addAttribute("item", item);
         return "checkOutView";
     }
-
+    
     @RequestMapping(value = "/checkOut/submit", method = RequestMethod.POST)
     public String onSubmitCheckout(@ModelAttribute ("transactionForm") TransactionForm transactionForm) {
         Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
-    //    transaction.setShippingAddress(transactionForm.getAddress());
+        transaction.setShippingAddress(transactionForm.getAddress());
+        transaction.setShippingService(transactionForm.getShippingService());
         return "redirect:/payment/"+transactionForm.getTransactionID();
     }
     
@@ -75,17 +76,5 @@ public class CheckOutController {
     public String finishCheckout(@PathVariable("transactionID") long transactionID,Model model) {
         model.addAttribute("transactionID", transactionID);    
         return "paymentView";
-    }
-    
-    @RequestMapping(value = "/checkOut/checkoutTransaction/{transactionID}", method = RequestMethod.GET)
-    public String finishCheckout(@PathVariable("transactionID") long transactionID) {
-        if(this.transactionService.checkOutTransaction(transactionID)){        
-            return "redirect:/";
-        }
-        else
-        {
-            return "";
-        }
-    }
-    
+    }    
 }

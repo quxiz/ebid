@@ -18,6 +18,16 @@ class TransactionForm {
     @Size(min = 1, message = "Address must not be empty")
     private String address;
 
+    private String shippingService;
+
+    public String getShippingService() {
+        return shippingService;
+    }
+
+    public void setShippingService(String shippingService) {
+        this.shippingService = shippingService;
+    }
+    
     public long getTransactionID() {
         return transactionID;
     }

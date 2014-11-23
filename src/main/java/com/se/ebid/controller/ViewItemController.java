@@ -82,7 +82,19 @@ public class ViewItemController {
     @RequestMapping(value = "/buyItem/{itemID}", method = RequestMethod.GET)
     public String buyItem(@ModelAttribute("buyForm") BuyForm buyForm,@PathVariable("itemID") long itemID, Model model) {
         Invoice invoice = this.itemService.buy(buyForm);
-        if(invoice ==null) return "redirect:/error/Blacklisted userID can't buy any items.";
+        if(invoice ==null) {
+            model.addAttribute("isSuccess","false");
+            model.addAttribute("text", "Error found");
+             return "showView";
+        }else if(invoice.getItemID()==-1){
+            model.addAttribute("isSuccess","false");
+            model.addAttribute("text", "Your userID is in the blacklist");
+            return "showView";
+        }else if(invoice.getItemID()==-2){
+            model.addAttribute("isSuccess","false");
+            model.addAttribute("text", "Quantity exceed");
+            return "showView";
+        }
         model.addAttribute("invoice", invoice);
         model.addAttribute("item", this.itemService.getItem(itemID));
         model.addAttribute("listPhotos", this.itemService.getPhoto(itemID));

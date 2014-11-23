@@ -213,11 +213,13 @@ public class ItemServiceImpl implements ItemService {
     @Transactional
     public Invoice buy(BuyForm buyForm) {
         Member member = this.memberDAO.findByMemberID(Common.getMemberID());
+        Invoice invoice = new Invoice();
         if (member == null) {
             return null;
         }
         if (member.isBlacklisted()) {
-            return null;
+            invoice.setItemID(-1);
+            return invoice;
         }
 
         long itemID = buyForm.getItemID();
@@ -226,10 +228,11 @@ public class ItemServiceImpl implements ItemService {
             return null;
         }
         if (item.getQuantity() < buyForm.getQuantity()) {
-            return null;
+            
+            invoice.setItemID(-2);
+            return invoice;
         }
 
-        Invoice invoice = new Invoice();
         invoice.setItemID(itemID);
         invoice.setQuantity(buyForm.getQuantity());
         invoice.setTotal(buyForm.getQuantity() * item.getPrice());

@@ -43,7 +43,9 @@ public class EditPaymentInfoController {
      public String onSubmitEditPaymentInfo(@ModelAttribute PaymentInfoForm paymentInfoForm){
          if(this.memberService.editPaymentInfo(paymentInfoForm)){
              return "rediect:/success/Your Payment Infomation has changed";
-         }else {}
+         }else {
+             return "redirect:/error/There is a problem with your new Payment Information and can't change";
+         }
          
      }
 }

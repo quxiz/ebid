@@ -6,12 +6,16 @@
 
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author Kawin
  */
 class TransactionForm {
     private long transactionID;
+    
+    @Size(min = 1, message = "Address must not be empty")
     private String address;
 
     public long getTransactionID() {

@@ -6,6 +6,11 @@
 package com.se.ebid.controller;
 
 import java.sql.Timestamp;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -13,20 +18,43 @@ import org.springframework.web.multipart.MultipartFile;
  * @author mtmmoei
  */
 public class RegisterItemForm {
+    @Size(min = 1, max = 80, message = "Title must not be empty or longer than 80 characters")
     private String title;
+    
+    @Size(min = 1, message = "Specifics must not be empty")
     private String specifics;
+    
+    @Size(min = 1, message = "Detail must not be empty")
     private String detail;
+    
     private CategoryType category;
     private MultipartFile[] photos;
     private SellingType sellingType;
+    
+    @DecimalMin(value = "0.01", message = "Price must be greater than or equal to 0.01")
+    @Size(min = 1, message = "Price must not be empty")
+    @Digits(integer = 20, fraction = 2, message = "Price is invalid")
     private double price;
+    
+    @Min(value = 1, message = "Quantity must be at least 1")
     private long quantity;
+    
     private Timestamp startTime;
+    
+    @Future(message = "End time is invalid")
     private Timestamp endTime;
 //    private String paymentMethod;
+    
+    @Size(min = 1, message = "Shipping service must not be empty")
     private String shippingService;
+    
+    @Size(min = 1, message = "Shipping cost must not be empty")
     private String shippingCost;
+    
+    @Size(min = 1, message = "Package detail must not be empty")
     private String packageDetail;
+    
+    @Size(min = 1, message = "Return policy must not be empty")
     private String returnPolicy;
 //    private String delivery;
 

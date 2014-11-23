@@ -31,7 +31,7 @@ public class ResetPasswordController {
         this.memberService = memberService;
     }
     
-      @RequestMapping(value = "/resetPassword/{email}/{secret}",method = RequestMethod.GET)
+      @RequestMapping(value = "/resetPassword/{email}_{secret}",method = RequestMethod.GET)
      public String viewResetPassword(@PathVariable("secret") String secret,@PathVariable("email") String email,Model model) {
         model.addAttribute("title", "Reset password");
          List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  

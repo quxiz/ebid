@@ -18,7 +18,7 @@
                         <h3 class="panel-title">ลืมรหัสผ่าน</h3>
                     </div>
                     <div class="panel-body">
-                        <c:url var="addAction" value="/register/submit" ></c:url>
+                        <c:url var="addAction" value="/forgotPassword/submit" ></c:url>
                             <p>กรุณากรอกอีเมลที่ใช้ในการลงทะเบียนเพื่อรอรับลิงค์สำหรับเปลี่ยนรหัสผ่าน</p>
                             <br>
                         <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="forgotPasswordForm" method="POST" name="forgotPasswordForm">

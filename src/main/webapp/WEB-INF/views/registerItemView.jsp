@@ -150,7 +150,7 @@
                                 <div class="col-sm-1">
                                     <div class="checkbox" >
                                         <label>
-                                            <input id="shippingService1" type="checkbox" value="" checked="true" onclick="validate()">
+                                            <input id="shippingService1" type="checkbox" value="" onclick="validate()">
                                             ด่วน
                                         </label>
                                     </div>
@@ -159,7 +159,7 @@
                                 <div class="col-sm-8">
                                     <label for="shippingServicePrice1" class="col-sm-1 control-label">ราคา</label>
                                     <div class="input-group col-sm-3">
-                                        <input type="text" class="form-control" id="shippingServicePrice1"/>
+                                        <input type="text" class="form-control" id="shippingServicePrice1" onkeyup="savePrice()" disabled="true" value="0"/>
                                         <span class="input-group-addon">บาท</span>
                                     </div>
                                 </div>
@@ -175,8 +175,8 @@
                                 <div class="col-sm-8">
                                     <label for="shippingServicePrice2" class="col-sm-1 control-label">ราคา</label>
                                     <div class="input-group col-sm-3">
-                                        <input type="text" class="form-control" id="shippingServicePrice2" disabled="true"/>
-                                        <span class="input-group-addon">บาท</span>
+                                        <input type="text" class="form-control" id="shippingServicePrice2" disabled="true" onkeyup="savePrice()" value="0"/>
+                                        <span class ="input-group-addon">บาท</span>
                                     </div>
                                 </div>
                                 <div class="col-sm-1 col-sm-offset-3">
@@ -191,18 +191,14 @@
                                 <div class="col-sm-8">
                                     <label for="shippingServicePrice3" class="col-sm-1 control-label">ราคา</label>
                                     <div class="input-group col-sm-3">
-                                        <input type="text" class="form-control" id="shippingServicePrice3" disabled="true"/>
-                                        <span class="input-group-addon">บาท</span>
+                                        <input type="text" class="form-control" id="shippingServicePrice3" disabled="true" onkeyup="savePrice()" value="0"/>
+                                        <span class ="input-group-addon">บาท</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="shippingCost" class="col-sm-3 control-label">ค่าส่ง</label>
-                                <div class="input-group col-sm-3">
-                                    <form:input type="text" class="form-control" id="shippingCost" placeholder="ค่าส่ง" path="shippingCost"/>
-                                    <span class="input-group-addon">บาท</span>
-                                </div>
-                            </div>
+                            <form:hidden id="shippingService" path="shippingService"/>
+                            <form:hidden id="shippingCost" path="shippingCost"/>
+
                             <div class="form-group">
                                 <label for="packageDetail" class="col-sm-3 control-label">วิธีการจัดส่งหีบห่อ</label>
                                 <div class="col-sm-6">
@@ -262,7 +258,6 @@
                     }
                 });
                 $('#datetimepicker1').datetimepicker();
-
 //                $('#endTimeInput').keyup(function () {
 //                    try {
 //                    var dateFormat = new simpleDateFormat();
@@ -277,45 +272,82 @@
             });</script>
         <script>
             function validate() {
+                var shippingService = "";
                 if (document.getElementById('shippingService1').checked) {
                     document.getElementById('shippingServicePrice1').disabled = false;
+                    shippingService += "ด่วน ";
                 } else if (!document.getElementById('shippingService1').checked) {
                     document.getElementById('shippingServicePrice1').disabled = true;
-                };
+                    $("#shippingServicePrice1").val("0");
+               
+                }
+                ;
                 if (document.getElementById('shippingService2').checked) {
                     document.getElementById('shippingServicePrice2').disabled = false;
+                    shippingService += "มาตรฐาน "
                 } else if (!document.getElementById('shippingService2').checked) {
                     document.getElementById('shippingServicePrice2').disabled = true;
-                };
+                    $("#shippingServicePrice2").val("0");
+                
+                }
+                ;
                 if (document.getElementById('shippingService3').checked) {
                     document.getElementById('shippingServicePrice3').disabled = false;
+                    shippingService += "ประหยัด"
                 } else if (!document.getElementById('shippingService3').checked) {
                     document.getElementById('shippingServicePrice3').disabled = true;
-                };
+                    $("#shippingServicePrice3").val("0");
+            
+                }
+                ;
+                $("#shippingService").val(shippingService);
+                savePrice();
+            }
+
+            function savePrice() {
+                var shippingCost = "";
+                if (document.getElementById('shippingService1').checked) {
+
+                    shippingCost += $("#shippingServicePrice1").val() + " ";
+
+                }
+                ;
+                if (document.getElementById('shippingService2').checked) {
+
+                    shippingCost += $("#shippingServicePrice2").val() + " ";
+
+                }
+                ;
+                if (document.getElementById('shippingService3').checked) {
+
+                    shippingCost += $("#shippingServicePrice3").val().toString();
+                }
+                ;
+                $("#shippingCost").val(shippingCost);
             }
         </script>
         <script>
-                $("#specifics-form").keyup(function () {
-                    $("#specifics-json").val(JSON.stringify($("#specifics-form :input").serializeArray()));
-                });
-                $("#specifics-add").click(function () {
-                    var specificName = $("#specifics-name").val();
-                    $("#specifics-name").val("");
-                    $("#specifics-form").append('<div class="specifics-' + specificName + '">' + specificName + ' : <input name="' + specificName + '" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
-                });
-                $(document).on("click", "#specifics-remove", function () {
-                    $(this).parent().remove();
-                });</script>
+            $("#specifics-form").keyup(function () {
+                $("#specifics-json").val(JSON.stringify($("#specifics-form :input").serializeArray()));
+            });
+            $("#specifics-add").click(function () {
+                var specificName = $("#specifics-name").val();
+                $("#specifics-name").val("");
+                $("#specifics-form").append('<div class="specifics-' + specificName + '">' + specificName + ' : <input name="' + specificName + '" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
+            });
+            $(document).on("click", "#specifics-remove", function () {
+                $(this).parent().remove();
+            });</script>
 
         <script>
-                $(document).ready(function () {
-                    if ($("#specifics-json").val()) {
-                        $("#specifics-form").empty();
-                        var obj = jQuery.parseJSON($("#specifics-json").val());
-                        $.each(obj, function (key, value) {
-                            $("#specifics-form").append('<div class="specifics-' + value.name + '">' + value.name + ' : <input name="' + value.name + '" value="' + value.value + '"><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
-                        });
-                    }
+            $(document).ready(function () {
+                if ($("#specifics-json").val()) {
+                    $("#specifics-form").empty();
+                    var obj = jQuery.parseJSON($("#specifics-json").val());
+                    $.each(obj, function (key, value) {
+                        $("#specifics-form").append('<div class="specifics-' + value.name + '">' + value.name + ' : <input name="' + value.name + '" value="' + value.value + '"><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
+                    });
+                }
             }
             );
         </script>

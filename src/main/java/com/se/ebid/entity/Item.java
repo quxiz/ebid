@@ -56,7 +56,7 @@ public class Item {
     @Column(name="shippingService")
     private String shippingService;
     @Column(name="shippingCost")
-    private double shippingCost;
+    private String shippingCost;
     @Column(name="packageDetail")
     private String packageDetail;
     @Column(name="returnPolicy")
@@ -168,11 +168,11 @@ public class Item {
         this.shippingService = shippingService;
     }
 
-    public double getShippingCost() {
+    public String getShippingCost() {
         return shippingCost;
     }
 
-    public void setShippingCost(double shippingCost) {
+    public void setShippingCost(String shippingCost) {
         this.shippingCost = shippingCost;
     }
 

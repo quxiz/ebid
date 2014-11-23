@@ -65,8 +65,8 @@ public class TransactionDAOImpl implements TransactionDAO {
         session.getTransaction().begin();
         List<Transaction> transactions = new ArrayList<Transaction>();
         transactions = sessionFactory.getCurrentSession()
-                .createQuery("from Transaction where buyerID=?")
-                .setParameter(0, buyerID)
+                .createQuery("from Transaction where buyerID=:buyerID")
+                .setParameter("buyerID", buyerID)
                 .list();
         session.getTransaction().commit();
         return transactions;
@@ -79,8 +79,8 @@ public class TransactionDAOImpl implements TransactionDAO {
         session.getTransaction().begin();
         List<Transaction> transactions = new ArrayList<Transaction>();
         transactions = sessionFactory.getCurrentSession()
-                .createQuery("from Transaction where sellerID=?")
-                .setParameter(0, sellerID)
+                .createQuery("from Transaction where sellerID=:sellerID")
+                .setParameter("sellerID", sellerID)
                 .list();
         session.getTransaction().commit();
         return transactions;
@@ -93,8 +93,8 @@ public class TransactionDAOImpl implements TransactionDAO {
         session.getTransaction().begin();
         List<Transaction> transactions = new ArrayList<Transaction>();
         transactions = sessionFactory.getCurrentSession()
-                .createQuery("from Transaction where transactionID=?")
-                .setParameter(0, transactionID)
+                .createQuery("from Transaction where transactionID=:transactionID")
+                .setParameter("transactionID", transactionID)
                 .list();
         session.getTransaction().commit();
         if (transactions.size() > 0) {

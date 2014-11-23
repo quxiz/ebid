@@ -30,9 +30,9 @@ public class RegistrationForm {
     @Email(message = "Email is invalid")
     @Size(min = 1, max = 45, message = "Email must not be empty and must not be longer than 45 characters")
     private String email;
-
-    @Size(min = 6, max = 20, message = "Phone number is invalid")
-    @Pattern(regexp = "[0-9]+")
+    
+    @Pattern(regexp = "[0-9]+", message = "Phone number is invalid")
+    @Size(min = 6, max = 20, message = "Phone number requires at least 5 characters and at most 20 characters")
     private String phoneNo;
     
     @Pattern(regexp = "[A-Za-z0-9]+", message = "User ID is invalid. It must contain only alphanumeric character")

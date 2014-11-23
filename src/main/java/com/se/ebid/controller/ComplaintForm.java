@@ -5,12 +5,17 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author mtmmoei
  */
 public class ComplaintForm {
+    @Size(min = 1, message = "Title must not be empty")
     private String title;
+    
+    @Size(min = 1, message = "Detail must not be empty")
     private String detail;
 
     public String getTitle() {

@@ -47,26 +47,6 @@ public class SearchController {
             model.addAttribute("category","null");
         }
         List<Item> listItems = itemService.search(searchForm);
-<<<<<<< HEAD
-=======
-        model.addAttribute("keyword", keyword);
-        model.addAttribute("listItems", listItems);
-        return "searchResultView";
-    }
-    
-    @RequestMapping(value="/search", method = RequestMethod.GET)
-    public String searchGET(@RequestParam(value = "category", required=false)String category,
-                           @RequestParam(value = "keyword", required=false)String keyword , Model model) {
-        //new itemService = ItemService();
-        //String keyword = searchForm.getKeyword();
-        //if (searchForm.getCategory() != null) {
-        //    String category = searchForm.getCategory().toString();
-            model.addAttribute("category",category);
-        //} else {
-        //    model.addAttribute("category","null");
-        //}
-//        List<Item> listItems = itemService.search(searchForm);
->>>>>>> c4e3a44b53931657ffd0f0fda25c266f9f1c5081
         model.addAttribute("keyword", keyword);
         model.addAttribute("listItems", listItems);
         List<Photo> listPhotos = null;

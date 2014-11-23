@@ -41,7 +41,7 @@ public class RegistrationForm {
     private String phoneNo;
     
     @Pattern(regexp="[A-Za-z0-9]+",message = "invalid userID pattern" )
-    @Size(min=5, message = "userID requires at least 5 characters")
+    @Size(min=1, message = "userID requires at least 5 characters")
     private String userID;
     
     @Size(min=6,message= "password requires at least 6 characters")

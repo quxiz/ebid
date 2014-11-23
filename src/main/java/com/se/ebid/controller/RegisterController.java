@@ -63,8 +63,9 @@ public class RegisterController {
             }catch(ConstraintViolationException e){
                 System.out.println("รหัสผ่านไม่ตรงกัน หรือ email หรือ userID มีอยู่ในระบบอยู่แล้ว");
                 System.out.println(e.getCause());
+                return "redirect:/error/password mismatched or usernamID or email has already used";
             }
-            return "homeView";
+            return "redirect:/success/Please check your email and activate your ID";
             //
 
             //if (successStatus) {

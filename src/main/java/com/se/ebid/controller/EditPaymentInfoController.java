@@ -41,7 +41,11 @@ public class EditPaymentInfoController {
      
      @RequestMapping(value = "/editPaymentInfo/onSubmit",method = RequestMethod.POST)
      public String onSubmitEditPaymentInfo(@ModelAttribute PaymentInfoForm paymentInfoForm){
-         this.memberService.editPaymentInfo(paymentInfoForm);
-         return "redirect:/";//หน้าแก้ไขสำเร็จ
+         if(this.memberService.editPaymentInfo(paymentInfoForm)){
+             return "rediect:/success/Your Payment Infomation has changed";
+         }else {
+             return "redirect:/error/There is a problem with your new Payment Information and can't change";
+         }
+         
      }
 }

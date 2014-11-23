@@ -178,7 +178,11 @@ public class ItemServiceImpl implements ItemService {
                 Message message = new Message();
                 message.setSenderID(Common.ADMIN_ID);
                 message.setReceiverID(outBidderID);
-                message.setMessage("outbid");
+                message.setMessage("You were outbitted at " + item.getTitle() + "\n"
+                        + "Current price: " + item.getPrice() + "\n"
+                        + "\n"
+                        + "Beat it now!!!\n"
+                        + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID());
                 message.setTimestamp(new Timestamp(System.currentTimeMillis()));
                 message.setSeen(false);
                 this.messageDAO.save(message);
@@ -316,14 +320,13 @@ public class ItemServiceImpl implements ItemService {
             autoBid.setBidIncrement(0);
             autoBid.setTimestamp(new Timestamp(System.currentTimeMillis()));
             this.autoBidDAO.save(autoBid);
-            
-            
+
             Date date = new Date(registerItemForm.getEndTime().getTime());
-            
+
             SimpleDateFormat formatter = new SimpleDateFormat("ss mm HH dd MM ? yyyy");
             String cronDate = formatter.format(date);
             try {
-            //SchedulerFactory schdFact = new StdSchedulerFactory("quartz.properties");
+                //SchedulerFactory schdFact = new StdSchedulerFactory("quartz.properties");
                 //Scheduler scheduler = schdFact.getScheduler();
                 Scheduler scheduler;
                 // Setup the Job class and the Job group
@@ -395,7 +398,10 @@ public class ItemServiceImpl implements ItemService {
         Message messageBuyer = new Message();
         messageBuyer.setSenderID(Common.ADMIN_ID);
         messageBuyer.setReceiverID(buyerID);
-        messageBuyer.setMessage("ข้อความผู้ซื้อ");
+        messageBuyer.setMessage("There is a winner for your auction item!"
+                + "To enter the feedback for your buyer, click on the link below (or copy and paste the URL into your browser): \n"
+                + Common.BASE_URL
+                + Common.VIEW_MESSAGE_URL);
         messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
         this.messageDAO.save(messageBuyer);
 
@@ -410,7 +416,10 @@ public class ItemServiceImpl implements ItemService {
         Message messageSeller = new Message();
         messageSeller.setSenderID(Common.ADMIN_ID);
         messageSeller.setReceiverID(sellerID);
-        messageSeller.setMessage("ข้อความผู้ขาย");
+        messageSeller.setMessage("[ebid] Congratulations, you won the auction!"
+                + "To complete transaction, click on the link below (or copy and paste the URL into your browser): \n"
+                + Common.BASE_URL
+                + Common.VIEW_MESSAGE_URL);
         messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
         this.messageDAO.save(messageSeller);
 

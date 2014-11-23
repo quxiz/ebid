@@ -52,7 +52,9 @@ public class ComplaintServiceImpl implements ComplaintService{
         Message message = new Message();
         message.setSenderID(MemberID);
         message.setReceiverID(Common.ADMIN_ID);
-        message.setMessage("complaint");
+        message.setMessage("There is a complaint from an user.<br/>"
+        + "To solve the complaint, click on the link below (or copy and paste the URL into your browser):<br/>"
+        + Common.BASE_URL + Common.SOLVE_COMPLAINT_URL);
         message.setTimestamp(new Timestamp(System.currentTimeMillis()));
         message.setSeen(false);
         this.messageDAO.save(message);
@@ -78,7 +80,7 @@ public class ComplaintServiceImpl implements ComplaintService{
         Message message = new Message();
         message.setSenderID(solveComplaintForm.getSolverID());
         message.setReceiverID(complaint.getComplainterID());
-        message.setMessage("solve complaint");
+        message.setMessage(complaint.getSolveDetail());
         message.setTimestamp(new Timestamp(System.currentTimeMillis()));
         message.setSeen(false);
         this.messageDAO.save(message);

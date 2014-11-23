@@ -55,8 +55,8 @@ public class CommentDAOImpl implements CommentDAO {
         session.getTransaction().begin();
         List<Comment> comments = new ArrayList<Comment>();
         comments = sessionFactory.getCurrentSession()
-                .createQuery("from Comment where itemID=?")
-                .setParameter(0, itemID)
+                .createQuery("from Comment where itemID=:itemID")
+                .setParameter("itemID", itemID)
                 .list();
         session.getTransaction().commit();
         return comments;

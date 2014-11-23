@@ -51,8 +51,8 @@ public class PhotoDAOImpl implements PhotoDAO {
         session.getTransaction().begin();
         List<Photo> photoList = new ArrayList<Photo>();
         photoList = sessionFactory.getCurrentSession()
-                .createQuery("from Photo where itemID=?")
-                .setParameter(0, itemID)
+                .createQuery("from Photo where itemID=:itemID")
+                .setParameter("itemID", itemID)
                 .list();
         session.getTransaction().commit();
         return photoList;

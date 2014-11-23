@@ -5,15 +5,28 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author mtmmoei
  */
 public class EditPasswordForm {
+    @Size(min = 6, max = 20, message = "New password requires at least 6 characters and at most 20 characters")
     private String newPassword;
-    private String conformNewPassword;
+    
+    @Size(min = 6, max = 20, message = "Confirm new password requires at least 6 characters and at most 20 characters")
+    private String confirmNewPassword;
+    
+    @Size(min = 6, max = 20, message = "Old password requires at least 6 characters and at most 20 characters")
     private String oldPassword;
 
+    @AssertTrue(message = "New password must be as same as Confirm new password")
+    private boolean isValid() {
+        return this.newPassword.equals(this.confirmNewPassword);
+    }
+    
     public String getNewPassword() {
         return newPassword;
     }
@@ -22,12 +35,12 @@ public class EditPasswordForm {
         this.newPassword = newPassword;
     }
 
-    public String getConformNewPassword() {
-        return conformNewPassword;
+    public String getConfirmNewPassword() {
+        return confirmNewPassword;
     }
 
-    public void setConformNewPassword(String conformNewPassword) {
-        this.conformNewPassword = conformNewPassword;
+    public void setConfirmNewPassword(String conformNewPassword) {
+        this.confirmNewPassword = conformNewPassword;
     }
 
     public String getOldPassword() {

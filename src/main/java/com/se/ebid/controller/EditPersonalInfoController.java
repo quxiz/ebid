@@ -32,7 +32,7 @@ public class EditPersonalInfoController {
 
     @RequestMapping("/editPersonalInfo")
     public String viewEditPersonalInfo(Model model) {
-        model.addAttribute("title", "Edit Info");
+        model.addAttribute("title", "แก้ไขข้อมูลส่วนตัว");
         List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
         model.addAttribute("categoryList", categoryList);
         Member member = this.memberService.getMember();

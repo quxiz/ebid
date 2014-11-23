@@ -53,7 +53,7 @@ public class CheckOutController {
         model.addAttribute("title", "ชำระค่าสินค้า");
         Transaction transaction = this.transactionService.getTransaction(transactionID);
         Member member = this.memberService.getMember();
-        Item item = this.itemService.getItem(transaction.getTransactionID());
+        Item item = this.itemService.getItem(transactionID);
         TransactionForm transactionForm = new TransactionForm();
         transactionForm.setTransactionID(transactionID);
         transactionForm.setAddress(member.getAddress());

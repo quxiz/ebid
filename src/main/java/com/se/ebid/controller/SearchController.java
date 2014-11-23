@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.List;
 import java.util.Locale.Category;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,41 +29,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class SearchController {
   // รอ ItemService
-     
+
     private ItemService itemService;
-    
+
     @Autowired
-    public void setItemService(ItemService itemService){
+    public void setItemService(ItemService itemService) {
         this.itemService = itemService;
-    } 
-    
-    @RequestMapping(value="/search", method = RequestMethod.POST)
-    public String search(@ModelAttribute ("searchForm") SearchForm searchForm, Model model) {
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public String search(@ModelAttribute("searchForm") SearchForm searchForm, Model model, HttpServletRequest request) {
         String keyword = searchForm.getKeyword();
         if (searchForm.getCategory() != null) {
             String category = searchForm.getCategory().toString();
-            model.addAttribute("category",category);
+            model.addAttribute("category", category);
         } else {
-            model.addAttribute("category","ทุกประเภท");
+            model.addAttribute("category", "ทุกประเภท");
         }
         List<Item> listItems = this.itemService.search(searchForm);
         model.addAttribute("keyword", keyword);
         model.addAttribute("listItems", listItems);
-        List<Photo> listPhotos = null;
-        for(int i=0;i<listItems.size();i++){
-            
-            listPhotos = this.itemService.getPhoto(listItems.get(i).getItemID());
-            model.addAttribute("listPhotos"+i, listPhotos);
-            /*
-            if(this.itemService.getPhoto(listItems.get(i).getItemID())==null){
+        List<Photo> listPhotos = new ArrayList();
+        for (int i = 0; i < listItems.size(); i++) {
+
+            List<Photo> photos = this.itemService.getPhoto(listItems.get(i).getItemID());
+            if (photos.size() == 0) {
                 Photo photo = new Photo();
-                photo.setPhotoURL("photo");
+                photo.setPhotoURL(request.getContextPath() + "/resources/img/ebay1.png");
                 listPhotos.add(photo);
-            }else{
-                listPhotos.add(this.itemService.getPhoto(listItems.get(i).getItemID()).get(0));
-            }*/
+            } else {
+                listPhotos.add(photos.get(0));
+            }
         }
+        model.addAttribute("listPhotos", listPhotos);
+        
         return "searchResultView";
     }
-   
+
 }

@@ -42,11 +42,11 @@
         <div class="container">
             <h3>ผลการค้นหาคำว่า ${keyword} จาก ${category}</h3>
             <hr>
-            <c:forEach items="${listItems}" var = "item">
+            <c:forEach items="${listItems}" var = "item" varStatus="status">
                 <div class = "row">
                     <div class="col-sm-4 col-md-4">
                         <div class="thumbnail">
-                            <a href="viewItem/${item.itemID}"><img src="item.img.jpg" alt="..."></a>
+                            <a href="viewItem/${item.itemID}"><img src="${listPhotos[status.index].photoURL}" alt="..."></a>
                         </div>
                     </div>
                     <div class="col-sm-8 col-md-8">	

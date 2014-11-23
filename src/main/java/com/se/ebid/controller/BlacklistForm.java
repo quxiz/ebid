@@ -5,13 +5,19 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author mtmmoei
  */
 public class BlacklistForm {
     private String userId;
+    
+    @Size(min = 1, message = "Blacklist status must not be empty")
     private String blacklistStatus;
+    
+    @Size(min = 1, message = "Detail must not be empty")
     private String detail;
 
     public String getUserId() {

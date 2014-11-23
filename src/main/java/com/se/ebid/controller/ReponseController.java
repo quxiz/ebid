@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
-public class reponseController {
+public class ReponseController {
     
     @RequestMapping(value = "/success/{text}",method = RequestMethod.GET)
     public String showSuccess(@PathVariable ("text") String text,Model model){

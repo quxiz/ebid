@@ -24,10 +24,11 @@ import javax.mail.internet.MimeMessage;
 public class Common {
     
     static final int ADMIN_ID = -1;
-    static final String BASE_URL = "localhost:8080/";
+    static final String BASE_URL = "http://localhost:8080/SE%20project/";
     static final String VIEW_MESSAGE_URL = "viewMessage/";
     static final String VIEW_ITEM_URL = "viewItem/";
-    static final String RESET_PASSWORD_URL = null;
+    static final String ACTIVATE_URL = "activateMember/";
+    static final String RESET_PASSWORD_URL = "resetPassword/";
     
     static final long getMemberID(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

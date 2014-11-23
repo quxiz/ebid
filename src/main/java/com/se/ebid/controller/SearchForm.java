@@ -7,6 +7,7 @@
 package com.se.ebid.controller;
 
 import java.util.Locale;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -14,6 +15,8 @@ import java.util.Locale;
  */
 public class SearchForm {
     private CategoryType category;
+    
+    @Size(min = 1, message = "Keyword must not be empty")
     private String keyword;
 
     public CategoryType getCategory() {

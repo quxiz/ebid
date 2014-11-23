@@ -6,12 +6,19 @@
 
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author Quxiz
  */
 public class SignInForm {
+    @Pattern(regexp = "[A-Za-z0-9]+", message = "User ID is invalid")
+    @Size(min = 5, max = 20, message = "User ID requires at least 5 characters and at most 20 characters")
     private String userID;
+    
+    @Size(min = 6, max = 20, message = "Password requires at least 6 characters and at most 20 characters")
     private String password;
 
     public String getUserID() {

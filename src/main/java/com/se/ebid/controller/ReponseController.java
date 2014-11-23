@@ -21,17 +21,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ReponseController {
     
-    @RequestMapping(value = "/success/{text}",method = RequestMethod.GET)
-    public String showSuccess(@PathVariable ("text") String text,Model model){
-        model.addAttribute("text", text);
-        model.addAttribute("isSuccess", true);
-        return "showView"; //มีปุ่มกลับหน้าหลักเพียงปุ่มเดียว
-    }
-         
-    @RequestMapping(value = "/error/{text}",method = RequestMethod.GET)
-    public String showError(@PathVariable ("text") String text,Model model){
-        model.addAttribute("text", text);
-        model.addAttribute("isSuccess", false);
-        return "showView"; //มีปุ่มกลับหน้าหลักเพียงปุ่มเดียว
-    }
+//    @RequestMapping(value = "/success/{text}",method = RequestMethod.GET)
+//    public String showSuccess(@PathVariable ("text") String text,Model model){
+//        model.addAttribute("text", text);
+//        model.addAttribute("isSuccess", true);
+//        return "showView"; //มีปุ่มกลับหน้าหลักเพียงปุ่มเดียว
+//    }
+//         
+//    @RequestMapping(value = "/error/{text}",method = RequestMethod.GET)
+//    public String showError(@PathVariable ("text") String text,Model model){
+//        model.addAttribute("text", text);
+//        model.addAttribute("isSuccess", false);
+//        return "showView"; //มีปุ่มกลับหน้าหลักเพียงปุ่มเดียว
+//    }
 }

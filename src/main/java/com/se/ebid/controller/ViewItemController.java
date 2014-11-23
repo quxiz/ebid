@@ -69,25 +69,24 @@ public class ViewItemController {
     }
 
     @RequestMapping(value = {"/viewItem/{itemID}/onSubmitBuyForm"}, method = RequestMethod.POST)
-    public String onSubmitBuyForm(@PathVariable ("itemID") long itemID,@ModelAttribute("buyform") BuyForm buyForm,Model model, RedirectAttributes redirectAttributes) {
+    public String onSubmitBuyForm(@PathVariable ("itemID") long itemID,@ModelAttribute("buyForm") BuyForm buyForm,Model model, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("buyForm", buyForm);
         return "redirect:/buyItem/"+itemID;
 
     }
 
     @RequestMapping(value = "/buyItem/{itemID}", method = RequestMethod.GET)
-    public String buyItem(@ModelAttribute("buyform") BuyForm buyform, @PathVariable("itemID") long itemID, Model model) {
-        Invoice invoice = this.itemService.buy(buyform);
-        model.addAttribute("buyform", buyform);
+    public String buyItem(@ModelAttribute("buyForm") BuyForm buyForm,@PathVariable("itemID") long itemID, Model model) {
+        Invoice invoice = this.itemService.buy(buyForm);
         model.addAttribute("invoice", invoice);
-        model.addAttribute("item", this.itemService.getItem(buyform.getItemID()));
-        // model.addAttribute("listPhotos", this.itemService.getItem(buyform.getItemID()).getPhoto());
+        model.addAttribute("item", this.itemService.getItem(itemID));
+        model.addAttribute("listPhotos", this.itemService.getPhoto(itemID));
         return "buyItemView";
     }
 
-    @RequestMapping(value = "/buyItem/confirmBuy", method = RequestMethod.POST)
-    public String confirmBuy(@ModelAttribute BuyForm buyform) {
-
-        return "";
+    @RequestMapping(value = "/buyItem/{itemID}/confirmBuy", method = RequestMethod.POST)
+    public String confirmBuy(@PathVariable("itemID") long itemID ,@ModelAttribute BuyForm buyForm) {
+        
+        return "redirect:/checkOut/"+this.itemService.confirmBuy(buyForm);
     }
 }

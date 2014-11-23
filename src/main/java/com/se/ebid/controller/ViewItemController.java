@@ -44,13 +44,17 @@ public class ViewItemController {
     @RequestMapping(value = "/viewItem/{itemID}",method = RequestMethod.GET)
     public String viewItem(@PathVariable("itemID") long itemID, Model model) {
         QuestionForm questionForm = new QuestionForm();
-        BuyForm buyForm = new BuyForm();
-        questionForm.setItemID(itemID);
-        buyForm.setItemID(itemID);
         
+        Item item = this.itemService.getItem(itemID);
+        
+        BuyForm buyForm = new BuyForm();
+        BidForm bidForm = new BidForm();
+        questionForm.setItemID(itemID);
+        buyForm.setItemID(itemID);       
         model.addAttribute("buyForm", buyForm);
+        model.addAttribute("bidForm",bidForm);
         model.addAttribute("questionForm", questionForm);
-        model.addAttribute("item", this.itemService.getItem(itemID));
+        model.addAttribute("item",item);
         model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
         model.addAttribute("listComments",this.itemService.getComment(itemID));
         model.addAttribute("title", this.itemService.getItem(itemID).getTitle());
@@ -59,13 +63,15 @@ public class ViewItemController {
     }
 
     @RequestMapping(value = "/viewItem/{itemID}/onSubmitQuestionForm", method = RequestMethod.POST)
-    public String onSubmitQuestionForm(@PathVariable ("itemID") long itemID,@ModelAttribute QuestionForm questionForm) {
+    public String onSubmitQuestionForm(@PathVariable ("itemID") long itemID,@ModelAttribute("questionForm") QuestionForm questionForm) {
              this.commentService.askQuestion(questionForm);
         return "redirect:/viewItem/{itemID}"; //url item
     }
 
-    public void onSubmitBidForm(BidForm form) {
-        //do sth
+    @RequestMapping(value = "/viewItem/{itemID}/onSubmitBidForm", method = RequestMethod.POST)
+    public String onSubmitBidForm(@PathVariable ("itemID") long itemID,@ModelAttribute ("bidForm") BidForm bidForm) {
+        this.itemService.bid(bidForm);
+        return "redirect:/viewItem/"+itemID;
     }
 
     @RequestMapping(value = {"/viewItem/{itemID}/onSubmitBuyForm"}, method = RequestMethod.POST)
@@ -78,6 +84,7 @@ public class ViewItemController {
     @RequestMapping(value = "/buyItem/{itemID}", method = RequestMethod.GET)
     public String buyItem(@ModelAttribute("buyForm") BuyForm buyForm,@PathVariable("itemID") long itemID, Model model) {
         Invoice invoice = this.itemService.buy(buyForm);
+        if(invoice ==null) return "redirect:/error/Blacklisted userID can't buy any items.";
         model.addAttribute("invoice", invoice);
         model.addAttribute("item", this.itemService.getItem(itemID));
         model.addAttribute("listPhotos", this.itemService.getPhoto(itemID));
@@ -85,8 +92,9 @@ public class ViewItemController {
     }
 
     @RequestMapping(value = "/buyItem/{itemID}/confirmBuy", method = RequestMethod.POST)
-    public String confirmBuy(@PathVariable("itemID") long itemID ,@ModelAttribute BuyForm buyForm) {
-        
-        return "redirect:/checkOut/"+this.itemService.confirmBuy(buyForm);
+    public String confirmBuy(@PathVariable("itemID") long itemID ,@ModelAttribute("buyForm") BuyForm buyForm) {
+        long transactionID = this.itemService.confirmBuy(buyForm);
+        if(transactionID<0) return "/viewItem/"+itemID;
+        return "redirect:/checkOut/"+transactionID;
     }
 }

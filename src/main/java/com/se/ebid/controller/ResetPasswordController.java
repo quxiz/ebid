@@ -31,21 +31,14 @@ public class ResetPasswordController {
         this.memberService = memberService;
     }
     
-      @RequestMapping(value = "/resetPassword/{email}_{secret}",method = RequestMethod.GET)
-     public String viewResetPassword(@PathVariable("email") String email,@PathVariable("secret") String secret,Model model) {
-        System.out.println("code: "+email+ " "+secret);
-         model.addAttribute("title", "Reset password");
+      @RequestMapping(value = "/resetPassword/{email}/{secret}",method = RequestMethod.GET)
+     public String viewResetPassword(@PathVariable("secret") String secret,@PathVariable("email") String email,Model model) {
+        model.addAttribute("title", "Reset password");
          List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
         model.addAttribute("categoryList", categoryList);
         ResetPasswordForm resetPasswordForm = new ResetPasswordForm();
-//        int delimeterIndex = code.indexOf('_');
-//        if(delimeterIndex == -1){
-//            System.out.println("invalid url");
-//            return "redirect:/";
-//        }
         resetPasswordForm.setEmail(email);
         resetPasswordForm.setSecret(secret);
-        System.out.println(email + " - " +secret);
         model.addAttribute("resetPasswordForm",resetPasswordForm);
         return "resetPasswordView";
     }

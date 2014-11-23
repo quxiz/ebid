@@ -49,30 +49,15 @@ public class RegisterController {
 
     @RequestMapping(value = "/register/submit", method = RequestMethod.POST)
     public String onSubmitRegistration(@Valid @ModelAttribute("registrationForm") RegistrationForm registrationForm, BindingResult result, Model model,RedirectAttributes redirectAttributes) {
-        //System.out.println(result.hasErrors());
-        if (result.hasErrors()) {
-            //return "registerView";
+    if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registrationForm", result);
             redirectAttributes.addFlashAttribute("registrationForm", registrationForm);
             return "redirect:/register";
-
-        } else {
+        }
+        else {
             
-            try{
-                boolean successStatus = this.memberService.register(registrationForm);
-            }catch(ConstraintViolationException e){
-                System.out.println("รหัสผ่านไม่ตรงกัน หรือ email หรือ userID มีอยู่ในระบบอยู่แล้ว");
-                System.out.println(e.getCause());
-            }
-            return "homeView";
-            //
-
-            //if (successStatus) {
-            //    return "redirect:/registerSuccess";
-            //} else {
-            //    return "redirect:/register";
-            //}
+                if(this.memberService.register(registrationForm))return "redirect:/success/Please check your email and activate your ID";  
+                else  return "redirect:/error/Password mismatched or this userID or Email has already used";
         }
     }
-
 }

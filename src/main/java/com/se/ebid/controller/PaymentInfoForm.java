@@ -5,11 +5,16 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+
 /**
  *
  * @author mtmmoei
  */
 public class PaymentInfoForm {
+    @Email(message = "Paypal account is invalid")
+    @Size(min = 1, max = 45, message = "Paypal account must not be empty or longer than 45 characters")
     private String payPalAccount;
 
     public String getPayPalAccount() {

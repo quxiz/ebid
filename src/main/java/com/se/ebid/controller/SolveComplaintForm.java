@@ -5,6 +5,8 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author mtmmoei
@@ -12,6 +14,8 @@ package com.se.ebid.controller;
 public class SolveComplaintForm {
     private long solverID;
     private long complaintID;
+    
+    @Size(min = 1, message = "Detail must not be empty")
     private String detail;
 
     public long getSolverID() {

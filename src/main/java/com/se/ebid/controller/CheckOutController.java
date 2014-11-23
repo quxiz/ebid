@@ -65,7 +65,7 @@ public class CheckOutController {
     }
 
     @RequestMapping(value = "/checkOut/submit", method = RequestMethod.POST)
-    public String onSubmitCheckout(@ModelAttribute TransactionForm transactionForm) {
+    public String onSubmitCheckout(@ModelAttribute ("transactionForm") TransactionForm transactionForm) {
         Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
     //    transaction.setShippingAddress(transactionForm.getAddress());
         return "redirect:/payment/"+transactionForm.getTransactionID();

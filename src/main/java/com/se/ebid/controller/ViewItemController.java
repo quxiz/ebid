@@ -43,10 +43,8 @@ public class ViewItemController {
      
     @RequestMapping(value = "/viewItem/{itemID}",method = RequestMethod.GET)
     public String viewItem(@PathVariable("itemID") long itemID, Model model) {
-        QuestionForm questionForm = new QuestionForm();
-        
-        Item item = this.itemService.getItem(itemID);
-        
+        QuestionForm questionForm = new QuestionForm();        
+        Item item = this.itemService.getItem(itemID);        
         BuyForm buyForm = new BuyForm();
         BidForm bidForm = new BidForm();
         questionForm.setItemID(itemID);
@@ -57,7 +55,7 @@ public class ViewItemController {
         model.addAttribute("item",item);
         model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
         model.addAttribute("listComments",this.itemService.getComment(itemID));
-        model.addAttribute("title", this.itemService.getItem(itemID).getTitle());
+        model.addAttribute("title", item.getTitle());
         return "viewItemView";
 
     }

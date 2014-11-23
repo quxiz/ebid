@@ -5,15 +5,28 @@
  */
 package com.se.ebid.controller;
 
+import java.math.BigDecimal;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author mtmmoei
  */
 public class BidForm {
     private long itemID;
-    private double maxBid;
-    private double bidIncrement;
-
+    
+    @DecimalMin(value = "0.01", message = "Maxbid must be greater than or equal to 0.01")
+    @Size(min = 1, message = "Maxbid must not be empty")
+    @Digits(integer=20, fraction=2)
+    private BigDecimal maxBid;
+    
+    @DecimalMin(value = "0.01", message = "Bid increment must be greater than or equal to 0.01")
+    @Size(min = 1, message = "Bid increment must not be empty")
+    @Digits(integer=20, fraction=2)
+    private BigDecimal bidIncrement;
+    
     public long getItemID() {
         return itemID;
     }
@@ -23,19 +36,19 @@ public class BidForm {
     }
 
     public double getMaxBid() {
-        return maxBid;
+        return maxBid.doubleValue();
     }
 
     public void setMaxBid(double maxBid) {
-        this.maxBid = maxBid;
+        this.maxBid = BigDecimal.valueOf(maxBid);
     }
 
     public double getBidIncrement() {
-        return bidIncrement;
+        return bidIncrement.doubleValue();
     }
 
     public void setBidIncrement(double bidIncrement) {
-        this.bidIncrement = bidIncrement;
+        this.bidIncrement = BigDecimal.valueOf(bidIncrement);
     }
     
 }

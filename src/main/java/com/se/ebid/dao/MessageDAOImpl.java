@@ -49,8 +49,8 @@ public class MessageDAOImpl implements MessageDAO {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Message> messageList = sessionFactory.getCurrentSession()
-                .createQuery("from Message where receiverID=?")
-                .setParameter(0, receiverID)
+                .createQuery("from Message where receiverID=:receiverID")
+                .setParameter("receiverID", receiverID)
                 .list();
         session.getTransaction().commit();
         return messageList;

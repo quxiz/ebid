@@ -60,8 +60,8 @@ public class ComplaintDAOImpl implements ComplaintDAO {
         session.getTransaction().begin();
         List<Complaint> complaints = new ArrayList<Complaint>();
         complaints = sessionFactory.getCurrentSession()
-                .createQuery("from Complaint where complaintID=?")
-                .setParameter(0, complaintID)
+                .createQuery("from Complaint where complaintID=:complaintID")
+                .setParameter(":complaintID", complaintID)
                 .list();
         session.getTransaction().commit();
         if (complaints.size() > 0) {

@@ -52,8 +52,8 @@ public class ItemDAOImpl implements ItemDAO {
         session.getTransaction().begin();
         List<Item> items = new ArrayList<Item>();
         items = sessionFactory.getCurrentSession()
-                .createQuery("from Item where itemID=?")
-                .setParameter(0, itemID)
+                .createQuery("from Item where itemID=:itemID")
+                .setParameter("itemID", itemID)
                 .list();
         session.getTransaction().commit();
         if (items.size() > 0) {

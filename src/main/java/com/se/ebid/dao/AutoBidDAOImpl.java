@@ -50,8 +50,8 @@ public class AutoBidDAOImpl implements AutoBidDAO {
         session.getTransaction().begin();
         List<AutoBid> autobids = new ArrayList<AutoBid>();
         autobids = sessionFactory.getCurrentSession()
-                .createQuery("from AutoBid where itemID=?")
-                .setParameter(0, itemID)
+                .createQuery("from AutoBid where itemID=:itemID")
+                .setParameter("itemID", itemID)
                 .list();
         session.getTransaction().commit();
         if (autobids.size() > 0) {

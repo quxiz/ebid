@@ -30,8 +30,8 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li><a href="${pageContext.request.contextPath}">หน้าแรก</a></li>
-                <li a href="#">สินค้า</li>
-                <li a href="#" class="active">เสื้อผ้า</li> <!--ติดไว้ก่อนรอ search-->
+                <li><a href="${pageContext.request.contextPath}/search?category=All">สินค้า</a></li>
+                <li><a href="${pageContext.request.contextPath}/search?category=Clothing" class="active">เสื้อผ้า</a></li> <!--ติดไว้ก่อนรอ search-->
             </ol>
 
             <h4>${item.title}</h4>

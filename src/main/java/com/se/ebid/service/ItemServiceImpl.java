@@ -272,7 +272,7 @@ public class ItemServiceImpl implements ItemService {
         long memberID = Common.getMemberID();
         item.setSellerID(memberID);
         item.setTitle(registerItemForm.getTitle());
-        item.setSpecifics(registerItemForm.getSpecific());
+        item.setSpecifics(registerItemForm.getSpecifics());
         item.setDetail(registerItemForm.getDetail());
         item.setCategory(registerItemForm.getCategory());
         item.setSellingType(registerItemForm.getSellingType());

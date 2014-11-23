@@ -60,15 +60,15 @@
 
                                 </div>
                                 <div class="form-group">
-                                    <label for="fault" class="col-sm-3 control-label">จุดบกพร่อง</label>
+                                    <label for="something" class="col-sm-3 control-label">จุดบกพร่อง</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control" name="something" placeholder="จุดบกพร่อง"/>
                                     </div>
 
                                 </div>
                             </div>
-                            ${form.specifics}
-                            <form:hidden id="specificsJson" placeholder="itemID" path="specifics" value=""/>
+                                                   
+                            <form:hidden id="specifics-json" placeholder="itemID" path="specifics" value=""/>
 
 
 
@@ -200,6 +200,8 @@
                     var selText = $(this).text();
                     $(this).parents('.dropdown').find('.dropdown-toggle').html(selText + "&nbsp;&nbsp;" + '<span class="caret"></span>');
 
+
+
                     //                    var registerAttributes = model.get("RegistrationForm");
                     //                    registerAttributes.country = selText;
                     //                    model.set("RegistrationForm", registerAttributes);
@@ -228,7 +230,8 @@
         </script>
         <script>
             $("#specifics-form").keyup(function () {
-                $("#specificsJson").val(JSON.stringify($("#specifics-form :input").serializeArray()));
+                $("#specifics-json").val(JSON.stringify($("#specifics-form :input").serializeArray()));
+     
 
             });
 

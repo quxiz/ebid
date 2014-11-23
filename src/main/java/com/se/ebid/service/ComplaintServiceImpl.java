@@ -54,7 +54,7 @@ public class ComplaintServiceImpl implements ComplaintService{
         message.setReceiverID(Common.ADMIN_ID);
         message.setMessage("There is a complaint from an user.<br/>"
         + "To solve the complaint, click on the link below (or copy and paste the URL into your browser):<br/>"
-        + Common.BASE_URL + "/solveComplaint/");
+        + Common.BASE_URL + Common.SOLVE_COMPLAINT_URL);
         message.setTimestamp(new Timestamp(System.currentTimeMillis()));
         message.setSeen(false);
         this.messageDAO.save(message);

@@ -235,13 +235,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional
-    public boolean confirmBuy(BuyForm buyForm) {
+    public long confirmBuy(BuyForm buyForm) {
         long itemID = buyForm.getItemID();
         Item item = this.itemDAO.findByItemID(itemID);
         long sellerID = item.getSellerID();
         long buyerID = Common.getMemberID();
         if (buyForm.getQuantity() > item.getQuantity()) {
-            return false;
+            return -1;
         }
 
         Transaction transaction = new Transaction();
@@ -261,7 +261,7 @@ public class ItemServiceImpl implements ItemService {
         feedback.setItemID(itemID);
         this.feedbackDAO.save(feedback);
 
-        return true;
+        return transaction.getTransactionID();
     }
 
     @Override
@@ -272,7 +272,7 @@ public class ItemServiceImpl implements ItemService {
         long memberID = Common.getMemberID();
         item.setSellerID(memberID);
         item.setTitle(registerItemForm.getTitle());
-        item.setSpecifics(registerItemForm.getSpecific());
+        item.setSpecifics(registerItemForm.getSpecifics());
         item.setDetail(registerItemForm.getDetail());
         item.setCategory(registerItemForm.getCategory());
         item.setSellingType(registerItemForm.getSellingType());

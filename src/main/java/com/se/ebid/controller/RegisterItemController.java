@@ -44,7 +44,7 @@ public class RegisterItemController {
     }
 
     @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
-    public String onSubmit(@ModelAttribute RegisterItemForm form){
+    public String onSubmit(@ModelAttribute RegisterItemForm form,Model model){
         System.out.println("REQ: reg item call");
         if(form.getPhotos() == null){
             System.out.println("null photos");
@@ -59,7 +59,12 @@ public class RegisterItemController {
                 }
             }
         }
-        this.itemService.registerItem(form);
-        return "redirect:/viewItem";//รอแก้หน้าแสดง
+        long itemID = this.itemService.registerItem(form);
+        if (itemID<0){
+            model.addAttribute("isSuccess", false);
+            model.addAttribute("text", "Sorry, The item was unsuccessfully registered");
+            return "showView";
+        }
+        return "redirect:/viewItem/"+itemID;//รอแก้หน้าแสดง
     }
 }

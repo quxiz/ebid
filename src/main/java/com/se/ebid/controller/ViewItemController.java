@@ -75,6 +75,11 @@ public class ViewItemController {
 
     @RequestMapping(value = {"/viewItem/{itemID}/onSubmitBuyForm"}, method = RequestMethod.POST)
     public String onSubmitBuyForm(@PathVariable ("itemID") long itemID,@ModelAttribute("buyForm") BuyForm buyForm,Model model, RedirectAttributes redirectAttributes) {
+        if(buyForm.getQuantity() <= 0){
+            model.addAttribute("isSuccess", "false");
+            model.addAttribute("text", "Invalid quantity");
+            return "showView";
+        }
         redirectAttributes.addFlashAttribute("buyForm", buyForm);
         return "redirect:/buyItem/"+itemID;
 

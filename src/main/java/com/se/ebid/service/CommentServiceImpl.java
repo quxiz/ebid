@@ -90,4 +90,9 @@ public class CommentServiceImpl implements CommentService {
         return true;
     }
 
+    @Override
+    public Comment getComment(long commentID) {
+        return this.commentDAO.getComment(commentID);
+    }
+
 }

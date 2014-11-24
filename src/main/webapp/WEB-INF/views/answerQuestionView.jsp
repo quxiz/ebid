@@ -31,6 +31,9 @@
                 </div>
                 <hr>
                 <form:textarea id="answer" placeholder="คำตอบ" class="col-sm-12 col-md-12" style="resize:vertical;" path ="answer"/><!--คำตอบ-->
+                <form:hidden path="itemID"/>
+                <form:hidden path="parentID"/>
+                <form:hidden path="askerID"/>
                 <br>
                 <br>
                 <br>

@@ -72,8 +72,11 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = new Comment();
         comment.setParentID(answerForm.getParentID());
         comment.setCommenterID(memberID);
+        System.out.println("item id : "+answerForm.getItemID());
+        comment.setItemID(answerForm.getItemID());
         comment.setCommentDetail(answerForm.getAnswer());
         comment.setTimestamp(new Timestamp((System.currentTimeMillis())));
+        comment.setCommenterName(Common.getUserID());
         this.commentDAO.save(comment);
 
         Message message = new Message();

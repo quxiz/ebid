@@ -148,7 +148,7 @@
                             </div> -->
                                 
                                         
-<div class="col-sm-3">
+                                <div class="col-sm-3">
                                     <div class='input-group date'>
                                         <form:input type="datetime-local" class="form-control" id="endTime2" path='endTime'/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>

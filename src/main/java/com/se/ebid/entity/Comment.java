@@ -26,7 +26,7 @@ public class Comment {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long commentID;
     @Column(name="parentID")
-    private long parentID;
+    private Long parentID = null;
     @Column(name="itemID", nullable = false)
     private long itemID;
     @Column(name="commenterID", nullable = false)
@@ -46,13 +46,18 @@ public class Comment {
         this.commentID = commentID;
     }
 
-    public long getParentID() {
+    public Long getParentID() {
         return parentID;
     }
 
+    public void setParentID(Long parentID) {
+        this.parentID = parentID;
+    }
+    
     public void setParentID(long parentID) {
         this.parentID = parentID;
     }
+
 
     public long getItemID() {
         return itemID;

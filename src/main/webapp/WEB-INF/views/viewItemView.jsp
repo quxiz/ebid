@@ -239,13 +239,15 @@
                 <div class="panel-body">
                     <c:forEach items="${listComments}" var="comment">
                         <c:if test = "${comment.parentID==null}">
-                            <h5 class="media-heading">${comment.commenterID}</h5> <!--name-->
+                            <h4 class="media-heading">${comment.commenterName}</h4> <!--name-->
                             <p>${comment.commentDetail}</p>
+                            <hr>
                             <!-- Nested media object -->
                             <c:forEach items="${listComments}" var="nestedComment">
                                 <c:if test ="${nestedComment.parentID == comment.commentID}">
-                                    <h5 class="media-heading" style="margin-left:50px">${nestedComment.commenterID}</h5> <!--name-->
+                                    <h4 class="media-heading" style="margin-left:50px">${nestedComment.commenterName}</h4> <!--name-->
                                     <p style="margin-left:50px">${nestedComment.commentDetail}</p>
+                                    <hr>
                                 </c:if>
                             </c:forEach>
                         </c:if>

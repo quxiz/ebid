@@ -27,6 +27,21 @@
     }
 
 </style>
+
+<style>
+    .error {
+        color: #ff0000;
+    }
+
+    .errorblock {
+        color: #000;
+        background-color: #ffEEEE;
+        border: 3px solid #ff0000;
+        padding: 8px;
+        margin: 16px;
+    }
+</style>
+
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <div class="container">
@@ -225,6 +240,7 @@
                             </div>
 
                             <br>
+                            <form:errors path="*" cssClass="errorblock" element="div" />
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <input type="submit" class="btn btn-primary" value="ประกาศขาย"/>

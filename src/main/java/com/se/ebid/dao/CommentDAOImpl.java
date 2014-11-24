@@ -62,4 +62,20 @@ public class CommentDAOImpl implements CommentDAO {
         return comments;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public Comment getComment(long commentID) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.getTransaction().begin();
+        List<Comment> comments = new ArrayList<Comment>();
+        comments = sessionFactory.getCurrentSession()
+                .createQuery("from Comment where commentID=:commentID")
+                .setParameter("commentID", commentID)
+                .list();
+        session.getTransaction().commit();
+        if(comments.isEmpty())
+            return null;
+        return comments.get(0);
+    }
+
 }

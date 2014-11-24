@@ -62,8 +62,8 @@ public class ViewItemController {
 
     @RequestMapping(value = "/viewItem/{itemID}/onSubmitQuestionForm", method = RequestMethod.POST)
     public String onSubmitQuestionForm(@PathVariable ("itemID") long itemID,@ModelAttribute("questionForm") QuestionForm questionForm) {
-             System.out.print("this is itemID "+questionForm.getItemID() +"\n sellerID "+ questionForm.getSellerID()); 
-             this.commentService.askQuestion(questionForm);
+            questionForm.setSellerID(this.itemService.getItem(itemID).getSellerID());
+            this.commentService.askQuestion(questionForm);
         return "redirect:/viewItem/"+itemID; //url item
     }
 
@@ -75,6 +75,11 @@ public class ViewItemController {
 
     @RequestMapping(value = {"/viewItem/{itemID}/onSubmitBuyForm"}, method = RequestMethod.POST)
     public String onSubmitBuyForm(@PathVariable ("itemID") long itemID,@ModelAttribute("buyForm") BuyForm buyForm,Model model, RedirectAttributes redirectAttributes) {
+        if(buyForm.getQuantity() <= 0){
+            model.addAttribute("isSuccess", "false");
+            model.addAttribute("text", "Invalid quantity");
+            return "showView";
+        }
         redirectAttributes.addFlashAttribute("buyForm", buyForm);
         return "redirect:/buyItem/"+itemID;
 

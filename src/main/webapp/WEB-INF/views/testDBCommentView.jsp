@@ -25,6 +25,7 @@
                             <form:form action="${addAction}" modelAttribute="comment" method="POST" name="comment">
                                 <div class="form-group">
                                     <div><form:hidden placeholder="commentID" path="commentID" /></div>
+                                    <div><form:input placeholder="parentID" path="parentID" /></div>
                                     <div><form:input placeholder="itemID" path="itemID" /></div>
                                     <div><form:input placeholder="commenterID" path="commenterID" /></div>
                                     <div><form:input placeholder="commenterName" path="commenterName" /></div>

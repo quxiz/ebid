@@ -74,7 +74,7 @@ public class HomeController {
         List<Photo> listPhotos = new ArrayList<>();        
         for (int i = 0; i < 4 && i < listRecentItems.size(); i++) {
             List<Photo> photos = this.itemService.getPhoto(listRecentItems.get(i).getItemID());
-            if (photos.size() == 0) {
+            if ( (photos.size() == 0) || photos.get(0).getPhotoURL()==null) {
                 Photo photo = new Photo();
                 photo.setPhotoURL(request.getContextPath() + "/resources/img/ebay1.png");
                 listPhotos.add(photo);

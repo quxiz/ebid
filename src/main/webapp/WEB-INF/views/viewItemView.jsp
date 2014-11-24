@@ -263,7 +263,7 @@
                                 </div>
 
 
-                                <c:url var="addAction" value="/viewItem/onSubmitQuestionForm" ></c:url>
+                                <c:url var="addAction" value="/viewItem/${itemID}/onSubmitQuestionForm" ></c:url>
                                 <form:form action="${addAction}" modelAttribute="questionForm" method="POST" name="questionForm">
                                     <div class="modal-body">
                                         <h4>คำถาม</h4>                                   

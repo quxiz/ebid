@@ -136,26 +136,17 @@
                             </div>
 
 
-<!--                            <div class="form-group" id="auction" hidden="true">
+                            <div class="form-group" id="auction" hidden="true">
                                 <label for="datetimepicker1" class="col-sm-3 control-label">เวลาสิ้นสุดการประมูล</label>
 
                                 <div class="col-sm-3">
                                     <div class='input-group date' id='datetimepicker1'>
-                                        <f orm:input type="text" class="form-control" id="endTime" path="endTime"/>
+                                        <form:input type="text" class="form-control" id="endTime" path="endTime"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </div>
                                 </div>
-                            </div> -->
-                                
-                                        
-<div class="col-sm-3">
-                                    <div class='input-group date'>
-                                        <form:input type="datetime-local" class="form-control" id="endTime2" path='endTime'/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                    </div>
-                                </div>
-                                        
-                                        
+                            </div> 
+
                             <div class="form-group">
                                 <label for="price" class="col-sm-3 control-label" id="priceLabel">ราคา</label>
                                 <div class="input-group col-sm-3">

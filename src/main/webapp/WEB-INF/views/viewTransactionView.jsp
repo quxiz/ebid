@@ -60,7 +60,7 @@
                                                     ${transaction.shippingService}<!--getShippingService()-->
                                                 </td>
                                                 <td>
-                                                    <a href="${pageContext.request.contextPath}/viewSeller/${transaction.sellerID}">${transaction.sellerID}</a><!--ชื่อผู้แจ้ง getSellerID()-->
+                                                    <a href="${pageContext.request.contextPath}/viewSeller/${transaction.sellerName}">${transaction.sellerName}</a><!--ชื่อผู้แจ้ง getSellerID()-->
                                                 </td>
                                             </tr>
                                         </c:forEach>

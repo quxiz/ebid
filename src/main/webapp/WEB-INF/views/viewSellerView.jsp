@@ -44,7 +44,7 @@
                     <div class="col-sm-8 col-md-8">	
 
                         <div class="caption">	
-                            <h2><a href="#">${seller.userID}</a></h2>
+                            <h2>${seller.userID}</h2>
                             <p>${seller.country}</p>
                             <!--                            <h4>You can find the best clothes at my shop.</h4>-->
                         </div>
@@ -55,49 +55,28 @@
                 <hr>
                 <div class = "row">
                     <c:forEach items="${sellerFeedback}" var="feedback">
-                        <li role="presentation"><a role="menuitem" tabindex="-1">${category.name}</a>
+                        <li role="presentation"><a role="menuitem" tabindex="-1"></a>
                         </li>
                         <div class="col-sm-12 col-md-12">
                             <div class="thumbnail">
-                                <a href="#">${feedback.sellerID}</a><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></p>
-                                <p>ส่งของตรงเวลาดีครับ</p>
+                                <h4>${feedback.buyerName}</h4>
+                                <c:if test ="${feedback.sellerRating > 0}">
+                                <c:forEach begin = "1" end = "${feedback.sellerRaing}" >
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </c:forEach></c:if>
+                                <c:if test ="${feedback.sellerRating < 5}">
+                                <c:forEach begin = "1" end = "${5-feedback.sellerRaing}" >
+                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                </c:forEach></c:if>
+                                <p>${feedback.buyerComment}</p>
                             </div>
                         </div>
-                    </c:forEach>
-                    <div class="col-sm-12 col-md-12">
-                        <div class="thumbnail">
-                            <a href="#">petch</a><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></p>
-                            <p>ส่งของตรงเวลาดีครับ</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="col-sm-12 col-md-12">
-                        <div class="thumbnail">
-                            <a href="#">moei</a><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></p>
-                            <p>สีเพี้ยนไปจากรูปนิดหน่อย แต่แบบสวยตามรูปเลย</p>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="col-sm-12 col-md-12">
-                        <div class="thumbnail">
-                            <a href="#">kawin</a><p><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></p>
-                            <p>ส่งของช้าครับ ของชำรุดหลายจุดด้วยแต่ไม่เห็นบอกในคำอธิบายสินค้า</p>
-                        </div>
-                    </div>
+                            <hr>
+                    </c:forEach>                                     
                 </div>
             </div>
             <hr>
-            <div class="centercontents">
-                <ul class="pagination">
-                    <li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
-                </ul> 
-            </div>
+            
         </div>
     </tiles:putAttribute>
     <script>

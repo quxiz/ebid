@@ -40,7 +40,8 @@ public class EditPersonalInfoController {
         
         model.addAttribute("title", "แก้ไขข้อมูลส่วนตัว");
         Member member = this.memberService.getMember();
-
+        model.addAttribute("errorNUM",errorNum);
+        
         if (!model.containsAttribute("personalInfoForm")) {
             PersonalInfoForm personalInfoForm = new PersonalInfoForm();
             personalInfoForm.setFirstName(member.getFirstName());

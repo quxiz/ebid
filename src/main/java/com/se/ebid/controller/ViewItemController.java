@@ -6,9 +6,11 @@
 package com.se.ebid.controller;
 
 import com.se.ebid.entity.Item;
+import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Photo;
 import com.se.ebid.service.CommentService;
 import com.se.ebid.service.ItemService;
+import com.se.ebid.service.MemberService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +32,7 @@ public class ViewItemController {
 
     private ItemService itemService; //waiting for declaring itemService
     private CommentService commentService;
-
+    private MemberService memberService;
     @Autowired
     public void setItemService(ItemService itemService) {
         this.itemService = itemService;
@@ -39,6 +41,11 @@ public class ViewItemController {
     @Autowired
      public void setCommentService(CommentService commentService) {
      this.commentService = commentService;
+     }
+     
+     @Autowired
+     private void setMemberService(MemberService memberService){
+         this.memberService=memberService;
      }
      
     @RequestMapping(value = "/viewItem/{itemID}",method = RequestMethod.GET)
@@ -69,6 +76,8 @@ public class ViewItemController {
 
     @RequestMapping(value = "/viewItem/{itemID}/onSubmitBidForm", method = RequestMethod.POST)
     public String onSubmitBidForm(@PathVariable ("itemID") long itemID,@ModelAttribute ("bidForm") BidForm bidForm) {
+        Member member = this.memberService.getMember();
+        if(member.getPaymentAccount()==null)return "redirect:/editPersonalInfo3";
         this.itemService.bid(bidForm);
         return "redirect:/viewItem/"+itemID;
     }

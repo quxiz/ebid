@@ -36,7 +36,7 @@
 
             <h4>${item.title}</h4>
             <!--addaction link profile-->
-            <a href="${pageContext.request.contextPath}/viewSeller/${item.sellerID}">${item.sellerName}</a> <!--name-->
+            <a href="${pageContext.request.contextPath}/viewSeller/${item.sellerName}">${item.sellerName}</a> <!--name-->
 
             <br>
             <br>

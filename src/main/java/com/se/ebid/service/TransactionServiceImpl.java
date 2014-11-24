@@ -102,10 +102,10 @@ public class TransactionServiceImpl implements TransactionService {
                 + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
             }
             if(item.getSellingType() == BID){
-                messageBuyer.setMessage("[ebid] The transaction is completed!"
+                messageBuyer.setMessage("The transaction is completed!"
                     +"The transaction ID " + transaction.getTransactionID() + " is completed.");
             }
-            messageBuyer.setMessage("Transaction is completed!"
+            messageBuyer.setMessage("The transaction is completed!"
                 + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
                 + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
             messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
@@ -129,7 +129,7 @@ public class TransactionServiceImpl implements TransactionService {
             Message messageSeller = new Message();
             messageSeller.setSenderID(Common.ADMIN_ID);
             messageSeller.setReceiverID(sellerID);
-            messageSeller.setMessage("[ebid] Transaction is completed!"
+            messageSeller.setMessage("The transaction is completed!"
                 + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
                 + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
             messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
@@ -157,7 +157,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     private boolean sendBuyerEmail(Member member, Transaction transaction) {
-        return Common.sendMail(member.getEmail(), "[ebid] Transaction is completed!",
+        return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
                 "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
                 + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
     }

@@ -124,10 +124,10 @@
                                         <ul id="sellingType" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
                                             <c:forEach items="${sellingType}" var="selling">
-                                                <li role="presentation"><a role="menuitem" tabindex="-1">${selling.name}</a>
+                                                <li onclick = "$(#sellingTypeID).val('${selling.name}')" role="presentation"><a role="menuitem" tabindex="-1">${selling.name}</a>
                                                 </li>
                                             </c:forEach>
-
+                                            <form:hidden id = "sellingTypeID" path="sellingType"/>
                                         </ul>
                                     </div>
                                 </div>

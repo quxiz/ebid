@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -180,23 +181,25 @@ System.out.println("step3");
             autoBid.setBidIncrement(newBidIncrement);
             autoBid.setTimestamp(new Timestamp(System.currentTimeMillis()));
             this.autoBidDAO.save(autoBid);
-System.out.println("step4");
-            Member outBidder = this.memberDAO.findByMemberID(outBidderID);
-            if (outBidder != null) {
-                sendOutbidEmail(outBidder, item);
-                Message message = new Message();
-                message.setSenderID(Common.ADMIN_ID);
-                message.setReceiverID(outBidderID);
-                message.setMessage("You were outbitted at " + item.getTitle() + "<br/>"
-                        + "Current price: " + item.getPrice() + "<br/>"
-                        + "<br/>"
-                        + "Beat it now!!!<br/>"
-                        + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">" 
-                        + "Click to view" + "</a>");
-                message.setTimestamp(new Timestamp(System.currentTimeMillis()));
-                message.setSeen(false);
-                message.setSenderName(Common.ADMIN_NAME);
-                this.messageDAO.save(message);
+            System.out.println("step4");
+            if(outBidderID>=0){
+                Member outBidder = this.memberDAO.findByMemberID(outBidderID);
+                if (outBidder != null) {
+                    sendOutbidEmail(outBidder, item);
+                    Message message = new Message();
+                    message.setSenderID(Common.ADMIN_ID);
+                    message.setReceiverID(outBidderID);
+                    message.setMessage("You were outbitted at " + item.getTitle() + "<br/>"
+                            + "Current price: " + item.getPrice() + "<br/>"
+                            + "<br/>"
+                            + "Beat it now!!!<br/>"
+                            + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">" 
+                            + "Click to view" + "</a>");
+                    message.setTimestamp(new Timestamp(System.currentTimeMillis()));
+                    message.setSeen(false);
+                    message.setSenderName(Common.ADMIN_NAME);
+                    this.messageDAO.save(message);
+                }
             }
         } else {
             double price = newMaxBid + oldBidIncrement;
@@ -305,8 +308,8 @@ System.out.println("step4");
         item.setQuantity(registerItemForm.getQuantity());
         item.setStartTime(registerItemForm.getStartTime());
         item.setSellerName(this.memberDAO.findByMemberID(memberID).getUserID());
-        item.setEndTime(registerItemForm.getEndTime());
-
+   //     item.setEndTime(registerItemForm.getEndTime());
+        item.setSellerID(Common.getMemberID());
         // item.setPaymentMethod(registerItemForm.getPaymentMethod());
         item.setShippingService(registerItemForm.getShippingService());
         item.setShippingCost(registerItemForm.getShippingCost());
@@ -315,18 +318,25 @@ System.out.println("step4");
         item.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
         MultipartFile[] photoList = registerItemForm.getPhotos();
-        
+        if(registerItemForm.getEndTime()!=null){
+            System.out.println(registerItemForm.getEndTime());
+            System.out.println(registerItemForm.getEndTime().getTime());
+            System.out.println(System.currentTimeMillis());
+            System.currentTimeMillis();
+            item.setEndTime(new Timestamp(registerItemForm.getEndTime().getTime()));
+        }
         this.itemDAO.save(item);
         long itemID = item.getItemID();
         for (MultipartFile aPhoto : photoList) {
+            if(!aPhoto.getContentType().substring(0,5).equals("image")){
+                System.out.println(aPhoto.getContentType().substring(0,5));
+                continue;
+            }
+            
             Photo photo = new Photo();
             photo.setItemID(itemID);
             photo.setPhotoURL(null);
             long photoID = this.photoDAO.save(photo);
-            if(!aPhoto.getContentType().substring(0,5).equals("image")){
-                System.out.println(aPhoto.getContentType().substring(0,5));
-                throw new RuntimeException();
-            }
             String photoURL = servletContext.getRealPath("resources/uploadedImg/") +"/"+ + photoID+ "."+aPhoto.getContentType().substring(6);
             try {
                 aPhoto.transferTo(new File(photoURL));
@@ -339,8 +349,12 @@ System.out.println("step4");
             photo.setPhotoURL(photoURL);
             this.photoDAO.save(photo);
         }
-
+        if(registerItemForm.getSellingType() == null){
+            System.out.println("null selling type");
+        }
         if (registerItemForm.getSellingType() == SellingType.BID) {
+            System.out.println("is bid");
+            
             AutoBid autoBid = new AutoBid();
             autoBid.setItemID(itemID);
             autoBid.setBidderID(-1);
@@ -379,6 +393,14 @@ System.out.println("step4");
         
         System.out.println("item save complete");
         return item.getItemID();
+    }
+    
+    public long getMaxBidderID(long itemID){
+       AutoBid autoBid = this.autoBidDAO.findByItemID(itemID);
+       if (autoBid == null) {
+            return ERR_NO_AUTOBID;
+        }
+       return autoBid.getBidderID();
     }
 
     public boolean reportBidResult(long itemID) {

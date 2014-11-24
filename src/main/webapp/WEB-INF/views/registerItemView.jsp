@@ -147,7 +147,6 @@
                                 </div>
                             </div> 
 
-
                             <div class="form-group">
                                 <label for="price" class="col-sm-3 control-label" id="priceLabel">ราคา</label>
                                 <div class="input-group col-sm-3">
@@ -231,6 +230,7 @@
 
                                 </div>
                             </div>
+                                     <form:errors path="*" cssClass="errorblock" element="div" />
 
                             <br>
                             <form:errors path="*" cssClass="errorblock" element="div" />

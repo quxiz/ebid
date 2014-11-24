@@ -44,7 +44,21 @@ public class RegisterItemController {
     }
 
     @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
-    public String onSubmit(@ModelAttribute RegisterItemForm form) {
+    public String onSubmit(@ModelAttribute RegisterItemForm form){
+        System.out.println("REQ: reg item call");
+        if(form.getPhotos() == null){
+            System.out.println("null photos");
+        }
+        else{
+            if(form.getPhotos().length == 0){
+                System.out.println("zero photo");
+            }
+            else{
+                for(int i=0;i<form.getPhotos().length;i++){
+                    System.out.println("file type uploaded:"+form.getPhotos()[i].getContentType());
+                }
+            }
+        }
         this.itemService.registerItem(form);
         return "redirect:/viewItem";//รอแก้หน้าแสดง
     }

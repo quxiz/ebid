@@ -45,7 +45,7 @@ public class RegisterItemForm {
     
     private Timestamp startTime;
     
-    //@Future(message = "End time is invalid")
+    @Future(message = "End time is invalid")
     private Date endTime;
 //    private String paymentMethod;
     

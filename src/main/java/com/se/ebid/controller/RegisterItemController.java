@@ -6,14 +6,19 @@
 package com.se.ebid.controller;
 
 import com.se.ebid.service.ItemService;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +37,15 @@ public class RegisterItemController {
     public void setItemService(ItemService itemService) {
         this.itemService = itemService;
     }
+    
+    @InitBinder
+public void initBinder(WebDataBinder binder) {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy K:mm a");
+    dateFormat.setLenient(false);
+
+    // true passed to CustomDateEditor constructor means convert empty String to null
+    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+}
 
     @RequestMapping("/registerItem")
     public String viewRegisterItem(Model model) {
@@ -44,6 +58,7 @@ public class RegisterItemController {
             model.addAttribute("form", new RegisterItemForm());
             
         }
+        
         model.addAttribute("title", "RegisterItem");
         return "registerItemView";
     }
@@ -51,7 +66,9 @@ public class RegisterItemController {
     @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
 
     public String onSubmit(@Valid @ModelAttribute("form") RegisterItemForm form, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
-
+        if(form.getEndTime()!=null){
+            System.out.println(form.getEndTime());
+        }
          
         System.out.println("REQ: reg item call");
         if (result.hasErrors()) {

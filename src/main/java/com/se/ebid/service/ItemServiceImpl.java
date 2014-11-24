@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -315,7 +316,13 @@ System.out.println("step4");
         item.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
         MultipartFile[] photoList = registerItemForm.getPhotos();
-        
+        if(registerItemForm.getEndTime()!=null){
+            System.out.println(registerItemForm.getEndTime());
+            System.out.println(registerItemForm.getEndTime().getTime());
+            System.out.println(System.currentTimeMillis());
+            System.currentTimeMillis();
+            item.setEndTime(new Timestamp(registerItemForm.getEndTime().getTime()));
+        }
         this.itemDAO.save(item);
         long itemID = item.getItemID();
         for (MultipartFile aPhoto : photoList) {
@@ -344,8 +351,8 @@ System.out.println("step4");
             System.out.println("null selling type");
         }
         if (registerItemForm.getSellingType() == SellingType.BID) {
-           System.out.println("is bid");
-            item.setEndTime(new Timestamp(registerItemForm.getEndTime().getTime()));
+            System.out.println("is bid");
+            
             AutoBid autoBid = new AutoBid();
             autoBid.setItemID(itemID);
             autoBid.setBidderID(-1);

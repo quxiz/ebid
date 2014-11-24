@@ -55,15 +55,15 @@ public class RegisterController {
             redirectAttributes.addFlashAttribute("registrationForm", registrationForm);
             return "redirect:/register";
         }else {
-            model.addAttribute("text",false);
+            
             if(!registrationForm.getPassword().equals(registrationForm.getConfirmPassword())) model.addAttribute("text","Password mismatch"); 
             int ret = this.memberService.register(registrationForm);
             switch(ret){
-                case MemberService.ERR_DUP_EMAIL : model.addAttribute("text","Email has already used");
-                case MemberService.ERR_DUP_USER : model.addAttribute("text","User ID has already used");
+                case MemberService.ERR_DUP_EMAIL : {model.addAttribute("isSuccess",false); model.addAttribute("text","Email has already used");}
+                case MemberService.ERR_DUP_USER : {model.addAttribute("isSuccess",false); model.addAttribute("text","User ID has already used");}
             }
-            if(ret >= 0) model.addAttribute("text","Please check your email and activate your ID");  
-            else model.addAttribute("text","Error found");
+            if(ret >= 0) {model.addAttribute("isSuccess",true); model.addAttribute("text","Please check your email and activate your ID");  }
+            else {model.addAttribute("isSuccess",false); model.addAttribute("text","Error found");}
             return "showView";
         }
     }

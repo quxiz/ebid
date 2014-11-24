@@ -11,6 +11,7 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +23,7 @@ public class RegisterItemForm {
     @Size(min = 1, max = 80, message = "Title must not be empty or longer than 80 characters")
     private String title;
     
-    @Size(min = 1, message = "Specifics must not be empty")
+    //Size(min = 1, message = "Specifics must not be empty")
     private String specifics;
     
     @Size(min = 1, message = "Detail must not be empty")
@@ -32,9 +33,10 @@ public class RegisterItemForm {
     private MultipartFile[] photos;
     private SellingType sellingType;
     
-    @DecimalMin(value = "0.01", message = "Price must be greater than or equal to 0.01")
-    @Size(min = 1, message = "Price must not be empty")
-    @Digits(integer = 20, fraction = 2, message = "Price is invalid")
+   // @DecimalMin(value = "0.01", message = "Price must be greater than or equal to 0.01")
+    //@Pattern(regexp = "[0-9]+.[0-9]{2}")
+   // @Size(min = 1, message = "Price must not be empty")
+    //@Digits(integer = 20, fraction = 2, message = "Price is invalid")
     private double price;
     
     @Min(value = 1, message = "Quantity must be at least 1")

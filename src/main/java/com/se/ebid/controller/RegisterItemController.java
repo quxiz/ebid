@@ -9,12 +9,15 @@ import com.se.ebid.service.ItemService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -34,37 +37,43 @@ public class RegisterItemController {
     public String viewRegisterItem(Model model) {
         List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
         List<SellingType> sellingType = new ArrayList<>(Arrays.asList(SellingType.values()));
-
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("sellingType", sellingType);
-        model.addAttribute("form", new RegisterItemForm());
-        model.addAttribute("title", "Register");
-
+        if (!model.containsAttribute("form")) {
+            model.addAttribute("form", new RegisterItemForm());
+            
+        }
+        model.addAttribute("title", "RegisterItem");
         return "registerItemView";
     }
 
     @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
-    public String onSubmit(@ModelAttribute RegisterItemForm form,Model model){
+    public String onSubmit(@Valid @ModelAttribute("form") RegisterItemForm form, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         System.out.println("REQ: reg item call");
-        if(form.getPhotos() == null){
+        if (form.getPhotos() == null) {
             System.out.println("null photos");
-        }
-        else{
-            if(form.getPhotos().length == 0){
+        } else {
+            if (form.getPhotos().length == 0) {
                 System.out.println("zero photo");
-            }
-            else{
-                for(int i=0;i<form.getPhotos().length;i++){
-                    System.out.println("file type uploaded:"+form.getPhotos()[i].getContentType());
+            } else {
+                for (int i = 0; i < form.getPhotos().length; i++) {
+                    System.out.println("file type uploaded:" + form.getPhotos()[i].getContentType());
                 }
             }
         }
-        long itemID = this.itemService.registerItem(form);
-        if (itemID<0){
-            model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "Sorry, The item was unsuccessfully registered");
-            return "showView";
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", result);
+            redirectAttributes.addFlashAttribute("form", form);
+            return "redirect:/registerItem";
+        } else {
+            long itemID = this.itemService.registerItem(form);
+            if (itemID < 0) {
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "Sorry, The item was unsuccessfully registered");
+                return "showView";
+            }
+            return "redirect:/viewItem/" + itemID;//รอแก้หน้าแสดง
         }
-        return "redirect:/viewItem/"+itemID;//รอแก้หน้าแสดง
+
     }
 }

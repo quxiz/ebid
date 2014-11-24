@@ -53,8 +53,7 @@ public class RegisterController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registrationForm", result);
             redirectAttributes.addFlashAttribute("registrationForm", registrationForm);
             return "redirect:/register";
-        }
-        else {
+        }else {
             if(!registrationForm.getPassword().equals(registrationForm.getConfirmPassword())) return "redirect:/error/Password mismatch";
             int ret = this.memberService.register(registrationForm);
             switch(ret){

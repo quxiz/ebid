@@ -5,15 +5,27 @@
  */
 package com.se.ebid.controller;
 
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author mtmmoei
  */
 public class PersonalInfoForm {
+    
+    @Size(min = 1, max = 45, message = "First name must not be empty or longer than 45 characters")
     private String firstName;
+    
+    @Size(min = 1, max = 45, message = "Last name must not be empty or longer than 45 characters")
     private String lastName;
+    
     private String address;
+    
+    @Size(min = 1, max = 45, message = "Country must not be empty or longer than 45 characters")
     private String country;
+    
+    @Pattern(regexp = "[0-9]+", message = "Phone number is invalid")
     private String phoneNo;
 
     public String getFirstName() {

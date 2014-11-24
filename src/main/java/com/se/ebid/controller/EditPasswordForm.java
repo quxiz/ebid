@@ -19,7 +19,6 @@ public class EditPasswordForm {
     @Size(min = 6, max = 20, message = "Confirm new password requires at least 6 characters and at most 20 characters")
     private String confirmNewPassword;
     
-    @Size(min = 6, max = 20, message = "Old password requires at least 6 characters and at most 20 characters")
     private String oldPassword;
 
     @AssertTrue(message = "New password must be as same as Confirm new password")

@@ -13,20 +13,54 @@
 
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<style>
+    .error {
+        color: #ff0000;
+    }
+
+    .errorblock {
+        color: #000;
+        background-color: #ffEEEE;
+        border: 3px solid #ff0000;
+        padding: 8px;
+        margin: 16px;
+    }
+</style>
+
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <div class="container">
             <div class="col-sm-12">
                 <ul id="myTab" class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">แก้ไขข้อมูลทั่วไป</a></li>
-                    <li role="presentation"><a href="#password" aria-controls="password" role="tab" data-toggle="tab">แก้ไขรหัสผ่าน</a></li>
-                    <li role="presentation"><a href="#payment" aria-controls="payment" role="tab" data-toggle="tab">แก้ไขข้อมูลการชำระเงิน</a></li>
-                    <li role="presentation"><a href="#recieve" aria-controls="recieve" role="tab" data-toggle="tab">แก้ไขข้อมูลบัญชีรับเงิน</a></li>
+                    <c:choose>
+                        <c:when test = "${(errorNum =='1')||(errorNum == null)}"><li role="presentation" class="active"></c:when>
+                        <c:otherwise><li role="presentation"></c:otherwise>
+                    </c:choose>
+                        <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">แก้ไขข้อมูลทั่วไป</a></li>
+                    <c:choose>
+                        <c:when test = "${(errorNum =='2')}"><li role="presentation" class="active"></c:when>
+                        <c:otherwise><li role="presentation"></c:otherwise>
+                    </c:choose>
+                        <a href="#password" aria-controls="password" role="tab" data-toggle="tab">แก้ไขรหัสผ่าน</a></li>
+                    <c:choose>
+                        <c:when test = "${(errorNum =='3')}"><li role="presentation" class="active"></c:when>
+                        <c:otherwise><li role="presentation"></c:otherwise>
+                    </c:choose>
+                        <a href="#payment" aria-controls="payment" role="tab" data-toggle="tab">แก้ไขข้อมูลการชำระเงิน</a></li>
+                    <c:choose>
+                        <c:when test = "${(errorNum =='4')}"><li role="presentation" class="active"></c:when>
+                        <c:otherwise><li role="presentation"></c:otherwise>
+                    </c:choose>
+                        <a href="#recieve" aria-controls="recieve" role="tab" data-toggle="tab">แก้ไขข้อมูลบัญชีรับเงิน</a></li>
                 </ul>
             </div>
             <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active in" id="profile">
-                    <div class="panel panel-default">
+                <c:choose>
+                        <c:when test = "${(errorNum =='1')||(errorNum == '')}"><div role="tabpanel" class="tab-pane active in" id="profile"></c:when>
+                        <c:otherwise><div role="tabpanel" class="tab-pane" id="profile"></c:otherwise>
+                    </c:choose>
+                  <div class="panel panel-default">
                         <br>
                         <br>
                         <br>
@@ -81,8 +115,8 @@
                                     </div>
                                 </div>
 
-
-                                <form:errors path="*" cssClass="errorblock" element="div" />
+                                 
+                                <c:if test = "${errorNum == '1'}"><form:errors path="*" cssClass="errorblock" element="div" /></c:if>
 
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
@@ -94,7 +128,11 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="password">
+                
+                <c:choose>
+                        <c:when test = "${(errorNum =='2')}"><div role="tabpanel" class="tab-pane active in" id="password"></c:when>
+                        <c:otherwise><div role="tabpanel" class="tab-pane" id="password"></c:otherwise>
+                    </c:choose>            
                     <div class="panel panel-default">
                         <br>
                         <br>
@@ -121,6 +159,8 @@
                                         <form:input type="password" class="form-control" id="inputOldPassword" placeholder="รหัสผ่านเก่า" path="oldPassword"/><!--check with getPassword()-->
                                     </div>
                                 </div>
+                                
+                                <c:if test = "${errorNum =='2'}"><form:errors path="*" cssClass="errorblock" element="div" /></c:if>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
                                         <input type="submit" class="btn btn-primary" value="บันทึก"/>
@@ -130,7 +170,10 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="payment">
+                            <c:choose>
+                        <c:when test = "${(errorNum =='3')}"><div role="tabpanel" class="tab-pane active in" id="payment"></c:when>
+                        <c:otherwise><div role="tabpanel" class="tab-pane" id="payment"></c:otherwise>
+                    </c:choose> 
                     <div class="panel panel-default">
                         <br>
                         <br>
@@ -143,6 +186,7 @@
                                         <form:input type="email" class="form-control" id="newPayment" placeholder="อีเมล" path="payPalAccount"/><!--getPaypalAccount()-->
                                     </div>
                                 </div>
+                                <c:if test = "${errorNum == '3'}"><form:errors path="*" cssClass="errorblock" element="div" /></c:if>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
                                         <input type="submit" class="btn btn-primary" value="บันทึก">
@@ -152,7 +196,11 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="recieve">
+                
+                              <c:choose>
+                        <c:when test = "${(errorNum =='4')}"><div role="tabpanel" class="tab-pane active in" id="recieve"></c:when>
+                        <c:otherwise><div role="tabpanel" class="tab-pane" id="recieve"></c:otherwise>
+                    </c:choose> 
                     <div class="panel panel-default">
                         <br>
                         <br>
@@ -165,6 +213,7 @@
                                         <form:input type="email" class="form-control" id="newPayment" placeholder="อีเมล" path="payPalAccount"/><!--getPaypalAccount()-->
                                     </div>
                                 </div>
+                                <c:if test="${errorNum == 4}"><form:errors path="*" cssClass="errorblock" element="div" /></c:if>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
                                         <input type="submit" class="btn btn-primary" value="บันทึก">
@@ -186,6 +235,7 @@
                     <div class="modal-body">
                         คุณต้องการแก้ไขข้อมูล?
                     </div>
+                   
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                         <input type="submit" class="btn btn-primary" data-dismiss="modal" id="acceptChange" value="ยืนยัน"/>

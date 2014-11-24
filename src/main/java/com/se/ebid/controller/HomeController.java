@@ -83,8 +83,8 @@ public class HomeController {
             }
         }
         model.addAttribute("listPhotos", listPhotos); 
-        model.addAttribute("maxIndex", listPhotos.size());
-        model.addAttribute("listRecentItem",listRecentItems);
+        model.addAttribute("maxIndex", listPhotos.size()-1);
+        model.addAttribute("listRecentItems",listRecentItems);
         return "homeView";
     }
 }

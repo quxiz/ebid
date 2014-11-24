@@ -295,6 +295,7 @@ System.out.println("step4");
         Item item = new Item();
         long memberID = Common.getMemberID();
         item.setSellerID(memberID);
+        item.setSellerName(Common.getUserID());
         item.setTitle(registerItemForm.getTitle());
         item.setSpecifics(registerItemForm.getSpecifics());
         item.setDetail(registerItemForm.getDetail());
@@ -326,7 +327,7 @@ System.out.println("step4");
                 System.out.println(aPhoto.getContentType().substring(0,5));
                 throw new RuntimeException();
             }
-            String photoURL = servletContext.getRealPath("resources/uploadedImg/") +"/"+ + photoID+ aPhoto.getContentType().substring(6);
+            String photoURL = servletContext.getRealPath("resources/uploadedImg/") +"/"+ + photoID+ "."+aPhoto.getContentType().substring(6);
             try {
                 aPhoto.transferTo(new File(photoURL));
             } catch (IOException ex) {
@@ -334,6 +335,7 @@ System.out.println("step4");
             } catch (IllegalStateException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+            photoURL =  "/ebid/resources/uploadedImg/"+ + photoID+ "."+aPhoto.getContentType().substring(6);
             photo.setPhotoURL(photoURL);
             this.photoDAO.save(photo);
         }

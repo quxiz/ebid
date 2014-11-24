@@ -54,11 +54,11 @@ public class CommentServiceImpl implements CommentService {
         message.setSenderID(memberID);
         message.setReceiverID(questionForm.getSellerID());
         message.setMessage("There is a question for you.<br/>"
-                + "To answer your question, click on the link below (or copy and paste the URL into your browser):<br/>"
                 + "<a href=\"" + Common.BASE_URL + Common.ANSWER_QUESTION_URL + questionForm.getItemID() + "_" + comment.getCommentID() + "\">" 
-                + Common.BASE_URL + Common.ANSWER_QUESTION_URL + questionForm.getItemID() + "_" + comment.getCommentID() + "</a>");
+                + "Click to answer your question" + "</a>");
         message.setTimestamp(new Timestamp(System.currentTimeMillis()));
         message.setSeen(false);
+        message.setSenderName(Common.getUserID());
         this.messageDAO.save(message);
 
         return true;
@@ -80,11 +80,11 @@ public class CommentServiceImpl implements CommentService {
         message.setSenderID(memberID);
         message.setReceiverID(answerForm.getAskerID());
         message.setMessage("Your question has been answered.<br/>"
-                + "To see the answer, click on the link below (or copy and paste the URL into your browser):<br/>"
                 + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + comment.getItemID() + "\">" 
-                + Common.BASE_URL + Common.VIEW_ITEM_URL + comment.getItemID() + "</a>");
+                + "Click to view" + "</a>");
         message.setTimestamp(new Timestamp(System.currentTimeMillis()));
         message.setSeen(false);
+        message.setSenderName(Common.getUserID());
         this.messageDAO.save(message);
 
         return true;

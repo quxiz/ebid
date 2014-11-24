@@ -89,6 +89,7 @@ public class TransactionServiceImpl implements TransactionService {
             + "ItemID: " + transaction.getItemID());
             messageAdmin.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageAdmin.setSeen(false);
+            messageAdmin.setSenderName(Common.ADMIN_NAME);
             this.messageDAO.save(messageAdmin);
         } else {
             sendBuyerEmail(buyer, transaction);
@@ -98,9 +99,8 @@ public class TransactionServiceImpl implements TransactionService {
             Item item = this.itemDAO.findByItemID(transaction.getItemID());
             if(item.getSellingType() == BUY){
                 messageBuyer.setMessage("Transaction is completed!<br/>"
-                + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): <br/>"
                 + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
-                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "</a>");
+                + "Click to enter the feedback for your seller" + "</a>");
             }
             if(item.getSellingType() == BID){
                 messageBuyer.setMessage("The transaction is completed!"
@@ -108,6 +108,7 @@ public class TransactionServiceImpl implements TransactionService {
             }
             messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageBuyer.setSeen(false);
+            messageBuyer.setSenderName(Common.ADMIN_NAME);
             this.messageDAO.save(messageBuyer);
         }
 
@@ -121,6 +122,7 @@ public class TransactionServiceImpl implements TransactionService {
             + "ItemID: " + transaction.getItemID());
             messageAdmin.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageAdmin.setSeen(false);
+            messageAdmin.setSenderName(Common.ADMIN_NAME);
             this.messageDAO.save(messageAdmin);
         } else {
             sendSellerEmail(seller, transaction);
@@ -128,11 +130,11 @@ public class TransactionServiceImpl implements TransactionService {
             messageSeller.setSenderID(Common.ADMIN_ID);
             messageSeller.setReceiverID(sellerID);
             messageSeller.setMessage("The transaction is completed!"
-                + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
                 + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
-                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "</a>");
+                + "Click to enter the feedback for your buyer" + "</a>");
             messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageSeller.setSeen(false);
+            messageSeller.setSenderName(Common.ADMIN_NAME);
             this.messageDAO.save(messageSeller);
         }
         return true;

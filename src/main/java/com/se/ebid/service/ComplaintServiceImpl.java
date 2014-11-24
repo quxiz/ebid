@@ -53,11 +53,11 @@ public class ComplaintServiceImpl implements ComplaintService{
         message.setSenderID(MemberID);
         message.setReceiverID(Common.ADMIN_ID);
         message.setMessage("There is a complaint from an user.<br/>"
-                + "To solve the complaint, click on the link below (or copy and paste the URL into your browser):<br/>"
                 + "<a href=\"" + Common.BASE_URL + Common.SOLVE_COMPLAINT_URL + "\">" 
-                + Common.BASE_URL + Common.SOLVE_COMPLAINT_URL + "</a>");
+                + "Click to solve" + "</a>");
         message.setTimestamp(new Timestamp(System.currentTimeMillis()));
         message.setSeen(false);
+        message.setSenderName(Common.getUserID());
         this.messageDAO.save(message);
         
         return true;
@@ -84,6 +84,7 @@ public class ComplaintServiceImpl implements ComplaintService{
         message.setMessage(complaint.getSolveDetail());
         message.setTimestamp(new Timestamp(System.currentTimeMillis()));
         message.setSeen(false);
+        message.setSenderName(Common.ADMIN_NAME);
         this.messageDAO.save(message);
         
         return true;

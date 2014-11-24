@@ -185,17 +185,17 @@ System.out.println("step4");
             if (outBidder != null) {
                 sendOutbidEmail(outBidder, item);
                 Message message = new Message();
-                //message.setSenderID(Common.ADMIN_ID);
-                message.setSenderID(1);
+                message.setSenderID(Common.ADMIN_ID);
                 message.setReceiverID(outBidderID);
-                message.setMessage("You were outbitted at " + item.getTitle() + "\n"
-                        + "Current price: " + item.getPrice() + "\n"
-                        + "\n"
-                        + "Beat it now!!!\n"
+                message.setMessage("You were outbitted at " + item.getTitle() + "<br/>"
+                        + "Current price: " + item.getPrice() + "<br/>"
+                        + "<br/>"
+                        + "Beat it now!!!<br/>"
                         + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">" 
-                        + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "</a>");
+                        + "Click to view" + "</a>");
                 message.setTimestamp(new Timestamp(System.currentTimeMillis()));
                 message.setSeen(false);
+                message.setSenderName(Common.ADMIN_NAME);
                 this.messageDAO.save(message);
             }
         } else {
@@ -426,11 +426,12 @@ System.out.println("step4");
         Message messageBuyer = new Message();
         messageBuyer.setSenderID(Common.ADMIN_ID);
         messageBuyer.setReceiverID(buyerID);
-        messageBuyer.setMessage("Congratulations, you won the auction!"
-                + "To complete transaction, click on the link below (or copy and paste the URL into your browser): \n"
+        messageBuyer.setMessage("Congratulations, you won the auction!<br/>"
                 + "<a href=\"" + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID() + "\">" 
-                + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID() + "</a>");
+                + "Click to check out" + "</a>");
         messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        messageBuyer.setSeen(false);
+        messageBuyer.setSenderName(Common.ADMIN_NAME);
         this.messageDAO.save(messageBuyer);
 
         Member seller = this.memberDAO.findByMemberID(sellerID);
@@ -444,11 +445,12 @@ System.out.println("step4");
         Message messageSeller = new Message();
         messageSeller.setSenderID(Common.ADMIN_ID);
         messageSeller.setReceiverID(sellerID);
-        messageSeller.setMessage("There is a winner for your auction item!"
-                + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
+        messageSeller.setMessage("There is a winner for your auction item!<br/>"
                 + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
-                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "</a>");
+                + "Click to enter the feedback for your seller" + "</a>");
         messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
+        messageSeller.setSeen(false);
+        messageBuyer.setSenderName(Common.ADMIN_NAME);
         this.messageDAO.save(messageSeller);
 
         /*BidSchedule bidSchedule = BidScheduleDAO.findByItemID(itemID);

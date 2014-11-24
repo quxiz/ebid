@@ -51,7 +51,7 @@ public class RegisterItemController {
 
     public String onSubmit(@Valid @ModelAttribute("form") RegisterItemForm form, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 
-         long itemID = this.itemService.registerItem(form);
+         
         System.out.println("REQ: reg item call");
         if (form.getPhotos() == null) {
             System.out.println("null photos");
@@ -64,10 +64,7 @@ public class RegisterItemController {
                 }
             }
         }
-<<<<<<< HEAD
-        this.itemService.registerItem(form);
-        return "redirect:/viewItem/"+itemID;//รอแก้หน้าแสดง
-=======
+
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", result);
             redirectAttributes.addFlashAttribute("form", form);
@@ -82,6 +79,5 @@ public class RegisterItemController {
             return "redirect:/viewItem/" + itemID;//รอแก้หน้าแสดง
         }
 
->>>>>>> 4e8aee5a2846c344e9fdae7e9e1aad86709df5fb
     }
 }

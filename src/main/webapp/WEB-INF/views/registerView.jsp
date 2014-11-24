@@ -13,27 +13,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
-<style type="text/css">
-    .scrollable-menu {
-        height: auto;
-        max-height: 200px;
-        overflow-x: hidden;
-    }
 
-</style>
 
 <style>
-.error {
-	color: #ff0000;
-}
- 
-.errorblock {
-	color: #000;
-	background-color: #ffEEEE;
-	border: 3px solid #ff0000;
-	padding: 8px;
-	margin: 16px;
-}
+    .error {
+        color: #ff0000;
+    }
+
+    .errorblock {
+        color: #000;
+        background-color: #ffEEEE;
+        border: 3px solid #ff0000;
+        padding: 8px;
+        margin: 16px;
+    }
 </style>
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
@@ -78,10 +71,10 @@
                                         <ul id="divNewNotifications" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
                                             <c:forEach items="${countryList.countries}" var="country">
-                                                <li role="presentation"><a role="menuitem" tabindex="-1" class="test">${country}</a>
+                                                <li onclick="$('#country-hidden').val('${country}')" role="presentation"><a role="menuitem" tabindex="-1" class="test">${country}</a>
                                                 </li>
                                             </c:forEach>
-
+                                            <form:hidden id="country-hidden" path="country" />
                                         </ul>
                                     </div>
                                 </div>
@@ -135,19 +128,16 @@
             </div>
         </div>
         <script>
-            $(function () {
-
-                $(".dropdown-menu li a").click(function () {
-                    var selText = $(this).text();
-                    $(this).parents('.dropdown').find('.dropdown-toggle').html(selText + "&nbsp;&nbsp;" + '<span class="caret"></span>');
-
-                    var registerAttributes = model.get("RegistrationForm");
-                    registerAttributes.country = selText;
-                    model.set("RegistrationForm", registerAttributes);
-
-                });
-
-            });
+//            $(function () {
+//
+//                $(".dropdown-menu li a").click(function () {
+//                    var selText = $(this).text();
+//                    $(this).parents('.dropdown').find('.dropdown-toggle').html(selText + "&nbsp;&nbsp;" + '<span class="caret"></span>');
+//
+//  
+//                });
+//
+//            });
         </script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

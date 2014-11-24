@@ -31,65 +31,66 @@
                         <br>
                         <br>
                         <div class="panel-body">
-                            <form class="form-horizontal" role="form" id="personalInfoForm">
+                          
+                            <form:form class="form-horizontal" role="form" modelAttribute="personalInfoForm" method="POST" name="personalInfoForm" onsubmit="return confirmSubmit(this, '${pageContext.request.contextPath}/editPersonalInfo/onSubmitPersonalInfo')">
                                 <div class="form-group">
                                     <label for="inputName" class="col-sm-3 control-label">ชื่อจริง</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="inputName" placeholder="ชื่อ" value="วงศกร"> <!--getFirstName()-->
+                                        <form:input type="text" class="form-control" id="inputName" placeholder="ชื่อ" path="firstName" />
+                                        <form:errors path="firstName" cssClass="error" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputSurname" class="col-sm-3 control-label">นามสกุล</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="inputSurname" placeholder="นามสกุล" value="โยธินวัฒน์"> <!--getLastName()-->
+                                        <form:input type="text" class="form-control" id="inputSurname" placeholder="นามสกุล" path="lastName"/>
+                                        <form:errors path="lastName" cssClass="error" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputAddress" class="col-sm-3 control-label">ที่อยู่</label>
                                     <div class="col-sm-8">
-                                        <textarea class="form-control" id="inputAddress" placeholder="ที่อยู่"></textarea> <!--getAddress()-->
+                                        <form:textarea class="form-control" id="inputAddress" placeholder="ที่อยู่" path="address"></form:textarea>
+                                        <form:errors path="address" cssClass="error" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputCountry" class="col-sm-3 control-label">ประเทศ</label>
                                     <div class="col-sm-9">
                                         <div class="dropdown">
-                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                                                - เลือก -
-                                                <span class="caret"></span>
+                                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownCountry" data-toggle="dropdown">
+                                                ${member.country}&nbsp;&nbsp;<span class="caret"></span>
                                             </button>
-                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">America</a></li>
-                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Japan</a></li>
-                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">South Korea</a></li>
-                                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Thailand</a></li>
+                                            <ul id="divNewNotifications" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
+
+                                                <c:forEach items="${countryList.countries}" var="country">
+                                                    <li onclick="$('#country-hidden').val('${country}')" role="presentation"><a role="menuitem" tabindex="-1" class="test">${country}</a>
+                                                    </li>
+                                                </c:forEach>
+                                                <form:hidden id="country-hidden" path="country" />
                                             </ul>
                                         </div>
-                                    </div><!--getCountry()-->
+                                    </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="inputEmail" class="col-sm-3 control-label">อีเมล</label>
-                                    <div class="col-sm-4">
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="อีเมล" value="wongsakorn1"><!--getEmail()-->
-                                    </div>
-                                    <div class="input-group col-sm-4">
-                                        <div class="input-group-addon">@</div>
-                                        <input class="form-control" type="email" placeholder="อีเมล" value="hotmail.com"><!--getEmail()-->
-                                    </div>
-                                </div>
+
                                 <div class="form-group">
                                     <label for="inputTel" class="col-sm-3 control-label">หมายเลขโทรศัพท์</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="inputTel" placeholder="หมายเลขโทรศัพท์" value="081-888-8888"><!--getPhoneNo()-->
+                                        <form:input type="text" class="form-control" id="inputTel" placeholder="หมายเลขโทรศัพท์" path="phoneNo"/>
                                     </div>
                                 </div>
+
+
+                                <form:errors path="*" cssClass="errorblock" element="div" />
+
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
-                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#answerModal">บันทึก</button>
+                                        <button type="submit" class="btn btn-primary">บันทึก</button>
                                     </div>
                                 </div>
-                            </form>
+                            </form:form>
+
                         </div>
                     </div>
                 </div>
@@ -99,32 +100,33 @@
                         <br>
                         <br>
                         <div class="panel-body">
-                            <form class="form-horizontal" role="form" id="editPasswordForm">
+
+                            <form:form class="form-horizontal" role="form" id="editPasswordForm" modelAttribute="editPasswordForm" method="POST" name="editPasswordForm" onsubmit="return confirmSubmit(this, '${pageContext.request.contextPath}/editPersonalInfo/onSubmitEditPassword')">
                                 <div class="form-group">
                                     <label for="inputNewPassword" class="col-sm-3 control-label">รหัสผ่านใหม่</label>
                                     <div class="col-sm-4">
-                                        <input type="password" class="form-control" id="inputNewPassword" placeholder="รหัสผ่านใหม่">
+                                        <form:input type="password" class="form-control" id="inputNewPassword" placeholder="รหัสผ่านใหม่" path="newPassword"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputNewPassword2" class="col-sm-3 control-label">ยืนยันรหัสผ่านใหม่</label>
                                     <div class="col-sm-4">
-                                        <input type="password" class="form-control" id="inputNewPassword2" placeholder="ยืนยันรหัสผ่านใหม่">
+                                        <form:input type="password" class="form-control" id="inputNewPassword2" placeholder="ยืนยันรหัสผ่านใหม่" path="confirmNewPassword"/>
                                         <br>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputOldPassword" class="col-sm-3 control-label">รหัสผ่านเก่า</label>
                                     <div class="col-sm-4">
-                                        <input type="password" class="form-control" id="inputOldPassword" placeholder="รหัสผ่านเก่า"><!--check with getPassword()-->
+                                        <form:input type="password" class="form-control" id="inputOldPassword" placeholder="รหัสผ่านเก่า" path="oldPassword"/><!--check with getPassword()-->
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
-                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#answerModal">บันทึก</button>
+                                        <input type="submit" class="btn btn-primary" value="บันทึก"/>
                                     </div>
                                 </div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>
@@ -134,19 +136,19 @@
                         <br>
                         <br>
                         <div class="panel-body">
-                            <form class="form-horizontal" role="form" id="PaymentInfoForm">
+                            <form:form class="form-horizontal" role="form" id="PaymentInfoForm" modelAttribute="paymentInfoForm" method="POST" name="paymentInfoForm" onsubmit="return confirmSubmit(this, '${pageContext.request.contextPath}/editPersonalInfo/editPaymentInfo/onSubmit')">
                                 <div class="form-group">
                                     <label for="inputPassword" class="col-sm-3 control-label">บัญชีชำระเงิน</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="newPayment" placeholder="บัญชี" value=""><!--getPaypalAccount()-->
+                                        <form:input type="email" class="form-control" id="newPayment" placeholder="อีเมล" path="payPalAccount"/><!--getPaypalAccount()-->
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
-                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#answerModal">บันทึก</button>
+                                        <input type="submit" class="btn btn-primary" value="บันทึก">
                                     </div>
                                 </div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>
@@ -156,19 +158,19 @@
                         <br>
                         <br>
                         <div class="panel-body">
-                            <form class="form-horizontal" role="form" id="RecievingInfoForm">
+                            <form:form class="form-horizontal" role="form" id="RecievingInfoForm" modelAttribute="receivingInfoForm" method="POST" name="receivingInfoForm" onsubmit="return confirmSubmit(this, '${pageContext.request.contextPath}/editPersonalInfo/editReceivingInfo/onSubmit')">
                                 <div class="form-group">
                                     <label for="inputPassword" class="col-sm-3 control-label">บัญชีรับเงิน</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="newPayment" placeholder="บัญชี" value=""><!--getPaypalAccount()-->
+                                        <form:input type="email" class="form-control" id="newPayment" placeholder="อีเมล" path="payPalAccount"/><!--getPaypalAccount()-->
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-offset-3 col-sm-9">
-                                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#answerModal">บันทึก</button>
+                                        <input type="submit" class="btn btn-primary" value="บันทึก">
                                     </div>
                                 </div>
-                            </form>
+                            </form:form>
                         </div>
                     </div>
                 </div>
@@ -186,12 +188,21 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="acceptChange">ยืนยัน</button>
+                        <input type="submit" class="btn btn-primary" data-dismiss="modal" id="acceptChange" value="ยืนยัน"/>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
 
+        <script>
+            function confirmSubmit(submitForm, submitUrl) { // <--- changed here
+                if (confirm("คุณต้องการแก้ไขข้อมูล?")) {
+                    submitForm.action = submitUrl;          // <--- changed here
+                    return true;                      // <--- changed here
+                }
+                return false;                         // <--- changed here
+            }
+        </script>
     </tiles:putAttribute>
 </tiles:insertDefinition>
 

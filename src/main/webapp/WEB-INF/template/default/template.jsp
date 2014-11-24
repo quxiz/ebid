@@ -14,7 +14,14 @@
 
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
         <title>${title} - ebid</title>
+<style type="text/css">
+    .scrollable-menu {
+        height: auto;
+        max-height: 200px;
+        overflow-x: hidden;
+    }
 
+</style>
     </head>
 
     <body>
@@ -40,13 +47,11 @@
         <script>
             $(function () {
 
-                $("#categoryHeader li a").click(function () {
+                $(".dropdown-menu li a").click(function () {
                     var selText = $(this).text();
                     $(this).parents('.dropdown').find('.dropdown-toggle').html(selText + "&nbsp;&nbsp;" + '<span class="caret"></span>');
 
-                    //                    var registerAttributes = model.get("RegistrationForm");
-                    //                    registerAttributes.country = selText;
-                    //                    model.set("RegistrationForm", registerAttributes);
+      
                 });
 
             });

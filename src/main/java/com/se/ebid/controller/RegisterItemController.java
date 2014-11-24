@@ -45,8 +45,8 @@ public class RegisterItemController {
 
     @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
     public String onSubmitRegisterItem(@ModelAttribute RegisterItemForm form) {
-        this.itemService.registerItem(form);
+        long itemID = this.itemService.registerItem(form);
         
-        return "redirect:/viewItem/";//รอแก้หน้าแสดง
+        return "redirect:/viewItem/"+itemID;//รอแก้หน้าแสดง
     }
 }

@@ -5,6 +5,7 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.entity.Comment;
 import com.se.ebid.service.CommentService;
 import com.se.ebid.service.ItemService;
 import com.se.ebid.service.MessageService;
@@ -28,7 +29,6 @@ public class AnswerQuestionController {
     
     private CommentService commentService;
     private ItemService itemService;
-    private MessageService messageService;
     @Autowired
     public void setCommentService(CommentService commentService){
         this.commentService = commentService;
@@ -39,26 +39,29 @@ public class AnswerQuestionController {
         this.itemService = itemService;
     }
     
-     @Autowired
-    public void messageService(MessageService messageService){
-        this.messageService = messageService;
-    }
     
     @RequestMapping(value = "/answerQuestion/{itemID}_{parentID}", method = RequestMethod.GET)
      public String viewAnswerQuestion(@PathVariable ("itemID") long itemID,@PathVariable ("parentID") long parentID, Model model) {
         model.addAttribute("title", "ตอบคำถาม");
         AnswerForm answerForm = new AnswerForm();
         answerForm.setParentID(parentID);
-        answerForm.setItemID(itemID);
+        answerForm.setItemID(itemID);        
+        Comment comment = this.commentService.getComment(parentID);
+        answerForm.setAskerID(comment.getCommenterID());
         String title = this.itemService.getItem(itemID).getTitle();
         model.addAttribute("answerForm",answerForm);
         model.addAttribute("itemTitle",title);
+        model.addAttribute("comment",comment);
         return "answerQuestionView";
     }  
      
      @RequestMapping(value = "/answerQuestion/onSubmit",method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute ("answerForm") AnswerForm answerForm){
-         if(this.commentService.answerQuestion(answerForm))return "redirect:/viewItem/"+answerForm.getItemID();
-        return "";
+     public String onSubmit(@ModelAttribute ("answerForm") AnswerForm answerForm,Model model){
+            if(this.commentService.answerQuestion(answerForm))return "redirect:/viewItem/"+answerForm.getItemID();
+            else {
+                model.addAttribute("isSuccess",false);
+                model.addAttribute("text","Error found");
+                return "showView";
+            }
      }
 }

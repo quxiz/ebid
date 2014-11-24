@@ -28,6 +28,7 @@ public interface ItemService {
     public static final int ERR_BLACKLIST = -5;
     public static final int ERR_NO_PAY_ACC = -6;
     public static final int ERR_NOT_ENOUGH_QTY = -7;
+    public static final int ERR_NO_AUTOBID = -8;
     
     public List<Item> search(SearchForm searchForm);
     public Item getItem(long itemID);
@@ -39,4 +40,5 @@ public interface ItemService {
     public long confirmBuy(BuyForm buyForm);
     public long registerItem(RegisterItemForm registerItemForm);
     public boolean reportBidResult(long itemID);
+    public long getMaxBidderID(long itemID);
 }

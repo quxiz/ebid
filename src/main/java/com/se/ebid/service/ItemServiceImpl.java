@@ -181,23 +181,25 @@ System.out.println("step3");
             autoBid.setBidIncrement(newBidIncrement);
             autoBid.setTimestamp(new Timestamp(System.currentTimeMillis()));
             this.autoBidDAO.save(autoBid);
-System.out.println("step4");
-            Member outBidder = this.memberDAO.findByMemberID(outBidderID);
-            if (outBidder != null) {
-                sendOutbidEmail(outBidder, item);
-                Message message = new Message();
-                message.setSenderID(Common.ADMIN_ID);
-                message.setReceiverID(outBidderID);
-                message.setMessage("You were outbitted at " + item.getTitle() + "<br/>"
-                        + "Current price: " + item.getPrice() + "<br/>"
-                        + "<br/>"
-                        + "Beat it now!!!<br/>"
-                        + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">" 
-                        + "Click to view" + "</a>");
-                message.setTimestamp(new Timestamp(System.currentTimeMillis()));
-                message.setSeen(false);
-                message.setSenderName(Common.ADMIN_NAME);
-                this.messageDAO.save(message);
+            System.out.println("step4");
+            if(outBidderID>=0){
+                Member outBidder = this.memberDAO.findByMemberID(outBidderID);
+                if (outBidder != null) {
+                    sendOutbidEmail(outBidder, item);
+                    Message message = new Message();
+                    message.setSenderID(Common.ADMIN_ID);
+                    message.setReceiverID(outBidderID);
+                    message.setMessage("You were outbitted at " + item.getTitle() + "<br/>"
+                            + "Current price: " + item.getPrice() + "<br/>"
+                            + "<br/>"
+                            + "Beat it now!!!<br/>"
+                            + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">" 
+                            + "Click to view" + "</a>");
+                    message.setTimestamp(new Timestamp(System.currentTimeMillis()));
+                    message.setSeen(false);
+                    message.setSenderName(Common.ADMIN_NAME);
+                    this.messageDAO.save(message);
+                }
             }
         } else {
             double price = newMaxBid + oldBidIncrement;
@@ -391,6 +393,14 @@ System.out.println("step4");
         
         System.out.println("item save complete");
         return item.getItemID();
+    }
+    
+    public long getMaxBidderID(long itemID){
+       AutoBid autoBid = this.autoBidDAO.findByItemID(itemID);
+       if (autoBid == null) {
+            return ERR_NO_AUTOBID;
+        }
+       return autoBid.getBidderID();
     }
 
     public boolean reportBidResult(long itemID) {

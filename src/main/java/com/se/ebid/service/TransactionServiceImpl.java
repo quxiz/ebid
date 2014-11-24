@@ -97,17 +97,15 @@ public class TransactionServiceImpl implements TransactionService {
             messageBuyer.setReceiverID(buyerID);
             Item item = this.itemDAO.findByItemID(transaction.getItemID());
             if(item.getSellingType() == BUY){
-                messageBuyer.setMessage("Transaction is completed!"
-                + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
+                messageBuyer.setMessage("Transaction is completed!<br/>"
+                + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): <br/>"
+                + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
+                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "</a>");
             }
             if(item.getSellingType() == BID){
                 messageBuyer.setMessage("The transaction is completed!"
                     +"The transaction ID " + transaction.getTransactionID() + " is completed.");
             }
-            messageBuyer.setMessage("The transaction is completed!"
-                + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
             messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageBuyer.setSeen(false);
             this.messageDAO.save(messageBuyer);
@@ -131,7 +129,8 @@ public class TransactionServiceImpl implements TransactionService {
             messageSeller.setReceiverID(sellerID);
             messageSeller.setMessage("The transaction is completed!"
                 + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
+                + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
+                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "</a>");
             messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageSeller.setSeen(false);
             this.messageDAO.save(messageSeller);

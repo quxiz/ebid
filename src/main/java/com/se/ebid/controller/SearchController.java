@@ -46,6 +46,7 @@ public class SearchController {
         } else {
             model.addAttribute("category", "ทุกประเภท");
         }
+        
         List<Item> listItems = this.itemService.search(searchForm);
         model.addAttribute("keyword", keyword);
         model.addAttribute("listItems", listItems);

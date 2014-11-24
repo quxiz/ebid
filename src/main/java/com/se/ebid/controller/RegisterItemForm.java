@@ -5,6 +5,7 @@
  */
 package com.se.ebid.controller;
 
+import java.io.File;
 import java.sql.Timestamp;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;

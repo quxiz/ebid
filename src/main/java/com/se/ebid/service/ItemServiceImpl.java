@@ -290,8 +290,8 @@ System.out.println("step4");
 
     @Override
     @Transactional
-    //unfinish
     public long registerItem(RegisterItemForm registerItemForm) {
+        System.out.println("REQ : register item");
         Item item = new Item();
         long memberID = Common.getMemberID();
         item.setSellerID(memberID);
@@ -313,23 +313,26 @@ System.out.println("step4");
         item.setReturnPolicy(registerItemForm.getReturnPolicy());
         item.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
-        this.itemDAO.save(item);
         MultipartFile[] photoList = registerItemForm.getPhotos();
+        
+        this.itemDAO.save(item);
         long itemID = item.getItemID();
         for (MultipartFile aPhoto : photoList) {
             Photo photo = new Photo();
             photo.setItemID(itemID);
             photo.setPhotoURL(null);
             long photoID = this.photoDAO.save(photo);
-            String photoURL = servletContext.getRealPath("resources/uploadedImg/") + photoID + aPhoto.getContentType();
+            if(!aPhoto.getContentType().substring(0,5).equals("image")){
+                System.out.println(aPhoto.getContentType().substring(0,5));
+                throw new RuntimeException();
+            }
+            String photoURL = servletContext.getRealPath("resources/uploadedImg/") +"/"+ + photoID+ aPhoto.getContentType().substring(6);
             try {
                 aPhoto.transferTo(new File(photoURL));
             } catch (IOException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-                return -1;
             } catch (IllegalStateException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-                return -1;
             }
             photo.setPhotoURL(photoURL);
             this.photoDAO.save(photo);
@@ -369,9 +372,10 @@ System.out.println("step4");
                 scheduler.scheduleJob(job, trigger);
             } catch (SchedulerException e) {
                 e.printStackTrace();
-                return -1;
             }
         }
+        
+        System.out.println("item save complete");
         return item.getItemID();
     }
 

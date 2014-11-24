@@ -61,6 +61,10 @@ public class CheckOutController {
         model.addAttribute("member", member);
         model.addAttribute("transaction", transaction);
         model.addAttribute("item", item);
+        String[] shippingServices = item.getShippingService().split(" ");
+        String[] shippingCosts = item.getShippingCost().split(" ");
+        model.addAttribute("shippingServices", shippingServices);
+        model.addAttribute("shippingCosts", shippingCosts);
         return "checkOutView";
     }
     
@@ -69,6 +73,7 @@ public class CheckOutController {
         Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
         transaction.setShippingAddress(transactionForm.getAddress());
         transaction.setShippingService(transactionForm.getShippingService());
+        transaction.setPrice(transactionForm.getPrice());
         return "redirect:/payment/"+transactionForm.getTransactionID();
     }
     

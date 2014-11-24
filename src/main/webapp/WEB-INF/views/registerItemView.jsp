@@ -37,7 +37,7 @@
                     </div>
                     <div class="panel-body">
                         <c:url var="addAction" value="/registerItem/sentForm" ></c:url>
-                        <form:form action="${addAction}" class="form-horizontal" role="form" modelAttribute="form" method="POST" name="form">
+                        <form:form action="${addAction}" enctype="multipart/form-data" class="form-horizontal" role="form" modelAttribute="form" method="POST" name="form">
                             <div class="form-group">
                                 <label for="input1" class="col-sm-3 control-label" id="test">ชื่อสินค้า</label>
                                 <div class="col-sm-6">
@@ -120,17 +120,26 @@
                             </div>
 
 
-                            <div class="form-group" id="auction" hidden="true">
+<!--                            <div class="form-group" id="auction" hidden="true">
                                 <label for="datetimepicker1" class="col-sm-3 control-label">เวลาสิ้นสุดการประมูล</label>
 
                                 <div class="col-sm-3">
                                     <div class='input-group date' id='datetimepicker1'>
-                                        <form:input type="text" class="form-control" id="endTime" path="endTime"/>
+                                        <f orm:input type="text" class="form-control" id="endTime" path="endTime"/>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </div>
                                 </div>
-                            </div>
-
+                            </div> -->
+                                
+                                        
+<div class="col-sm-3">
+                                    <div class='input-group date'>
+                                        <form:input type="datetime-local" class="form-control" id="endTime2" path='endTime'/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    </div>
+                                </div>
+                                        
+                                        
                             <div class="form-group">
                                 <label for="price" class="col-sm-3 control-label" id="priceLabel">ราคา</label>
                                 <div class="input-group col-sm-3">
@@ -259,15 +268,7 @@
                     }
                 });
                 $('#datetimepicker1').datetimepicker();
-//                $('#endTimeInput').keyup(function () {
-//                    try {
-//                    var dateFormat = new simpleDateFormat();
-//                            dateFormat.applyPattern('dd/MM/yyyy h:mm a');
-//                            Date parsedDate = dateFormat.parse($('#endTimeInput').text());
-//                            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-//                            $('#endTime').val(timestamp);
-//                } catch (e) {//this generic but you csan control another types of exception
-//                }
+//                
 //            });
 
             });</script>

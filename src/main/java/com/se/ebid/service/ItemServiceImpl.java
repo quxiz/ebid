@@ -192,7 +192,8 @@ System.out.println("step4");
                         + "Current price: " + item.getPrice() + "\n"
                         + "\n"
                         + "Beat it now!!!\n"
-                        + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID());
+                        + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">" 
+                        + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "</a>");
                 message.setTimestamp(new Timestamp(System.currentTimeMillis()));
                 message.setSeen(false);
                 this.messageDAO.save(message);
@@ -289,8 +290,8 @@ System.out.println("step4");
 
     @Override
     @Transactional
-    //unfinish
     public long registerItem(RegisterItemForm registerItemForm) {
+        System.out.println("REQ : register item");
         Item item = new Item();
         long memberID = Common.getMemberID();
         item.setSellerID(memberID);
@@ -312,23 +313,26 @@ System.out.println("step4");
         item.setReturnPolicy(registerItemForm.getReturnPolicy());
         item.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
-        this.itemDAO.save(item);
         MultipartFile[] photoList = registerItemForm.getPhotos();
+        
+        this.itemDAO.save(item);
         long itemID = item.getItemID();
         for (MultipartFile aPhoto : photoList) {
             Photo photo = new Photo();
             photo.setItemID(itemID);
             photo.setPhotoURL(null);
             long photoID = this.photoDAO.save(photo);
-            String photoURL = servletContext.getRealPath("resources/uploadedImg/") + photoID + aPhoto.getContentType();
+            if(!aPhoto.getContentType().substring(0,5).equals("image")){
+                System.out.println(aPhoto.getContentType().substring(0,5));
+                throw new RuntimeException();
+            }
+            String photoURL = servletContext.getRealPath("resources/uploadedImg/") +"/"+ + photoID+ aPhoto.getContentType().substring(6);
             try {
                 aPhoto.transferTo(new File(photoURL));
             } catch (IOException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-                return -1;
             } catch (IllegalStateException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-                return -1;
             }
             photo.setPhotoURL(photoURL);
             this.photoDAO.save(photo);
@@ -368,9 +372,10 @@ System.out.println("step4");
                 scheduler.scheduleJob(job, trigger);
             } catch (SchedulerException e) {
                 e.printStackTrace();
-                return -1;
             }
         }
+        
+        System.out.println("item save complete");
         return item.getItemID();
     }
 
@@ -414,17 +419,17 @@ System.out.println("step4");
         if (buyer == null) {
             return false;
         }
-        if (!sendBuyerEmail(buyer)) {
+        if (!sendBuyerEmail(buyer, transaction)) {
             return false;
         }
 
         Message messageBuyer = new Message();
         messageBuyer.setSenderID(Common.ADMIN_ID);
         messageBuyer.setReceiverID(buyerID);
-        messageBuyer.setMessage("There is a winner for your auction item!"
-                + "To enter the feedback for your buyer, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL
-                + Common.VIEW_MESSAGE_URL);
+        messageBuyer.setMessage("Congratulations, you won the auction!"
+                + "To complete transaction, click on the link below (or copy and paste the URL into your browser): \n"
+                + "<a href=\"" + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID() + "\">" 
+                + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID() + "</a>");
         messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
         this.messageDAO.save(messageBuyer);
 
@@ -432,17 +437,17 @@ System.out.println("step4");
         if (seller == null) {
             return false;
         }
-        if (!sendSellerEmail(seller)) {
+        if (!sendSellerEmail(seller, transaction)) {
             return false;
         }
 
         Message messageSeller = new Message();
         messageSeller.setSenderID(Common.ADMIN_ID);
         messageSeller.setReceiverID(sellerID);
-        messageSeller.setMessage("[ebid] Congratulations, you won the auction!"
-                + "To complete transaction, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL
-                + Common.VIEW_MESSAGE_URL);
+        messageSeller.setMessage("There is a winner for your auction item!"
+                + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
+                + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
+                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "</a>");
         messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
         this.messageDAO.save(messageSeller);
 
@@ -462,18 +467,16 @@ System.out.println("step4");
                 + "If you want to reopen the auction, please register your auction item again.");
     }
 
-    private boolean sendSellerEmail(Member member) {
+    private boolean sendSellerEmail(Member member, Transaction transaction) {
         return Common.sendMail(member.getEmail(), "[ebid] There is a winner for your auction item!",
-                "To enter the feedback for your buyer, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL
-                + Common.VIEW_MESSAGE_URL);
+                "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
+                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
     }
 
-    private boolean sendBuyerEmail(Member member) {
+    private boolean sendBuyerEmail(Member member, Transaction transaction) {
         return Common.sendMail(member.getEmail(), "[ebid] Congratulations, you won the auction!",
                 "To complete transaction, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL
-                + Common.VIEW_MESSAGE_URL);
+                + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID());
     }
 
 }

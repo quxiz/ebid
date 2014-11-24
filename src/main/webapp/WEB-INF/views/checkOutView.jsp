@@ -36,13 +36,31 @@
                             <br>
 
 
+                         
                             <div class="form-group shipping" hidden="true">
                                 <label for="sendingMethod" class="col-sm-3 control-label">วิธีการจัดส่ง</label>
                                 <div class="col-sm-6">
-                                    <form:input type="text" class="form-control" id="sendingMethod" value="" path=""/>
-                                </div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="sendingMethod" data-toggle="dropdown">
+                                            - เลือก -&nbsp;&nbsp;<span class="caret"></span>
+                                        </button>
+                                        <ul id="sendingMethod2" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
-                            </div>
+                                            <c:forEach items="${shippingServices}" var="shippingService" varStatus="status">
+                                                <li onclick="$('#shippingService-hidden').val('${shippingService}'),
+                                                            $('#price-hidden').val('${shippingCosts[status.count-1]+item.price*transaction.quantity}'),
+                                                            $('#shippingCost').val('${shippingCosts[status.count-1]}'),
+                                                $('#totalPrice').val('${shippingCosts[status.count-1]+item.price*transaction.quantity}')" role="presentation"><a role="menuitem" tabindex="-1">${shippingService}</a>
+                                                </li>
+                                            </c:forEach>
+                                            <form:hidden id="shippingService-hidden" path="shippingService" />
+                                        
+                                            <form:hidden id="price-hidden" path="price" />
+                                        </ul>
+                                    </div>
+                                </div>
+                            
+                            
                             <div class="form-group shipping" hidden="true">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <input class="btn btn-primary" id="next" style="width: 100px;" value="ต่อไป"/>
@@ -65,30 +83,28 @@
                                             <tr>
                                                 <td>${item.title}</td>
                                                 <td>${transaction.quantity}</td>
-                                                <td>${item.price}</td>
+                                                <td>${item.price*transaction.quantity}</td>
                                             </tr>
                                         </tbody>
                                         <tbody>
                                             <tr>
                                                 <td colspan="2">ค่าส่งสินค้า</td>
-                                                <td>${item.shippingCost}</td>
+                                                <td>
+                                                    <input id="shippingCost" disabled="true">
+                                                </td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
                                             <tr>
                                                 <td colspan="2">รวม</td>
-                                                <td>${transaction.price}</td>
+                                                <td>
+                                                    <input id="totalPrice" disabled="true">
+                                                </td>
                                             </tr>
                                         </tfoot>
                                     </table>
-                                    <dl class="dl-horizontal">
-                                        <dt>ที่อยู่</dt>
-                                        <dd>${transaction.shippingAddress}</dd>
-                                    </dl>
-                                    <dl class="dl-horizontal">
-                                        <dt>วิธีการจัดส่ง</dt>
-                                        <dd>${transaction.shippingService}</dd>
-                                    </dl>
+                                   
+                                   
                                     <div class="col-md-8 col-sm-offset-2 text-center">
                                         <input type="submit" class=" btn btn-primary" value="ชำระเงิน"/>
                                         <a class="btn btn-default" id="cancel">ยกเลิก</a>

@@ -62,6 +62,7 @@ public class ViewItemController {
 
     @RequestMapping(value = "/viewItem/{itemID}/onSubmitQuestionForm", method = RequestMethod.POST)
     public String onSubmitQuestionForm(@PathVariable ("itemID") long itemID,@ModelAttribute("questionForm") QuestionForm questionForm) {
+             System.out.print("this is itemID "+questionForm.getItemID() +"\n sellerID "+ questionForm.getSellerID()); 
              this.commentService.askQuestion(questionForm);
         return "redirect:/viewItem/"+itemID; //url item
     }

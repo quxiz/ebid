@@ -84,16 +84,28 @@ public class TransactionServiceImpl implements TransactionService {
             Message messageAdmin = new Message();
             messageAdmin.setSenderID(Common.ADMIN_ID);
             messageAdmin.setReceiverID(Common.ADMIN_ID);
-            messageAdmin.setMessage("ผู้ซื้อหาย");
+            messageAdmin.setMessage("Buyer is unknown<br/>"
+            + "BuyerID: " + buyerID + "<br/>"
+            + "ItemID: " + transaction.getItemID());
             messageAdmin.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageAdmin.setSeen(false);
             this.messageDAO.save(messageAdmin);
         } else {
-            sendBuyerEmail(buyer);
+            sendBuyerEmail(buyer, transaction);
             Message messageBuyer = new Message();
             messageBuyer.setSenderID(Common.ADMIN_ID);
             messageBuyer.setReceiverID(buyerID);
-            messageBuyer.setMessage("ข้อความผู้ซื้อ");
+            Item item = this.itemDAO.findByItemID(transaction.getItemID());
+            if(item.getSellingType() == BUY){
+                messageBuyer.setMessage("Transaction is completed!<br/>"
+                + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): <br/>"
+                + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
+                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "</a>");
+            }
+            if(item.getSellingType() == BID){
+                messageBuyer.setMessage("The transaction is completed!"
+                    +"The transaction ID " + transaction.getTransactionID() + " is completed.");
+            }
             messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageBuyer.setSeen(false);
             this.messageDAO.save(messageBuyer);
@@ -104,7 +116,9 @@ public class TransactionServiceImpl implements TransactionService {
             Message messageAdmin = new Message();
             messageAdmin.setSenderID(Common.ADMIN_ID);
             messageAdmin.setReceiverID(Common.ADMIN_ID);
-            messageAdmin.setMessage("ผู้ขายหาย");
+            messageAdmin.setMessage("Seller is unknown<br/>"
+            + "SellerID: " + sellerID + "<br/>"
+            + "ItemID: " + transaction.getItemID());
             messageAdmin.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageAdmin.setSeen(false);
             this.messageDAO.save(messageAdmin);
@@ -113,7 +127,10 @@ public class TransactionServiceImpl implements TransactionService {
             Message messageSeller = new Message();
             messageSeller.setSenderID(Common.ADMIN_ID);
             messageSeller.setReceiverID(sellerID);
-            messageSeller.setMessage("ข้อความผู้ขาย");
+            messageSeller.setMessage("The transaction is completed!"
+                + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
+                + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
+                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "</a>");
             messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageSeller.setSeen(false);
             this.messageDAO.save(messageSeller);
@@ -127,8 +144,7 @@ public class TransactionServiceImpl implements TransactionService {
         if(item.getSellingType() == BUY){
             return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
                 "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL
-                + Common.VIEW_MESSAGE_URL);
+                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
         }
         if(item.getSellingType() == BID){
             return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
@@ -139,11 +155,10 @@ public class TransactionServiceImpl implements TransactionService {
         return false;
     }
 
-    private boolean sendBuyerEmail(Member member) {
-        return Common.sendMail(member.getEmail(), "[ebid] Transaction is completed!",
+    private boolean sendBuyerEmail(Member member, Transaction transaction) {
+        return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
                 "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL
-                + Common.VIEW_MESSAGE_URL);
+                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
     }
 
     @Override

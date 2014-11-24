@@ -31,6 +31,8 @@ public class Common {
     static final String SOLVE_COMPLAINT_URL = "solveComplaint/";
     static final String RESET_PASSWORD_URL = "resetPassword/";
     static final String ACTIVATE_MEMBER_URL = "activateMember/";
+    static final String GIVE_FEEDBACK_URL = "giveFeedback/";
+    static final String CHECK_OUT_URL = "checkOut/";
     
     static final long getMemberID(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

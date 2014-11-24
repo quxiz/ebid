@@ -30,7 +30,7 @@
                     <c:forEach begin = "1" end = "${listSize}" varStatus = "loop">
                     <tbody>
                         <tr>
-                            <td data-toggle="modal" data-id="1" data-target="#viewModal${listMessages[loop.count-1].messageID}">
+                            <td>
                                 <text id="title0">
                                 ${listMessages[loop.count-1].message}<!--getMessageID()-->
                                 </text>
@@ -50,32 +50,6 @@
                 </div>
             </div>
         </div>
-        <c:forEach begin="1" end="${listSize}" varStatus = "loop">
-        <div class="modal fade" id="viewModal${listMessages[loop.count-1].messageID}" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title">ข้อความ</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>${listMessages[loop.count-1].message}</p>
-                        <br>
-                        <br>
-                        <div class="text-right">
-                            <text type="text">
-                            ${listMessages[loop.count-1].senderName}<!--getSenderName()-->
-                            </text>
-                        </div>
-                        <br>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-</c:forEach>
         
     </tiles:putAttribute>
 </tiles:insertDefinition>

@@ -24,6 +24,7 @@ import javax.mail.internet.MimeMessage;
 public class Common {
     
     static final int ADMIN_ID = -1;
+    static final String ADMIN_NAME = "eBid_ADMIN";
     static final String BASE_URL = "http://localhost:8080/ebid/";
     static final String VIEW_MESSAGE_URL = "viewMessage/";
     static final String VIEW_ITEM_URL = "viewItem/";

@@ -49,7 +49,8 @@ public class RegisterController {
 
     @RequestMapping(value = "/register/submit", method = RequestMethod.POST)
     public String onSubmitRegistration(@Valid @ModelAttribute("registrationForm") RegistrationForm registrationForm, BindingResult result, Model model,RedirectAttributes redirectAttributes) {
-    if (result.hasErrors()) {
+        
+        if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registrationForm", result);
             redirectAttributes.addFlashAttribute("registrationForm", registrationForm);
             return "redirect:/register";

@@ -3,6 +3,16 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<style>
+.errorblock {
+	color: #000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding: 8px;
+	margin: 16px;
+}
+</style>
+
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <div class="container">
@@ -19,15 +29,16 @@
                             <div class="form-group">
                                 <label for="input1" class="col-sm-3 control-label">รหัสผ่านใหม่</label>
                                 <div class="col-sm-9">
-                                    <form:input type="text" class="form-control" id="input1" placeholder="รหัสผ่านใหม่" path="newPassword"/>
+                                    <form:input type="password" class="form-control" id="input1" placeholder="รหัสผ่านใหม่" path="newPassword"/>
                                 </div>
                                 <label for="input2" class="col-sm-3 control-label">ยืนยันรหัสผ่านใหม่</label>
                                 <div class="col-sm-9">
-                                    <form:input type="text" class="form-control" id="input2" placeholder="ยืนยันรหัสผ่านใหม่" path="confirmNewPassword"/>
+                                    <form:input type="password" class="form-control" id="input2" placeholder="ยืนยันรหัสผ่านใหม่" path="confirmNewPassword"/>
                                 </div>
                                 <form:hidden path="email" />
                                 <form:hidden path="secret" />
                             </div>
+                            <form:errors path="*" cssClass="errorblock" element="div" />
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <input type="submit" id="submit" class="btn btn-primary" value="ตกลง">

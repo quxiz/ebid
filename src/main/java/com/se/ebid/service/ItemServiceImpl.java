@@ -192,7 +192,8 @@ System.out.println("step4");
                         + "Current price: " + item.getPrice() + "\n"
                         + "\n"
                         + "Beat it now!!!\n"
-                        + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID());
+                        + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">" 
+                        + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "</a>");
                 message.setTimestamp(new Timestamp(System.currentTimeMillis()));
                 message.setSeen(false);
                 this.messageDAO.save(message);
@@ -423,7 +424,8 @@ System.out.println("step4");
         messageBuyer.setReceiverID(buyerID);
         messageBuyer.setMessage("Congratulations, you won the auction!"
                 + "To complete transaction, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID());
+                + "<a href=\"" + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID() + "\">" 
+                + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID() + "</a>");
         messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
         this.messageDAO.save(messageBuyer);
 
@@ -440,7 +442,8 @@ System.out.println("step4");
         messageSeller.setReceiverID(sellerID);
         messageSeller.setMessage("There is a winner for your auction item!"
                 + "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
+                + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
+                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "</a>");
         messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
         this.messageDAO.save(messageSeller);
 

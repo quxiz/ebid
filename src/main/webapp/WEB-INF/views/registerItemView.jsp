@@ -97,11 +97,12 @@
                                         <ul id="category" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
                                             <c:forEach items="${categoryList}" var="category" begin="1">
-                                                <li role="presentation"><a role="menuitem" tabindex="-1">${category.name}</a>
+                                                <li onclick="$('#categoryRegister-hidden').val('${category}')" role="presentation"><a role="menuitem" tabindex="-1">${category.name}</a>
                                                 </li>
                                             </c:forEach>
 
                                         </ul>
+                                        <form:hidden id="categoryRegister-hidden" path="category" />
                                     </div>
                                 </div>
                             </div>
@@ -124,17 +125,18 @@
                                         <ul id="sellingType" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
                                             <c:forEach items="${sellingType}" var="selling">
-                                                <li onclick = "$(#sellingTypeID).val('${selling.name}')" role="presentation"><a role="menuitem" tabindex="-1">${selling.name}</a>
+
+                                                <li onclick="$('#sellingType-hidden').val('${selling}')" role="presentation"><a role="menuitem" tabindex="-1">${selling.name}</a>
                                                 </li>
                                             </c:forEach>
-                                            <form:hidden id = "sellingTypeID" path="sellingType"/>
+                                            <form:hidden id="sellingType-hidden" path="sellingType" />
                                         </ul>
                                     </div>
                                 </div>
                             </div>
 
-<!--
-                            <div class="form-group" id="auction" hidden="true">
+
+<!--                            <div class="form-group" id="auction" hidden="true">
                                 <label for="datetimepicker1" class="col-sm-3 control-label">เวลาสิ้นสุดการประมูล</label>
 
                                 <div class="col-sm-3">
@@ -144,7 +146,16 @@
                                     </div>
                                 </div>
                             </div> -->
-
+                                
+                                        
+<div class="col-sm-3">
+                                    <div class='input-group date'>
+                                        <form:input type="datetime-local" class="form-control" id="endTime2" path='endTime'/>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    </div>
+                                </div>
+                                        
+                                        
                             <div class="form-group">
                                 <label for="price" class="col-sm-3 control-label" id="priceLabel">ราคา</label>
                                 <div class="input-group col-sm-3">
@@ -274,15 +285,7 @@
                     }
                 });
                 $('#datetimepicker1').datetimepicker();
-//                $('#endTimeInput').keyup(function () {
-//                    try {
-//                    var dateFormat = new simpleDateFormat();
-//                            dateFormat.applyPattern('dd/MM/yyyy h:mm a');
-//                            Date parsedDate = dateFormat.parse($('#endTimeInput').text());
-//                            Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-//                            $('#endTime').val(timestamp);
-//                } catch (e) {//this generic but you csan control another types of exception
-//                }
+//                
 //            });
 
             });</script>
@@ -295,7 +298,7 @@
                 } else if (!document.getElementById('shippingService1').checked) {
                     document.getElementById('shippingServicePrice1').disabled = true;
                     $("#shippingServicePrice1").val("0");
-               
+
                 }
                 ;
                 if (document.getElementById('shippingService2').checked) {
@@ -304,7 +307,7 @@
                 } else if (!document.getElementById('shippingService2').checked) {
                     document.getElementById('shippingServicePrice2').disabled = true;
                     $("#shippingServicePrice2").val("0");
-                
+
                 }
                 ;
                 if (document.getElementById('shippingService3').checked) {
@@ -313,7 +316,7 @@
                 } else if (!document.getElementById('shippingService3').checked) {
                     document.getElementById('shippingServicePrice3').disabled = true;
                     $("#shippingServicePrice3").val("0");
-            
+
                 }
                 ;
                 $("#shippingService").val(shippingService);

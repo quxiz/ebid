@@ -19,6 +19,7 @@ class TransactionForm {
     private String address;
 
     private String shippingService;
+    private double price;
 
     public String getShippingService() {
         return shippingService;
@@ -42,6 +43,14 @@ class TransactionForm {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
     
     

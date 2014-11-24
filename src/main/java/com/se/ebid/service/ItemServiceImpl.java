@@ -304,7 +304,7 @@ System.out.println("step4");
         item.setPrice(registerItemForm.getPrice());
         item.setQuantity(registerItemForm.getQuantity());
         item.setStartTime(registerItemForm.getStartTime());
-        item.setSellerID(Common.getMemberID());
+        item.setSellerName(this.memberDAO.findByMemberID(memberID).getUserID());
         item.setEndTime(registerItemForm.getEndTime());
 
         // item.setPaymentMethod(registerItemForm.getPaymentMethod());

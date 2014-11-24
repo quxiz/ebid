@@ -63,6 +63,10 @@ public class ViewItemController {
         model.addAttribute("listPhotos",this.itemService.getPhoto(itemID));
         model.addAttribute("listComments",this.itemService.getComment(itemID));
         model.addAttribute("title", item.getTitle());
+        if(item.getSellingType()==SellingType.BID){
+            model.addAttribute("maxbidID", this.itemService.getMaxBidderID(itemID));
+            model.addAttribute("yourID",this.memberService.getMember().getMemberID());
+        }
         return "viewItemView";
 
     }
@@ -75,7 +79,7 @@ public class ViewItemController {
     }
 
     @RequestMapping(value = "/viewItem/{itemID}/onSubmitBidForm", method = RequestMethod.POST)
-    public String onSubmitBidForm(@PathVariable ("itemID") long itemID,@ModelAttribute ("bidForm") BidForm bidForm) {
+    public String onSubmitBidForm(@PathVariable ("itemID") long itemID,@ModelAttribute ("bidForm") BidForm bidForm,Model model) {
         Member member = this.memberService.getMember();
         if(member.getPaymentAccount()==null)return "redirect:/editPersonalInfo3";
         this.itemService.bid(bidForm);

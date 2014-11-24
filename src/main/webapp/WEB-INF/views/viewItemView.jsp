@@ -85,6 +85,15 @@
                 <div class="col-sm-5 col">
                     <div class="text-center">
                         <h3>${item.price} บาท</h3>
+                       <c:if test="${item.sellingType=='BID'}"> 
+                           <h4>Maxbid User : 
+                           <c:if test ="${maxbidID == yourID}">
+                               You </h4>
+                           </c:if>
+                           <c:if test ="${maxbidID != yourID}">
+                               Anonymous </h4>
+                           </c:if>
+                       </c:if>
                     </div>
                     <br>
 

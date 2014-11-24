@@ -290,7 +290,7 @@ System.out.println("step4");
     @Override
     @Transactional
     //unfinish
-    public boolean registerItem(RegisterItemForm registerItemForm) {
+    public long registerItem(RegisterItemForm registerItemForm) {
         Item item = new Item();
         long memberID = Common.getMemberID();
         item.setSellerID(memberID);
@@ -302,6 +302,7 @@ System.out.println("step4");
         item.setPrice(registerItemForm.getPrice());
         item.setQuantity(registerItemForm.getQuantity());
         item.setStartTime(registerItemForm.getStartTime());
+        item.setSellerID(Common.getMemberID());
         item.setEndTime(registerItemForm.getEndTime());
 
         // item.setPaymentMethod(registerItemForm.getPaymentMethod());
@@ -324,8 +325,10 @@ System.out.println("step4");
                 aPhoto.transferTo(new File(photoURL));
             } catch (IOException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                return -1;
             } catch (IllegalStateException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                return -1;
             }
             photo.setPhotoURL(photoURL);
             this.photoDAO.save(photo);
@@ -365,9 +368,10 @@ System.out.println("step4");
                 scheduler.scheduleJob(job, trigger);
             } catch (SchedulerException e) {
                 e.printStackTrace();
+                return -1;
             }
         }
-        return true;
+        return item.getItemID();
     }
 
     public boolean reportBidResult(long itemID) {

@@ -172,7 +172,15 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public boolean resetPassword(ResetPasswordForm resetPasswordForm) {
-        if(!resetPasswordForm.getSecret().trim().equals(encodeEmail(resetPasswordForm.getEmail()).trim())) return false;
+        System.out.println("reset password req");
+        if(!resetPasswordForm.getSecret().trim().equals(encodeEmail(resetPasswordForm.getEmail()).trim())) {
+            System.out.println(resetPasswordForm.getSecret());
+            System.out.println(encodeEmail(resetPasswordForm.getEmail()));
+            System.out.println(resetPasswordForm.getSecret().trim().length());
+            System.out.println(encodeEmail(resetPasswordForm.getEmail()).trim().length());
+                    
+            return false;
+        }
         Member member = this.memberDAO.findByEmail(resetPasswordForm.getEmail());
         
         if (member == null) {

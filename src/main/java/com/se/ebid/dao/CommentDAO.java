@@ -21,4 +21,5 @@ public interface CommentDAO {
     
     public List<Comment> findByItemID(long itemID);
      
+    public Comment getComment(long commentID);
 }

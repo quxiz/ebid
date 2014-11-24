@@ -7,6 +7,7 @@ package com.se.ebid.service;
 
 import com.se.ebid.controller.QuestionForm;
 import com.se.ebid.controller.AnswerForm;
+import com.se.ebid.entity.Comment;
 /**
  *
  * @author Nuttapong
@@ -14,5 +15,6 @@ import com.se.ebid.controller.AnswerForm;
 public interface CommentService {
     public boolean askQuestion(QuestionForm questionForm);
     public boolean answerQuestion(AnswerForm answerForm);
+    public Comment getComment(long commentID);
     
 }

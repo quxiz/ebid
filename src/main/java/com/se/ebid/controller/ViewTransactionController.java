@@ -56,15 +56,15 @@ public class ViewTransactionController {
          List<Transaction> listBuyTransactions = this.transactionService.getBuyTransaction();
         model.addAttribute("listBuyTransactions",listBuyTransactions);
         model.addAttribute("listSellTransactions",listSellTransactions);
-        List<Item> listSoldItems = null;
-        List<Item> listBoughtItems = null;
+        List<Item> listSoldItems = new ArrayList();
+        List<Item> listBoughtItems = new ArrayList();
 
-//        for (Transaction listSellTransaction : listSellTransactions) {
-//            listSoldItems.add(this.itemService.getItem(listSellTransaction.getItemID()));
-//        }
-//        for (Transaction listBuyTransaction : listBuyTransactions) {
-//            listBoughtItems.add(this.itemService.getItem(listBuyTransaction.getItemID()));
-//        }
+        for (Transaction listSellTransaction : listSellTransactions) {
+            listSoldItems.add(this.itemService.getItem(listSellTransaction.getItemID()));
+        }
+        for (Transaction listBuyTransaction : listBuyTransactions) {
+            listBoughtItems.add(this.itemService.getItem(listBuyTransaction.getItemID()));
+        }
         model.addAttribute("listSoldItems",listSoldItems);
         model.addAttribute("listBoughtItems",listBoughtItems);
         return "viewTransactionView";

@@ -7,13 +7,16 @@
 package com.se.ebid.controller;
 
 import com.se.ebid.entity.Item;
+import com.se.ebid.entity.Photo;
 import com.se.ebid.service.ItemService;
+import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import javax.servlet.http.HttpServletRequest;
  
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,13 +64,26 @@ public class HomeController {
     }
     
        @RequestMapping("/")
-    public String viewHome(Model model) {
+    public String viewHome(Model model,HttpServletRequest request) {
         model.addAttribute("title", "หน้าหลัก");
         SearchForm searchForm = new SearchForm();
         searchForm.setCategory(CategoryType.All);
-        searchForm.setKeyword(null);
+        searchForm.setKeyword("");
         List<Item> listRecentItems= new ArrayList<>();
-        //List<Item> listRecentItems = this.itemService.search(null);
+        listRecentItems = this.itemService.search(searchForm);
+        List<Photo> listPhotos = new ArrayList<>();        
+        for (int i = 0; i < 4 && i < listRecentItems.size(); i++) {
+            List<Photo> photos = this.itemService.getPhoto(listRecentItems.get(i).getItemID());
+            if (photos.size() == 0) {
+                Photo photo = new Photo();
+                photo.setPhotoURL(request.getContextPath() + "/resources/img/ebay1.png");
+                listPhotos.add(photo);
+            } else {
+                listPhotos.add(photos.get(0));
+            }
+        }
+        model.addAttribute("listPhotos", listPhotos); 
+        model.addAttribute("maxIndex", listPhotos.size());
         model.addAttribute("listRecentItem",listRecentItems);
         return "homeView";
     }

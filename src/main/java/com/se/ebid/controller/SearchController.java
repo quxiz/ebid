@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.List;
 import java.util.Locale.Category;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,33 +38,32 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String search(@ModelAttribute("searchForm") SearchForm searchForm, Model model) {
+    public String search(@ModelAttribute("searchForm") SearchForm searchForm, Model model, HttpServletRequest request) {
         String keyword = searchForm.getKeyword();
         if (searchForm.getCategory() != null) {
             String category = searchForm.getCategory().toString();
             model.addAttribute("category", category);
         } else {
-            model.addAttribute("category", "null");
+            model.addAttribute("category", "ทุกประเภท");
         }
         List<Item> listItems = this.itemService.search(searchForm);
         model.addAttribute("keyword", keyword);
         model.addAttribute("listItems", listItems);
-        List<Photo> listPhotos = null;
+        List<Photo> listPhotos = new ArrayList();
         for (int i = 0; i < listItems.size(); i++) {
 
-            listPhotos = this.itemService.getPhoto(listItems.get(i).getItemID());
-            model.addAttribute("listPhotos" + i, listPhotos);
-            /*
-             if(this.itemService.getPhoto(listItems.get(i).getItemID()).get(0)==null){
-             Photo photo = new Photo();
-             photo.setPhotoURL("photo");
-             listPhotos.add(photo);
-             }else{
-             listPhotos.add(this.itemService.getPhoto(listItems.get(i).getItemID()).get(0));
-             }
-             }model.addAttribute("listPhotos", listPhotos);*/
-            
+            List<Photo> photos = this.itemService.getPhoto(listItems.get(i).getItemID());
+            if (photos.size() == 0) {
+                Photo photo = new Photo();
+                photo.setPhotoURL(request.getContextPath() + "/resources/img/ebay1.png");
+                listPhotos.add(photo);
+            } else {
+                listPhotos.add(photos.get(0));
+            }
         }
+        model.addAttribute("listPhotos", listPhotos);
+        
         return "searchResultView";
     }
+
 }

@@ -46,7 +46,7 @@
                     <div class="thumbnail">
                         <c:if test = "${fn:length(listPhotos)>0}"> 
                             <div class="item active">
-                                <img src="img/${listPhotos[0].photoURL}" alt="..." class="carousel-img">
+                                <img src="${listPhotos[0].photoURL}" alt="..." class="carousel-img">
                             </div>
                         </c:if>
                     </div>
@@ -56,22 +56,6 @@
                     <div class="caption">
                         <div class="panel-body">
                             <dl class="dl-horizontal">
-                                <dt>สภาพสินค้า</dt>
-                                <dd>${item.condition}</dd>
-                            </dl>
-                            <dl class="dl-horizontal">
-                                <dt>จุดบกพร่อง</dt>
-                                <dd>${item.specific}</dd>
-                            </dl>
-                            <dl class="dl-horizontal">
-                                <dt>นโยบายการรับของคืน</dt>
-                                <dd>${item.returnPolicy}</dd>
-                            </dl>
-                            <dl class="dl-horizontal">
-                                <dt>จำนวนที่ซื้อ</dt>
-                                <dd>${invoice.quantity}</dd>
-                            </dl>
-                            <dl class="dl-horizontal">
                                 <dt>จำนวนชิ้นที่ซื้อ</dt>
                                 <dd>${invoice.quantity}</dd>
                             </dl>
@@ -79,30 +63,17 @@
                                 <dt>ราคาต่อชิ้น</dt>
                                 <dd>${item.price}</dd>
                             </dl>          
-                            <dl class="dl-horizontal">
-                                <dt>การบรรจุหีบห่อ</dt>
-                                <dd>${item.packageDetail}</dd>
-                            </dl>
-                            <dl class="dl-horizontal">
-                                <dt>วิธีการส่ง</dt>
-                                <dd>${item.shippingService}</dd>
-                            </dl>
-                            <dl class="dl-horizontal">
-                                <dt>ค่าส่ง</dt>
-                                <dd>${item.shippingCost}</dd>
-                            </dl>
-                
                         </div>
                     </div>
                 </div>
             </div>
             <hr>
             <!--confirm buy waiting for invoice-->           
-            <div class="centercontents"><h3>รวมเป็นเงินทั้งสิ้น ${invoice.total} บาท</h3></div>
+            <div class="centercontents"><h3>รวมเป็นเงิน ${invoice.total} บาท (ยังไม่รวมค่าจัดส่ง)</h3></div>
             
             <div class = "row centercontents">
             
-            <c:url var="addAction" value="/buyItem/confirmBuy" ></c:url>
+            <c:url var="addAction" value="/buyItem/${item.itemID}/confirmBuy" ></c:url>
             <form:form action="${addAction}" modelAttribute="buyform" method="POST" name="buyform">
                 <input type="submit" class="btn btn-default" value="ยืนยันการซื้อ"/>
             </form:form>

@@ -33,24 +33,22 @@ public class ReportController {
     @RequestMapping(value = "/report", method = RequestMethod.GET)
      public String viewReport(Model model) {
         model.addAttribute("title", "Report");
-        List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
-        model.addAttribute("categoryList", categoryList);
         ReportForm reportForm = new ReportForm();
         model.addAttribute("reportForm",reportForm);
         return "reportView";
     }  
      
      @RequestMapping(value = "/report/printReport", method = RequestMethod.POST)
-     public String printReport(@ModelAttribute("report") Report report,@ModelAttribute ReportForm reportForm,
+     public String printReport(@ModelAttribute ReportForm reportForm,
             Model model, RedirectAttributes redirectAttributes){
-         report = this.reportService.printReport(reportForm.getReportType().toString(),reportForm.getMonth(),reportForm.getYear());
+         Report report = this.reportService.printReport(reportForm.getReportType().toString(),reportForm.getMonth(),reportForm.getYear());
          redirectAttributes.addFlashAttribute("report", report);
-         return "redirect:/repoer/showReportView";
+         return "redirect:/report/showReport";
      }
      
-     @RequestMapping(value = "/reportView/printReport", method = RequestMethod.GET)
+     @RequestMapping(value = "/report/showReport", method = RequestMethod.GET)
      public String showReport(@ModelAttribute("report") Report report, Model model){
          model.addAttribute("report",report);
-         return "reportView";
+         return "showReportView";
      } 
 }

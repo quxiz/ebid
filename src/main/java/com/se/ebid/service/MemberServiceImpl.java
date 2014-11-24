@@ -94,12 +94,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public boolean register(RegistrationForm registrationForm) {
+    public int register(RegistrationForm registrationForm) {
         if (this.memberDAO.findByUserID(registrationForm.getUserID()) != null) {
-            return false;
+            return -2;
         }
         if (this.memberDAO.findByEmail(registrationForm.getEmail()) != null) {
-            return false;
+            return -1;
         }
         Member member = new Member();
         member.setFirstName(registrationForm.getFirstName());
@@ -111,23 +111,23 @@ public class MemberServiceImpl implements MemberService {
         member.setUserID(registrationForm.getUserID());
         member.setPassword(toSHA256(registrationForm.getPassword()));
         member.setTimestamp(new Timestamp((System.currentTimeMillis())));
-        this.sendActivateEmail(member);
+        member.setActivateKey(generateActivateKey());
+        if(!this.sendActivateEmail(member)) return -3;
         this.memberDAO.save(member);
 
-        return true;
+        return 1;
     }
 
     @Override
     public boolean sendActivateEmail(Member member) {
-        String activateURL = null;
         return Common.sendMail(member.getEmail(), "[ebid] Signup confirmation",
                 "Hello " + member.getFirstName() + ",\n"
                 + "You have requested a new user account on ebid:\n"
                 + "User name:     " + member.getUserID() + "\n"
                 + "\n"
                 + "-------------------------------------\n"
-                + "To confirm your user registration, you have to follow this link\n:"
-                + activateURL + "\n"
+                + "To confirm your user registration, you have to follow this link:\n"
+                + Common.BASE_URL + Common.ACTIVATE_MEMBER_URL + member.getActivateKey()+ "\n"
                 + "\n"
                 + "Regards,\n"
                 + "ebid Staff"
@@ -160,24 +160,25 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean sendResetPasswordEmail(Member member) {
+        System.out.println(Common.BASE_URL + Common.RESET_PASSWORD_URL + member.getEmail() + "_" + encodeEmail(member.getEmail()));
         return Common.sendMail(member.getEmail(), "[ebid] Reset your account password",
         "ebid received a request to reset the password for your account\n" +
         "\n" +
         "To reset your password, click on the link below (or copy and paste the URL into your browser): \n" +
-        Common.BASE_URL + Common.RESET_PASSWORD_URL);
+        Common.BASE_URL + Common.RESET_PASSWORD_URL + member.getEmail() + "_" + encodeEmail(member.getEmail()));
         
     }
 
     @Override
     @Transactional
     public boolean resetPassword(ResetPasswordForm resetPasswordForm) {
-        if(!resetPasswordForm.getSecret().equals(encodeEmail(resetPasswordForm.getEmail()))) return false;
+        if(!resetPasswordForm.getSecret().trim().equals(encodeEmail(resetPasswordForm.getEmail()).trim())) return false;
         Member member = this.memberDAO.findByEmail(resetPasswordForm.getEmail());
         
         if (member == null) {
             return false;
         }
-        member.setPassword(resetPasswordForm.getNewPassword());
+        member.setPassword(toSHA256(resetPasswordForm.getNewPassword()));
         this.memberDAO.save(member);
         return true;
     }
@@ -268,8 +269,33 @@ public class MemberServiceImpl implements MemberService {
     private String encodeEmail(String email){
         char[] charArray = email.toCharArray();
         char[] encodeArray = new char[30];
+        int[] start = {48,65,97};
+        int[] mod = {10,26,26};
         for(int i=0;i<charArray.length;i++){
-            encodeArray[i] = (char)((((int)charArray[i])+(i%9)*9+3-33)%90+33);
+            int k = (i+1)%3;
+            encodeArray[i] = (char)((((int)charArray[i])+(i%9)*9+3-33)%mod[k]+start[k]);
+        }
+        return new String(encodeArray);
+    }
+    
+    private String generateActivateKey(){
+        long time = System.currentTimeMillis();
+        time %= 31536000000L;
+        char[] encodeArray = new char[30];
+        int[] start = {48,65,97};
+        int[] mod = {10,26,26};
+        int i=0;
+        while(time!=0){
+            int k = i%3;
+            encodeArray[i] = (char)((time%10*6+i*5)%mod[k] + start[k]);
+            time/=10;
+            i++;
+        }
+        encodeArray[i] = (char)95;
+        i++;
+        for(;i<encodeArray.length;i++){
+            int k = i%3;
+            encodeArray[i] = (char)(((Math.random()*26)%mod[k]) + start[k]);
         }
         return new String(encodeArray);
     }

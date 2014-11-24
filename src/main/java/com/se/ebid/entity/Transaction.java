@@ -32,6 +32,10 @@ public class Transaction {
     private long sellerID;
     @Column(name="buyerID", nullable = false)
     private long buyerID;
+    @Column(name="sellerName")
+    private String sellerName;
+    @Column(name="buyerName")
+    private String buyerName;
     @Column(name="itemID", nullable = false)
     private long itemID;
     @Column(name="quantity")
@@ -45,6 +49,8 @@ public class Transaction {
     private SellingType sellingType;
     @Column(name="shippingService")
     private String shippingService;
+    @Column(name="shippingCost")
+    private double shippingCost;
     @Column(name="shippingAddress")
     private String shippingAddress;
     @Column(name="timestamp")
@@ -74,6 +80,22 @@ public class Transaction {
 
     public void setBuyerID(long buyerID) {
         this.buyerID = buyerID;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
+    public String getBuyerName() {
+        return buyerName;
+    }
+
+    public void setBuyerName(String buyerName) {
+        this.buyerName = buyerName;
     }
 
     public long getItemID() {
@@ -122,6 +144,14 @@ public class Transaction {
 
     public void setShippingService(String shippingService) {
         this.shippingService = shippingService;
+    }
+
+    public double getShippingCost() {
+        return shippingCost;
+    }
+
+    public void setShippingCost(double shippingCost) {
+        this.shippingCost = shippingCost;
     }
 
     public String getShippingAddress() {

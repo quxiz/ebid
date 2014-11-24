@@ -55,9 +55,15 @@ public class RegisterController {
             return "redirect:/register";
         }
         else {
-            
-                if(this.memberService.register(registrationForm))return "redirect:/success/Please check your email and activate your ID";  
-                else  return "redirect:/error/Password mismatched or this userID or Email has already used";
+            if(!registrationForm.getPassword().equals(registrationForm.getConfirmPassword())) return "redirect:/error/Password mismatch";
+            int ret = this.memberService.register(registrationForm);
+            switch(ret){
+                case MemberService.ERR_DUP_EMAIL : return "redirect:/error/Email has already used";
+                case MemberService.ERR_DUP_USER : return "redirect:/error/User ID has already used";
+            }
+            if(ret >= 0)
+                return "redirect:/success/Please check your email and activate your ID";  
+            else  return "redirect:/error/Error found";
         }
     }
 }

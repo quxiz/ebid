@@ -7,6 +7,7 @@ package com.se.ebid.controller;
 
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.Date;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Future;
@@ -44,8 +45,8 @@ public class RegisterItemForm {
     
     private Timestamp startTime;
     
-    @Future(message = "End time is invalid")
-    private Timestamp endTime;
+    //@Future(message = "End time is invalid")
+    private Date endTime;
 //    private String paymentMethod;
     
     @Size(min = 1, message = "Shipping service must not be empty")
@@ -133,11 +134,11 @@ public class RegisterItemForm {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 

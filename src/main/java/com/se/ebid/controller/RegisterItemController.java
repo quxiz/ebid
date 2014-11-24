@@ -35,6 +35,7 @@ public class RegisterItemController {
 
     @RequestMapping("/registerItem")
     public String viewRegisterItem(Model model) {
+        System.out.println("Req : register item form");
         List<CategoryType> categoryList = new ArrayList<>(Arrays.asList(CategoryType.values()));
         List<SellingType> sellingType = new ArrayList<>(Arrays.asList(SellingType.values()));
         model.addAttribute("categoryList", categoryList);
@@ -46,25 +47,13 @@ public class RegisterItemController {
         model.addAttribute("title", "RegisterItem");
         return "registerItemView";
     }
-
+    
     @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
 
     public String onSubmit(@Valid @ModelAttribute("form") RegisterItemForm form, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 
          
         System.out.println("REQ: reg item call");
-        if (form.getPhotos() == null) {
-            System.out.println("null photos");
-        } else {
-            if (form.getPhotos().length == 0) {
-                System.out.println("zero photo");
-            } else {
-                for (int i = 0; i < form.getPhotos().length; i++) {
-                    System.out.println("file type uploaded:" + form.getPhotos()[i].getContentType());
-                }
-            }
-        }
-
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", result);
             redirectAttributes.addFlashAttribute("form", form);

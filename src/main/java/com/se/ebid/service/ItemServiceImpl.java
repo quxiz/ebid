@@ -305,8 +305,8 @@ System.out.println("step4");
         item.setQuantity(registerItemForm.getQuantity());
         item.setStartTime(registerItemForm.getStartTime());
         item.setSellerName(this.memberDAO.findByMemberID(memberID).getUserID());
-        item.setEndTime(registerItemForm.getEndTime());
-
+   //     item.setEndTime(registerItemForm.getEndTime());
+        item.setSellerID(Common.getMemberID());
         // item.setPaymentMethod(registerItemForm.getPaymentMethod());
         item.setShippingService(registerItemForm.getShippingService());
         item.setShippingCost(registerItemForm.getShippingCost());
@@ -319,14 +319,15 @@ System.out.println("step4");
         this.itemDAO.save(item);
         long itemID = item.getItemID();
         for (MultipartFile aPhoto : photoList) {
+            if(!aPhoto.getContentType().substring(0,5).equals("image")){
+                System.out.println(aPhoto.getContentType().substring(0,5));
+                continue;
+            }
+            
             Photo photo = new Photo();
             photo.setItemID(itemID);
             photo.setPhotoURL(null);
             long photoID = this.photoDAO.save(photo);
-            if(!aPhoto.getContentType().substring(0,5).equals("image")){
-                System.out.println(aPhoto.getContentType().substring(0,5));
-                throw new RuntimeException();
-            }
             String photoURL = servletContext.getRealPath("resources/uploadedImg/") +"/"+ + photoID+ "."+aPhoto.getContentType().substring(6);
             try {
                 aPhoto.transferTo(new File(photoURL));
@@ -339,8 +340,12 @@ System.out.println("step4");
             photo.setPhotoURL(photoURL);
             this.photoDAO.save(photo);
         }
-
+        if(registerItemForm.getSellingType() == null){
+            System.out.println("null selling type");
+        }
         if (registerItemForm.getSellingType() == SellingType.BID) {
+           System.out.println("is bid");
+            item.setEndTime(new Timestamp(registerItemForm.getEndTime().getTime()));
             AutoBid autoBid = new AutoBid();
             autoBid.setItemID(itemID);
             autoBid.setBidderID(-1);

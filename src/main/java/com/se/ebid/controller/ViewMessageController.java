@@ -34,7 +34,8 @@ public class ViewMessageController {
      public String viewMessage(Model model) {
         model.addAttribute("title", "ข้อความ");
         List<Message> listMessages = this.messageService.getMessage();
-        model.addAttribute("listMessages",listMessages); 
+        model.addAttribute("listMessages",listMessages);
+        model.addAttribute("listSize",listMessages.size());
         return "viewMessageView";
     }  
 }

@@ -23,38 +23,35 @@
                         <tr>
                             <th class="col-md-6">ข้อความ</th>
                             <th class="col-md-2">ผู้ส่ง</th>
+                            <th class="col-md-2">เวลาที่ได้รับ</th> <!--timestamp to string-->
                         </tr>
                     </thead>
+                    
+                    <c:forEach begin = "1" end = "${listSize}" varStatus = "loop">
                     <tbody>
                         <tr>
-                            <td data-toggle="modal" data-id="1" data-target="#viewModal">
+                            <td data-toggle="modal" data-id="1" data-target="#viewModal${listMessages[loop.count-1].messageID}">
                                 <text id="title0">
-                                ไม่ได้รับสินค้า<!--getMessageID()-->
+                                ${listMessages[loop.count-1].message}<!--getMessageID()-->
                                 </text>
                             </td>
                             <td>
-                                <a href="#">KJ</a></h5><!--getSenderName()-->
+                                <h5>${listMessages[loop.count-1].senderName}</h5><!--getSenderName()-->
+                            </td>
+                            <td>
+                                <h5>${listMessages[loop.count-1].timestamp}</h5><!--timeStamp.toString-->
                             </td>
                         </tr>
                     </tbody><!--สร้าง 1 body ต่อ 1 message-->
+                    </c:forEach>
                 </table>
-                        <div class="centercontents text-center">
-            <ul class="pagination">
-                <li><a href="#"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
-            </ul>
-        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="viewModal" aria-hidden="true" style="display: none;">
+        <c:forEach begin="1" end="${listSize}" varStatus = "loop">
+        <div class="modal fade" id="viewModal${listMessages[loop.count-1].messageID}" aria-hidden="true" style="display: none;">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -62,15 +59,12 @@
                         <h4 class="modal-title">ข้อความ</h4>
                     </div>
                     <div class="modal-body">
-                        <a type="text" href="#">
-                            ไม่ได้รับสินค้า BRANDIT M-65 Classic Herren Jacke schwarz Feldjacke BW Kapuze Fieldjacket M65 ของ SoulOfNature ครับ
-                            <!--getMessage() /จะเป็นลิงค์ไปยังหน้าที่เกี่ยวข้อง-->
-                        </a>
+                        <p>${listMessages[loop.count-1].message}</p>
                         <br>
                         <br>
                         <div class="text-right">
                             <text type="text">
-                            <a href="#">KJ</a><!--getSenderName()-->
+                            ${listMessages[loop.count-1].senderName}<!--getSenderName()-->
                             </text>
                         </div>
                         <br>
@@ -81,7 +75,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
+</c:forEach>
         
     </tiles:putAttribute>
 </tiles:insertDefinition>

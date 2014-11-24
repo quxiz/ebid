@@ -12,11 +12,7 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <div class="container">
-            <div class="col-md-11" style="float:none; margin-left:auto; margin-right:auto">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">ประวัติการซื้อขาย</h3>
-                    </div>
+          
                     <div class="col-sm-12">
                         <ul id="myTab" class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active"><a href="#buying" aria-controls="buying" role="tab" data-toggle="tab">ข้อมูลการซื้อ</a></li>
@@ -26,7 +22,7 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active in" id="buying">
                             <div class="panel panel-default">
-                                <br>
+                         
 
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead>
@@ -75,7 +71,7 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="selling">
                             <div class="panel panel-default">
-                                <br>
+                       
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead>
                                         <tr>
@@ -135,8 +131,7 @@
                         </div>
 
                     </div>
-                </div>
-            </div>
+               
         </div>
         <div class="modal fade" id="answerModal" aria-hidden="true" style="display: none;">
             <div class="modal-dialog">

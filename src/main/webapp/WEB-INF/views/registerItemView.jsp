@@ -82,11 +82,12 @@
                                         <ul id="category" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
                                             <c:forEach items="${categoryList}" var="category" begin="1">
-                                                <li role="presentation"><a role="menuitem" tabindex="-1">${category.name}</a>
+                                                <li onclick="$('#categoryRegister-hidden').val('${category}')" role="presentation"><a role="menuitem" tabindex="-1">${category.name}</a>
                                                 </li>
                                             </c:forEach>
 
                                         </ul>
+                                        <form:hidden id="categoryRegister-hidden" path="category" />
                                     </div>
                                 </div>
                             </div>
@@ -109,10 +110,10 @@
                                         <ul id="sellingType" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
                                             <c:forEach items="${sellingType}" var="selling">
-                                                <li role="presentation"><a role="menuitem" tabindex="-1">${selling.name}</a>
+                                                <li onclick="$('#sellingType-hidden').val('${selling}')" role="presentation"><a role="menuitem" tabindex="-1">${selling.name}</a>
                                                 </li>
                                             </c:forEach>
-
+                                            <form:hidden id="sellingType-hidden" path="sellingType" />
                                         </ul>
                                     </div>
                                 </div>
@@ -279,7 +280,7 @@
                 } else if (!document.getElementById('shippingService1').checked) {
                     document.getElementById('shippingServicePrice1').disabled = true;
                     $("#shippingServicePrice1").val("0");
-               
+
                 }
                 ;
                 if (document.getElementById('shippingService2').checked) {
@@ -288,7 +289,7 @@
                 } else if (!document.getElementById('shippingService2').checked) {
                     document.getElementById('shippingServicePrice2').disabled = true;
                     $("#shippingServicePrice2").val("0");
-                
+
                 }
                 ;
                 if (document.getElementById('shippingService3').checked) {
@@ -297,7 +298,7 @@
                 } else if (!document.getElementById('shippingService3').checked) {
                     document.getElementById('shippingServicePrice3').disabled = true;
                     $("#shippingServicePrice3").val("0");
-            
+
                 }
                 ;
                 $("#shippingService").val(shippingService);

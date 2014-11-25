@@ -35,9 +35,15 @@ public class ViewMessageController {
         model.addAttribute("title", "ข้อความ");
         List<Message> listMessages = this.messageService.getMessage();
         List<Message> cloneListMesssages = new ArrayList<Message>(listMessages);
-        this.messageService.markAsRead(cloneListMesssages);
         model.addAttribute("listMessages", listMessages);
         model.addAttribute("listSize", listMessages.size());
         return "viewMessageView";
+    }
+    
+    @RequestMapping("/viewMessage/markAsRead")
+    public String markAsRead(Model model) {
+        List<Message> listMessages = this.messageService.getMessage();
+        this.messageService.markAsRead(listMessages);
+        return "redirect:/viewMessage";
     }
 }

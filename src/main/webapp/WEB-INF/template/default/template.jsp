@@ -14,14 +14,13 @@
 
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
         <title>${title} - ebid</title>
-<style type="text/css">
-    .scrollable-menu {
-        height: auto;
-        max-height: 200px;
-        overflow-x: hidden;
-    }
-
-</style>
+        <style type="text/css">
+            .scrollable-menu {
+                height: auto;
+                max-height: 200px;
+                overflow-x: hidden;
+            }
+        </style>
     </head>
 
     <body>
@@ -32,7 +31,7 @@
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap-datetimepicker.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/jquery.countdown.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/star-rating.js"></script>
-        
+
 
 <!--        <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.1.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
@@ -51,7 +50,7 @@
                     var selText = $(this).text();
                     $(this).parents('.dropdown').find('.dropdown-toggle').html(selText + "&nbsp;&nbsp;" + '<span class="caret"></span>');
 
-      
+
                 });
 
             });

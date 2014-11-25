@@ -6,11 +6,12 @@
 
 <style type="text/css">
     #carousel{
-        max-height: 500px;
+        height: 500px;
         max-width: 1140px
     }
     .carousel-img {
-        max-height: 500px;
+        height: 500px;
+        width : 100%;
         margin: 0 auto
     }
     .thumbnail a img {
@@ -39,9 +40,9 @@
                 
                             <div class="item active">                       
                                 <a href="${pageContext.request.contextPath}/viewItem/${listRecentItems[0].itemID}"><img src="${listPhotos[0].photoURL}" alt="..." class="carousel-img">
-                                    <div class="carousel-caption">
+<!--                                    <div class="carousel-caption">
                                         <h4>${listRecentItems[0].title}</h4>
-                                    </div>
+                                    </div>-->
                                 </a>
                             </div>    
                 
@@ -51,9 +52,9 @@
 
                             <div class="item">                       
                                 <a href="${pageContext.request.contextPath}/viewItem/${listRecentItems[loop.count].itemID}"><img src="${listPhotos[loop.count].photoURL}" alt="..." class="carousel-img">
-                                    <div class="carousel-caption">
+<!--                                    <div class="carousel-caption">
                                         <h4>${listRecentItems[loop.count].title}</h4>
-                                    </div>
+                                    </div>-->
                                 </a>
                             </div>   
                     </c:forEach>

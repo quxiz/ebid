@@ -217,7 +217,7 @@
                             <form:hidden id="shippingCost" path="shippingCost"/>
 
                             <div class="form-group">
-                                <label for="packageDetail" class="col-sm-3 control-label">วิธีการจัดส่งหีบห่อ</label>
+                                <label for="packageDetail" class="col-sm-3 control-label">การบรรจุหีบห่อ</label>
                                 <div class="col-sm-6">
                                     <form:input type="text" class="form-control" id="packageDetail" placeholder="วิธีการจัดส่งหีบห่อ" path="packageDetail"/>
 

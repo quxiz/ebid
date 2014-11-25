@@ -21,6 +21,11 @@
         overflow-x: hidden;
     }
 
+    .carousel-img {
+
+
+        margin: 0 auto
+    }
 
 </style>
 
@@ -159,91 +164,94 @@
                             <div class="panel-heading" role="tab" id="headingZero">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
-                                        คำอธิบายสินค้า
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseZero" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
-                                <div class="panel-body">
-                                    ${item.detail}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingOne">
-                                <h4 class="panel-title">
-                                    <a  class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                         รายละเอียดสินค้า
                                     </a>
                                 </h4>
                             </div>
-
-                            <!-- ยังไม่รุมีไรมั่ง -->
-                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                                <div class="panel-body" id="specifics-div">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingTwo">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        ข้อตกลงและเงื่อนไข
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
                                 <div class="panel-body">
                                     <dl class="dl-horizontal">
-                                        <dt>นโยบายการรับสินค้าคืน</dt>
-                                        <dd>${item.returnPolicy}</dd>
+                                        <dt>คำอธิบายสินค้า</dt>
+                                        <dd>${item.detail}</dd>
                                     </dl>
+
+
+                                    <dl class="dl-horizontal">
+                                        <dt>รายละเอียดสินค้า</dt>
+                                        <dd>${item.detail}</dd>
+                                    </dl>
+
+                                    <div id="specifics-div">
+
+                                    </div>
+
                                 </div>
                             </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingThree">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        วิธีการบรรจุหีบห่อและการขนส่ง
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                <div class="panel-body" id="shipping-div">
-                                    <dl class="dl-horizontal">
-                                        <dt>การบรรจุหีบห่อ</dt>
-                                        <dd>${item.packageDetail}</dd>
-                                    </dl>
-                                    <dl class="dl-horizontal">
-                                        <dt> </dt>
-                                        <dd> </dd>
-                                    </dl>
-                                    <dl class="dl-horizontal">
-                                        <dt>วิธีการจัดส่ง</dt>
-                                        <dd>ค่าส่ง</dd>
-                                    </dl>
-                                    <c:forEach items="${shippingServices}" var="shippingService" varStatus="status">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingTwo">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            ข้อตกลง เงื่อนไข และการจัดส่ง
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                    <div class="panel-body">
                                         <dl class="dl-horizontal">
-                                            <dt>${shippingService}</dt>
-                                            <dd>${shippingCosts[status.index]}</dd>
-                                        </dl>
-                                    </c:forEach>
+                                            <dt>วิธีการจัดส่ง</dt>
+                                            <dd>
+                                                <div class="col-sm-3">
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-default dropdown-toggle" type="button" id="input7" data-toggle="dropdown">
+                                                            ${shippingServices[0]}<span class="caret"></span>
+                                                        </button>
+                                                        <ul id="sellingType" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
+                                                            <c:forEach items="${shippingServices}" var="shippingService" varStatus="status">
+
+                                                                <li onclick="$('#shippingCost').text('${shippingCosts[status.count-1]}')" role="presentation"><a role="menuitem" tabindex="-1">${shippingService}</a>
+                                                                </li>
+                                                            </c:forEach>
+                                                      
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </dd>
+                                        </dl>
+                                        <dl class="dl-horizontal">
+                                            <dt>ค่าส่ง</dt>
+                                            <dd id="shippingCost">${shippingCosts[0]}</dd>
+                                            
+                                        </dl>
+
+
+                                        <dl class="dl-horizontal">
+                                            <dt>การบรรจุหีบห่อ</dt>
+                                            <dd>${item.packageDetail}</dd>
+                                        </dl>
+
+
+                                        <dl class="dl-horizontal">
+                                            <dt>นโยบายการรับสินค้าคืน</dt>
+                                            <dd>${item.returnPolicy}</dd>
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
+
+
                         </div>
-
-                    </div>
-                </div> <!-- col -->
-            </div> <!-- row -->
+                    </div> <!-- col -->
+                </div> <!-- row -->
 
 
 
 
 
 
+
+
+            </div>
             <br>
             <br>
 
@@ -300,42 +308,48 @@
                     </div><!-- /.modal -->
                 </div>
             </div>
+            <script>
+                $(function () {
+                    //ต้องผูกกับ timestamp
+                    var timestamp = '${item.endTime}';
+                    var newTimestamp = timestamp.replace("-", "/").replace(".0", "");
+                    $('#clock').countdown(newTimestamp)
+                            .on('update.countdown', function (event) {
+                                var format = '%H:%M:%S';
+                                if (event.offset.days > 0) {
+                                    format = '%-d วัน ' + format;
+                                }
+                                if (event.offset.weeks > 0) {
+                                    format = '%-w สัปดาห์ ' + format;
+                                }
+                                $(this).html(event.strftime(format));
+                            })
+                            .on('finish.countdown', function (event) {
+                                $(this).html('หมดเวลาประมูล');
+                                $('.countdown').addClass('disabled')
+                            });
 
-        </div>
-
-        <script>
-            $(function() {
-//ต้องผูกกับ timestamp
-                var timestamp = '${item.endTime}';
-                var newTimestamp = timestamp.replace("-", "/").replace(".0", "");
-                $('#clock').countdown(newTimestamp)
-                        .on('update.countdown', function(event) {
-                            var format = '%H:%M:%S';
-                            if (event.offset.days > 0) {
-                                format = '%-d วัน ' + format;
-                            }
-                            if (event.offset.weeks > 0) {
-                                format = '%-w สัปดาห์ ' + format;
-                            }
-                            $(this).html(event.strftime(format));
-                        })
-                        .on('finish.countdown', function(event) {
-                            $(this).html('หมดเวลาประมูล');
-                            $('.countdown').addClass('disabled')
-                        });
-
-            });
-        </script>
-
-        <script>
-            $(document).ready(function() {
-                var specificsJson = '${item.specifics}';
-                var obj = jQuery.parseJSON(specificsJson);
-                $.each(obj, function(key, value) {
-                    $("#specifics-div").append('<dl class="dl-horizontal"><dt>' + value.name + '</dt><dd>' + value.value + '</dd></dl>');
                 });
+            </script>
 
-            });
-        </script>
-    </tiles:putAttribute>
-</tiles:insertDefinition>
+            <script>
+                $(document).ready(function () {
+                    var specificsJson = '${item.specifics}';
+                    var obj = jQuery.parseJSON(specificsJson);
+                    var name = "";
+
+                    $.each(obj, function (key, value) {
+
+                        if (value.name == "condition") {
+                            name = "สภาพสินค้า";
+                        } else {
+                            name = "จุดบกพร่อง";
+                        }
+
+                        $("#specifics-div").append('<dl class="dl-horizontal"><dt>' + name + '</dt><dd>' + value.value + '</dd></dl>');
+                    });
+
+                });
+            </script>
+        </tiles:putAttribute>
+    </tiles:insertDefinition>

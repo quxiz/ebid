@@ -14,17 +14,11 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 
 <style type="text/css">
-    #carousel{
-        max-height: 500px;
-        max-width: 1140px
-    }
-    .carousel-img {
-        max-height: 500px;
-        margin: 0 auto
-    }
+    
     .thumbnail a img {
-        max-height: 250px;
-        max-width: 250px
+        /*        max-height: 250px;*/
+        margin: 0 auto;
+        width: 100%
     }
 
     .center {
@@ -52,8 +46,8 @@
                     </div>
                     <div class="col-sm-8 col-md-8">	
                         <div class="caption">	
-                            <a href="viewItem/${item.itemID}"><p>${item.title}</p></a>
-                            <h3>${item.price} บาท</h3><h4>${item.sellingType}</h4>
+                            <a href="viewItem/${item.itemID}"><h3>${item.title}</h3></a>
+                            <h4>${item.price} บาท</h4><h4>${item.sellingType}</h4>
                         </div>
                     </div>
                 </div>

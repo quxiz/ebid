@@ -161,14 +161,14 @@
 
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="headingZero">
+                            <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseZero" aria-expanded="true" aria-controls="collapseZero">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         รายละเอียดสินค้า
                                     </a>
                                 </h4>
                             </div>
-                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingZero">
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body">
                                     <dl class="dl-horizontal">
                                         <dt>คำอธิบายสินค้า</dt>
@@ -187,169 +187,170 @@
 
                                 </div>
                             </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="headingTwo">
-                                    <h4 class="panel-title">
-                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            ข้อตกลง เงื่อนไข และการจัดส่ง
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                    <div class="panel-body">
-                                        <dl class="dl-horizontal">
-                                            <dt>วิธีการจัดส่ง</dt>
-                                            <dd>
-                                                <div class="col-sm-3">
-                                                    <div class="dropdown">
-                                                        <button class="btn btn-default dropdown-toggle" type="button" id="input7" data-toggle="dropdown">
-                                                            ${shippingServices[0]}<span class="caret"></span>
-                                                        </button>
-                                                        <ul id="sellingType" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        ข้อตกลง เงื่อนไข และการจัดส่ง
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <dl class="dl-horizontal">
+                                        <dt>วิธีการจัดส่ง</dt>
+                                        <dd>
+                                            <div class="col-sm-3">
+                                                <div class="dropdown">
+                                                    <button class="btn btn-default dropdown-toggle" type="button" id="input7" data-toggle="dropdown">
+                                                        ${shippingServices[0]}<span class="caret"></span>
+                                                    </button>
+                                                    <ul id="sellingType" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
 
-                                                            <c:forEach items="${shippingServices}" var="shippingService" varStatus="status">
+                                                        <c:forEach items="${shippingServices}" var="shippingService" varStatus="status">
 
-                                                                <li onclick="$('#shippingCost').text('${shippingCosts[status.count-1]}')" role="presentation"><a role="menuitem" tabindex="-1">${shippingService}</a>
-                                                                </li>
-                                                            </c:forEach>
-                                                      
-                                                        </ul>
-                                                    </div>
+                                                            <li onclick="$('#shippingCost').text('${shippingCosts[status.count-1]}')" role="presentation"><a role="menuitem" tabindex="-1">${shippingService}</a>
+                                                            </li>
+                                                        </c:forEach>
+
+                                                    </ul>
                                                 </div>
-                                            </dd>
-                                        </dl>
-                                        <dl class="dl-horizontal">
-                                            <dt>ค่าส่ง</dt>
-                                            <dd id="shippingCost">${shippingCosts[0]}</dd>
-                                            
-                                        </dl>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                    <dl class="dl-horizontal">
+                                        <dt>ค่าส่ง</dt>
+                                        <dd id="shippingCost">${shippingCosts[0]}</dd>
+
+                                    </dl>
 
 
-                                        <dl class="dl-horizontal">
-                                            <dt>การบรรจุหีบห่อ</dt>
-                                            <dd>${item.packageDetail}</dd>
-                                        </dl>
+                                    <dl class="dl-horizontal">
+                                        <dt>การบรรจุหีบห่อ</dt>
+                                        <dd>${item.packageDetail}</dd>
+                                    </dl>
 
 
-                                        <dl class="dl-horizontal">
-                                            <dt>นโยบายการรับสินค้าคืน</dt>
-                                            <dd>${item.returnPolicy}</dd>
-                                        </dl>
-                                    </div>
+                                    <dl class="dl-horizontal">
+                                        <dt>นโยบายการรับสินค้าคืน</dt>
+                                        <dd>${item.returnPolicy}</dd>
+                                    </dl>
                                 </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div> <!-- col -->
+            </div> <!-- row -->
+
+<br>
+        <br>
+
+        <br>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">คำถามเกี่ยวกับสินค้า</h3>
+            </div>
+            <div class="panel-body">
+                <c:forEach items="${listComments}" var="comment">
+                    <c:if test = "${comment.parentID==null}">
+                        <h4 class="media-heading">${comment.commenterName}</h4> <!--name-->
+                        <p>${comment.commentDetail}</p>
+                        <hr>
+                        <!-- Nested media object -->
+                        <c:forEach items="${listComments}" var="nestedComment">
+                            <c:if test ="${nestedComment.parentID == comment.commentID}">
+                                <h4 class="media-heading" style="margin-left:50px">${nestedComment.commenterName}</h4> <!--name-->
+                                <p style="margin-left:50px">${nestedComment.commentDetail}</p>
+                                <hr>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+                </c:forEach>
+
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#askQuestionModal">สอบถามข้อมูลสินค้า</button>
+                <div class="modal fade" id="askQuestionModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title">สอบถามข้อมูลสินค้า</h4>
                             </div>
 
 
-                        </div>
-                    </div> <!-- col -->
-                </div> <!-- row -->
-
-
-
-
-
-
-
-
-            </div>
-            <br>
-            <br>
-
-            <br>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">คำถามเกี่ยวกับสินค้า</h3>
-                </div>
-                <div class="panel-body">
-                    <c:forEach items="${listComments}" var="comment">
-                        <c:if test = "${comment.parentID==null}">
-                            <h4 class="media-heading">${comment.commenterName}</h4> <!--name-->
-                            <p>${comment.commentDetail}</p>
-                            <hr>
-                            <!-- Nested media object -->
-                            <c:forEach items="${listComments}" var="nestedComment">
-                                <c:if test ="${nestedComment.parentID == comment.commentID}">
-                                    <h4 class="media-heading" style="margin-left:50px">${nestedComment.commenterName}</h4> <!--name-->
-                                    <p style="margin-left:50px">${nestedComment.commentDetail}</p>
-                                    <hr>
-                                </c:if>
-                            </c:forEach>
-                        </c:if>
-                    </c:forEach>
-
-                </div>
-                <div class="panel-footer">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#askQuestionModal">สอบถามข้อมูลสินค้า</button>
-                    <div class="modal fade" id="askQuestionModal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title">สอบถามข้อมูลสินค้า</h4>
+                            <c:url var="addAction" value="/viewItem/${itemID}/onSubmitQuestionForm" ></c:url>
+                            <form:form action="${addAction}" modelAttribute="questionForm" method="POST" name="questionForm">
+                                <div class="modal-body">
+                                    <h4>คำถาม</h4>                                   
+                                    <form:textarea class="form-control" rows="3" path="question" />
                                 </div>
+                                <div class="modal-footer">
+                                    <!--แก้เป็น link-->
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                    <input type="submit" class="btn btn-primary" value="ส่งคำถาม"/>
+                                </div>
+                            </form:form>
 
-
-                                <c:url var="addAction" value="/viewItem/${itemID}/onSubmitQuestionForm" ></c:url>
-                                <form:form action="${addAction}" modelAttribute="questionForm" method="POST" name="questionForm">
-                                    <div class="modal-body">
-                                        <h4>คำถาม</h4>                                   
-                                        <form:textarea class="form-control" rows="3" path="question" />
-                                    </div>
-                                    <div class="modal-footer">
-                                        <!--แก้เป็น link-->
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                        <input type="submit" class="btn btn-primary" value="ส่งคำถาม"/>
-                                    </div>
-                                </form:form>
-
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-                </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
             </div>
-            <script>
-                $(function () {
-                    //ต้องผูกกับ timestamp
-                    var timestamp = '${item.endTime}';
-                    var newTimestamp = timestamp.replace("-", "/").replace(".0", "");
-                    $('#clock').countdown(newTimestamp)
-                            .on('update.countdown', function (event) {
-                                var format = '%H:%M:%S';
-                                if (event.offset.days > 0) {
-                                    format = '%-d วัน ' + format;
-                                }
-                                if (event.offset.weeks > 0) {
-                                    format = '%-w สัปดาห์ ' + format;
-                                }
-                                $(this).html(event.strftime(format));
-                            })
-                            .on('finish.countdown', function (event) {
-                                $(this).html('หมดเวลาประมูล');
-                                $('.countdown').addClass('disabled')
-                            });
+        </div>
 
+
+
+
+
+
+        </div>
+        
+        <script>
+            $(function () {
+                //ต้องผูกกับ timestamp
+                var timestamp = '${item.endTime}';
+                var newTimestamp = timestamp.replace("-", "/").replace(".0", "");
+                $('#clock').countdown(newTimestamp)
+                        .on('update.countdown', function (event) {
+                            var format = '%H:%M:%S';
+                            if (event.offset.days > 0) {
+                                format = '%-d วัน ' + format;
+                            }
+                            if (event.offset.weeks > 0) {
+                                format = '%-w สัปดาห์ ' + format;
+                            }
+                            $(this).html(event.strftime(format));
+                        })
+                        .on('finish.countdown', function (event) {
+                            $(this).html('หมดเวลาประมูล');
+                            $('.countdown').addClass('disabled')
+                        });
+
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                var specificsJson = '${item.specifics}';
+                var obj = jQuery.parseJSON(specificsJson);
+                var name = "";
+
+                $.each(obj, function (key, value) {
+
+                    if (value.name == "condition") {
+                        name = "สภาพสินค้า";
+                    } else {
+                        name = "จุดบกพร่อง";
+                    }
+
+                    $("#specifics-div").append('<dl class="dl-horizontal"><dt>' + name + '</dt><dd>' + value.value + '</dd></dl>');
                 });
-            </script>
 
-            <script>
-                $(document).ready(function () {
-                    var specificsJson = '${item.specifics}';
-                    var obj = jQuery.parseJSON(specificsJson);
-                    var name = "";
-
-                    $.each(obj, function (key, value) {
-
-                        if (value.name == "condition") {
-                            name = "สภาพสินค้า";
-                        } else {
-                            name = "จุดบกพร่อง";
-                        }
-
-                        $("#specifics-div").append('<dl class="dl-horizontal"><dt>' + name + '</dt><dd>' + value.value + '</dd></dl>');
-                    });
-
-                });
-            </script>
-        </tiles:putAttribute>
-    </tiles:insertDefinition>
+            });
+        </script>
+    </tiles:putAttribute>
+</tiles:insertDefinition>

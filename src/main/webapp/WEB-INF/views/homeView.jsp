@@ -84,13 +84,14 @@
                             <div class="thumbnail">
                                 <a href="${pageContext.request.contextPath}/viewItem/${listRecentItems[loop.count-1].itemID}"><img src="${listPhotos[loop.count-1].photoURL}" alt="..."></a>
                                 <div class="caption">
+                                    <h3>${listRecentItems[loop.count-1].title}</h3>
                                     <c:if test = "${listRecentItems[loop.count-1].sellingType=='BUY'}">
-                                        <h3>${listRecentItems[loop.count-1].price} บาท</h3><h4>ซื้อทันที</h4>
+                                        <h4>${listRecentItems[loop.count-1].price} บาท</h4><h4>ซื้อทันที</h4>
                                     </c:if>
                                     <c:if test = "${listRecentItems[loop.count-1].sellingType=='BID'}">
-                                        <h3>ราคาปัจุบัน ${listRecentItems[loop.count-1].price} บาท</h3><h4>ประมูล</h4>
+                                        <h4>ราคาปัจจุบัน ${listRecentItems[loop.count-1].price} บาท</h4><h4>ประมูล</h4>
                                     </c:if>
-                                    <p>${listRecentItems[loop.count-1].title}</p>
+                                    
                                 </div>
                             </div>
                         </div>

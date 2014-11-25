@@ -63,7 +63,7 @@ public class SearchController {
             }
         }
         model.addAttribute("listPhotos", listPhotos);
-        
+        model.addAttribute("title", "สินค้า");
         return "searchResultView";
     }
 

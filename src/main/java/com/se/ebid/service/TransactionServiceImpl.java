@@ -139,7 +139,7 @@ public class TransactionServiceImpl implements TransactionService {
             Message messageSeller = new Message();
             messageSeller.setSenderID(Common.ADMIN_ID);
             messageSeller.setReceiverID(sellerID);
-            messageSeller.setMessage("The transaction is completed!"
+            messageSeller.setMessage("The transaction is completed!<br/>"
                 + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
                 + "Click to enter the feedback for your buyer" + "</a>");
             messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));

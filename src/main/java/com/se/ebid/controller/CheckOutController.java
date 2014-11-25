@@ -11,6 +11,7 @@ import com.se.ebid.entity.Transaction;
 import com.se.ebid.service.ItemService;
 import com.se.ebid.service.MemberService;
 import com.se.ebid.service.TransactionService;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -71,13 +72,13 @@ public class CheckOutController {
     }
 
     @RequestMapping(value = "/checkOut/submit", method = RequestMethod.POST)
-    public String onSubmitCheckout(@ModelAttribute("transactionForm") TransactionForm transactionForm, Model model) {
+    public String onSubmitCheckout(@ModelAttribute("transactionForm") TransactionForm transactionForm, Model model) throws UnsupportedEncodingException {
         Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
         System.out.println(transactionForm.getTransactionID());
         System.out.println(transactionForm.getAddress());
         System.out.println(transactionForm.getShippingService());
-        transaction.setShippingAddress(transactionForm.getAddress());
-        transaction.setShippingService(transactionForm.getShippingService());
+        transaction.setShippingAddress(new String(transactionForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
+        transaction.setShippingService(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
         transaction.setPrice(transactionForm.getPrice());
         return "redirect:/payment/" + transactionForm.getTransactionID();
     }
@@ -96,7 +97,7 @@ public class CheckOutController {
             model.addAttribute("text", "การชำระเงินเสร็จสิ้น");
         } else {
             model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "Error found");
+            model.addAttribute("text", "มีข้อผิดพลาดในการชำระเงิน");
         }
         return "showView";
     }

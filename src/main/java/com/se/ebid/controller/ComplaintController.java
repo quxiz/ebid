@@ -6,6 +6,7 @@
 package com.se.ebid.controller;
 
 import com.se.ebid.service.ComplaintService;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,16 +35,20 @@ public class ComplaintController {
     @RequestMapping(value = "/complaint")
      public String viewComplaint(Model model) {
         model.addAttribute("title", "Complaint");
-//         List<CategoryType> categoryList = new ArrayList<>( Arrays.asList(CategoryType.values() ));  
-//        model.addAttribute("categoryList", categoryList);
         ComplaintForm complaintForm = new ComplaintForm();
         model.addAttribute("complaintForm", complaintForm);
         return "complaintView";
     }  
      
      @RequestMapping(value = "/complaint/submit", method = RequestMethod.POST)
-     public String onSubmitComplaint(@ModelAttribute ComplaintForm complaintForm){
-         this.complaintService.complaint(complaintForm);
-         return "redirect:/";
+     public String onSubmitComplaint(@ModelAttribute ("complaintForm") ComplaintForm complaintForm,Model model) throws UnsupportedEncodingException{
+         complaintForm.setDetail(new String(complaintForm.getDetail().getBytes("iso8859-1"), "UTF-8"));
+         complaintForm.setTitle(new String(complaintForm.getTitle().getBytes("iso8859-1"), "UTF-8"));
+         boolean isSuccess = this.complaintService.complaint(complaintForm);
+         model.addAttribute("isSuccess", isSuccess);
+         if(isSuccess){
+        model.addAttribute("text", "You've sent your complaint to administrators. ");
+        } else { model.addAttribute("text", "Fail to send your complaint. <br> <a href =\"${pageContext.request.contextPath}/complaint\" type = \"button\" class=\"btn btn-primary\">กลับหน้าร้องเรียน</a> ");
+        }return "showView";
      }
 }

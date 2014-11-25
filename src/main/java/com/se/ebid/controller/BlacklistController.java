@@ -8,6 +8,7 @@ package com.se.ebid.controller;
 import com.se.ebid.entity.Member;
 import com.se.ebid.service.BlacklistService;
 import com.se.ebid.service.MemberService;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,14 +50,15 @@ public class BlacklistController {
     }  
      
      @RequestMapping(value = "/blacklist/selectMember", method=RequestMethod.POST)
-     public String selectMember(@ModelAttribute BlacklistForm blacklistForm){            
+     public String selectMember(@ModelAttribute ("blacklistForm") BlacklistForm blacklistForm){            
          return "redirect:/blacklist/"+blacklistForm.getUserID();
      }
      
      @RequestMapping(value = "/blacklist/{userID}",method = RequestMethod.GET)
-     public String showSelectedMember(@PathVariable ("userID") String userID ,Model model){
+     public String showSelectedMember(@PathVariable ("userID") String userID ,Model model) throws UnsupportedEncodingException{
             Member member = this.memberService.getMemberByUserID(userID);
             BlacklistForm blacklistForm = new BlacklistForm();
+            userID = new String(userID.getBytes("iso8859-1"), "UTF-8");
             blacklistForm.setUserID(userID);
             model.addAttribute("blacklistForm", blacklistForm);
             model.addAttribute("member", member);
@@ -64,9 +66,16 @@ public class BlacklistController {
      }
      
      @RequestMapping(value = "/blacklist/onSubmit",method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute BlacklistForm blacklistForm)
+     public String onSubmit(@ModelAttribute ("blacklistForm") BlacklistForm blacklistForm,Model model) throws UnsupportedEncodingException
      {
-        this.blacklistService.blacklist(blacklistForm);
-        return "redirect:/blacklist";
+         blacklistForm.setDetail(new String(blacklistForm.getDetail().getBytes("iso8859-1"), "UTF-8"));
+         blacklistForm.setBlacklistStatus(new String(blacklistForm.getBlacklistStatus().getBytes("iso8859-1"), "UTF-8"));
+        boolean isSuccess = this.blacklistService.blacklist(blacklistForm);
+        model.addAttribute("isSuccess", isSuccess);
+        if(isSuccess){
+        model.addAttribute("text", "You've changed blacklist status of userID "+blacklistForm.getUserID()+" to "
+                +blacklistForm.getBlacklistStatus()+". <br> <a href =\"${pageContext.request.contextPath}/blacklist\" type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a> ");
+        } else { model.addAttribute("text", "Fail to change blacklist status of userID "+blacklistForm.getUserID()+". <br> <a href =\"${pageContext.request.contextPath}/blacklist\" type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a> ");
+        }return "showView";
      }
 }

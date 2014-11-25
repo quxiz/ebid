@@ -46,7 +46,7 @@
             </c:if>
                 <hr>               
                 <div>
-                <h2>${text}</h2>
+                ${text}
                 <a href ="${pageContext.request.contextPath}" type = "button" class="btn btn-primary">กลับหน้าหลัก</a>
                 </div>                       
         </div>

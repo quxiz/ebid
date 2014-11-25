@@ -34,6 +34,11 @@ public class BlacklistController {
         this.blacklistService=blacklistService;
     }
     
+    @Autowired
+    public void setMemberService(MemberService memberService) {
+        this.memberService = memberService;
+    }
+    
     
     @RequestMapping("/blacklist")
      public String viewBlacklist(Model model) {
@@ -45,14 +50,14 @@ public class BlacklistController {
      
      @RequestMapping(value = "/blacklist/selectMember", method=RequestMethod.POST)
      public String selectMember(@ModelAttribute BlacklistForm blacklistForm){            
-         return "redirect:/blacklist/"+blacklistForm.getUserId();
+         return "redirect:/blacklist/"+blacklistForm.getUserID();
      }
      
      @RequestMapping(value = "/blacklist/{userID}",method = RequestMethod.GET)
      public String showSelectedMember(@PathVariable ("userID") String userID ,Model model){
             Member member = this.memberService.getMemberByUserID(userID);
             BlacklistForm blacklistForm = new BlacklistForm();
-            blacklistForm.setUserId(userID);
+            blacklistForm.setUserID(userID);
             model.addAttribute("blacklistForm", blacklistForm);
             model.addAttribute("member", member);
             return "blacklistMemberView";

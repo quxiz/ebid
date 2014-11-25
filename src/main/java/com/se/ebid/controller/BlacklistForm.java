@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  * @author mtmmoei
  */
 public class BlacklistForm {
-    private String userId;
+    private String userID;
     
     @Size(min = 1, message = "Blacklist status must not be empty")
     private String blacklistStatus;
@@ -20,12 +20,12 @@ public class BlacklistForm {
     @Size(min = 1, message = "Detail must not be empty")
     private String detail;
 
-    public String getUserId() {
-        return userId;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getBlacklistStatus() {

@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 <label for="userId" class="col-sm-3 control-label">ชื่อผู้ใช้</label>
                                 <div class="col-sm-4">
-                                    <form:input type="text" class="form-control" id="userId" placeholder="ชื่อผู้ใช้" path="userId"/>
+                                    <form:input type="text" class="form-control" id="userID" placeholder="ชื่อผู้ใช้" path="userID"/>
                                 </div>
                             </div>
                                 

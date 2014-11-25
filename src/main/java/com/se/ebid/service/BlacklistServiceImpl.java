@@ -38,7 +38,7 @@ public class BlacklistServiceImpl implements BlacklistService{
     @Override
     @Transactional
     public boolean blacklist(BlacklistForm blacklistForm) {
-        Member member = this.memberDAO.findByUserID(blacklistForm.getUserId());
+        Member member = this.memberDAO.findByUserID(blacklistForm.getUserID());
 	if(member == null) return false;
         boolean blacklistStatus;
         switch(blacklistForm.getBlacklistStatus()){

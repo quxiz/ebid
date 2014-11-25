@@ -69,11 +69,12 @@ public class ViewItemController {
         model.addAttribute("item", item);
         model.addAttribute("listPhotos", this.itemService.getPhoto(itemID));
         model.addAttribute("listComments", this.itemService.getComment(itemID));
-        model.addAttribute("title", item.getTitle());
+        if(item != null) model.addAttribute("title", item.getTitle());
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
-        model.addAttribute("showBidForm", item.getEndTime().after(timestamp));
-        //model.addAttribute("timestamp", timestamp);
+        if (item.getEndTime() != null) {
+            model.addAttribute("showBidForm", item.getEndTime().after(timestamp));
+        }
         if (item.getSellingType() == SellingType.BID) {
             model.addAttribute("maxbidID", this.itemService.getMaxBidderID(itemID));
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();

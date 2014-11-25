@@ -122,6 +122,16 @@ public class ItemServiceImpl implements ItemService {
     public Item getItem(long itemID) {
         return this.itemDAO.findByItemID(itemID);
     }
+    
+    @Override
+    @Transactional
+    public Item getItemByTransactionID(long transactionID) {
+        Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
+        if(transaction != null) {
+            return this.itemDAO.findByItemID(transaction.getItemID());
+        }
+        return null;
+    }
 
     @Override
     public List<Photo> getPhoto(long itemID) {

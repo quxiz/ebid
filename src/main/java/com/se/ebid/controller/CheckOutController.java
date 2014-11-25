@@ -53,7 +53,7 @@ public class CheckOutController {
         model.addAttribute("title", "ชำระค่าสินค้า");
         Transaction transaction = this.transactionService.getTransaction(transactionID);
         Member member = this.memberService.getMember();
-        Item item = this.itemService.getItem(transactionID);
+        Item item = this.itemService.getItemByTransactionID(transactionID);
         TransactionForm transactionForm = new TransactionForm();
         transactionForm.setTransactionID(transactionID);
         transactionForm.setAddress(member.getAddress());
@@ -61,25 +61,27 @@ public class CheckOutController {
         model.addAttribute("member", member);
         model.addAttribute("transaction", transaction);
         model.addAttribute("item", item);
-        String[] shippingServices = item.getShippingService().split(" ");
-        String[] shippingCosts = item.getShippingCost().split(" ");
-        model.addAttribute("shippingServices", shippingServices);
-        model.addAttribute("shippingCosts", shippingCosts);
+        if (item.getShippingService() != null && item.getShippingCost() != null) {
+            String[] shippingServices = item.getShippingService().split(" ");
+            String[] shippingCosts = item.getShippingCost().split(" ");
+            model.addAttribute("shippingServices", shippingServices);
+            model.addAttribute("shippingCosts", shippingCosts);
+        }
         return "checkOutView";
     }
-    
+
     @RequestMapping(value = "/checkOut/submit", method = RequestMethod.POST)
-    public String onSubmitCheckout(@ModelAttribute ("transactionForm") TransactionForm transactionForm) {
+    public String onSubmitCheckout(@ModelAttribute("transactionForm") TransactionForm transactionForm) {
         Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
         transaction.setShippingAddress(transactionForm.getAddress());
         transaction.setShippingService(transactionForm.getShippingService());
         transaction.setPrice(transactionForm.getPrice());
-        return "redirect:/payment/"+transactionForm.getTransactionID();
+        return "redirect:/payment/" + transactionForm.getTransactionID();
     }
-    
+
     @RequestMapping(value = "/payment/{transactionID}", method = RequestMethod.GET)
-    public String finishCheckout(@PathVariable("transactionID") long transactionID,Model model) {
-        model.addAttribute("transactionID", transactionID);    
+    public String finishCheckout(@PathVariable("transactionID") long transactionID, Model model) {
+        model.addAttribute("transactionID", transactionID);
         return "paymentView";
-    }    
+    }
 }

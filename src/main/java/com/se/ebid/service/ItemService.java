@@ -32,6 +32,7 @@ public interface ItemService {
     
     public List<Item> search(SearchForm searchForm);
     public Item getItem(long itemID);
+    public Item getItemByTransactionID(long transactionID);
     public List<Photo> getPhoto(long itemID);
     public List<Comment> getComment(long itemID);
     public int bid(BidForm bidForm);

@@ -69,6 +69,12 @@ public class ViewItemController {
         model.addAttribute("item", item);
         model.addAttribute("listPhotos", this.itemService.getPhoto(itemID));
         model.addAttribute("listComments", this.itemService.getComment(itemID));
+        if (item.getShippingService() != null && item.getShippingCost() != null) {
+            String[] shippingServices = item.getShippingService().split(" ");
+            String[] shippingCosts = item.getShippingCost().split(" ");
+            model.addAttribute("shippingServices", shippingServices);
+            model.addAttribute("shippingCosts", shippingCosts);
+        }
         if(item != null) model.addAttribute("title", item.getTitle());
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
@@ -134,6 +140,7 @@ public class ViewItemController {
             model.addAttribute("text", "Error found");
             return "showView";
         }
+        model.addAttribute("buyForm", buyForm);
         model.addAttribute("invoice", invoice);
         model.addAttribute("item", this.itemService.getItem(itemID));
         model.addAttribute("listPhotos", this.itemService.getPhoto(itemID));

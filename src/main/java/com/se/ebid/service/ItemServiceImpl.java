@@ -280,7 +280,6 @@ System.out.println("step3");
         if (buyForm.getQuantity() > item.getQuantity()) {
             return -1;
         }
-
         Transaction transaction = new Transaction();
         transaction.setSellerID(sellerID);
         transaction.setBuyerID(buyerID);

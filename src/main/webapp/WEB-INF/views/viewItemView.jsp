@@ -224,6 +224,12 @@
                                         <dt>วิธีการจัดส่ง</dt>
                                         <dd>ค่าส่ง</dd>
                                     </dl>
+                                    <c:forEach items="${shippingServices}" var="shippingService" varStatus="status">
+                                        <dl class="dl-horizontal">
+                                            <dt>${shippingService}</dt>
+                                            <dd>${shippingCosts[status.index]}</dd>
+                                        </dl>
+                                    </c:forEach>
 
                                 </div>
                             </div>
@@ -327,15 +333,6 @@
                 var obj = jQuery.parseJSON(specificsJson);
                 $.each(obj, function(key, value) {
                     $("#specifics-div").append('<dl class="dl-horizontal"><dt>' + value.name + '</dt><dd>' + value.value + '</dd></dl>');
-                });
-
-                var shippingService = '${item.shippingService}';
-                var shippingCost = '${item.shippingCost}';
-                var delimiter = ' ';
-                var shippingServiceArr = shippingService.split(delimiter);
-                var shippingCostArr = shippingCost.split(delimiter);
-                $.each(shippingServiceArr, function(key, value) {
-                    $("#shipping-div").append('<dl class="dl-horizontal"><dt>' + value + '</dt><dd>' + shippingCostArr[key] + '</dd></dl>');
                 });
 
             });

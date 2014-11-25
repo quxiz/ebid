@@ -74,7 +74,8 @@
             <div class = "row centercontents">
             
             <c:url var="addAction" value="/buyItem/${item.itemID}/confirmBuy" ></c:url>
-            <form:form action="${addAction}" modelAttribute="buyform" method="POST" name="buyform">
+            <form:form action="${addAction}" modelAttribute="buyForm" method="POST" name="buyForm">
+                <form:hidden path="quantity" />
                 <input type="submit" class="btn btn-default" value="ยืนยันการซื้อ"/>
             </form:form>
                 <a type="button" class="btn btn-default" href="${pageContext.request.contextPath}/viewItem/${item.itemID}">ยกเลิก</a>

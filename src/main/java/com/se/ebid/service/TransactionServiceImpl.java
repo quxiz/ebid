@@ -48,6 +48,11 @@ public class TransactionServiceImpl implements TransactionService {
     public void setMessageDAO(MessageDAO messageDAO) {
         this.messageDAO = messageDAO;
     }
+    
+    @Autowired
+    public void setItemDAO(ItemDAO itemDAO) {
+        this.itemDAO = itemDAO;
+    }
 
     @Override
     public Transaction getTransaction(long transactionID) {
@@ -76,6 +81,12 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setCompleted(true);
         this.transactionDAO.save(transaction);
 
+        System.out.println(transaction.getItemID());
+        Item item = this.itemDAO.findByItemID(transaction.getItemID());
+            
+        item.setQuantity(item.getQuantity() - 1);
+        this.itemDAO.save(item);
+        
         long sellerID = transaction.getSellerID();
         long buyerID = transaction.getBuyerID();
 
@@ -96,7 +107,6 @@ public class TransactionServiceImpl implements TransactionService {
             Message messageBuyer = new Message();
             messageBuyer.setSenderID(Common.ADMIN_ID);
             messageBuyer.setReceiverID(buyerID);
-            Item item = this.itemDAO.findByItemID(transaction.getItemID());
             if(item.getSellingType() == BUY){
                 messageBuyer.setMessage("Transaction is completed!<br/>"
                 + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 

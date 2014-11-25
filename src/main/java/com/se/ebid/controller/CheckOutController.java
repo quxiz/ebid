@@ -71,8 +71,11 @@ public class CheckOutController {
     }
 
     @RequestMapping(value = "/checkOut/submit", method = RequestMethod.POST)
-    public String onSubmitCheckout(@ModelAttribute("transactionForm") TransactionForm transactionForm) {
+    public String onSubmitCheckout(@ModelAttribute("transactionForm") TransactionForm transactionForm, Model model) {
         Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
+        System.out.println(transactionForm.getTransactionID());
+        System.out.println(transactionForm.getAddress());
+        System.out.println(transactionForm.getShippingService());
         transaction.setShippingAddress(transactionForm.getAddress());
         transaction.setShippingService(transactionForm.getShippingService());
         transaction.setPrice(transactionForm.getPrice());
@@ -83,5 +86,18 @@ public class CheckOutController {
     public String finishCheckout(@PathVariable("transactionID") long transactionID, Model model) {
         model.addAttribute("transactionID", transactionID);
         return "paymentView";
+    }
+
+    @RequestMapping(value = "/checkOut/checkoutTransaction/{transactionID}", method = RequestMethod.GET)
+    public String CheckoutTransaction(@PathVariable("transactionID") long transactionID, Model model) {
+        boolean success = this.transactionService.checkOutTransaction(transactionID);
+        if (success) {
+            model.addAttribute("isSuccess", true);
+            model.addAttribute("text", "การชำระเงินเสร็จสิ้น");
+        } else {
+            model.addAttribute("isSuccess", false);
+            model.addAttribute("text", "Error found");
+        }
+        return "showView";
     }
 }

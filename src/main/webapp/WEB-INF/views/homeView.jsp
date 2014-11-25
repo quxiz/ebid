@@ -10,8 +10,8 @@
         max-width: 1140px
     }
     .carousel-img {
-        height: 500px;
-        width : 100%;
+        max-height: 500px;
+    
         margin: 0 auto
     }
     .thumbnail a img {

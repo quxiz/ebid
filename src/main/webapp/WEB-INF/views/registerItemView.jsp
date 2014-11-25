@@ -140,9 +140,9 @@
                                 <label for="datetimepicker1" class="col-sm-3 control-label">เวลาสิ้นสุดการประมูล</label>
 
                                 <div class="col-sm-3">
-                                    <div class='input-group date' id='datetimepicker1'>
-                                        <form:input type="text" class="form-control" id="endTime" path="endTime"/>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    <div class='input-group date'>
+                                        <form:input type="text" class="form-control" id="datetimepicker1" path="endTime"/>
+<!--                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>-->
                                     </div>
                                 </div>
                             </div> 
@@ -154,10 +154,10 @@
                                     <span class="input-group-addon">บาท</span>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="quantity">
                                 <label for="quantity" class="col-sm-3 control-label">จำนวน</label>
                                 <div class="input-group col-sm-3">
-                                    <form:input type="text" class="form-control" id="quantity" placeholder="ปริมาณ" path="quantity"/>
+                                    <form:input type="text" class="form-control" id="quantity" placeholder="ปริมาณ" path="quantity" value="1"/>
                                     <span class="input-group-addon">ชิ้น</span>
                                 </div>
                             </div>
@@ -271,12 +271,17 @@
                         $("#auction").show();
                         //                        $("#priceLabel").text = "ราคาเริ่มต้น";
                         document.getElementById('priceLabel').innerHTML = 'ราคาเริ่มต้น';
+                        $("#quantity").hide();
+                        
                     } else {
                         $("#auction").hide();
+                        $("#quantity").show();
                         document.getElementById('priceLabel').innerHTML = 'ราคา';
                     }
                 });
-                $('#datetimepicker1').datetimepicker();
+                $('#datetimepicker1').datetimepicker({
+                    format:'m/d/Y H:i'
+                });
 //                
 //            });
 
@@ -341,26 +346,26 @@
             $("#specifics-form").keyup(function () {
                 $("#specifics-json").val(JSON.stringify($("#specifics-form :input").serializeArray()));
             });
-            $("#specifics-add").click(function () {
-                var specificName = $("#specifics-name").val();
-                $("#specifics-name").val("");
-                $("#specifics-form").append('<div class="specifics-' + specificName + '">' + specificName + ' : <input name="' + specificName + '" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
-            });
-            $(document).on("click", "#specifics-remove", function () {
-                $(this).parent().remove();
-            });</script>
+//            $("#specifics-add").click(function () {
+//                var specificName = $("#specifics-name").val();
+//                $("#specifics-name").val("");
+//                $("#specifics-form").append('<div class="specifics-' + specificName + '">' + specificName + ' : <input name="' + specificName + '" value=""><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
+//            });
+//            $(document).on("click", "#specifics-remove", function () {
+//                $(this).parent().remove();
+//            });</script>
 
         <script>
-            $(document).ready(function () {
-                if ($("#specifics-json").val()) {
-                    $("#specifics-form").empty();
-                    var obj = jQuery.parseJSON($("#specifics-json").val());
-                    $.each(obj, function (key, value) {
-                        $("#specifics-form").append('<div class="specifics-' + value.name + '">' + value.name + ' : <input name="' + value.name + '" value="' + value.value + '"><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
-                    });
-                }
-            }
-            );
+//            $(document).ready(function () {
+//                if ($("#specifics-json").val()) {
+//                    $("#specifics-form").empty();
+//                    var obj = jQuery.parseJSON($("#specifics-json").val());
+//                    $.each(obj, function (key, value) {
+//                        $("#specifics-form").append('<div class="specifics-' + value.name + '">' + value.name + ' : <input name="' + value.name + '" value="' + value.value + '"><span id="specifics-remove" class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>');
+//                    });
+//                }
+//            }
+//            );
         </script>
     </tiles:putAttribute>
 </tiles:insertDefinition>

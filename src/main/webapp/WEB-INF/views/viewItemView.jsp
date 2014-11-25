@@ -85,15 +85,15 @@
                 <div class="col-sm-5 col">
                     <div class="text-center">
                         <h3>${item.price} บาท</h3>
-                       <c:if test="${item.sellingType=='BID'}"> 
-                           <h4>Maxbid User : 
-                           <c:if test ="${maxbidID == yourID}">
-                               You </h4>
-                           </c:if>
-                           <c:if test ="${maxbidID != yourID}">
-                               Anonymous </h4>
-                           </c:if>
-                       </c:if>
+                        <c:if test="${item.sellingType=='BID'}"> 
+                            <h4>Maxbid User : 
+                                <c:if test ="${maxbidID == yourID}">
+                                    You </h4>
+                                </c:if>
+                                <c:if test ="${maxbidID != yourID}">
+                                Anonymous </h4>
+                            </c:if>
+                        </c:if>
                     </div>
                     <br>
 
@@ -122,31 +122,33 @@
                             </div>
                         </div>
                         <br>
+                        <c:if test="${showBidForm}">
 
 
-                        <c:url var="addAction" value="/viewItem/${item.itemID}/onSubmitBidForm" ></c:url>
-                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="bidForm" method="POST" name="bidForm">
+                            <c:url var="addAction" value="/viewItem/${item.itemID}/onSubmitBidForm" ></c:url>
+                            <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="bidForm" method="POST" name="bidForm">
 
-                            <div class="form-group">
-                                <label for="maxBid" class="col-sm-5 control-label">จำนวนเงินสูงสุด</label>
-                                <div class="input-group col-sm-4">
-                                    <form:input type="text" class="form-control" id="maxBid" path="maxBid" />
-                                    <span class="input-group-addon">บาท</span>
+                                <div class="form-group">
+                                    <label for="maxBid" class="col-sm-5 control-label">จำนวนเงินสูงสุด</label>
+                                    <div class="input-group col-sm-4">
+                                        <form:input type="text" class="form-control" id="maxBid" path="maxBid" />
+                                        <span class="input-group-addon">บาท</span>
+                                    </div>
                                 </div>
-                            </div>
 
 
-                            <div class="form-group">
-                                <label for="bidIncrement" class="col-sm-5 control-label">จำนวนเงินเพิ่มแต่ละครั้ง</label>
-                                <div class="input-group col-sm-4">
-                                    <form:input type="text" class="form-control" id="bidIncrement" path="bidIncrement" />
-                                    <span class="input-group-addon">บาท</span>
+                                <div class="form-group">
+                                    <label for="bidIncrement" class="col-sm-5 control-label">จำนวนเงินเพิ่มแต่ละครั้ง</label>
+                                    <div class="input-group col-sm-4">
+                                        <form:input type="text" class="form-control" id="bidIncrement" path="bidIncrement" />
+                                        <span class="input-group-addon">บาท</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="text-center">
-                                <input type="submit" class="btn btn-primary" style="width:160px" value="ประมูล">
-                            </div>
-                        </form:form>
+                                <div class="text-center">
+                                    <input type="submit" class="btn btn-primary" style="width:160px" value="ประมูล">
+                                </div>
+                            </form:form>
+                        </c:if>
 
                     </c:if>
 
@@ -326,7 +328,7 @@
                 $.each(obj, function(key, value) {
                     $("#specifics-div").append('<dl class="dl-horizontal"><dt>' + value.name + '</dt><dd>' + value.value + '</dd></dl>');
                 });
-                
+
                 var shippingService = '${item.shippingService}';
                 var shippingCost = '${item.shippingCost}';
                 var delimiter = ' ';
@@ -335,7 +337,7 @@
                 $.each(shippingServiceArr, function(key, value) {
                     $("#shipping-div").append('<dl class="dl-horizontal"><dt>' + value + '</dt><dd>' + shippingCostArr[key] + '</dd></dl>');
                 });
-                
+
             });
         </script>
     </tiles:putAttribute>

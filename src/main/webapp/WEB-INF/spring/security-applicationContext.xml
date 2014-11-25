@@ -16,7 +16,7 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
         <intercept-url pattern="/answerQuestion*" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/checkOut*" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/payment*" access="hasRole('ROLE_USER')" />
-        <intercept-url pattern="/giveFeedback*" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/giveFeedback**" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/registerItem*" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/buyItem*" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/viewMessage*" access="hasRole('ROLE_USER')" />

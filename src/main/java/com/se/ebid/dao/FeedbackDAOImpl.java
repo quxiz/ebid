@@ -68,7 +68,7 @@ public class FeedbackDAOImpl implements FeedbackDAO {
         session.getTransaction().begin();
         List<Feedback> feedbacks = new ArrayList<Feedback>();
         feedbacks = sessionFactory.getCurrentSession()
-                .createQuery("from Feedback where buyerID=:buyerID")
+                .createQuery("from Feedback where buyerID=:buyerID and sellerFeedbacked=true order by timestamp desc")
                 .setParameter("buyerID", buyerID)
                 .list();
         session.getTransaction().commit();
@@ -82,7 +82,7 @@ public class FeedbackDAOImpl implements FeedbackDAO {
         session.getTransaction().begin();
         List<Feedback> feedbacks = new ArrayList<Feedback>();
         feedbacks = sessionFactory.getCurrentSession()
-                .createQuery("from Feedback where sellerID=:sellerID")
+                .createQuery("from Feedback where sellerID=:sellerID and buyerFeedbacked=true order by timestamp desc")
                 .setParameter("sellerID", sellerID)
                 .list();
         session.getTransaction().commit();

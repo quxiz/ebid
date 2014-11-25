@@ -40,12 +40,14 @@ public class FeedbackServiceImpl implements FeedbackService{
         if(memberID == feedback.getSellerID()){
             feedback.setSellerComment(feedbackForm.getComment());
             feedback.setSellerRating(feedbackForm.getRating());
+            feedback.setSellerFeedbacked(true);
             this.feedbackDAO.save(feedback);
             return true;
         }
         if(memberID == feedback.getBuyerID()){
             feedback.setBuyerComment(feedbackForm.getComment());
             feedback.setBuyerRating(feedbackForm.getRating());
+            feedback.setBuyerFeedbacked(true);
             this.feedbackDAO.save(feedback);
             return true;
         }

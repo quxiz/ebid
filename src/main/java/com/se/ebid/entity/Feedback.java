@@ -42,6 +42,10 @@ public class Feedback {
     private int sellerRating;
     @Column(name="buyerRating")
     private int buyerRating;
+    @Column(name="sellerFeedbacked")
+    private boolean sellerFeedbacked;
+    @Column(name="buyerFeedbacked")
+    private boolean buyerFeedbacked;
 
     public long getTransactionID() {
         return transactionID;
@@ -122,5 +126,22 @@ public class Feedback {
     public void setBuyerRating(int buyerRating) {
         this.buyerRating = buyerRating;
     }
+
+    public boolean isSellerFeedbacked() {
+        return sellerFeedbacked;
+    }
+
+    public void setSellerFeedbacked(boolean sellerFeedbacked) {
+        this.sellerFeedbacked = sellerFeedbacked;
+    }
+
+    public boolean isBuyerFeedbacked() {
+        return buyerFeedbacked;
+    }
+
+    public void setBuyerFeedbacked(boolean buyerFeedbacked) {
+        this.buyerFeedbacked = buyerFeedbacked;
+    }
+    
     
 }

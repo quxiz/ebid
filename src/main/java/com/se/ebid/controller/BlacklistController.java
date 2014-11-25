@@ -55,7 +55,7 @@ public class BlacklistController {
             blacklistForm.setUserId(userID);
             model.addAttribute("blacklistForm", blacklistForm);
             model.addAttribute("member", member);
-            return "blaclistMemberView";
+            return "blacklistMemberView";
      }
      
      @RequestMapping(value = "/blacklist/onSubmit",method = RequestMethod.POST)

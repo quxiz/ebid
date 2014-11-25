@@ -418,11 +418,12 @@ public class ItemServiceImpl implements ItemService {
 
     public boolean reportBidResult(long itemID) {
         System.out.println("Activate reportBidResult : " + itemID);
+        System.out.println("bidResult 1");
         Item item = this.itemDAO.findByItemID(itemID);
         if (item == null) {
             return false;
         }
-
+        System.out.println("bidResult 2");
         AutoBid autoBid = this.autoBidDAO.findByItemID(itemID);
         if (autoBid == null) {
             return false;
@@ -431,6 +432,7 @@ public class ItemServiceImpl implements ItemService {
             sendNoBidderSellerEmail(this.memberDAO.findByMemberID(item.getSellerID()), item.getItemID());
             return false;
         } // no one bid
+        System.out.println("bidResult 3");
         long sellerID = item.getSellerID();
         long buyerID = autoBid.getBidderID();
         String sellerName = item.getSellerName();
@@ -448,7 +450,7 @@ public class ItemServiceImpl implements ItemService {
         //transaction.setDelivery(item.getDelivery()); ???
         transaction.setTimestamp(autoBid.getTimestamp());
         this.transactionDAO.save(transaction);
-
+        System.out.println("bidResult 4");
         Feedback feedback = new Feedback();
         feedback.setTransactionID(transaction.getTransactionID());
         feedback.setSellerID(sellerID);
@@ -457,7 +459,7 @@ public class ItemServiceImpl implements ItemService {
         feedback.setBuyerName(buyerName);
         feedback.setItemID(itemID);
         this.feedbackDAO.save(feedback);
-
+        System.out.println("bidResult 5");
         Member buyer = this.memberDAO.findByMemberID(buyerID);
         if (buyer == null) {
             return false;
@@ -465,12 +467,12 @@ public class ItemServiceImpl implements ItemService {
         if (!sendBuyerEmail(buyer, transaction)) {
             return false;
         }
-
+        System.out.println("bidResult 6");
         Message messageBuyer = new Message();
         messageBuyer.setSenderID(Common.ADMIN_ID);
         messageBuyer.setReceiverID(buyerID);
         messageBuyer.setMessage("Congratulations, you won the auction!<br/>"
-                + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID()+ "\">"
+                + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">"
                 + item.getTitle() + "</a><br/><br/>"
                 + "<a href=\"" + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID() + "\">"
                 + "Click to check out" + "</a>");
@@ -478,7 +480,7 @@ public class ItemServiceImpl implements ItemService {
         messageBuyer.setSeen(false);
         messageBuyer.setSenderName(Common.ADMIN_NAME);
         this.messageDAO.save(messageBuyer);
-
+        System.out.println("bidResult 7");
         Member seller = this.memberDAO.findByMemberID(sellerID);
         if (seller == null) {
             return false;
@@ -486,20 +488,20 @@ public class ItemServiceImpl implements ItemService {
         if (!sendSellerEmail(seller, transaction)) {
             return false;
         }
-
+        System.out.println("bidResult 8");
         Message messageSeller = new Message();
         messageSeller.setSenderID(Common.ADMIN_ID);
         messageSeller.setReceiverID(sellerID);
         messageSeller.setMessage("There is a winner for your auction item!<br/>"
-                + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID()+ "\">"
+                + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">"
                 + item.getTitle() + "</a><br/><br/>"
                 + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">"
                 + "Click to enter the feedback for your seller" + "</a>");
         messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
         messageSeller.setSeen(false);
-        messageBuyer.setSenderName(Common.ADMIN_NAME);
+        messageSeller.setSenderName(Common.ADMIN_NAME);
         this.messageDAO.save(messageSeller);
-
+        System.out.println("bidResult 9");
         /*BidSchedule bidSchedule = BidScheduleDAO.findByItemID(itemID);
          if(bidSchedule == null) return false;
          bidSchedule.setCompleted(true);

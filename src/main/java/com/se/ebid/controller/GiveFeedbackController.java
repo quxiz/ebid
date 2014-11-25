@@ -37,7 +37,7 @@ public class GiveFeedbackController {
     public void setFeedbackService(FeedbackService feedbackService) {
         this.feedbackService = feedbackService;
     }
-    
+
     @Autowired
     public void setItemService(ItemService itemService) {
         this.itemService = itemService;
@@ -57,11 +57,21 @@ public class GiveFeedbackController {
             model.addAttribute("text", "You buy your item!!");
             return "showView";
         } else if (memberID == feedback.getSellerID()) {
+            if (feedback.isSellerFeedbacked()) {
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "You already feedbacked");
+                return "showView";
+            }
             model.addAttribute("isSeller", true);
             model.addAttribute("isBuyer", false);
             model.addAttribute("buyerName", feedback.getBuyerName());
             System.out.println("buyerName" + feedback.getBuyerName());
         } else if (memberID == feedback.getBuyerID()) {
+            if (feedback.isBuyerFeedbacked()) {
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "You already feedbacked");
+                return "showView";
+            }
             model.addAttribute("isSeller", false);
             model.addAttribute("isBuyer", true);
             model.addAttribute("sellerName", feedback.getSellerName());

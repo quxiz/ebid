@@ -29,8 +29,8 @@
 
                             <c:forEach begin = "1" end = "${listSize}" varStatus = "loop">
                                 <c:if test="${listMessages[loop.count-1].seen}">
-                                    <tbody class="success">
-                                        <tr>
+                                    <tbody>
+                                        <tr class="success">
                                             <td>
                                                 <text id="title0">
                                                 ${listMessages[loop.count-1].message}<!--getMessageID()-->
@@ -64,6 +64,7 @@
                                 </c:if>
                             </c:forEach>
                         </table>
+                        <a href="${pageContext.request.contextPath}/viewMessage/markAsRead">mark all as read</a>
 
                     </div>
                 </div>

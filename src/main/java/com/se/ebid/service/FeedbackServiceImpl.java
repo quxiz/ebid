@@ -8,6 +8,7 @@ package com.se.ebid.service;
 import com.se.ebid.controller.FeedbackForm;
 import com.se.ebid.dao.FeedbackDAO;
 import com.se.ebid.entity.Feedback;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,10 @@ public class FeedbackServiceImpl implements FeedbackService{
     @Transactional
     public boolean giveFeedback(FeedbackForm feedbackForm) {
         Feedback feedback = this.feedbackDAO.findByTransactionID(feedbackForm.getTransactionID());
-        if(feedback == null) return false;
+        if(feedback == null) {
+            System.out.println("feedback == null");
+            return false;
+        }
         
         long memberID = Common.getMemberID();
         if(memberID == feedback.getSellerID()){
@@ -45,6 +49,19 @@ public class FeedbackServiceImpl implements FeedbackService{
             this.feedbackDAO.save(feedback);
             return true;
         }
+        System.out.println("memberID != id in feedback");
         return false;
+    }
+    
+    @Override
+    @Transactional
+    public Feedback getFeedback(long transactionID) {
+        return this.feedbackDAO.findByTransactionID(transactionID);
+    }
+    
+    @Override
+    @Transactional
+    public List<Feedback> getSellerFeedback(long sellerID) {
+        return this.feedbackDAO.findBySellerID(sellerID);
     }
 }

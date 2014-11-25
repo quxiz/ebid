@@ -20,11 +20,29 @@
                     <div class="panel-body">
                         <c:url var="addAction" value="/giveFeedback/submit" ></c:url>
                         <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="feedbackForm" method="POST" name="feedbackForm">
+                            <div>
+                                <c:if test="${isSeller}">
+                                    ท่านได้ทำการขายสินค้า
+                                    <a href="/viewItem/${item.itemID}">${item.title}</a>
+                                </c:if>
+                                <c:if test="${isBuyer}">
+                                    ท่านได้ทำการซื้อสินค้า
+                                    <a href="/viewItem/${item.itemID}">${item.title}</a>
+                                </c:if>
+                            </div>
                             <div class="form-group">
-                                <label for="memberName" class="col-sm-3 control-label">ชื่อสมาชิก</label>
-                                <div class="col-sm-9">
-                                    <input id="memberName" class="form-control" value="SoulOfNature" disabled="true">
-                                </div>
+                                <c:if test="${isSeller}">
+                                    <label for="memberName" class="col-sm-3 control-label">ผู้ขาย</label>
+                                    <div class="col-sm-9">
+                                        <input id="memberName" class="form-control" value="${buyerName}" disabled="true">
+                                    </div>    
+                                </c:if>
+                                <c:if test="${isBuyer}">
+                                    <label for="memberName" class="col-sm-3 control-label">ผู้ซื้อ</label>
+                                    <div class="col-sm-9">
+                                        <input id="memberName" class="form-control" value="${sellerName}" disabled="true">
+                                    </div>     
+                                </c:if>
                             </div>
                             <div class="form-group">
                                 <label for="rating" class="col-sm-3 control-label">Rating</label>
@@ -45,9 +63,7 @@
                             </div>
                         </form:form>
 
-
                     </div>
-
 
                 </div>
 
@@ -55,7 +71,10 @@
             </div>
 
 
-
         </div>
-    </tiles:putAttribute>
+
+
+
+    </div>
+</tiles:putAttribute>
 </tiles:insertDefinition>

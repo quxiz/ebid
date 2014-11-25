@@ -28,6 +28,10 @@ public class Feedback {
     private long sellerID;
     @Column(name="buyerID", nullable = false)
     private long buyerID;
+    @Column(name="sellerName")
+    private String sellerName;
+    @Column(name="buyerName")
+    private String buyerName;
     @Column(name="itemID", nullable = false)
     private long itemID;
     @Column(name="sellerComment")
@@ -53,6 +57,22 @@ public class Feedback {
 
     public void setSellerID(long sellerID) {
         this.sellerID = sellerID;
+    }
+
+    public String getSellerName() {
+        return sellerName;
+    }
+
+    public void setSellerName(String sellerName) {
+        this.sellerName = sellerName;
+    }
+
+    public String getBuyerName() {
+        return buyerName;
+    }
+
+    public void setBuyerName(String buyerName) {
+        this.buyerName = buyerName;
     }
 
     public long getBuyerID() {

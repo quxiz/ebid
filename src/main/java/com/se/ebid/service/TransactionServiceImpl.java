@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
  *
  * @author Nuttapong
  */
-
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
@@ -48,7 +47,7 @@ public class TransactionServiceImpl implements TransactionService {
     public void setMessageDAO(MessageDAO messageDAO) {
         this.messageDAO = messageDAO;
     }
-    
+
     @Autowired
     public void setItemDAO(ItemDAO itemDAO) {
         this.itemDAO = itemDAO;
@@ -83,10 +82,10 @@ public class TransactionServiceImpl implements TransactionService {
 
         System.out.println(transaction.getItemID());
         Item item = this.itemDAO.findByItemID(transaction.getItemID());
-            
+
         item.setQuantity(item.getQuantity() - 1);
         this.itemDAO.save(item);
-        
+
         long sellerID = transaction.getSellerID();
         long buyerID = transaction.getBuyerID();
 
@@ -96,8 +95,8 @@ public class TransactionServiceImpl implements TransactionService {
             messageAdmin.setSenderID(Common.ADMIN_ID);
             messageAdmin.setReceiverID(Common.ADMIN_ID);
             messageAdmin.setMessage("Buyer is unknown<br/>"
-            + "BuyerID: " + buyerID + "<br/>"
-            + "ItemID: " + transaction.getItemID());
+                    + "BuyerID: " + buyerID + "<br/>"
+                    + "ItemID: " + transaction.getItemID());
             messageAdmin.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageAdmin.setSeen(false);
             messageAdmin.setSenderName(Common.ADMIN_NAME);
@@ -107,14 +106,16 @@ public class TransactionServiceImpl implements TransactionService {
             Message messageBuyer = new Message();
             messageBuyer.setSenderID(Common.ADMIN_ID);
             messageBuyer.setReceiverID(buyerID);
-            if(item.getSellingType() == BUY){
+            if (item.getSellingType() == BUY) {
                 messageBuyer.setMessage("Transaction is completed!<br/>"
-                + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
-                + "Click to enter the feedback for your seller" + "</a>");
+                        + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">"
+                        + item.getTitle() + "</a><br/><br/>"
+                        + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">"
+                        + "Click to enter the feedback for your seller" + "</a>");
             }
-            if(item.getSellingType() == BID){
+            if (item.getSellingType() == BID) {
                 messageBuyer.setMessage("The transaction is completed!"
-                    +"The transaction ID " + transaction.getTransactionID() + " is completed.");
+                        + "The transaction ID " + transaction.getTransactionID() + " is completed.");
             }
             messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageBuyer.setSeen(false);
@@ -128,8 +129,8 @@ public class TransactionServiceImpl implements TransactionService {
             messageAdmin.setSenderID(Common.ADMIN_ID);
             messageAdmin.setReceiverID(Common.ADMIN_ID);
             messageAdmin.setMessage("Seller is unknown<br/>"
-            + "SellerID: " + sellerID + "<br/>"
-            + "ItemID: " + transaction.getItemID());
+                    + "SellerID: " + sellerID + "<br/>"
+                    + "ItemID: " + transaction.getItemID());
             messageAdmin.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageAdmin.setSeen(false);
             messageAdmin.setSenderName(Common.ADMIN_NAME);
@@ -139,9 +140,11 @@ public class TransactionServiceImpl implements TransactionService {
             Message messageSeller = new Message();
             messageSeller.setSenderID(Common.ADMIN_ID);
             messageSeller.setReceiverID(sellerID);
-            messageSeller.setMessage("The transaction is completed!<br/>"
-                + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
-                + "Click to enter the feedback for your buyer" + "</a>");
+            messageSeller.setMessage("Transaction is completed!<br/>"
+                    + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">"
+                    + item.getTitle() + "</a><br/><br/>"
+                    + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">"
+                    + "Click to enter the feedback for your buyer" + "</a>");
             messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageSeller.setSeen(false);
             messageSeller.setSenderName(Common.ADMIN_NAME);
@@ -153,16 +156,16 @@ public class TransactionServiceImpl implements TransactionService {
     private boolean sendSellerEmail(Member member, Transaction transaction) {
         long itemID = transaction.getItemID();
         Item item = this.itemDAO.findByItemID(itemID);
-        if(item.getSellingType() == BUY){
+        if (item.getSellingType() == BUY) {
             return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
-                "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
-                + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
+                    "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
+                    + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
         }
-        if(item.getSellingType() == BID){
+        if (item.getSellingType() == BID) {
             return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
-                "The transaction ID "
-                + transaction.getTransactionID()
-                + " is completed.");
+                    "The transaction ID "
+                    + transaction.getTransactionID()
+                    + " is completed.");
         }
         return false;
     }

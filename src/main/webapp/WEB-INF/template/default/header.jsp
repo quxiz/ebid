@@ -55,7 +55,7 @@
                         </ul>
                         <form:hidden id="category-hidden" path="category" />
                     </div>
-                    <button type="submit" class="btn btn-default">ค้นหา</a>
+                    <button type="submit" class="btn btn-default">ค้นหา</button>
                 </div>
 
             </form:form>
@@ -69,9 +69,9 @@
             <sec:authorize access="isAuthenticated()">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">ยินดีต้อนรับ <sec:authentication property="principal.username" /><span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">ยินดีต้อนรับ <sec:authentication property="principal.username" /> <span class="badge">${unreadMessageCount}</span> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="${pageContext.request.contextPath}/viewMessage">กล่องข้อความ</a></li>
+                            <li><a href="${pageContext.request.contextPath}/viewMessage">กล่องข้อความ <span class="badge">${unreadMessageCount}</span></a></li>
                             <li><a href="${pageContext.request.contextPath}/viewTransaction">ประวัติการซื้อขาย</a></li>
 <!--                            <li><a href="${pageContext.request.contextPath}/viewSellTransaction">ประวัติการขาย</a></li>-->
                             <li><a href="${pageContext.request.contextPath}/editPersonalInfo">แก้ไขข้อมูลส่วนตัว</a></li>

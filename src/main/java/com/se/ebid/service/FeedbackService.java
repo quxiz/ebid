@@ -6,6 +6,8 @@
 package com.se.ebid.service;
 
 import com.se.ebid.controller.FeedbackForm;
+import com.se.ebid.entity.Feedback;
+import java.util.List;
 
 /**
  *
@@ -13,4 +15,6 @@ import com.se.ebid.controller.FeedbackForm;
  */
 public interface FeedbackService {
     public boolean giveFeedback(FeedbackForm feedbackForm);
+    public Feedback getFeedback(long transactionID);
+    public List<Feedback> getSellerFeedback(long sellerID);
 }

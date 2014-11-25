@@ -8,6 +8,7 @@ package com.se.ebid.controller;
 import com.se.ebid.entity.Item;
 import com.se.ebid.entity.Photo;
 import com.se.ebid.service.ItemService;
+import java.io.UnsupportedEncodingException;
 import static java.rmi.Naming.list;
 import java.util.ArrayList;
 import static java.util.Collections.list;
@@ -38,7 +39,8 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public String search(@ModelAttribute("searchForm") SearchForm searchForm, Model model, HttpServletRequest request) {
+    public String search(@ModelAttribute("searchForm") SearchForm searchForm, Model model, HttpServletRequest request) throws UnsupportedEncodingException {
+        searchForm.setKeyword(new String(searchForm.getKeyword().getBytes("iso8859-1"), "UTF-8"));
         String keyword = searchForm.getKeyword();
         if (searchForm.getCategory() != null) {
             String category = searchForm.getCategory().toString();

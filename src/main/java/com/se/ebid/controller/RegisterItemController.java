@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -40,7 +41,7 @@ public class RegisterItemController {
     
     @InitBinder
 public void initBinder(WebDataBinder binder) {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy K:mm a");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy H:mm",Locale.ENGLISH);
     dateFormat.setLenient(false);
 
     // true passed to CustomDateEditor constructor means convert empty String to null

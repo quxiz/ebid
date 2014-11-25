@@ -103,7 +103,15 @@ public class ViewItemController {
     @RequestMapping(value = "/viewItem/{itemID}/onSubmitBidForm", method = RequestMethod.POST)
     public String onSubmitBidForm(@PathVariable("itemID") long itemID, @ModelAttribute("bidForm") BidForm bidForm, Model model) {
         Member member = this.memberService.getMember();
-        if (member.getPaymentAccount() == null) {
+        if (!member.isActivated()) {
+            model.addAttribute("isSuccess", "false");
+            model.addAttribute("text", "Please, activate your account!");
+            return "showView";
+        } else if (member.isBlacklisted()) {
+            model.addAttribute("isSuccess", "false");
+            model.addAttribute("text", "You are blacklisted");
+            return "showView";
+        } else if (member.getPaymentAccount() == null) {
             return "redirect:/editPersonalInfo3";
         }
         this.itemService.bid(bidForm);
@@ -112,10 +120,21 @@ public class ViewItemController {
 
     @RequestMapping(value = {"/viewItem/{itemID}/onSubmitBuyForm"}, method = RequestMethod.POST)
     public String onSubmitBuyForm(@PathVariable("itemID") long itemID, @ModelAttribute("buyForm") BuyForm buyForm, Model model, RedirectAttributes redirectAttributes) {
+        Member member = this.memberService.getMember();
         if (buyForm.getQuantity() <= 0) {
             model.addAttribute("isSuccess", "false");
             model.addAttribute("text", "Invalid quantity");
             return "showView";
+        } else if (!member.isActivated()) {
+            model.addAttribute("isSuccess", "false");
+            model.addAttribute("text", "Please, activate your account!");
+            return "showView";
+        } else if (member.isBlacklisted()) {
+            model.addAttribute("isSuccess", "false");
+            model.addAttribute("text", "You are blacklisted");
+            return "showView";
+        } else if (member.getPaymentAccount() == null) {
+            return "redirect:/editPersonalInfo3";
         }
         redirectAttributes.addFlashAttribute("buyForm", buyForm);
         return "redirect:/buyItem/" + itemID;

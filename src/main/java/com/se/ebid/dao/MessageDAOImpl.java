@@ -49,9 +49,22 @@ public class MessageDAOImpl implements MessageDAO {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Message> messageList = sessionFactory.getCurrentSession()
-                .createQuery("from Message where receiverID=:receiverID")
+                .createQuery("from Message where receiverID=:receiverID order by timestamp desc")
                 .setParameter("receiverID", receiverID)
                 .list();
+        session.getTransaction().commit();
+        return messageList;
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public long getUnreadCount(long memberID) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.getTransaction().begin();
+        long messageList = (long)sessionFactory.getCurrentSession()
+                .createQuery("select count(*) from Message where receiverID=:receiverID and seen=false")
+                .setParameter("receiverID", memberID)
+                .uniqueResult();
         session.getTransaction().commit();
         return messageList;
     }

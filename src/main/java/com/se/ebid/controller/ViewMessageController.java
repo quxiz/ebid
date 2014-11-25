@@ -22,20 +22,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class ViewMessageController {
-    
+
     private MessageService messageService;
-    
+
     @Autowired
-    public void setMessageService(MessageService messageService){
-     this.messageService = messageService;
+    public void setMessageService(MessageService messageService) {
+        this.messageService = messageService;
     }
-    
+
     @RequestMapping("/viewMessage")
-     public String viewMessage(Model model) {
+    public String viewMessage(Model model) {
         model.addAttribute("title", "ข้อความ");
         List<Message> listMessages = this.messageService.getMessage();
-        model.addAttribute("listMessages",listMessages);
-        model.addAttribute("listSize",listMessages.size());
+        List<Message> cloneListMesssages = new ArrayList<Message>(listMessages);
+        this.messageService.markAsRead(cloneListMesssages);
+        model.addAttribute("listMessages", listMessages);
+        model.addAttribute("listSize", listMessages.size());
         return "viewMessageView";
-    }  
+    }
 }

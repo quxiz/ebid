@@ -122,12 +122,12 @@ public class ItemServiceImpl implements ItemService {
     public Item getItem(long itemID) {
         return this.itemDAO.findByItemID(itemID);
     }
-    
+
     @Override
     @Transactional
     public Item getItemByTransactionID(long transactionID) {
         Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
-        if(transaction != null) {
+        if (transaction != null) {
             return this.itemDAO.findByItemID(transaction.getItemID());
         }
         return null;
@@ -152,10 +152,10 @@ public class ItemServiceImpl implements ItemService {
         if (member == null) {
             return ItemService.ERR_MISSING_MEMBER;
         }
-        if (member.isBlacklisted()){
+        if (member.isBlacklisted()) {
             return ItemService.ERR_BLACKLIST;
         }
-        if (member.getPaymentAccount() == null){
+        if (member.getPaymentAccount() == null) {
             return ItemService.ERR_NO_PAY_ACC;
         }
         System.out.println("step1.1");
@@ -176,7 +176,7 @@ public class ItemServiceImpl implements ItemService {
         double oldMaxBid = autoBid.getMaxBid();
         double newBidIncrement = bidForm.getBidIncrement();
         double oldBidIncrement = autoBid.getBidIncrement();
-System.out.println("step3");
+        System.out.println("step3");
         if (newMaxBid > oldMaxBid) {
             double price = oldMaxBid + newBidIncrement;
             if (price > newMaxBid) {
@@ -192,7 +192,7 @@ System.out.println("step3");
             autoBid.setTimestamp(new Timestamp(System.currentTimeMillis()));
             this.autoBidDAO.save(autoBid);
             System.out.println("step4");
-            if(outBidderID>=0){
+            if (outBidderID >= 0) {
                 Member outBidder = this.memberDAO.findByMemberID(outBidderID);
                 if (outBidder != null) {
                     sendOutbidEmail(outBidder, item);
@@ -203,7 +203,7 @@ System.out.println("step3");
                             + "Current price: " + item.getPrice() + "<br/>"
                             + "<br/>"
                             + "Beat it now!!!<br/>"
-                            + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">" 
+                            + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">"
                             + "Click to view" + "</a>");
                     message.setTimestamp(new Timestamp(System.currentTimeMillis()));
                     message.setSeen(false);
@@ -247,7 +247,7 @@ System.out.println("step3");
             invoice.setItemID(ItemService.ERR_BLACKLIST);
             return invoice;
         }
-        if (member.getPaymentAccount() == null){
+        if (member.getPaymentAccount() == null) {
             invoice.setItemID(ItemService.ERR_NO_PAY_ACC);
             return invoice;
         }
@@ -277,6 +277,8 @@ System.out.println("step3");
         Item item = this.itemDAO.findByItemID(itemID);
         long sellerID = item.getSellerID();
         long buyerID = Common.getMemberID();
+        String sellerName = item.getSellerName();
+        String buyerName = Common.getUserID();
         if (buyForm.getQuantity() > item.getQuantity()) {
             return -1;
         }
@@ -294,6 +296,8 @@ System.out.println("step3");
         feedback.setTransactionID(transaction.getTransactionID());
         feedback.setSellerID(sellerID);
         feedback.setBuyerID(buyerID);
+        feedback.setSellerName(sellerName);
+        feedback.setBuyerName(buyerName);
         feedback.setItemID(itemID);
         this.feedbackDAO.save(feedback);
 
@@ -317,7 +321,7 @@ System.out.println("step3");
         item.setQuantity(registerItemForm.getQuantity());
         item.setStartTime(registerItemForm.getStartTime());
         item.setSellerName(this.memberDAO.findByMemberID(memberID).getUserID());
-   //     item.setEndTime(registerItemForm.getEndTime());
+        //     item.setEndTime(registerItemForm.getEndTime());
         item.setSellerID(Common.getMemberID());
         // item.setPaymentMethod(registerItemForm.getPaymentMethod());
         item.setShippingService(registerItemForm.getShippingService());
@@ -327,7 +331,7 @@ System.out.println("step3");
         item.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
         MultipartFile[] photoList = registerItemForm.getPhotos();
-        if(registerItemForm.getEndTime()!=null){
+        if (registerItemForm.getEndTime() != null) {
             System.out.println(registerItemForm.getEndTime());
             System.out.println(registerItemForm.getEndTime().getTime());
             System.out.println(System.currentTimeMillis());
@@ -337,16 +341,16 @@ System.out.println("step3");
         this.itemDAO.save(item);
         long itemID = item.getItemID();
         for (MultipartFile aPhoto : photoList) {
-            if(!aPhoto.getContentType().substring(0,5).equals("image")){
-                System.out.println(aPhoto.getContentType().substring(0,5));
+            if (!aPhoto.getContentType().substring(0, 5).equals("image")) {
+                System.out.println(aPhoto.getContentType().substring(0, 5));
                 continue;
             }
-            
+
             Photo photo = new Photo();
             photo.setItemID(itemID);
             photo.setPhotoURL(null);
             long photoID = this.photoDAO.save(photo);
-            String photoURL = servletContext.getRealPath("resources/uploadedImg/") +"/"+ + photoID+ "."+aPhoto.getContentType().substring(6);
+            String photoURL = servletContext.getRealPath("resources/uploadedImg/") + "/" + +photoID + "." + aPhoto.getContentType().substring(6);
             try {
                 aPhoto.transferTo(new File(photoURL));
             } catch (IOException ex) {
@@ -354,16 +358,16 @@ System.out.println("step3");
             } catch (IllegalStateException ex) {
                 Logger.getLogger(ItemServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-            photoURL =  "/ebid/resources/uploadedImg/"+ + photoID+ "."+aPhoto.getContentType().substring(6);
+            photoURL = "/ebid/resources/uploadedImg/" + +photoID + "." + aPhoto.getContentType().substring(6);
             photo.setPhotoURL(photoURL);
             this.photoDAO.save(photo);
         }
-        if(registerItemForm.getSellingType() == null){
+        if (registerItemForm.getSellingType() == null) {
             System.out.println("null selling type");
         }
         if (registerItemForm.getSellingType() == SellingType.BID) {
             System.out.println("is bid");
-            
+
             AutoBid autoBid = new AutoBid();
             autoBid.setItemID(itemID);
             autoBid.setBidderID(-1);
@@ -399,17 +403,17 @@ System.out.println("step3");
                 e.printStackTrace();
             }
         }
-        
+
         System.out.println("item save complete");
         return item.getItemID();
     }
-    
-    public long getMaxBidderID(long itemID){
-       AutoBid autoBid = this.autoBidDAO.findByItemID(itemID);
-       if (autoBid == null) {
+
+    public long getMaxBidderID(long itemID) {
+        AutoBid autoBid = this.autoBidDAO.findByItemID(itemID);
+        if (autoBid == null) {
             return ERR_NO_AUTOBID;
         }
-       return autoBid.getBidderID();
+        return autoBid.getBidderID();
     }
 
     public boolean reportBidResult(long itemID) {
@@ -429,11 +433,15 @@ System.out.println("step3");
         } // no one bid
         long sellerID = item.getSellerID();
         long buyerID = autoBid.getBidderID();
+        String sellerName = item.getSellerName();
+        String buyerName = this.memberDAO.findByMemberID(buyerID).getUserID();
 
         Transaction transaction = new Transaction();
         transaction.setSellerID(sellerID);
         transaction.setBuyerID(buyerID);
         transaction.setItemID(itemID);
+        transaction.setSellerName(sellerName);
+        transaction.setBuyerName(buyerName);
         transaction.setQuantity(item.getQuantity());
         transaction.setPrice(item.getPrice());
         transaction.setDetail(item.getDetail());
@@ -445,6 +453,8 @@ System.out.println("step3");
         feedback.setTransactionID(transaction.getTransactionID());
         feedback.setSellerID(sellerID);
         feedback.setBuyerID(buyerID);
+        feedback.setSellerName(sellerName);
+        feedback.setBuyerName(buyerName);
         feedback.setItemID(itemID);
         this.feedbackDAO.save(feedback);
 
@@ -460,7 +470,9 @@ System.out.println("step3");
         messageBuyer.setSenderID(Common.ADMIN_ID);
         messageBuyer.setReceiverID(buyerID);
         messageBuyer.setMessage("Congratulations, you won the auction!<br/>"
-                + "<a href=\"" + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID() + "\">" 
+                + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID()+ "\">"
+                + item.getTitle() + "</a><br/><br/>"
+                + "<a href=\"" + Common.BASE_URL + Common.CHECK_OUT_URL + transaction.getTransactionID() + "\">"
                 + "Click to check out" + "</a>");
         messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
         messageBuyer.setSeen(false);
@@ -479,7 +491,9 @@ System.out.println("step3");
         messageSeller.setSenderID(Common.ADMIN_ID);
         messageSeller.setReceiverID(sellerID);
         messageSeller.setMessage("There is a winner for your auction item!<br/>"
-                + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">" 
+                + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID()+ "\">"
+                + item.getTitle() + "</a><br/><br/>"
+                + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">"
                 + "Click to enter the feedback for your seller" + "</a>");
         messageSeller.setTimestamp(new Timestamp(System.currentTimeMillis()));
         messageSeller.setSeen(false);

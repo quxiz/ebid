@@ -18,38 +18,57 @@
                         <h3 class="panel-title">กล่องข้อความ</h3>
                     </div>
                     <div class="panel-body">
-                <table class="table table-bordered table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th class="col-md-6">ข้อความ</th>
-                            <th class="col-md-2">ผู้ส่ง</th>
-                            <th class="col-md-2">เวลาที่ได้รับ</th> <!--timestamp to string-->
-                        </tr>
-                    </thead>
-                    
-                    <c:forEach begin = "1" end = "${listSize}" varStatus = "loop">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <text id="title0">
-                                ${listMessages[loop.count-1].message}<!--getMessageID()-->
-                                </text>
-                            </td>
-                            <td>
-                                <h5>${listMessages[loop.count-1].senderName}</h5><!--getSenderName()-->
-                            </td>
-                            <td>
-                                <h5>${listMessages[loop.count-1].timestamp}</h5><!--timeStamp.toString-->
-                            </td>
-                        </tr>
-                    </tbody><!--สร้าง 1 body ต่อ 1 message-->
-                    </c:forEach>
-                </table>
-                        
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-6">ข้อความ</th>
+                                    <th class="col-md-2">ผู้ส่ง</th>
+                                    <th class="col-md-2">เวลาที่ได้รับ</th> <!--timestamp to string-->
+                                </tr>
+                            </thead>
+
+                            <c:forEach begin = "1" end = "${listSize}" varStatus = "loop">
+                                <c:if test="${listMessages[loop.count-1].seen}">
+                                    <tbody class="success">
+                                        <tr>
+                                            <td>
+                                                <text id="title0">
+                                                ${listMessages[loop.count-1].message}<!--getMessageID()-->
+                                                </text>
+                                            </td>
+                                            <td>
+                                                <h5>${listMessages[loop.count-1].senderName}</h5><!--getSenderName()-->
+                                            </td>
+                                            <td>
+                                                <h5>${listMessages[loop.count-1].timestamp}</h5><!--timeStamp.toString-->
+                                            </td>
+                                        </tr>
+                                    </tbody><!--สร้าง 1 body ต่อ 1 message-->
+                                </c:if>
+                                <c:if test="${not listMessages[loop.count-1].seen}">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <text id="title0">
+                                                ${listMessages[loop.count-1].message}<!--getMessageID()-->
+                                                </text>
+                                            </td>
+                                            <td>
+                                                <h5>${listMessages[loop.count-1].senderName}</h5><!--getSenderName()-->
+                                            </td>
+                                            <td>
+                                                <h5>${listMessages[loop.count-1].timestamp}</h5><!--timeStamp.toString-->
+                                            </td>
+                                        </tr>
+                                    </tbody><!--สร้าง 1 body ต่อ 1 message-->
+                                </c:if>
+                            </c:forEach>
+                        </table>
+
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </tiles:putAttribute>
 </tiles:insertDefinition>

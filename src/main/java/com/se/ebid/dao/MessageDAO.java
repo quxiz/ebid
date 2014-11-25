@@ -20,5 +20,7 @@ public interface MessageDAO {
     public List<Message> list();
     
     public List<Message> findByReceiverID(long receiverID);
+    
+    public long getUnreadCount(long memberID);
      
 }

@@ -14,4 +14,6 @@ import java.util.List;
  */
 public interface MessageService {
     public List<Message> getMessage();
+    public boolean markAsRead(List<Message> messages);
+    public long getUnreadCount(long memberID);
 }

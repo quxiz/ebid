@@ -56,18 +56,18 @@ public class RegisterController {
             return "redirect:/register";
         }else {
             
-            if(!registrationForm.getPassword().equals(registrationForm.getConfirmPassword())) model.addAttribute("text","Password mismatch"); 
+            if(!registrationForm.getPassword().equals(registrationForm.getConfirmPassword())) model.addAttribute("text","รหัสผ่านไม่ตรงกับยืนยันรหัสผ่าน"); 
             registrationForm.setAddress(new String(registrationForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
             registrationForm.setFirstName(new String(registrationForm.getFirstName().getBytes("iso8859-1"), "UTF-8"));
             registrationForm.setLastName(new String(registrationForm.getLastName().getBytes("iso8859-1"), "UTF-8"));
             registrationForm.setUserID(new String(registrationForm.getUserID().getBytes("iso8859-1"), "UTF-8"));
             int ret = this.memberService.register(registrationForm);
             switch(ret){
-                case MemberService.ERR_DUP_EMAIL : {model.addAttribute("isSuccess",false); model.addAttribute("text","Email has already used");}
-                case MemberService.ERR_DUP_USER : {model.addAttribute("isSuccess",false); model.addAttribute("text","User ID has already used");}
+                case MemberService.ERR_DUP_EMAIL : {model.addAttribute("isSuccess",false); model.addAttribute("text","อีเมลนี้ถูกใช้ไปแล้ว");}
+                case MemberService.ERR_DUP_USER : {model.addAttribute("isSuccess",false); model.addAttribute("text","ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว");}
             }
-            if(ret >= 0) {model.addAttribute("isSuccess",true); model.addAttribute("text","Please check your email and activate your ID");  }
-            else {model.addAttribute("isSuccess",false); model.addAttribute("text","Error found");}
+            if(ret >= 0) {model.addAttribute("isSuccess",true); model.addAttribute("text","กรุณาตรวจสอบอีเมลและ activate บัญชี");  }
+            model.addAttribute("title","ผิดพลาด");
             return "showView";
         }
     }

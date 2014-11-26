@@ -112,18 +112,18 @@ public class ViewItemController {
         Member member = this.memberService.getMember();
         if (!member.isActivated()) {
             model.addAttribute("isSuccess", "false");
-            model.addAttribute("text", "Please, check your email and activate your account!");
+            model.addAttribute("text", "กรุณาตรวจสอบอีเมลและ activate บัญชี!");
             return "showView";
         } else if (member.isBlacklisted()) {
             model.addAttribute("isSuccess", "false");
-            model.addAttribute("text", "You are blacklisted");
+            model.addAttribute("text", "คุณติดบัญชีดำ");
             return "showView";
         } else if (member.getPaymentAccount() == null) {
             return "redirect:/editPersonalInfo3";
         }
         if(this.itemService.bid(bidForm)!=1){
             model.addAttribute("isSuccess",false);
-            model.addAttribute("text","There is a problem, you can't bid. <br> <a href =\"${pageContext.request.contextPath}/viewItem/\""+itemID+" type = \"button\" class=\"btn btn-primary\">กลับหน้าดูข้อมูลสินค้า</a> ");
+            model.addAttribute("text","เกิดข้อพลาด ไม่สามารถประมูลได้ <br> <a href =\"${pageContext.request.contextPath}/viewItem/\""+itemID+" type = \"button\" class=\"btn btn-primary\">กลับหน้าดูข้อมูลสินค้า</a> ");
         return "showView";
         }
         else {
@@ -134,17 +134,17 @@ public class ViewItemController {
     @RequestMapping(value = {"/viewItem/{itemID}/onSubmitBuyForm"}, method = RequestMethod.POST)
     public String onSubmitBuyForm(@PathVariable("itemID") long itemID, @ModelAttribute("buyForm") BuyForm buyForm, Model model, RedirectAttributes redirectAttributes) {
         Member member = this.memberService.getMember();
-        if (buyForm.getQuantity() <= 0) {
+        if (buyForm.getQuantity() <= 0 && buyForm.getQuantity()>this.itemService.getItem(buyForm.getItemID()).getQuantity()) {
             model.addAttribute("isSuccess", "false");
-            model.addAttribute("text", "Invalid quantity");
+            model.addAttribute("text", "จำนวนสินค้าไม่ถูกต้อง");
             return "showView";
         } else if (!member.isActivated()) {
             model.addAttribute("isSuccess", "false");
-            model.addAttribute("text", "Please, activate your account!");
+            model.addAttribute("text", "กรุณา activate บัญชี");
             return "showView";
         } else if (member.isBlacklisted()) {
             model.addAttribute("isSuccess", "false");
-            model.addAttribute("text", "You are blacklisted");
+            model.addAttribute("text", "คุณติดบัญชีดำ");
             return "showView";
         } else if (member.getPaymentAccount() == null) {
             return "redirect:/editPersonalInfo3";
@@ -159,17 +159,17 @@ public class ViewItemController {
         Invoice invoice = this.itemService.buy(buyForm);
         if (invoice.getItemID() == ItemService.ERR_BLACKLIST) {
             model.addAttribute("isSuccess", "false");
-            model.addAttribute("text", "Your userID is in the blacklist");
+            model.addAttribute("text", "คุณติดบัญชีดำ");
             return "showView";
         }
         if (invoice.getItemID() == ItemService.ERR_NOT_ENOUGH_QTY) {
             model.addAttribute("isSuccess", "false");
-            model.addAttribute("text", "Quantity exceed");
+            model.addAttribute("text", "จำนวนสินค้าเกิน");
             return "showView";
         }
         if (invoice.getItemID() < 0) {
             model.addAttribute("isSuccess", "false");
-            model.addAttribute("text", "Error found");
+            model.addAttribute("text", "เกิดข้อผิดพลาด");
             return "showView";
         }
         model.addAttribute("buyForm", buyForm);

@@ -39,16 +39,19 @@
     <tiles:putAttribute name="body">
         <div class="container">
             <c:if test ="${isSuccess}">
-                <h3>Success!</h3>
+                <h3>สำเร็จ!</h3>
             </c:if>
             <c:if test ="${!isSuccess}">
-                <h3>Error found</h3>
+                <h3>ไม่สำเร็จ!</h3>
             </c:if>
                 <hr>               
                 <div>
                 ${text}
+                
+                </div>
+                <br>
+                <br>
                 <a href ="${pageContext.request.contextPath}" type = "button" class="btn btn-primary">กลับหน้าหลัก</a>
-                </div>                       
         </div>
     </tiles:putAttribute>
 </tiles:insertDefinition>

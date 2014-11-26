@@ -47,8 +47,8 @@ public class ComplaintController {
          boolean isSuccess = this.complaintService.complaint(complaintForm);
          model.addAttribute("isSuccess", isSuccess);
          if(isSuccess){
-        model.addAttribute("text", "You've sent your complaint to administrators. ");
-        } else { model.addAttribute("text", "Fail to send your complaint. <br> <a href =\"${pageContext.request.contextPath}/complaint\" type = \"button\" class=\"btn btn-primary\">กลับหน้าร้องเรียน</a> ");
+        model.addAttribute("text", "ส่งข้อร้องเรียนไปยังผู้ดูแลระบบเรียบร้อย ");
+        } else { model.addAttribute("text", "ล้มเหลวในการส่งข้อเร้องเรียน <br> <a href =\"${pageContext.request.contextPath}/complaint\" type = \"button\" class=\"btn btn-primary\">กลับหน้าร้องเรียน</a> ");
         }return "showView";
      }
 }

@@ -88,10 +88,10 @@ public class EditPersonalInfoController {
             boolean isSuccess = this.memberService.editPersonalInfo(personalInfoForm);
             model.addAttribute("isSuccess", isSuccess);
             if (isSuccess) {
-                model.addAttribute("text", "Your personal information has been changed.");
+                model.addAttribute("text", "แก้ไขข้อมูลส่วนตัวเรียบร้อย");
                 return "showView";
             } else {
-                model.addAttribute("text", "There is a problem when you tried to edit your personal information. <br> <a href =\"${pageContext.request.contextPath}/editPersonalInfo\" type = \"button\" class=\"btn btn-primary\">กลับหน้าแก้ไขข้อมูลส่วนตัว</a> ");
+                model.addAttribute("text", "แก้ไขข้อมูลส่วนตัวล้มเหลว <br> <a href =\"${pageContext.request.contextPath}/editPersonalInfo\" type = \"button\" class=\"btn btn-primary\">กลับหน้าแก้ไขข้อมูลส่วนตัว</a> ");
                 return "showView";
             }
         }
@@ -107,13 +107,13 @@ public class EditPersonalInfoController {
             boolean isSuccess = this.memberService.editPassword(editPasswordForm);
             model.addAttribute("isSuccess", isSuccess);
             if (isSuccess) {
-                model.addAttribute("text", "Your password has been changed.");
+                model.addAttribute("text", "เปลี่ยนรหัสผ่านเรียบร้อย");
 
             } else {
                 if (!editPasswordForm.getNewPassword().equals(editPasswordForm.getConfirmNewPassword())) {
-                    model.addAttribute("text", "New password and confirm newpassword mismatched.");
+                    model.addAttribute("text", "รหัสผ่านใหม่ไม่ตรงกับยืนยันรหัสผ่าน");
                 } else {
-                    model.addAttribute("text", "There is a problem when you tried to edit your password.");
+                    model.addAttribute("text", "เกิดปัญหาในการเปลี่ยนรหัสผ่าน");
                 }
             }
             return "showView";
@@ -132,9 +132,9 @@ public class EditPersonalInfoController {
             boolean isSuccess = this.memberService.editPaymentInfo(paymentInfoForm);
             model.addAttribute("isSuccess", isSuccess);
             if (isSuccess) {
-                model.addAttribute("text", "Your Paypal account information has been changed.");
+                model.addAttribute("text", "เปลี่ยนบัญชี Paypal เรียบร้อย");
             } else {
-                model.addAttribute("text", "There is a problem when you tried to edit your Paypal account information.");
+                model.addAttribute("text", "เกิดปัญหาในการเปลี่ยนบัญชี Paypal");
             }
             return "showView";
         }
@@ -151,9 +151,9 @@ public class EditPersonalInfoController {
             boolean isSuccess = this.memberService.editReceivingInfo(receivingInfoForm);
             model.addAttribute("isSuccess", isSuccess);
             if (isSuccess) {
-                model.addAttribute("text", "Your receiving account information has been changed.");
+                model.addAttribute("text", "เปลี่ยนบัญชีรับเงินเรียบร้อย");
             } else {
-                model.addAttribute("text", "There is a problem when you tried to edit your receiving account information.");
+                model.addAttribute("text", "เกิดปัญหาในการเปลี่ยนบัญชีรับเงิน");
             }
             return "showView";
         }

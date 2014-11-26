@@ -12,6 +12,7 @@ import com.se.ebid.service.CommentService;
 import com.se.ebid.service.CustomUser;
 import com.se.ebid.service.ItemService;
 import com.se.ebid.service.MemberService;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,10 +95,16 @@ public class ViewItemController {
     }
 
     @RequestMapping(value = "/viewItem/{itemID}/onSubmitQuestionForm", method = RequestMethod.POST)
-    public String onSubmitQuestionForm(@PathVariable("itemID") long itemID, @ModelAttribute("questionForm") QuestionForm questionForm) {
+    public String onSubmitQuestionForm(@PathVariable("itemID") long itemID, @ModelAttribute("questionForm") QuestionForm questionForm,Model model) throws UnsupportedEncodingException {
         questionForm.setSellerID(this.itemService.getItem(itemID).getSellerID());
-        this.commentService.askQuestion(questionForm);
-        return "redirect:/viewItem/" + itemID; //url item
+        questionForm.setQuestion(new String(questionForm.getQuestion().getBytes("iso8859-1"), "UTF-8"));        
+        if (this.commentService.askQuestion(questionForm)) {
+            return "redirect:/viewItem/" + itemID;
+        } else {
+            model.addAttribute("isSuccess", false);
+            model.addAttribute("text", "There is a problem when sending your question. <br> <a href =\"${pageContext.request.contextPath}/viewItem/\""+itemID+" type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a>" );
+            return "showView";
+        }
     }
 
     @RequestMapping(value = "/viewItem/{itemID}/onSubmitBidForm", method = RequestMethod.POST)
@@ -105,7 +112,7 @@ public class ViewItemController {
         Member member = this.memberService.getMember();
         if (!member.isActivated()) {
             model.addAttribute("isSuccess", "false");
-            model.addAttribute("text", "Please, activate your account!");
+            model.addAttribute("text", "Please, check your email and activate your account!");
             return "showView";
         } else if (member.isBlacklisted()) {
             model.addAttribute("isSuccess", "false");
@@ -114,8 +121,14 @@ public class ViewItemController {
         } else if (member.getPaymentAccount() == null) {
             return "redirect:/editPersonalInfo3";
         }
-        this.itemService.bid(bidForm);
-        return "redirect:/viewItem/" + itemID;
+        if(this.itemService.bid(bidForm)!=1){
+            model.addAttribute("isSuccess",false);
+            model.addAttribute("text","There is a problem, you can't bid. <br> <a href =\"${pageContext.request.contextPath}/viewItem/\""+itemID+" type = \"button\" class=\"btn btn-primary\">กลับหน้าดูข้อมูลสินค้า</a> ");
+        return "showView";
+        }
+        else {
+            return "redirect:/viewItem/" + itemID;
+        }
     }
 
     @RequestMapping(value = {"/viewItem/{itemID}/onSubmitBuyForm"}, method = RequestMethod.POST)

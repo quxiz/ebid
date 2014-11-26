@@ -6,6 +6,7 @@
 package com.se.ebid.controller;
 
 import com.se.ebid.service.MemberService;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,7 +49,7 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/register/submit", method = RequestMethod.POST)
-    public String onSubmitRegistration(@Valid @ModelAttribute("registrationForm") RegistrationForm registrationForm, BindingResult result, Model model,RedirectAttributes redirectAttributes) {
+    public String onSubmitRegistration(@Valid @ModelAttribute("registrationForm") RegistrationForm registrationForm, BindingResult result, Model model,RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
         
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registrationForm", result);
@@ -57,6 +58,10 @@ public class RegisterController {
         }else {
             
             if(!registrationForm.getPassword().equals(registrationForm.getConfirmPassword())) model.addAttribute("text","Password mismatch"); 
+            registrationForm.setAddress(new String(registrationForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
+            registrationForm.setFirstName(new String(registrationForm.getFirstName().getBytes("iso8859-1"), "UTF-8"));
+            registrationForm.setLastName(new String(registrationForm.getLastName().getBytes("iso8859-1"), "UTF-8"));
+            registrationForm.setUserID(new String(registrationForm.getUserID().getBytes("iso8859-1"), "UTF-8"));
             int ret = this.memberService.register(registrationForm);
             switch(ret){
                 case MemberService.ERR_DUP_EMAIL : {model.addAttribute("isSuccess",false); model.addAttribute("text","Email has already used");}

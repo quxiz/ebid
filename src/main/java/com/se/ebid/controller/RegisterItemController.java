@@ -6,6 +6,7 @@
 package com.se.ebid.controller;
 
 import com.se.ebid.service.ItemService;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +67,7 @@ public void initBinder(WebDataBinder binder) {
     
     @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
 
-    public String onSubmit(@Valid @ModelAttribute("form") RegisterItemForm form, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String onSubmit(@Valid @ModelAttribute("form") RegisterItemForm form, BindingResult result, Model model, RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
         if(form.getEndTime()!=null){
             System.out.println(form.getEndTime());
         }
@@ -77,10 +78,17 @@ public void initBinder(WebDataBinder binder) {
             redirectAttributes.addFlashAttribute("form", form);
             return "redirect:/registerItem";
         } else {
+ 
+            form.setDetail(new String(form.getDetail().getBytes("iso8859-1"), "UTF-8"));
+            form.setPackageDetail(new String(form.getPackageDetail().getBytes("iso8859-1"), "UTF-8"));
+            form.setReturnPolicy(new String(form.getReturnPolicy().getBytes("iso8859-1"), "UTF-8"));
+            form.setShippingService(new String(form.getShippingService().getBytes("iso8859-1"), "UTF-8"));
+            form.setSpecifics(new String(form.getSpecifics().getBytes("iso8859-1"), "UTF-8"));
+            form.setTitle(new String(form.getTitle().getBytes("iso8859-1"), "UTF-8"));
             long itemID = this.itemService.registerItem(form);
             if (itemID < 0) {
                 model.addAttribute("isSuccess", false);
-                model.addAttribute("text", "Sorry, The item was unsuccessfully registered");
+                model.addAttribute("text", "Sorry, The item was unsuccessfully registered. <br> <a href =\"${pageContext.request.contextPath}/registerItem\" type = \"button\" class=\"btn btn-primary\">กลับหน้าลงทะเบียนสินค้า</a>");
                 return "showView";
             }
             return "redirect:/viewItem/" + itemID;//รอแก้หน้าแสดง

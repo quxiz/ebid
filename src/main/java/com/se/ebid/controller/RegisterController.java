@@ -6,6 +6,7 @@
 package com.se.ebid.controller;
 
 import com.se.ebid.service.MemberService;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,8 +49,10 @@ public class RegisterController {
     }
 
     @RequestMapping(value = "/register/submit", method = RequestMethod.POST)
-    public String onSubmitRegistration(@Valid @ModelAttribute("registrationForm") RegistrationForm registrationForm, BindingResult result, Model model,RedirectAttributes redirectAttributes) {
-        
+    public String onSubmitRegistration(@Valid @ModelAttribute("registrationForm") RegistrationForm registrationForm, BindingResult result, Model model,RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
+        registrationForm.setAddress(new String(registrationForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
+        registrationForm.setFirstName(new String(registrationForm.getFirstName().getBytes("iso8859-1"), "UTF-8"));
+        registrationForm.setLastName(new String(registrationForm.getLastName().getBytes("iso8859-1"), "UTF-8"));
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registrationForm", result);
             redirectAttributes.addFlashAttribute("registrationForm", registrationForm);

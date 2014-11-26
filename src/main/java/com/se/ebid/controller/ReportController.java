@@ -39,7 +39,7 @@ public class ReportController {
     }  
      
      @RequestMapping(value = "/report/printReport", method = RequestMethod.POST)
-     public String printReport(@ModelAttribute ReportForm reportForm,
+     public String printReport(@ModelAttribute ("reportForm") ReportForm reportForm,
             Model model, RedirectAttributes redirectAttributes){
          Report report = this.reportService.printReport(reportForm.getReportType().toString(),reportForm.getMonth(),reportForm.getYear());
          redirectAttributes.addFlashAttribute("report", report);

@@ -7,6 +7,7 @@ package com.se.ebid.controller;
 
 import com.se.ebid.entity.Complaint;
 import com.se.ebid.service.ComplaintService;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,28 +25,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class SolveComplaintController {
-    
+
     private ComplaintService complaintService;
-    
+
     @Autowired
-    public void setComplaintService(ComplaintService complaintService){
-        this.complaintService=complaintService;
+    public void setComplaintService(ComplaintService complaintService) {
+        this.complaintService = complaintService;
     }
-    
+
     @RequestMapping("/solveComplaint")
-     public String viewSolveComplaint(Model model) {
+    public String viewSolveComplaint(Model model) {
         model.addAttribute("title", "ตอบข้อร้องเรียน");
         List<Complaint> listComplaints = this.complaintService.getComplaint();
         model.addAttribute("listComplaints", listComplaints);
         SolveComplaintForm solveComplaintForm = new SolveComplaintForm();
-        model.addAttribute("solveComplaintForm",solveComplaintForm);
+        model.addAttribute("solveComplaintForm", solveComplaintForm);
         return "solveComplaintView";
-    }  
-     
-     @RequestMapping(value = "/solveComplaint/onSubmit", method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute ("solveComplaintForm") SolveComplaintForm solveComplaintForm){
-        boolean success = this.complaintService.solveComplaint(solveComplaintForm);
-        if(success)return "redirect:/solveComplaint";
-        else return "redirect:/solveComplaint";//notfound     
-     }
+    }
+
+    @RequestMapping(value = "/solveComplaint/onSubmit", method = RequestMethod.POST)
+    public String onSubmit(@ModelAttribute("solveComplaintForm") SolveComplaintForm solveComplaintForm, Model model) throws UnsupportedEncodingException {
+        solveComplaintForm.setDetail(new String(solveComplaintForm.getDetail().getBytes("iso8859-1"), "UTF-8"));
+        boolean isSuccess = this.complaintService.solveComplaint(solveComplaintForm);
+        model.addAttribute("isSuccess", isSuccess);
+        if (isSuccess) {
+            model.addAttribute("text", "You've sent your explanation for the complaint. <br> <a href =\"${pageContext.request.contextPath}/solveComplaint\" type = \"button\" class=\"btn btn-primary\">กลับหน้าดูข้อร้องเรียน</a>" );
+        } else {
+            model.addAttribute("text", "The system can't sent your explanation for the complaint. <br> <a href =\"${pageContext.request.contextPath}/solveComplaint\" type = \"button\" class=\"btn btn-primary\">กลับหน้าดูข้อร้องเรียน</a>" );
+        }
+        return "showView";
+    }
 }

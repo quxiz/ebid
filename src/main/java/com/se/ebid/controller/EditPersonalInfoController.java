@@ -7,6 +7,7 @@ package com.se.ebid.controller;
 
 import com.se.ebid.entity.Member;
 import com.se.ebid.service.MemberService;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -74,19 +75,23 @@ public class EditPersonalInfoController {
     }
 
     @RequestMapping(value = "/editPersonalInfo/onSubmitPersonalInfo", method = RequestMethod.POST)
-    public String onSubmitPersonalInfo(@Valid @ModelAttribute("personalInfoForm") PersonalInfoForm personalInfoForm, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String onSubmitPersonalInfo(@Valid @ModelAttribute("personalInfoForm") PersonalInfoForm personalInfoForm, BindingResult result, Model model, RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.personalInfoForm", result);
             redirectAttributes.addFlashAttribute("personalInfoForm", personalInfoForm);
             return "redirect:/editPersonalInfo1";
         } else {
+            
+            personalInfoForm.setAddress(new String(personalInfoForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
+            personalInfoForm.setFirstName(new String(personalInfoForm.getFirstName().getBytes("iso8859-1"), "UTF-8"));
+            personalInfoForm.setLastName(new String(personalInfoForm.getLastName().getBytes("iso8859-1"), "UTF-8"));
             boolean isSuccess = this.memberService.editPersonalInfo(personalInfoForm);
             model.addAttribute("isSuccess", isSuccess);
             if (isSuccess) {
                 model.addAttribute("text", "Your personal information has been changed.");
                 return "showView";
             } else {
-                model.addAttribute("text", "There is a problem when you tried to edit your personal information.");
+                model.addAttribute("text", "There is a problem when you tried to edit your personal information. <br> <a href =\"${pageContext.request.contextPath}/editPersonalInfo\" type = \"button\" class=\"btn btn-primary\">กลับหน้าแก้ไขข้อมูลส่วนตัว</a> ");
                 return "showView";
             }
         }

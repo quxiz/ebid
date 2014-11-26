@@ -10,6 +10,7 @@ import com.se.ebid.entity.Item;
 import com.se.ebid.service.CustomUser;
 import com.se.ebid.service.FeedbackService;
 import com.se.ebid.service.ItemService;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -89,15 +90,16 @@ public class GiveFeedbackController {
     }
 
     @RequestMapping(value = "/giveFeedback/submit", method = RequestMethod.POST)
-    public String onSubmitFeedback(@ModelAttribute("feedbackForm") FeedbackForm feedbackForm, Model model) {
+    public String onSubmitFeedback(@ModelAttribute("feedbackForm") FeedbackForm feedbackForm, Model model) throws UnsupportedEncodingException {        
+        feedbackForm.setComment(new String(feedbackForm.getComment().getBytes("iso8859-1"), "UTF-8"));
         boolean success = this.feedbackService.giveFeedback(feedbackForm);
         if (success) {
             model.addAttribute("isSuccess", true);
-            model.addAttribute("text", "Feedback success");
+            model.addAttribute("text", "Your feedback has been sent.");
             return "showView";
         } else {
             model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "Error found");
+            model.addAttribute("text", "Please try again. <br> <a href =\"${pageContext.request.contextPath}/giveFeedback/\""+feedbackForm.getTransactionID()+" type = \"button\" class=\"btn btn-primary\">กลับไปหน้าให้ feedback</a> ");
             return "showView";
         }
         //return "redirect:/"; //ไปหน้าโง่บอกว่าสำเร็จแล้วหรือล้มเหลว

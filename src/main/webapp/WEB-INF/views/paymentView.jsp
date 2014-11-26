@@ -44,7 +44,7 @@
                 <hr>               
                 <div>
                 <a href ="${pageContext.request.contextPath}/checkOut/checkoutTransaction/${transactionID}" class="btn btn-primary">ตกลง</a>
-                <a href ="${pageContext.request.contextPath}/error/you don't have enough money in your account" class="btn btn-primary" >มีเงินในบัญชีไม่พอ</a>
+                <a href ="${pageContext.request.contextPath}/checkOut/error" class="btn btn-primary" >มีเงินในบัญชีไม่พอ</a>
                 <a href ="${pageContext.request.contextPath}/checkOut/${transactionID}" class="btn btn-primary">ยกเลิก</a>
                 </div>                       
         </div>

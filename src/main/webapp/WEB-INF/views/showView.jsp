@@ -55,6 +55,9 @@
                 </div>
                 <br>
                 <br>
+<<<<<<< HEAD
+>>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
+=======
 >>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
                 <a href ="${pageContext.request.contextPath}" type = "button" class="btn btn-primary">กลับหน้าหลัก</a>
         </div>

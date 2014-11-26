@@ -96,25 +96,18 @@ public void initBinder(WebDataBinder binder) {
             form.setTitle(new String(form.getTitle().getBytes("iso8859-1"), "UTF-8"));
             Member member = this.memberService.getMember();
             if (!member.isActivated()) {
-<<<<<<< HEAD
+
             model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "Please, check you email and activate your account!");
-            model.addAttribute("link", "");
-                    model.addAttribute("btnText", "");
-            return "showView";
-        } else if (member.isBlacklisted()) {
-            model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "You are blacklisted");
-            model.addAttribute("link", "");
-                    model.addAttribute("btnText", "");
-=======
-            model.addAttribute("isSuccess", "false");
             model.addAttribute("text", "กรุณาตรวจสอบอีเมลและ activate บัญชีของคุณ!");
+            model.addAttribute("link", "");
+                    model.addAttribute("btnText", "");
             return "showView";
         } else if (member.isBlacklisted()) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "คุณติดบัญชีดำ");
->>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
+            model.addAttribute("link", "");
+                    model.addAttribute("btnText", "");
+
             return "showView";
         }  
         else if(member.getReceivingAccount()==null){
@@ -123,13 +116,11 @@ public void initBinder(WebDataBinder binder) {
             long itemID = this.itemService.registerItem(form);
             if (itemID < 0) {
                 model.addAttribute("isSuccess", false);
-<<<<<<< HEAD
-                model.addAttribute("text", "Sorry, The item was unsuccessfully registered. ");
+
+                model.addAttribute("text", "ลงทะเบียนสินค้าไม่สำเร็จ");
                 model.addAttribute("link", "/registerItem");
                     model.addAttribute("btnText", "กลับหน้าลงทะเบียนสินค้า");
-=======
-                model.addAttribute("text", "ลงทะเบียนสินค้าไม่สำเร็จ <br> <a href =\"${pageContext.request.contextPath}/registerItem\" type = \"button\" class=\"btn btn-primary\">กลับหน้าลงทะเบียนสินค้า</a>");
->>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
+
                 return "showView";
             }
             return "redirect:/viewItem/" + itemID;//รอแก้หน้าแสดง

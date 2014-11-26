@@ -47,18 +47,13 @@ public class ComplaintController {
          boolean isSuccess = this.complaintService.complaint(complaintForm);
          model.addAttribute("isSuccess", isSuccess);
          if(isSuccess){
-<<<<<<< HEAD
-        model.addAttribute("text", "You've sent your complaint to administrators. ");
+
+        model.addAttribute("text", "ส่งข้อร้องเรียนไปยังผู้ดูแลระบบเรียบร้อย ");
          model.addAttribute("link", "");
             model.addAttribute("btnText", "");
-        } else { model.addAttribute("text", "Fail to send your complaint. ");
+        } else { model.addAttribute("text", "ล้มเหลวในการส่งข้อเร้องเรียน");
          model.addAttribute("link", "/complaint");
             model.addAttribute("btnText", "กลับหน้าร้องเรียน");
          }return "showView";
-=======
-        model.addAttribute("text", "ส่งข้อร้องเรียนไปยังผู้ดูแลระบบเรียบร้อย ");
-        } else { model.addAttribute("text", "ล้มเหลวในการส่งข้อเร้องเรียน <br> <a href =\"${pageContext.request.contextPath}/complaint\" type = \"button\" class=\"btn btn-primary\">กลับหน้าร้องเรียน</a> ");
-        }return "showView";
->>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
      }
 }

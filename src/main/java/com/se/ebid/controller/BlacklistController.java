@@ -70,26 +70,19 @@ public class BlacklistController {
         blacklistForm.setBlacklistStatus(new String(blacklistForm.getBlacklistStatus().getBytes("iso8859-1"), "UTF-8"));
         boolean isSuccess = this.blacklistService.blacklist(blacklistForm);
         model.addAttribute("isSuccess", isSuccess);
-<<<<<<< HEAD
         if (isSuccess) {
-            model.addAttribute("text", "You've changed blacklist status of userID " + blacklistForm.getUserID() + " to " + blacklistForm.getBlacklistStatus());
+            model.addAttribute("text", "คุณได้เปลี่ยนสถานะบัญชีดำของชื่อผู้ใช้ "+blacklistForm.getUserID()+" เป็น "
+                +blacklistForm.getBlacklistStatus());
             model.addAttribute("link", "/blacklist");
             model.addAttribute("btnText", "กลับหน้าจัดการ blacklist");
 
         } else {
-            model.addAttribute("text", "Fail to change blacklist status of userID " + blacklistForm.getUserID());
+            model.addAttribute("text", "ล้มเหลวในการเปลี่ยนสถานะบัญชีดำของชื่อผู้ใช้ "+blacklistForm.getUserID());
             model.addAttribute("link", "/blacklist");
             model.addAttribute("btnText", "กลับหน้าจัดการ blacklist");
 
         }
         return "showView";
     }
-=======
-        if(isSuccess){
-        model.addAttribute("text", "คุณได้เปลี่ยนสถานะบัญชีดำของชื่อผู้ใช้ "+blacklistForm.getUserID()+" เป็น "
-                +blacklistForm.getBlacklistStatus()+". <br> <a href ='${pageContext.request.contextPath}/blacklist' type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a> ");
-        } else { model.addAttribute("text", "ล้มเหลวในการเปลี่ยนสถานะบัญชีดำของชื่อผู้ใช้ "+blacklistForm.getUserID()+". <br> <a href =\"${pageContext.request.contextPath}/blacklist\" type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a> ");
-        }return "showView";
-     }
->>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
+
 }

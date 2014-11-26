@@ -54,58 +54,44 @@ public class RegisterController {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registrationForm", result);
             redirectAttributes.addFlashAttribute("registrationForm", registrationForm);
             return "redirect:/register";
-<<<<<<< HEAD
         } else {
 
             if (!registrationForm.getPassword().equals(registrationForm.getConfirmPassword())) {
-                model.addAttribute("text", "Password mismatch");
+                model.addAttribute("text", "รหัสผ่านไม่ตรงกับยืนยันรหัสผ่าน");
                 model.addAttribute("link", "");
                 model.addAttribute("btnText", "");
             }
-=======
-        }else {
-            
-            if(!registrationForm.getPassword().equals(registrationForm.getConfirmPassword())) model.addAttribute("text","รหัสผ่านไม่ตรงกับยืนยันรหัสผ่าน"); 
->>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
+
             registrationForm.setAddress(new String(registrationForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
             registrationForm.setFirstName(new String(registrationForm.getFirstName().getBytes("iso8859-1"), "UTF-8"));
             registrationForm.setLastName(new String(registrationForm.getLastName().getBytes("iso8859-1"), "UTF-8"));
             registrationForm.setUserID(new String(registrationForm.getUserID().getBytes("iso8859-1"), "UTF-8"));
             int ret = this.memberService.register(registrationForm);
-<<<<<<< HEAD
             switch (ret) {
                 case MemberService.ERR_DUP_EMAIL: {
                     model.addAttribute("isSuccess", false);
-                    model.addAttribute("text", "Email has already used");
+                    model.addAttribute("text", "อีเมลนี้ถูกใช้ไปแล้ว");
                     model.addAttribute("link", "");
                     model.addAttribute("btnText", "");
                 }
                 case MemberService.ERR_DUP_USER: {
                     model.addAttribute("isSuccess", false);
-                    model.addAttribute("text", "User ID has already used");
+                    model.addAttribute("text", "ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว");
                     model.addAttribute("link", "");
                     model.addAttribute("btnText", "");
                 }
             }
             if (ret >= 0) {
                 model.addAttribute("isSuccess", true);
-                model.addAttribute("text", "Please check your email and activate your ID");
+                model.addAttribute("text", "กรุณาตรวจสอบอีเมลและ activate บัญชี");
                 model.addAttribute("link", "");
                 model.addAttribute("btnText", "");
             } else {
                 model.addAttribute("isSuccess", false);
-                model.addAttribute("text", "Error found");
+                model.addAttribute("text", "เกิดข้อผิดพลาด");
                 model.addAttribute("link", "");
                 model.addAttribute("btnText", "");
             }
-=======
-            switch(ret){
-                case MemberService.ERR_DUP_EMAIL : {model.addAttribute("isSuccess",false); model.addAttribute("text","อีเมลนี้ถูกใช้ไปแล้ว");}
-                case MemberService.ERR_DUP_USER : {model.addAttribute("isSuccess",false); model.addAttribute("text","ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว");}
-            }
-            if(ret >= 0) {model.addAttribute("isSuccess",true); model.addAttribute("text","กรุณาตรวจสอบอีเมลและ activate บัญชี");  }
-            model.addAttribute("title","ผิดพลาด");
->>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
             return "showView";
         }
     }

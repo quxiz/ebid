@@ -52,6 +52,7 @@ public class SolveComplaintController {
             model.addAttribute("text", "ตอบข้อร้องเรียนเรียบร้อย " );
         } else {
             model.addAttribute("text", "ตอบข้อร้องเรียนล้มเหลว " );
+
         }
         model.addAttribute("link", "/solveComplaint");
         model.addAttribute("btnText", "กลับหน้าดูข้อร้องเรียน");

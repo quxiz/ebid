@@ -87,8 +87,9 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">ยินดีต้อนรับ <sec:authentication property="principal.username" /> <span class="badge">${unreadMessageCount}</span> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="${pageContext.request.contextPath}/viewMessage">กล่องข้อความ <span class="badge">${unreadMessageCount}</span></a></li>
+
                             <li><a href="${pageContext.request.contextPath}/blacklist">แก้ไขบัญชีดำ</a></li>
-                            <li><a href="${pageContext.request.contextPath}/report">ตอบข้อร้องเรียน</a></li>
+                            <li><a href="${pageContext.request.contextPath}/solveComplaint">ตอบข้อร้องเรียน</a></li>
                             <li><a href="${pageContext.request.contextPath}/report">ออกรายงาน</a></li>
                             <li class="divider"></li>
                             <li><a href="${pageContext.request.contextPath}/signOut">ออกจากระบบ</a></li>

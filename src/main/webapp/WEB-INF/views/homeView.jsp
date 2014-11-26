@@ -5,27 +5,56 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 
 <style type="text/css">
-    #carousel{
-        max-height: 500px;
-        max-width: 1140px
-    }
+
     .carousel-img {
         max-height: 500px;
-    
         margin: 0 auto
     }
+    /*    .carousel-inner{
+            width:100%;
+            max-height: 500px !important;
+            
+        }*/
     .thumbnail a img {
-        max-height: 250px;
+        height:250px;
+        /*        max-height: 250px;*/
         max-width: 250px
     }
+    /* Smaller than standard 960 (devices and browsers) */
+    @media only screen and (max-width: 959px) {
+         #carousel{
+            height: 500px;
+            max-width: 1140px
+        }
+    }
 
+    /* Tablet Portrait size to standard 960 (devices and browsers) */
+    @media only screen and (min-width: 768px) and (max-width: 959px) {
+        
+}
+
+    /* All Mobile Sizes (devices and browser) */
+    @media only screen and (max-width: 767px) {
+       
+    }
+
+    /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+    @media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+    /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+    @media only screen and (max-width: 479px) {
+        #carousel{
+            height: 250px;
+            max-width: 1140px
+        }
+    }
 </style>
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
-        
-        
+
+
         <!--carousel-->
-        
+
         <div id="carousel" class="carousel slide container" data-ride="carousel">
             <!-- Indicators -->
             <ol class="carousel-indicators">
@@ -37,26 +66,26 @@
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner" role="listbox">
-                
-                            <div class="item active">                       
-                                <a href="${pageContext.request.contextPath}/viewItem/${listRecentItems[0].itemID}"><img src="${listPhotos[0].photoURL}" alt="..." class="carousel-img">
-<!--                                    <div class="carousel-caption">
-                                        <h4>${listRecentItems[0].title}</h4>
-                                    </div>-->
-                                </a>
-                            </div>    
-                
-                
+
+                <div class="item active">                       
+                    <a href="${pageContext.request.contextPath}/viewItem/${listRecentItems[0].itemID}"><img src="${listPhotos[0].photoURL}" alt="..." class="carousel-img">
+                        <!--                                    <div class="carousel-caption">
+                                                                <h4>${listRecentItems[0].title}</h4>
+                                                            </div>-->
+                    </a>
+                </div>    
+
+
                 <c:if test = "${maxIndex > 0}">
                     <c:forEach begin="1" end="${maxIndex}" varStatus="loop">                       
 
-                            <div class="item">                       
-                                <a href="${pageContext.request.contextPath}/viewItem/${listRecentItems[loop.count].itemID}"><img src="${listPhotos[loop.count].photoURL}" alt="..." class="carousel-img">
-<!--                                    <div class="carousel-caption">
-                                        <h4>${listRecentItems[loop.count].title}</h4>
-                                    </div>-->
-                                </a>
-                            </div>   
+                        <div class="item">                       
+                            <a href="${pageContext.request.contextPath}/viewItem/${listRecentItems[loop.count].itemID}"><img src="${listPhotos[loop.count].photoURL}" alt="..." class="carousel-img">
+                                <!--                                    <div class="carousel-caption">
+                                                                        <h4>${listRecentItems[loop.count].title}</h4>
+                                                                    </div>-->
+                            </a>
+                        </div>   
                     </c:forEach>
                 </c:if>
             </div>
@@ -86,12 +115,12 @@
                                 <div class="caption">
                                     <h3>${listRecentItems[loop.count-1].title}</h3>
                                     <c:if test = "${listRecentItems[loop.count-1].sellingType=='BUY'}">
-                                        <h4>${listRecentItems[loop.count-1].price} บาท</h4><h4>ซื้อทันที</h4>
+                                        <h4>${listRecentItems[loop.count-1].price} บาท</h4><h4><span class="label label-success">ซื้อทันที</span></h4>
                                     </c:if>
                                     <c:if test = "${listRecentItems[loop.count-1].sellingType=='BID'}">
-                                        <h4>ราคาปัจจุบัน ${listRecentItems[loop.count-1].price} บาท</h4><h4>ประมูล</h4>
+                                        <h4>ราคาปัจจุบัน ${listRecentItems[loop.count-1].price} บาท</h4><h4><span class="label label-warning">ประมูล</span></h4>
                                     </c:if>
-                                    
+
                                 </div>
                             </div>
                         </div>

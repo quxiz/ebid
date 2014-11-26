@@ -37,6 +37,7 @@ public interface MemberService {
     public boolean resetPassword(ResetPasswordForm resetPasswordForm);
     public Member getMember();
     public Member getMemberByUserID(String userID);
+    public Member getMemberByMemberID(long memberID);
     public boolean editPersonalInfo(PersonalInfoForm personalInfoForm);
     public boolean editPassword(EditPasswordForm editPasswordForm);
     public boolean editPaymentInfo(PaymentInfoForm paymentInfoForm);

@@ -5,7 +5,9 @@
  */
 package com.se.ebid.controller;
 
+import com.se.ebid.entity.Member;
 import com.se.ebid.service.ItemService;
+import com.se.ebid.service.MemberService;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,10 +36,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RegisterItemController {
 
     private ItemService itemService;
-
+    private MemberService memberService;
+    
     @Autowired
     public void setItemService(ItemService itemService) {
         this.itemService = itemService;
+    }
+    
+    @Autowired
+    public void setMemberService(MemberService memberService) {
+        this.memberService = memberService;
     }
     
     @InitBinder
@@ -85,6 +93,19 @@ public void initBinder(WebDataBinder binder) {
             form.setShippingService(new String(form.getShippingService().getBytes("iso8859-1"), "UTF-8"));
             form.setSpecifics(new String(form.getSpecifics().getBytes("iso8859-1"), "UTF-8"));
             form.setTitle(new String(form.getTitle().getBytes("iso8859-1"), "UTF-8"));
+            Member member = this.memberService.getMember();
+            if (!member.isActivated()) {
+            model.addAttribute("isSuccess", "false");
+            model.addAttribute("text", "Please, check you email and activate your account!");
+            return "showView";
+        } else if (member.isBlacklisted()) {
+            model.addAttribute("isSuccess", "false");
+            model.addAttribute("text", "You are blacklisted");
+            return "showView";
+        }  
+        else if(member.getReceivingAccount()==null){
+                return "redirect:/editPersonalInfo4";
+            }
             long itemID = this.itemService.registerItem(form);
             if (itemID < 0) {
                 model.addAttribute("isSuccess", false);

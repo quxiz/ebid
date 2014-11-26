@@ -76,6 +76,7 @@ public void initBinder(WebDataBinder binder) {
     @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
 
     public String onSubmit(@Valid @ModelAttribute("form") RegisterItemForm form, BindingResult result, Model model, RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
+
         if(form.getEndTime()!=null){
             System.out.println(form.getEndTime());
         }

@@ -81,6 +81,21 @@
                     </li>
                 </ul>		
             </sec:authorize>
+            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">ยินดีต้อนรับ <sec:authentication property="principal.username" /> <span class="badge">${unreadMessageCount}</span> <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="${pageContext.request.contextPath}/viewMessage">กล่องข้อความ <span class="badge">${unreadMessageCount}</span></a></li>
+                            <li><a href="${pageContext.request.contextPath}/blacklist">แก้ไขบัญชีดำ</a></li>
+<!--                            <li><a href="${pageContext.request.contextPath}/viewSellTransaction">ประวัติการขาย</a></li>-->
+                            <li><a href="${pageContext.request.contextPath}/report">ออกรายงาน</a></li>
+                            <li class="divider"></li>
+                            <li><a href="${pageContext.request.contextPath}/signOut">ออกจากระบบ</a></li>
+                        </ul>
+                    </li>
+                </ul>	
+            </sec:authorize>
         </div>
     </div>
 

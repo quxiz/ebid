@@ -50,7 +50,6 @@ public class RegisterController {
 
     @RequestMapping(value = "/register/submit", method = RequestMethod.POST)
     public String onSubmitRegistration(@Valid @ModelAttribute("registrationForm") RegistrationForm registrationForm, BindingResult result, Model model,RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
-        
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.registrationForm", result);
             redirectAttributes.addFlashAttribute("registrationForm", registrationForm);

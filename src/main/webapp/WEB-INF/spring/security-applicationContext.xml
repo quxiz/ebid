@@ -12,14 +12,14 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 <!--        <intercept-url pattern="/home*" access="hasRole('ROLE_USER')" />-->
         <intercept-url pattern="/members" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/testQuartz*" access="hasRole('ROLE_ADMIN')" />
-        <intercept-url pattern="/viewItem/*/*" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/viewItem/*/*" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/answerQuestion*" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/checkOut*" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/payment*" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/giveFeedback**" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/registerItem*" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/buyItem*" access="hasRole('ROLE_USER')" />
-        <intercept-url pattern="/viewMessage*" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/viewMessage*" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
         <intercept-url pattern="/viewTransaction*" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/**" access="permitAll" />
         <form-login 

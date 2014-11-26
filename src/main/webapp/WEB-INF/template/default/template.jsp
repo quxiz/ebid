@@ -21,6 +21,10 @@
                 max-height: 200px;
                 overflow-x: hidden;
             }
+            .navbar-form .input-group-btn,
+.navbar-form .input-group-addon {
+width: auto;
+}
         </style>
     </head>
 

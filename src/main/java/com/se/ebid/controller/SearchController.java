@@ -58,7 +58,7 @@ public class SearchController {
             List<Photo> photos = this.itemService.getPhoto(listItems.get(i).getItemID());
             if (photos.size() == 0) {
                 Photo photo = new Photo();
-                photo.setPhotoURL(request.getContextPath() + "/resources/img/ebay1.png");
+                photo.setPhotoURL(request.getContextPath() + "/resources/img/logo.jpg");
                 listPhotos.add(photo);
             } else {
                 listPhotos.add(photos.get(0));

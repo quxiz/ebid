@@ -107,7 +107,7 @@
                                                     ${transaction.shippingService}<!--getShippingService()-->
                                                 </td>
                                                 <td>
-                                                    <a href="${pageContext.request.contextPath}/viewSeller/${transaction.buyerID}">${transaction.buyerID}</a><!--ชื่อผู้แจ้ง getBuyerID()-->
+                                                    <a href="${pageContext.request.contextPath}/viewSeller/${transaction.buyerName}">${transaction.buyerName}</a><!--ชื่อผู้แจ้ง getBuyerID()-->
                                                 </td>
 
                                             </tr>

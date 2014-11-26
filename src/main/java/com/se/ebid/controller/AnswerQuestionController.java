@@ -63,7 +63,8 @@ public class AnswerQuestionController {
             return "redirect:/viewItem/" + answerForm.getItemID();
         } else {
             model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "Error found");
+            model.addAttribute("text", "There is a problem when sending your question. <br> <a href =\"${pageContext.request.contextPath}/viewMessage/\" type = \"button\" class=\"btn btn-primary\">กลับหน้าดูกล่องข้อความ</a>"
+                    + "<a href =\"${pageContext.request.contextPath}/viewณะำท/\"" + answerForm.getItemID()+ " type = \"button\" class=\"btn btn-primary\">ไปหน้าสินค้าที่ตอบคำถาม</a>" );
             return "showView";
         }
     }

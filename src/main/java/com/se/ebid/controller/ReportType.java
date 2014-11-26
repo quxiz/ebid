@@ -10,5 +10,16 @@ package com.se.ebid.controller;
  * @author mtmmoei
  */
 public enum ReportType {
-    BID, BUY, ALL
+    BID("ประมูล"), BUY("ซื้อโดยตรง"), ALL("โดยรวม");
+     private String name;
+
+    private ReportType(String name)
+    {
+        this.name = name;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
 }

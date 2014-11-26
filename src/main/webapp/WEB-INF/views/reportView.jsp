@@ -31,58 +31,73 @@
     <tiles:putAttribute name="body">
 
         <div class="container">
-            <div class="col-sm-10" style="float:none; margin-left:auto; margin-right:auto">
+            <div class="col-sm-6" style="float:none; margin-left:auto; margin-right:auto">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">รายงาน</h3>
                     </div>
 
                     <div class="panel-body">
+                        <c:url var="addAction" value="/report/printReport" ></c:url>
+                        <form:form action="${addAction}" class="form-horizontal" role="form" modelAttribute="reportForm" method="POST" name="reportForm">
+                            <div class="form-group">
+                                <label for="inputReport" class="col-sm-5 control-label">ประเภทรายงาน</label>
+                                <div class="col-sm-1">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                                            - เลือก -
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                            <li onclick="$('#reportType').val('BID')" role="presentation"><a role="menuitem" tabindex="-1">สินค้าประมูล</a></li>
+                                            <li onclick="$('#reportType').val('BUY')" role="presentation"><a role="menuitem" tabindex="-1">สินค้าซื้อโดยตรง</a></li>
+                                            <li onclick="$('#reportType').val('ALL')" role="presentation"><a role="menuitem" tabindex="-1">สินค้าโดยรวม</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <form:hidden id="reportType" path="reportType"/>
+                            <div class="form-group">
+                                <label for="inputMonth" class="col-sm-5 control-label">เดือน</label>
+                                <div class="col-sm-3">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="inputMonth" data-toggle="dropdown">
+                                            - เลือก -
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
 
-                        <form class="form-horizontal" role="form">
-                            <label for="inputReport" class="col-sm-2 control-label">ประเภทรายงาน</label>
-                            <div class="col-sm-1">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                                        - เลือก -
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">สินค้าประมูล</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">สินค้าขายโดยตรง</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">สินค้าโดยรวม</a></li>
-                                    </ul>
+                                            <li onclick="$('#month').val('11')" role="presentation"><a role="menuitem" tabindex="-1">11</a></li>
+
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                            <label for="inputMonth" class="col-sm-2 control-label">เดือน</label>
-                            <div class="col-sm-3">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                                        - เลือก -
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">1/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">2/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">3/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">4/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">5/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">6/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">7/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">8/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">9/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">10/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">11/2557</a></li>
-                                        <li role="presentation"><a role="menuitem" tabindex="-1">12/2557</a></li>
-                                    </ul>
+                            <form:hidden id="month" path="month"/>
+                            <div class="form-group">
+                                <label for="inputYear" class="col-sm-5 control-label">ปี</label>
+                                <div class="col-sm-3">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="inputYear" data-toggle="dropdown">
+                                            - เลือก -
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+
+                                            <li onclick="$('#year').val('2557')" role="presentation"><a role="menuitem" tabindex="-1">2557</a></li>
+
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-md-2">
-                                <a class="btn btn-primary" href="#">
-                                    ออกรายงาน
-                                </a>
+                            <form:hidden id="year" path="year"/>
+                            <br>
+                            <div class="col-sm-offset-5">
+                                <input class="btn btn-primary" type="submit" value="ออกรายงาน">
+
                             </div>
-                        </form>
+
+                        </form:form>
                     </div>
                 </div>
             </div>

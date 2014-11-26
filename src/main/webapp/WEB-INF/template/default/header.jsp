@@ -88,7 +88,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="${pageContext.request.contextPath}/viewMessage">กล่องข้อความ <span class="badge">${unreadMessageCount}</span></a></li>
                             <li><a href="${pageContext.request.contextPath}/blacklist">แก้ไขบัญชีดำ</a></li>
-<!--                            <li><a href="${pageContext.request.contextPath}/viewSellTransaction">ประวัติการขาย</a></li>-->
+                            <li><a href="${pageContext.request.contextPath}/report">ตอบข้อร้องเรียน</a></li>
                             <li><a href="${pageContext.request.contextPath}/report">ออกรายงาน</a></li>
                             <li class="divider"></li>
                             <li><a href="${pageContext.request.contextPath}/signOut">ออกจากระบบ</a></li>

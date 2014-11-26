@@ -101,4 +101,12 @@ public class CheckOutController {
         }
         return "showView";
     }
+    
+    @RequestMapping("/checkOut/error")
+    public String CheckoutTransaction(Model model) {        
+        model.addAttribute("isSuccess", false);
+        model.addAttribute("text", "เงินในบัญชีของคุณไม่พอในการจ่าย");
+        return "showView";
+    }
+    
 }

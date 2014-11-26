@@ -35,6 +35,8 @@ public class ActivateMemberController {
         
         boolean isSuccess = this.memberService.activateMember(activateKey);
         model.addAttribute("isSuccess", isSuccess);
+        model.addAttribute("link", "");
+        model.addAttribute("btnText", "");
         if(isSuccess){
             model.addAttribute("text", "You have finished userID activation.");
         }else {model.addAttribute("text", "There is a problem when you tried to activate userID.");}

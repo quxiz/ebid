@@ -96,12 +96,16 @@ public void initBinder(WebDataBinder binder) {
             form.setTitle(new String(form.getTitle().getBytes("iso8859-1"), "UTF-8"));
             Member member = this.memberService.getMember();
             if (!member.isActivated()) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "Please, check you email and activate your account!");
+            model.addAttribute("link", "");
+                    model.addAttribute("btnText", "");
             return "showView";
         } else if (member.isBlacklisted()) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "You are blacklisted");
+            model.addAttribute("link", "");
+                    model.addAttribute("btnText", "");
             return "showView";
         }  
         else if(member.getReceivingAccount()==null){
@@ -110,7 +114,9 @@ public void initBinder(WebDataBinder binder) {
             long itemID = this.itemService.registerItem(form);
             if (itemID < 0) {
                 model.addAttribute("isSuccess", false);
-                model.addAttribute("text", "Sorry, The item was unsuccessfully registered. <br> <a href =\"${pageContext.request.contextPath}/registerItem\" type = \"button\" class=\"btn btn-primary\">กลับหน้าลงทะเบียนสินค้า</a>");
+                model.addAttribute("text", "Sorry, The item was unsuccessfully registered. ");
+                model.addAttribute("link", "/registerItem");
+                    model.addAttribute("btnText", "กลับหน้าลงทะเบียนสินค้า");
                 return "showView";
             }
             return "redirect:/viewItem/" + itemID;//รอแก้หน้าแสดง

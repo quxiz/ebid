@@ -48,7 +48,11 @@ public class ComplaintController {
          model.addAttribute("isSuccess", isSuccess);
          if(isSuccess){
         model.addAttribute("text", "You've sent your complaint to administrators. ");
-        } else { model.addAttribute("text", "Fail to send your complaint. <br> <a href =\"${pageContext.request.contextPath}/complaint\" type = \"button\" class=\"btn btn-primary\">กลับหน้าร้องเรียน</a> ");
-        }return "showView";
+         model.addAttribute("link", "");
+            model.addAttribute("btnText", "");
+        } else { model.addAttribute("text", "Fail to send your complaint. ");
+         model.addAttribute("link", "/complaint");
+            model.addAttribute("btnText", "กลับหน้าร้องเรียน");
+         }return "showView";
      }
 }

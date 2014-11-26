@@ -66,7 +66,7 @@
                     <li><a href="${pageContext.request.contextPath}/signIn">เข้าสู่ระบบ</a></li>
                 </ul>
             </sec:authorize>
-            <sec:authorize access="isAuthenticated()">
+            <sec:authorize access="hasRole('ROLE_USER')">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">ยินดีต้อนรับ <sec:authentication property="principal.username" /> <span class="badge">${unreadMessageCount}</span> <span class="caret"></span></a>

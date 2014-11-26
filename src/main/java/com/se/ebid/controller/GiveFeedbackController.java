@@ -55,16 +55,24 @@ public class GiveFeedbackController {
         long memberID = customUser.getMemberID();
         if (memberID == feedback.getSellerID() && memberID == feedback.getBuyerID()) {
             model.addAttribute("isSuccess", false);
+<<<<<<< HEAD
             model.addAttribute("text", "You buy your item!!");
             model.addAttribute("link", "");
             model.addAttribute("btnText", "");
+=======
+            model.addAttribute("text", "ซื้อสินค้าของคุณเอง!!");
+>>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
             return "showView";
         } else if (memberID == feedback.getSellerID()) {
             if (feedback.isSellerFeedbacked()) {
                 model.addAttribute("isSuccess", false);
+<<<<<<< HEAD
                 model.addAttribute("text", "You already feedbacked");
                 model.addAttribute("link", "");
                 model.addAttribute("btnText", "");
+=======
+                model.addAttribute("text", "ให้ feedback แล้ว");
+>>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
                 return "showView";
             }
             model.addAttribute("isSeller", true);
@@ -74,9 +82,13 @@ public class GiveFeedbackController {
         } else if (memberID == feedback.getBuyerID()) {
             if (feedback.isBuyerFeedbacked()) {
                 model.addAttribute("isSuccess", false);
+<<<<<<< HEAD
                 model.addAttribute("text", "You already feedbacked");
                 model.addAttribute("link", "");
                 model.addAttribute("btnText", "");
+=======
+                model.addAttribute("text", "ให้ feedback แล้ว");
+>>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
                 return "showView";
             }
             model.addAttribute("isSeller", false);
@@ -86,9 +98,13 @@ public class GiveFeedbackController {
         } else {
             System.out.println("memberID != sellerID and buyerID");
             model.addAttribute("isSuccess", false);
+<<<<<<< HEAD
             model.addAttribute("text", "Error found");
             model.addAttribute("link", "");
             model.addAttribute("btnText", "");
+=======
+            model.addAttribute("text", "เกิดข้อผิดพลาด");
+>>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
             return "showView";
         }
         Item item = this.itemService.getItem(feedback.getItemID());
@@ -103,6 +119,7 @@ public class GiveFeedbackController {
         boolean success = this.feedbackService.giveFeedback(feedbackForm);
         if (success) {
             model.addAttribute("isSuccess", true);
+<<<<<<< HEAD
             model.addAttribute("text", "Your feedback has been sent.");
             model.addAttribute("link", "");
             model.addAttribute("btnText", "");
@@ -112,6 +129,13 @@ public class GiveFeedbackController {
             model.addAttribute("text", "Please try again. ");
             model.addAttribute("link", "/giveFeedback/" + feedbackForm.getTransactionID());
             model.addAttribute("btnText", "กลับไปหน้าให้ feedback");
+=======
+            model.addAttribute("text", "ส่ง feedback เรียบร้อย");
+            return "showView";
+        } else {
+            model.addAttribute("isSuccess", false);
+            model.addAttribute("text", "กรุณาส่งอีกครั้ง <br> <a href =\"${pageContext.request.contextPath}/giveFeedback/\""+feedbackForm.getTransactionID()+" type = \"button\" class=\"btn btn-primary\">กลับไปหน้าให้ feedback</a> ");
+>>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
             return "showView";
         }
     }

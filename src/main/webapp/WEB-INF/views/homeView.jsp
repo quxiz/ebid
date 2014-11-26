@@ -6,7 +6,7 @@
 
 <style type="text/css">
     #carousel{
-        height: 500px;
+        max-height: 500px;
         max-width: 1140px
     }
     .carousel-img {

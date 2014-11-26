@@ -38,8 +38,8 @@ public class ActivateMemberController {
         model.addAttribute("link", "");
         model.addAttribute("btnText", "");
         if(isSuccess){
-            model.addAttribute("text", "You have finished userID activation.");
-        }else {model.addAttribute("text", "There is a problem when you tried to activate userID.");}
+            model.addAttribute("text", "Activate สำเร็จ");
+        }else {model.addAttribute("text", "เกิดปัญหาบางอย่าง");}
         return "showView";
     }  
 }

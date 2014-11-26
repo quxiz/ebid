@@ -49,10 +49,9 @@ public class SolveComplaintController {
         boolean isSuccess = this.complaintService.solveComplaint(solveComplaintForm);
         model.addAttribute("isSuccess", isSuccess);
         if (isSuccess) {
-            model.addAttribute("text", "You've sent your explanation for the complaint. ");
-
+            model.addAttribute("text", "ตอบข้อร้องเรียนเรียบร้อย " );
         } else {
-            model.addAttribute("text", "The system can't sent your explanation for the complaint. ");
+            model.addAttribute("text", "ตอบข้อร้องเรียนล้มเหลว " );
         }
         model.addAttribute("link", "/solveComplaint");
         model.addAttribute("btnText", "กลับหน้าดูข้อร้องเรียน");

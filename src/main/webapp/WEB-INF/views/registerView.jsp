@@ -43,14 +43,14 @@
                             <div class="form-group">
                                 <label for="inputName" class="col-sm-3 control-label">ชื่อจริง</label>
                                 <div class="col-sm-4">
-                                    <form:input type="text" class="form-control" id="inputName" placeholder="ชื่อ" path="firstName"/>
+                                    <form:input type="text" class="form-control" id="inputName" placeholder="ชื่อ" path="firstName" required="true"/>
                                     <form:errors path="firstName" cssClass="error" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputSurname" class="col-sm-3 control-label">นามสกุล</label>
                                 <div class="col-sm-4">
-                                    <form:input type="text" class="form-control" id="inputSurname" placeholder="นามสกุล" path="lastName"/>
+                                    <form:input type="text" class="form-control" id="inputSurname" placeholder="นามสกุล" path="lastName" required="true"/>
                                     <form:errors path="lastName" cssClass="error" />
                                 </div>
                             </div>
@@ -83,33 +83,33 @@
                             <div class="form-group">
                                 <label for="inputEmail" class="col-sm-3 control-label">อีเมล</label>
                                 <div class="col-sm-4">
-                                    <form:input type="email" class="form-control" id="inputEmail" placeholder="อีเมล" path="email"/>
+                                    <form:input type="email" class="form-control" id="inputEmail" placeholder="อีเมล" path="email" required="true"/>
                                 </div>
 
                             </div>
                             <div class="form-group">
                                 <label for="inputTel" class="col-sm-3 control-label">หมายเลขโทรศัพท์</label>
                                 <div class="col-sm-4">
-                                    <form:input type="text" class="form-control" id="inputTel" placeholder="หมายเลขโทรศัพท์" path="phoneNo"/>
+                                    <form:input type="text" class="form-control" id="inputTel" placeholder="หมายเลขโทรศัพท์" path="phoneNo" required="true"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputUserID" class="col-sm-3 control-label">ชื่อผู้ใช้</label>
                                 <div class="col-sm-4">
-                                    <form:input type="text" class="form-control" id="inputUserID" placeholder="ชื่อผู้ใช้" path="userID"/>
+                                    <form:input type="text" class="form-control" id="inputUserID" placeholder="ชื่อผู้ใช้" path="userID" required="true"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="inputPassword" class="col-sm-3 control-label">รหัสผ่าน</label>
                                 <div class="col-sm-4">
-                                    <form:input type="password" class="form-control" id="inputPassword" placeholder="รหัสผ่าน" path="password"/>
+                                    <form:input type="password" class="form-control" id="inputPassword" placeholder="รหัสผ่าน" path="password" required="true"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword2" class="col-sm-3 control-label">ยืนยันรหัสผ่าน</label>
                                 <div class="col-sm-4">
-                                    <form:input type="password" class="form-control" id="inputPassword2" placeholder="ยืนยันรหัสผ่าน" path="confirmPassword"/>
+                                    <form:input type="password" class="form-control" id="inputPassword2" placeholder="ยืนยันรหัสผ่าน" path="confirmPassword" required="true"/>
                                     <br>
                                 </div>
                             </div>

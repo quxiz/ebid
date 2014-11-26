@@ -17,13 +17,13 @@
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-3 control-label">ชื่อผู้ใช้</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputEmail3" placeholder="ชื่อผู้ใช้" name="userID">
+                                    <input type="text" class="form-control" id="inputEmail3" placeholder="ชื่อผู้ใช้" name="userID" required="true">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword3" class="col-sm-3 control-label">รหัสผ่าน</label>
                                 <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="inputPassword3" placeholder="รหัสผ่าน" name="password">
+                                    <input type="password" class="form-control" id="inputPassword3" placeholder="รหัสผ่าน" name="password" required="true">
                                     <br>
                                     <a href="${pageContext.request.contextPath}/forgotPassword">ลืมรหัสผ่าน?</a>
                                 </div>

@@ -49,10 +49,13 @@ public class SolveComplaintController {
         boolean isSuccess = this.complaintService.solveComplaint(solveComplaintForm);
         model.addAttribute("isSuccess", isSuccess);
         if (isSuccess) {
-            model.addAttribute("text", "ตอบข้อร้องเรียนเรียบร้อย <br> <a href =\"${pageContext.request.contextPath}/solveComplaint\" type = \"button\" class=\"btn btn-primary\">กลับหน้าดูข้อร้องเรียน</a>" );
+            model.addAttribute("text", "ตอบข้อร้องเรียนเรียบร้อย " );
         } else {
-            model.addAttribute("text", "ตอบข้อร้องเรียนล้มเหลว <br> <a href =\"${pageContext.request.contextPath}/solveComplaint\" type = \"button\" class=\"btn btn-primary\">กลับหน้าดูข้อร้องเรียน</a>" );
+            model.addAttribute("text", "ตอบข้อร้องเรียนล้มเหลว " );
+
         }
+        model.addAttribute("link", "/solveComplaint");
+        model.addAttribute("btnText", "กลับหน้าดูข้อร้องเรียน");
         return "showView";
     }
 }

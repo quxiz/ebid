@@ -26,56 +26,63 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class BlacklistController {
-    
+
     private BlacklistService blacklistService;
     private MemberService memberService;
-    
+
     @Autowired
-    public void setBlacklistService(BlacklistService blacklistService){
-        this.blacklistService=blacklistService;
+    public void setBlacklistService(BlacklistService blacklistService) {
+        this.blacklistService = blacklistService;
     }
-    
+
     @Autowired
     public void setMemberService(MemberService memberService) {
         this.memberService = memberService;
     }
-    
-    
+
     @RequestMapping("/blacklist")
-     public String viewBlacklist(Model model) {
+    public String viewBlacklist(Model model) {
         model.addAttribute("title", "Blacklist");
         BlacklistForm blacklistForm = new BlacklistForm();
         model.addAttribute("blacklistForm", blacklistForm);
         return "blacklistView";
-    }  
-     
-     @RequestMapping(value = "/blacklist/selectMember", method=RequestMethod.POST)
-     public String selectMember(@ModelAttribute ("blacklistForm") BlacklistForm blacklistForm){            
-         return "redirect:/blacklist/"+blacklistForm.getUserID();
-     }
-     
-     @RequestMapping(value = "/blacklist/{userID}",method = RequestMethod.GET)
-     public String showSelectedMember(@PathVariable ("userID") String userID ,Model model) throws UnsupportedEncodingException{
-            Member member = this.memberService.getMemberByUserID(userID);
-            BlacklistForm blacklistForm = new BlacklistForm();
-            userID = new String(userID.getBytes("iso8859-1"), "UTF-8");
-            blacklistForm.setUserID(userID);
-            model.addAttribute("blacklistForm", blacklistForm);
-            model.addAttribute("member", member);
-            return "blacklistMemberView";
-     }
-     
-     @RequestMapping(value = "/blacklist/onSubmit",method = RequestMethod.POST)
-     public String onSubmit(@ModelAttribute ("blacklistForm") BlacklistForm blacklistForm,Model model) throws UnsupportedEncodingException
-     {
-         blacklistForm.setDetail(new String(blacklistForm.getDetail().getBytes("iso8859-1"), "UTF-8"));
-         blacklistForm.setBlacklistStatus(new String(blacklistForm.getBlacklistStatus().getBytes("iso8859-1"), "UTF-8"));
+    }
+
+    @RequestMapping(value = "/blacklist/selectMember", method = RequestMethod.POST)
+    public String selectMember(@ModelAttribute("blacklistForm") BlacklistForm blacklistForm) {
+        return "redirect:/blacklist/" + blacklistForm.getUserID();
+    }
+
+    @RequestMapping(value = "/blacklist/{userID}", method = RequestMethod.GET)
+    public String showSelectedMember(@PathVariable("userID") String userID, Model model) throws UnsupportedEncodingException {
+        Member member = this.memberService.getMemberByUserID(userID);
+        BlacklistForm blacklistForm = new BlacklistForm();
+        userID = new String(userID.getBytes("iso8859-1"), "UTF-8");
+        blacklistForm.setUserID(userID);
+        model.addAttribute("blacklistForm", blacklistForm);
+        model.addAttribute("member", member);
+        return "blacklistMemberView";
+    }
+
+    @RequestMapping(value = "/blacklist/onSubmit", method = RequestMethod.POST)
+    public String onSubmit(@ModelAttribute("blacklistForm") BlacklistForm blacklistForm, Model model) throws UnsupportedEncodingException {
+        blacklistForm.setDetail(new String(blacklistForm.getDetail().getBytes("iso8859-1"), "UTF-8"));
+        blacklistForm.setBlacklistStatus(new String(blacklistForm.getBlacklistStatus().getBytes("iso8859-1"), "UTF-8"));
         boolean isSuccess = this.blacklistService.blacklist(blacklistForm);
         model.addAttribute("isSuccess", isSuccess);
-        if(isSuccess){
-        model.addAttribute("text", "คุณได้เปลี่ยนสถานะบัญชีดำของชื่อผู้ใช้ "+blacklistForm.getUserID()+" เป็น "
-                +blacklistForm.getBlacklistStatus()+". <br> <a href ='${pageContext.request.contextPath}/blacklist' type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a> ");
-        } else { model.addAttribute("text", "ล้มเหลวในการเปลี่ยนสถานะบัญชีดำของชื่อผู้ใช้ "+blacklistForm.getUserID()+". <br> <a href =\"${pageContext.request.contextPath}/blacklist\" type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a> ");
-        }return "showView";
-     }
+        if (isSuccess) {
+            model.addAttribute("text", "คุณได้เปลี่ยนสถานะบัญชีดำของชื่อผู้ใช้ "+blacklistForm.getUserID()+" เป็น "
+                +blacklistForm.getBlacklistStatus());
+            model.addAttribute("link", "/blacklist");
+            model.addAttribute("btnText", "กลับหน้าจัดการ blacklist");
+
+        } else {
+            model.addAttribute("text", "ล้มเหลวในการเปลี่ยนสถานะบัญชีดำของชื่อผู้ใช้ "+blacklistForm.getUserID());
+            model.addAttribute("link", "/blacklist");
+            model.addAttribute("btnText", "กลับหน้าจัดการ blacklist");
+
+        }
+        return "showView";
+    }
+
 }

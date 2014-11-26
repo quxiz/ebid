@@ -76,7 +76,9 @@ public class ViewItemController {
             model.addAttribute("shippingServices", shippingServices);
             model.addAttribute("shippingCosts", shippingCosts);
         }
-        if(item != null) model.addAttribute("title", item.getTitle());
+        if (item != null) {
+            model.addAttribute("title", item.getTitle());
+        }
         Date date = new Date();
         Timestamp timestamp = new Timestamp(date.getTime());
         if (item.getEndTime() != null) {
@@ -95,14 +97,16 @@ public class ViewItemController {
     }
 
     @RequestMapping(value = "/viewItem/{itemID}/onSubmitQuestionForm", method = RequestMethod.POST)
-    public String onSubmitQuestionForm(@PathVariable("itemID") long itemID, @ModelAttribute("questionForm") QuestionForm questionForm,Model model) throws UnsupportedEncodingException {
+    public String onSubmitQuestionForm(@PathVariable("itemID") long itemID, @ModelAttribute("questionForm") QuestionForm questionForm, Model model) throws UnsupportedEncodingException {
         questionForm.setSellerID(this.itemService.getItem(itemID).getSellerID());
-        questionForm.setQuestion(new String(questionForm.getQuestion().getBytes("iso8859-1"), "UTF-8"));        
+        questionForm.setQuestion(new String(questionForm.getQuestion().getBytes("iso8859-1"), "UTF-8"));
         if (this.commentService.askQuestion(questionForm)) {
             return "redirect:/viewItem/" + itemID;
         } else {
             model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "There is a problem when sending your question. <br> <a href =\"${pageContext.request.contextPath}/viewItem/\""+itemID+" type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a>" );
+            model.addAttribute("text", "There is a problem when sending your question. ");
+            model.addAttribute("link", "/viewItem/" + itemID);
+            model.addAttribute("btnText", "กลับหน้าดูข้อมูลสินค้า");
             return "showView";
         }
     }
@@ -111,22 +115,27 @@ public class ViewItemController {
     public String onSubmitBidForm(@PathVariable("itemID") long itemID, @ModelAttribute("bidForm") BidForm bidForm, Model model) {
         Member member = this.memberService.getMember();
         if (!member.isActivated()) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "กรุณาตรวจสอบอีเมลและ activate บัญชี!");
+            model.addAttribute("link", "");
+            model.addAttribute("btnText", "");
             return "showView";
         } else if (member.isBlacklisted()) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "คุณติดบัญชีดำ");
+            model.addAttribute("link", "");
+            model.addAttribute("btnText", "");
             return "showView";
         } else if (member.getPaymentAccount() == null) {
             return "redirect:/editPersonalInfo3";
         }
-        if(this.itemService.bid(bidForm)!=1){
-            model.addAttribute("isSuccess",false);
-            model.addAttribute("text","เกิดข้อพลาด ไม่สามารถประมูลได้ <br> <a href =\"${pageContext.request.contextPath}/viewItem/\""+itemID+" type = \"button\" class=\"btn btn-primary\">กลับหน้าดูข้อมูลสินค้า</a> ");
-        return "showView";
-        }
-        else {
+        if (this.itemService.bid(bidForm) != 1) {
+            model.addAttribute("isSuccess", false);
+            model.addAttribute("text", "เกิดข้อพลาด ไม่สามารถประมูลได้");
+            model.addAttribute("link", "/viewItem/" + itemID);
+            model.addAttribute("btnText", "กลับหน้าดูข้อมูลสินค้า");
+            return "showView";
+        } else {
             return "redirect:/viewItem/" + itemID;
         }
     }
@@ -134,16 +143,18 @@ public class ViewItemController {
     @RequestMapping(value = {"/viewItem/{itemID}/onSubmitBuyForm"}, method = RequestMethod.POST)
     public String onSubmitBuyForm(@PathVariable("itemID") long itemID, @ModelAttribute("buyForm") BuyForm buyForm, Model model, RedirectAttributes redirectAttributes) {
         Member member = this.memberService.getMember();
-        if (buyForm.getQuantity() <= 0 && buyForm.getQuantity()>this.itemService.getItem(buyForm.getItemID()).getQuantity()) {
-            model.addAttribute("isSuccess", "false");
+        model.addAttribute("link", "");
+        model.addAttribute("btnText", "");
+        if (buyForm.getQuantity() <= 0) {
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "จำนวนสินค้าไม่ถูกต้อง");
             return "showView";
         } else if (!member.isActivated()) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "กรุณา activate บัญชี");
             return "showView";
         } else if (member.isBlacklisted()) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "คุณติดบัญชีดำ");
             return "showView";
         } else if (member.getPaymentAccount() == null) {
@@ -157,18 +168,20 @@ public class ViewItemController {
     @RequestMapping(value = "/buyItem/{itemID}", method = RequestMethod.GET)
     public String buyItem(@ModelAttribute("buyForm") BuyForm buyForm, @PathVariable("itemID") long itemID, Model model) {
         Invoice invoice = this.itemService.buy(buyForm);
+        model.addAttribute("link", "/viewItem/"+itemID);
+        model.addAttribute("btnText", "กลับหน้าดูข้อมูลสินค้า");
         if (invoice.getItemID() == ItemService.ERR_BLACKLIST) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "คุณติดบัญชีดำ");
             return "showView";
         }
         if (invoice.getItemID() == ItemService.ERR_NOT_ENOUGH_QTY) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "จำนวนสินค้าเกิน");
             return "showView";
         }
         if (invoice.getItemID() < 0) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "เกิดข้อผิดพลาด");
             return "showView";
         }

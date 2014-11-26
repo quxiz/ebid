@@ -55,12 +55,19 @@ public class GiveFeedbackController {
         long memberID = customUser.getMemberID();
         if (memberID == feedback.getSellerID() && memberID == feedback.getBuyerID()) {
             model.addAttribute("isSuccess", false);
+
             model.addAttribute("text", "ซื้อสินค้าของคุณเอง!!");
+            model.addAttribute("link", "");
+            model.addAttribute("btnText", "");
+
             return "showView";
         } else if (memberID == feedback.getSellerID()) {
             if (feedback.isSellerFeedbacked()) {
                 model.addAttribute("isSuccess", false);
+
                 model.addAttribute("text", "ให้ feedback แล้ว");
+                model.addAttribute("link", "");
+                model.addAttribute("btnText", "");
                 return "showView";
             }
             model.addAttribute("isSeller", true);
@@ -71,6 +78,8 @@ public class GiveFeedbackController {
             if (feedback.isBuyerFeedbacked()) {
                 model.addAttribute("isSuccess", false);
                 model.addAttribute("text", "ให้ feedback แล้ว");
+                model.addAttribute("link", "");
+                model.addAttribute("btnText", "");
                 return "showView";
             }
             model.addAttribute("isSeller", false);
@@ -80,7 +89,10 @@ public class GiveFeedbackController {
         } else {
             System.out.println("memberID != sellerID and buyerID");
             model.addAttribute("isSuccess", false);
+
             model.addAttribute("text", "เกิดข้อผิดพลาด");
+            model.addAttribute("link", "");
+            model.addAttribute("btnText", "");
             return "showView";
         }
         Item item = this.itemService.getItem(feedback.getItemID());
@@ -90,18 +102,22 @@ public class GiveFeedbackController {
     }
 
     @RequestMapping(value = "/giveFeedback/submit", method = RequestMethod.POST)
-    public String onSubmitFeedback(@ModelAttribute("feedbackForm") FeedbackForm feedbackForm, Model model) throws UnsupportedEncodingException {        
+    public String onSubmitFeedback(@ModelAttribute("feedbackForm") FeedbackForm feedbackForm, Model model) throws UnsupportedEncodingException {
         feedbackForm.setComment(new String(feedbackForm.getComment().getBytes("iso8859-1"), "UTF-8"));
         boolean success = this.feedbackService.giveFeedback(feedbackForm);
         if (success) {
             model.addAttribute("isSuccess", true);
+
             model.addAttribute("text", "ส่ง feedback เรียบร้อย");
+            model.addAttribute("link", "");
+            model.addAttribute("btnText", "");
             return "showView";
         } else {
             model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "กรุณาส่งอีกครั้ง <br> <a href =\"${pageContext.request.contextPath}/giveFeedback/\""+feedbackForm.getTransactionID()+" type = \"button\" class=\"btn btn-primary\">กลับไปหน้าให้ feedback</a> ");
+            model.addAttribute("text", "กรุณาส่งอีกครั้ง");
+            model.addAttribute("link", "/giveFeedback/" + feedbackForm.getTransactionID());
+            model.addAttribute("btnText", "กลับไปหน้าให้ feedback");
             return "showView";
         }
-        //return "redirect:/"; //ไปหน้าโง่บอกว่าสำเร็จแล้วหรือล้มเหลว
     }
 }

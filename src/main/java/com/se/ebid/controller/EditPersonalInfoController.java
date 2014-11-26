@@ -37,12 +37,12 @@ public class EditPersonalInfoController {
     }
 
     @RequestMapping(value = "/editPersonalInfo{errorNum}", method = RequestMethod.GET)
-    public String viewEditPersonalInfo(Model model,@PathVariable ("errorNum") String errorNum) {
-        
+    public String viewEditPersonalInfo(Model model, @PathVariable("errorNum") String errorNum) {
+
         model.addAttribute("title", "แก้ไขข้อมูลส่วนตัว");
         Member member = this.memberService.getMember();
-        model.addAttribute("errorNUM",errorNum);
-        
+        model.addAttribute("errorNUM", errorNum);
+
         if (!model.containsAttribute("personalInfoForm")) {
             PersonalInfoForm personalInfoForm = new PersonalInfoForm();
             personalInfoForm.setFirstName(member.getFirstName());
@@ -81,17 +81,25 @@ public class EditPersonalInfoController {
             redirectAttributes.addFlashAttribute("personalInfoForm", personalInfoForm);
             return "redirect:/editPersonalInfo1";
         } else {
-            
+
             personalInfoForm.setAddress(new String(personalInfoForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
             personalInfoForm.setFirstName(new String(personalInfoForm.getFirstName().getBytes("iso8859-1"), "UTF-8"));
             personalInfoForm.setLastName(new String(personalInfoForm.getLastName().getBytes("iso8859-1"), "UTF-8"));
             boolean isSuccess = this.memberService.editPersonalInfo(personalInfoForm);
             model.addAttribute("isSuccess", isSuccess);
+
             if (isSuccess) {
+
                 model.addAttribute("text", "แก้ไขข้อมูลส่วนตัวเรียบร้อย");
+                model.addAttribute("link", "");
+                model.addAttribute("btnText", "");
                 return "showView";
             } else {
-                model.addAttribute("text", "แก้ไขข้อมูลส่วนตัวล้มเหลว <br> <a href =\"${pageContext.request.contextPath}/editPersonalInfo\" type = \"button\" class=\"btn btn-primary\">กลับหน้าแก้ไขข้อมูลส่วนตัว</a> ");
+                model.addAttribute("text", "แก้ไขข้อมูลส่วนตัวล้มเหลว");
+                model.addAttribute("link", "/editPersonalInfo");
+                model.addAttribute("btnText", "กลับหน้าแก้ไขข้อมูลส่วนตัว");
+
+
                 return "showView";
             }
         }
@@ -107,20 +115,26 @@ public class EditPersonalInfoController {
             boolean isSuccess = this.memberService.editPassword(editPasswordForm);
             model.addAttribute("isSuccess", isSuccess);
             if (isSuccess) {
+
                 model.addAttribute("text", "เปลี่ยนรหัสผ่านเรียบร้อย");
+                model.addAttribute("link", "");
+                model.addAttribute("btnText", "");
 
             } else {
                 if (!editPasswordForm.getNewPassword().equals(editPasswordForm.getConfirmNewPassword())) {
                     model.addAttribute("text", "รหัสผ่านใหม่ไม่ตรงกับยืนยันรหัสผ่าน");
+
                 } else {
                     model.addAttribute("text", "เกิดปัญหาในการเปลี่ยนรหัสผ่าน");
                 }
+                model.addAttribute("link", "/editPersonalInfo2");
+                model.addAttribute("btnText", "กลับไปแก้ไขรหัสผ่านอีกครั้ง");
             }
+
             return "showView";
         }
     }
 
-    
     @RequestMapping(value = "/editPersonalInfo/editPaymentInfo/onSubmit", method = RequestMethod.POST)
     public String onSubmitEditPaymentInfo(@Valid @ModelAttribute("paymentInfoForm") PaymentInfoForm paymentInfoForm, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
@@ -128,19 +142,23 @@ public class EditPersonalInfoController {
             redirectAttributes.addFlashAttribute("paymentInfoForm", paymentInfoForm);
             return "redirect:/editPersonalInfo3";
         } else {
-            
+
             boolean isSuccess = this.memberService.editPaymentInfo(paymentInfoForm);
             model.addAttribute("isSuccess", isSuccess);
             if (isSuccess) {
+
                 model.addAttribute("text", "เปลี่ยนบัญชี Paypal เรียบร้อย");
+                model.addAttribute("link", "");
+                model.addAttribute("btnText", "");
             } else {
                 model.addAttribute("text", "เกิดปัญหาในการเปลี่ยนบัญชี Paypal");
+                model.addAttribute("link", "/editPersonalInfo3");
+                model.addAttribute("btnText", "กลับไปแก้ไขบัญชีการจ่ายเงินอีกครั้ง");
             }
             return "showView";
         }
     }
-    
-    
+
     @RequestMapping(value = "/editPersonalInfo/editReceivingInfo/onSubmit", method = RequestMethod.POST)
     public String onSubmitRecievingInfo(@Valid @ModelAttribute("receivingInfoForm") ReceivingInfoForm receivingInfoForm, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
@@ -151,9 +169,14 @@ public class EditPersonalInfoController {
             boolean isSuccess = this.memberService.editReceivingInfo(receivingInfoForm);
             model.addAttribute("isSuccess", isSuccess);
             if (isSuccess) {
+
                 model.addAttribute("text", "เปลี่ยนบัญชีรับเงินเรียบร้อย");
+                model.addAttribute("link", "");
+                model.addAttribute("btnText", "");
             } else {
                 model.addAttribute("text", "เกิดปัญหาในการเปลี่ยนบัญชีรับเงิน");
+                model.addAttribute("link", "/editPersonalInfo4");
+                model.addAttribute("btnText", "กลับไปแก้ไขบัญชีการรับเงินอีกครั้ง");
             }
             return "showView";
         }

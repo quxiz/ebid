@@ -96,12 +96,18 @@ public void initBinder(WebDataBinder binder) {
             form.setTitle(new String(form.getTitle().getBytes("iso8859-1"), "UTF-8"));
             Member member = this.memberService.getMember();
             if (!member.isActivated()) {
-            model.addAttribute("isSuccess", "false");
+
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "กรุณาตรวจสอบอีเมลและ activate บัญชีของคุณ!");
+            model.addAttribute("link", "");
+                    model.addAttribute("btnText", "");
             return "showView";
         } else if (member.isBlacklisted()) {
-            model.addAttribute("isSuccess", "false");
+            model.addAttribute("isSuccess", false);
             model.addAttribute("text", "คุณติดบัญชีดำ");
+            model.addAttribute("link", "");
+                    model.addAttribute("btnText", "");
+
             return "showView";
         }  
         else if(member.getReceivingAccount()==null){
@@ -110,7 +116,11 @@ public void initBinder(WebDataBinder binder) {
             long itemID = this.itemService.registerItem(form);
             if (itemID < 0) {
                 model.addAttribute("isSuccess", false);
-                model.addAttribute("text", "ลงทะเบียนสินค้าไม่สำเร็จ <br> <a href =\"${pageContext.request.contextPath}/registerItem\" type = \"button\" class=\"btn btn-primary\">กลับหน้าลงทะเบียนสินค้า</a>");
+
+                model.addAttribute("text", "ลงทะเบียนสินค้าไม่สำเร็จ");
+                model.addAttribute("link", "/registerItem");
+                    model.addAttribute("btnText", "กลับหน้าลงทะเบียนสินค้า");
+
                 return "showView";
             }
             return "redirect:/viewItem/" + itemID;//รอแก้หน้าแสดง

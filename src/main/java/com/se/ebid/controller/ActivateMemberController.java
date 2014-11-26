@@ -35,6 +35,8 @@ public class ActivateMemberController {
         
         boolean isSuccess = this.memberService.activateMember(activateKey);
         model.addAttribute("isSuccess", isSuccess);
+        model.addAttribute("link", "");
+        model.addAttribute("btnText", "");
         if(isSuccess){
             model.addAttribute("text", "Activate สำเร็จ");
         }else {model.addAttribute("text", "เกิดปัญหาบางอย่าง");}

@@ -46,11 +46,19 @@
             </c:if>
                 <hr>               
                 <div>
+<<<<<<< HEAD
+                <h4>${text}</h4>
+                <c:if test ="${link != null}"><a href ="${pageContext.request.contextPath}/${link}" type = "button" class="btn btn-primary">btnText</a></c:if>
+=======
                 ${text}
                 
                 </div>
                 <br>
                 <br>
+<<<<<<< HEAD
+>>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
+=======
+>>>>>>> 6f7d1d9d9c7dd6662ae6740312b96bb6750fad43
                 <a href ="${pageContext.request.contextPath}" type = "button" class="btn btn-primary">กลับหน้าหลัก</a>
         </div>
     </tiles:putAttribute>

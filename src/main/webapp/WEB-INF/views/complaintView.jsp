@@ -18,7 +18,7 @@
                         <h3 class="panel-title">ร้องเรียน</h3>
                     </div>
                     <div class="panel-body">
-                        <c:url var="addAction" value="/complaint" ></c:url>
+                        <c:url var="addAction" value="/complaint/submit" ></c:url>
                         <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="complaintForm" method="POST" name="complaintForm">
                             <div class="form-group">
                                 <label for="title" class="col-sm-3 control-label">หัวข้อ</label>

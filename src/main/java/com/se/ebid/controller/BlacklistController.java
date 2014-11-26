@@ -74,7 +74,7 @@ public class BlacklistController {
         model.addAttribute("isSuccess", isSuccess);
         if(isSuccess){
         model.addAttribute("text", "คุณได้เปลี่ยนสถานะบัญชีดำของชื่อผู้ใช้ "+blacklistForm.getUserID()+" เป็น "
-                +blacklistForm.getBlacklistStatus()+". <br> <a href =\"${pageContext.request.contextPath}/blacklist\" type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a> ");
+                +blacklistForm.getBlacklistStatus()+". <br> <a href ='${pageContext.request.contextPath}/blacklist' type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a> ");
         } else { model.addAttribute("text", "ล้มเหลวในการเปลี่ยนสถานะบัญชีดำของชื่อผู้ใช้ "+blacklistForm.getUserID()+". <br> <a href =\"${pageContext.request.contextPath}/blacklist\" type = \"button\" class=\"btn btn-primary\">กลับหน้าจัดการ Blacklist</a> ");
         }return "showView";
      }

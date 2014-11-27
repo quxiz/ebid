@@ -202,7 +202,11 @@ public class MemberServiceImpl implements MemberService {
     public Member getMemberByUserID(String userID) {
         return this.memberDAO.findByUserID(userID);
     }
-
+@Override
+    @Transactional
+    public Member getMemberByMemberID(long memberID) {
+        return this.memberDAO.findByMemberID(memberID);
+    }
 
     @Override
     @Transactional

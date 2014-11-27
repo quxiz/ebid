@@ -47,7 +47,7 @@
                     <div class="col-sm-8 col-md-8">	
                         <div class="caption">	
                             <a href="viewItem/${item.itemID}"><h3>${item.title}</h3></a>
-                            <h4>${item.price} บาท</h4><h4>${item.sellingType}</h4>
+                            <h4>${item.price} บาท</h4><h4>${item.sellingType.name}</h4>
                         </div>
                     </div>
                 </div>

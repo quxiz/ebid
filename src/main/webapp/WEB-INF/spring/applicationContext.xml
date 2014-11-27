@@ -134,6 +134,14 @@
     
     
     <bean id="itemServiceImpl" class="com.se.ebid.service.ItemServiceImpl">
+        <property name="memberDAO" ref="memberDAO" />
+        <property name="autoBidDAO" ref="autoBidDAO" />
+        <property name="messageDAO" ref="messageDAO" />
+        <property name="transactionDAO" ref="transactionDAO" />
+        <property name="feedbackDAO" ref="feedbackDAO" />
+        <property name="photoDAO" ref="photoDAO" />
+        <property name="commentDAO" ref="commentDAO" />
+        <property name="itemDAO" ref="itemDAO" />
     </bean>
     
     

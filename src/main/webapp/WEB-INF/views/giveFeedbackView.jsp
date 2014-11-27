@@ -24,11 +24,11 @@
                             <div>
                                 <c:if test="${isSeller}">
                                     ท่านได้ทำการขายสินค้า
-                                    <a href="/viewItem/${item.itemID}">${item.title}</a>
+                                    <a href="${pageContext.request.contextPath}/viewItem/${item.itemID}">${item.title}</a>
                                 </c:if>
                                 <c:if test="${isBuyer}">
                                     ท่านได้ทำการซื้อสินค้า
-                                    <a href="/viewItem/${item.itemID}">${item.title}</a>
+                                    <a href="${pageContext.request.contextPath}/viewItem/${item.itemID}">${item.title}</a>
                                 </c:if>
                             </div>
                             <br/>

@@ -48,21 +48,32 @@ public class ItemDAOImpl implements ItemDAO {
     @SuppressWarnings("unchecked")
     @Override
     public Item findByItemID(long itemID) {
+        System.out.println("findByItem" + itemID);
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
+
+        System.out.println("findByItem step1");
         List<Item> items = new ArrayList<Item>();
         items = sessionFactory.getCurrentSession()
                 .createQuery("from Item where itemID=:itemID")
                 .setParameter("itemID", itemID)
                 .list();
+
+        System.out.println("findByItem step2");
         session.getTransaction().commit();
+
+        System.out.println("findByItem step3");
         if (items.size() > 0) {
+
+            System.out.println("findByItem step3.1");
             return items.get(0);
         } else {
+
+            System.out.println("findByItem step3.2");
             return null;
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public List<Item> search(SearchForm searchForm) {
@@ -75,7 +86,7 @@ public class ItemDAOImpl implements ItemDAO {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
         List<Item> items = new ArrayList<Item>();
-        if(category =="" || category =="All") {
+        if (category == "" || category == "All") {
             items = sessionFactory.getCurrentSession()
                     .createQuery("from Item as item where lower(item.title) like lower(:keyword) order by item.timestamp desc")
                     .setParameter("keyword", "%" + keyword + "%")

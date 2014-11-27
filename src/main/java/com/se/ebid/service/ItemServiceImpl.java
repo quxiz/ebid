@@ -419,8 +419,11 @@ public class ItemServiceImpl implements ItemService {
     public boolean reportBidResult(long itemID) {
         System.out.println("Activate reportBidResult : " + itemID);
         System.out.println("bidResult 1");
+        if(this.itemDAO == null) System.out.println("itemDAO == null");
         Item item = this.itemDAO.findByItemID(itemID);
+        System.out.println("bidResult 1.1");
         if (item == null) {
+            System.out.println("item null");
             return false;
         }
         System.out.println("bidResult 2");

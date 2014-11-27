@@ -32,8 +32,10 @@ public class MyUserDetailsService implements UserDetailsService {
 
         Member member = memberDAO.findByUserID(userID);
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        if(userID.equals("demo") || userID.equals("admin")) {
+        if (!userID.equals("admin")) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
+        if (userID.equals("demo") || userID.equals("admin")) {
             System.out.println("ADMIN");
             authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }

@@ -37,25 +37,24 @@ public class RegisterItemController {
 
     private ItemService itemService;
     private MemberService memberService;
-    
+
     @Autowired
     public void setItemService(ItemService itemService) {
         this.itemService = itemService;
     }
-    
+
     @Autowired
     public void setMemberService(MemberService memberService) {
         this.memberService = memberService;
     }
-    
-    @InitBinder
-public void initBinder(WebDataBinder binder) {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy H:mm",Locale.ENGLISH);
-    dateFormat.setLenient(false);
 
-    // true passed to CustomDateEditor constructor means convert empty String to null
-    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-}
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy H:mm", Locale.ENGLISH);
+        dateFormat.setLenient(false);
+        // true passed to CustomDateEditor constructor means convert empty String to null
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
     @RequestMapping("/registerItem")
     public String viewRegisterItem(Model model) {
@@ -66,61 +65,55 @@ public void initBinder(WebDataBinder binder) {
         model.addAttribute("sellingType", sellingType);
         if (!model.containsAttribute("form")) {
             model.addAttribute("form", new RegisterItemForm());
-            
         }
-        
+
         model.addAttribute("title", "RegisterItem");
         return "registerItemView";
     }
-    
-    @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
 
+    @RequestMapping(value = "/registerItem/sentForm", method = RequestMethod.POST)
     public String onSubmit(@Valid @ModelAttribute("form") RegisterItemForm form, BindingResult result, Model model, RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
 
-        if(form.getEndTime()!=null){
+        if (form.getEndTime() != null) {
             System.out.println(form.getEndTime());
         }
-         
+
         System.out.println("REQ: reg item call");
+        form.setDetail(new String(form.getDetail().getBytes("iso8859-1"), "UTF-8"));
+        form.setPackageDetail(new String(form.getPackageDetail().getBytes("iso8859-1"), "UTF-8"));
+        form.setReturnPolicy(new String(form.getReturnPolicy().getBytes("iso8859-1"), "UTF-8"));
+        form.setShippingService(new String(form.getShippingService().getBytes("iso8859-1"), "UTF-8"));
+        form.setSpecifics(new String(form.getSpecifics().getBytes("iso8859-1"), "UTF-8"));
+        form.setTitle(new String(form.getTitle().getBytes("iso8859-1"), "UTF-8"));
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.form", result);
             redirectAttributes.addFlashAttribute("form", form);
             return "redirect:/registerItem";
         } else {
- 
-            form.setDetail(new String(form.getDetail().getBytes("iso8859-1"), "UTF-8"));
-            form.setPackageDetail(new String(form.getPackageDetail().getBytes("iso8859-1"), "UTF-8"));
-            form.setReturnPolicy(new String(form.getReturnPolicy().getBytes("iso8859-1"), "UTF-8"));
-            form.setShippingService(new String(form.getShippingService().getBytes("iso8859-1"), "UTF-8"));
-            form.setSpecifics(new String(form.getSpecifics().getBytes("iso8859-1"), "UTF-8"));
-            form.setTitle(new String(form.getTitle().getBytes("iso8859-1"), "UTF-8"));
             Member member = this.memberService.getMember();
             if (!member.isActivated()) {
 
-            model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "กรุณาตรวจสอบอีเมลและ activate บัญชีของคุณ!");
-            model.addAttribute("link", "");
-                    model.addAttribute("btnText", "");
-            return "showView";
-        } else if (member.isBlacklisted()) {
-            model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "คุณติดบัญชีดำ");
-            model.addAttribute("link", "");
-                    model.addAttribute("btnText", "");
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "กรุณาตรวจสอบอีเมลและ activate บัญชีของคุณ!");
+                model.addAttribute("link", "");
+                model.addAttribute("btnText", "");
+                return "showView";
+            } else if (member.isBlacklisted()) {
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "คุณติดบัญชีดำ");
+                model.addAttribute("link", "");
+                model.addAttribute("btnText", "");
 
-            return "showView";
-        }  
-        else if(member.getReceivingAccount()==null){
+                return "showView";
+            } else if (member.getReceivingAccount() == null) {
                 return "redirect:/editPersonalInfo4";
             }
             long itemID = this.itemService.registerItem(form);
             if (itemID < 0) {
                 model.addAttribute("isSuccess", false);
-
                 model.addAttribute("text", "ลงทะเบียนสินค้าไม่สำเร็จ");
                 model.addAttribute("link", "/registerItem");
-                    model.addAttribute("btnText", "กลับหน้าลงทะเบียนสินค้า");
-
+                model.addAttribute("btnText", "กลับหน้าลงทะเบียนสินค้า");
                 return "showView";
             }
             return "redirect:/viewItem/" + itemID;//รอแก้หน้าแสดง

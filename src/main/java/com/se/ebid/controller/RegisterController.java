@@ -58,8 +58,8 @@ public class RegisterController {
 
             if (!registrationForm.getPassword().equals(registrationForm.getConfirmPassword())) {
                 model.addAttribute("text", "รหัสผ่านไม่ตรงกับยืนยันรหัสผ่าน");
-                model.addAttribute("link", "");
-                model.addAttribute("btnText", "");
+                model.addAttribute("link", "/register");
+                model.addAttribute("btnText", "กลับหน้าสมัครสมาชิก");
             }
 
             registrationForm.setAddress(new String(registrationForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
@@ -71,14 +71,14 @@ public class RegisterController {
                 case MemberService.ERR_DUP_EMAIL: {
                     model.addAttribute("isSuccess", false);
                     model.addAttribute("text", "อีเมลนี้ถูกใช้ไปแล้ว");
-                    model.addAttribute("link", "");
-                    model.addAttribute("btnText", "");
+                    model.addAttribute("link", "/register");
+                    model.addAttribute("btnText", "กลับหน้าสมัครสมาชิก");
                 }
                 case MemberService.ERR_DUP_USER: {
                     model.addAttribute("isSuccess", false);
                     model.addAttribute("text", "ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว");
-                    model.addAttribute("link", "");
-                    model.addAttribute("btnText", "");
+                    model.addAttribute("link", "/register");
+                    model.addAttribute("btnText", "กลับหน้าสมัครสมาชิก");
                 }
             }
             if (ret >= 0) {
@@ -89,8 +89,8 @@ public class RegisterController {
             } else {
                 model.addAttribute("isSuccess", false);
                 model.addAttribute("text", "เกิดข้อผิดพลาด");
-                model.addAttribute("link", "");
-                model.addAttribute("btnText", "");
+                model.addAttribute("link", "/register");
+                model.addAttribute("btnText", "กลับหน้าสมัครสมาชิก");
             }
             return "showView";
         }

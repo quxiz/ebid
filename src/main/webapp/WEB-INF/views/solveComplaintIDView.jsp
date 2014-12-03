@@ -20,7 +20,8 @@
                     <div class="panel-body">
                         <c:url var="addAction" value="/solveComplaint/submit" ></c:url>
                         <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="solveComplaintForm" method="POST" name="solveComplaintForm">
-                
+                            <form:hidden path="complaintID" />
+                            <form:hidden path="solverID" />
                             <div class="form-group">
                                 <label for="comment" class="col-sm-3 control-label">คำตอบ</label>
                                 <div class="col-sm-9">

@@ -67,7 +67,18 @@
                                         </button>
                                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
 
+                                            <li onclick="$('#month').val('1')" role="presentation"><a role="menuitem" tabindex="-1">1</a></li>
+                                            <li onclick="$('#month').val('2')" role="presentation"><a role="menuitem" tabindex="-1">2</a></li>
+                                            <li onclick="$('#month').val('3')" role="presentation"><a role="menuitem" tabindex="-1">3</a></li>
+                                            <li onclick="$('#month').val('4')" role="presentation"><a role="menuitem" tabindex="-1">4</a></li>
+                                            <li onclick="$('#month').val('5')" role="presentation"><a role="menuitem" tabindex="-1">5</a></li>
+                                            <li onclick="$('#month').val('6')" role="presentation"><a role="menuitem" tabindex="-1">6</a></li>
+                                            <li onclick="$('#month').val('7')" role="presentation"><a role="menuitem" tabindex="-1">7</a></li>
+                                            <li onclick="$('#month').val('8')" role="presentation"><a role="menuitem" tabindex="-1">8</a></li>
+                                            <li onclick="$('#month').val('9')" role="presentation"><a role="menuitem" tabindex="-1">9</a></li>
+                                            <li onclick="$('#month').val('10')" role="presentation"><a role="menuitem" tabindex="-1">10</a></li>
                                             <li onclick="$('#month').val('11')" role="presentation"><a role="menuitem" tabindex="-1">11</a></li>
+                                            <li onclick="$('#month').val('12')" role="presentation"><a role="menuitem" tabindex="-1">12</a></li>
 
                                         </ul>
                                     </div>

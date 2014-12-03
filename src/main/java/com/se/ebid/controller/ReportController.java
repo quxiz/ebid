@@ -41,6 +41,7 @@ public class ReportController {
      @RequestMapping(value = "/report/printReport", method = RequestMethod.POST)
      public String printReport(@ModelAttribute ("reportForm") ReportForm reportForm,
             Model model, RedirectAttributes redirectAttributes){
+         System.out.println("print report");
          Report report = this.reportService.printReport(reportForm.getReportType().toString(),reportForm.getMonth(),reportForm.getYear());
          redirectAttributes.addFlashAttribute("report", report);
          return "redirect:/report/showReport";
@@ -49,6 +50,8 @@ public class ReportController {
      @RequestMapping(value = "/report/showReport", method = RequestMethod.GET)
      public String showReport(@ModelAttribute("report") Report report, Model model){
          model.addAttribute("report",report);
+         model.addAttribute("reportMonth", report.getStartTime().getMonth() + 1);
+         model.addAttribute("reportYear", report.getStartTime().getYear() + 1900 + 543);
          model.addAttribute("title","รายงาน");
          
          return "showReportView";

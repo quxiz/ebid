@@ -35,7 +35,7 @@
             <div class="col-sm-8" style="float:none; margin-left:auto; margin-right:auto">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">รายงานสินค้า${report.reportType.name} ประจำเดือนตุลาคม ปี 2557</h3>
+                        <h3 class="panel-title">รายงานสินค้า${report.reportType.name} ประจำเดือน ${reportMonth} ปี ${reportYear}</h3>
                     </div>
                     <div class="panel-body">
                         <br>

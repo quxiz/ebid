@@ -10,6 +10,7 @@ import com.se.ebid.controller.ReportType;
 import com.se.ebid.controller.SellingType;
 import com.se.ebid.dao.TransactionDAO;
 import com.se.ebid.entity.Transaction;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -20,35 +21,45 @@ import org.springframework.stereotype.Service;
  *
  * @author Nuttapong
  */
-
 @Service
-public class ReportServiceImpl implements ReportService{
+public class ReportServiceImpl implements ReportService {
 
     private TransactionDAO transactionDAO;
-    
+
     @Autowired
-    public void setTransactionDAO(TransactionDAO transactionDAO){
+    public void setTransactionDAO(TransactionDAO transactionDAO) {
         this.transactionDAO = transactionDAO;
     }
-    
+
     @Override
     @Transactional
     public Report printReport(String reportType, int month, int year) {
-        Timestamp startTime = monthToStartTime(month,year);
-        Timestamp endTime = monthToEndTime(month,year);
+        Timestamp startTime = monthToStartTime(month, year);
+        Timestamp endTime = monthToEndTime(month, year);
         double buyingAmount = 0;
         double chargeAmount = 0;
         long transactionAmount = 0;
-        
+
         List<Transaction> transactionList = this.transactionDAO.findCompletedByTimestamp(startTime, endTime);
-        for(Transaction aTransaction : transactionList){
-            if( (reportType.equals(SellingType.BID.getName()) && aTransaction.getSellingType() == SellingType.BID) || (reportType.equals(SellingType.BUY.getName()) && aTransaction.getSellingType() == SellingType.BUY) || reportType.equals("ALL")){
+
+        System.out.println("report step 1 found : " + transactionList.size());
+        System.out.println("startTime : " + startTime);
+        System.out.println("endTime : " + endTime);
+        for (Transaction aTransaction : transactionList) {
+
+            System.out.println("report transac " + aTransaction.getTransactionID());
+            if (aTransaction.getSellingType() == null && !reportType.equals(ReportType.ALL.toString())) continue;
+            if (reportType.equals(ReportType.ALL.toString()) || reportType.equals(aTransaction.getSellingType().toString())) {
+                System.out.println("report add amount " + aTransaction.getPrice());
                 double price = aTransaction.getPrice();
                 buyingAmount += price;
                 chargeAmount += priceToChargeAmount(price);
                 transactionAmount++;
             }
         }
+        
+        buyingAmount = new BigDecimal(buyingAmount).setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
+        chargeAmount = new BigDecimal(chargeAmount).setScale(3, BigDecimal.ROUND_HALF_UP).doubleValue();
         
         Report report = new Report();
         report.setStartTime(startTime);
@@ -57,7 +68,7 @@ public class ReportServiceImpl implements ReportService{
         report.setChargeAmount(chargeAmount);
         report.setSellingAmount(buyingAmount - chargeAmount);
         report.setTransactionAmount(transactionAmount);
-        switch(reportType){
+        switch (reportType) {
             case "BID":
                 report.setReportType(ReportType.BID);
                 break;
@@ -70,25 +81,24 @@ public class ReportServiceImpl implements ReportService{
             default:
                 return null;
         }
-        
+
         return report;
     }
 
     private Timestamp monthToStartTime(int month, int year) {
-        return new Timestamp(year-1990,month-1,0,0,0,0,0);
+        return new Timestamp(year - 1900 - 543, month - 1, 1, 0, 0, 0, 0);
     }
 
     private Timestamp monthToEndTime(int month, int year) {
-        if(month==12){
-            month = 0;
-            year += 1;
-        }
-        Timestamp t = new Timestamp(year,month,0,0,0,0,0);
-        return new Timestamp(t.getTime()-1);
+        month += 1;
+        year += month/12;
+        month %= 12;
+        Timestamp t = new Timestamp(year - 1900 - 543, month - 1, 1, 0, 0, 0, 0);
+        return new Timestamp(t.getTime() - 1);
     }
 
     private double priceToChargeAmount(double price) {
-        return price*0.07;
+        return price * 0.07;
     }
-    
+
 }

@@ -91,7 +91,7 @@
                     <div class="text-center">
                         <h3>${item.price} บาท</h3>
                         <c:if test="${item.sellingType=='BID'}"> 
-                            <h4>ผู้ให้ประมูลสูงสุด : 
+                            <h4>ผู้ให้ราคาสูงสุด : 
                                 <c:if test ="${maxbidID == yourID}">
                                     คุณ </h4>
                                 </c:if>

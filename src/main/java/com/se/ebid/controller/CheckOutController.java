@@ -115,6 +115,10 @@ public class CheckOutController {
                 model.addAttribute("isSuccess", false);
                 model.addAttribute("text", "ไม่พบรายการสินค้า หากมีข้อผิดพลาด กรุณาแจ้งผู้ดูแล");
             }
+            else if(success == TransactionService.ERR_NOT_ENOUGH_QTY){
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "จำนวนสินค้าปัจจุบันไม่เพียงพอ กรุณาติดต่อระบบชำระเงิน(PayPal)เพื่อแจ้งปัญหา และขอรับเงินคืน");
+            }
             else{
                 model.addAttribute("isSuccess", false);
                 model.addAttribute("text", "มีข้อผิดพลาดในการชำระเงิน หากมีข้อผิดพลาด กรุณาแจ้งผู้แล");

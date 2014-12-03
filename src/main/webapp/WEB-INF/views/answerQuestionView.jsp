@@ -24,10 +24,18 @@
                     </div>
                     <div class="panel-body">
                         <form:form modelAttribute="answerForm" method="POST" name="answerForm" onsubmit="return confirmSubmit(this, '${pageContext.request.contextPath}/answerQuestion/onSubmit')">
-                            <div>
-                                <h5>${itemTitle}</h5> <!--getItemID()-->
+                            <div class="form-group">
+                                <label for="title" class="col-sm-3 control-label">ชื่อสินค้า</label>
+                                <div class="col-sm-9">
+                                    <div id="title">${itemTitle}</div>
+                                </div>
                             </div>
-                            <hr>
+                            <label for="detail" class="col-sm-3 control-label">รายละเอียด</label>
+                                <div class="col-sm-9">
+                                    <textarea type="text" class="form-control" id="detail" placeholder="รายละเอียด" path="detail"/>
+                                </div>
+                            </div>
+                            
                             <div>
                                 ${comment.commentDetail}<!--getCommentDetail()-->
                             </div>

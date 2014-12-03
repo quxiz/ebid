@@ -109,7 +109,7 @@
             <div class="row">
                 <c:if test = "${maxIndex >= 0}">
                     <c:forEach begin="0" end="${maxIndex}" varStatus="loop">
-                        <div class="col-sm-4 col-md-3">
+                        <div class="col-sm-2 col-md-3">
                             <div class="thumbnail">
                                 <a href="${pageContext.request.contextPath}/viewItem/${listRecentItems[loop.count-1].itemID}"><img src="${listPhotos[loop.count-1].photoURL}" alt="..."></a>
                                 <div class="caption">

@@ -10,11 +10,12 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
 <style type="text/css">
-    
+
     .thumbnail a img {
         /*        max-height: 250px;*/
         margin: 0 auto;
@@ -35,7 +36,18 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <div class="container">
-            <h3>ผลการค้นหาคำว่า ${keyword} จาก ${category}</h3>
+            <h3>
+                <c:choose>
+
+                    <c:when test="${fn:length(listItems)>0}"> 
+                        ผลการค้นหาคำว่า ${keyword} จาก ${category}
+
+                    </c:when>
+                    <c:otherwise>
+                        ไม่พบสินค้า
+                    </c:otherwise>
+                </c:choose>
+            </h3>
             <hr>
             <c:forEach items="${listItems}" var = "item" varStatus="status">
                 <div class = "row">

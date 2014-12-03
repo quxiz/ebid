@@ -175,12 +175,6 @@
                                         <dd>${item.detail}</dd>
                                     </dl>
 
-
-                                    <dl class="dl-horizontal">
-                                        <dt>รายละเอียดสินค้า</dt>
-                                        <dd>${item.detail}</dd>
-                                    </dl>
-
                                     <div id="specifics-div">
 
                                     </div>

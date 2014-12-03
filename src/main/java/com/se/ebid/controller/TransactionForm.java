@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
  *
  * @author Kawin
  */
-class TransactionForm {
+public class TransactionForm {
     private long transactionID;
     
     @Size(min = 1, message = "Address must not be empty")

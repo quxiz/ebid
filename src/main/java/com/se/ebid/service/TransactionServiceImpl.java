@@ -7,6 +7,7 @@ package com.se.ebid.service;
 
 import static com.se.ebid.controller.SellingType.BID;
 import static com.se.ebid.controller.SellingType.BUY;
+import com.se.ebid.controller.TransactionForm;
 import com.se.ebid.dao.ItemDAO;
 import com.se.ebid.entity.Member;
 import com.se.ebid.entity.Message;
@@ -60,13 +61,16 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public Transaction setShippingService(long transactionID, String shippingService, String shippingAddress) {
-        Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
+    public Transaction setShipping(TransactionForm transactionForm) {
+        System.out.println("run set shipping");
+        Transaction transaction = this.transactionDAO.findByTransactionID(transactionForm.getTransactionID());
         if (transaction == null) {
+            System.out.println("null transaction");
             return null;
         }
-        transaction.setShippingService(shippingService);
-        transaction.setShippingAddress(shippingAddress);
+        //System.out.println(shippingService + " : "+shippingAddress);
+        transaction.setShippingService(transactionForm.getShippingService());
+        transaction.setShippingAddress(transactionForm.getAddress());
         this.transactionDAO.save(transaction);
         return transaction;
     }

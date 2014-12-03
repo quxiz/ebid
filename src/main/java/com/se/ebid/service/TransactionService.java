@@ -6,6 +6,7 @@
 package com.se.ebid.service;
 
 import com.se.ebid.entity.Member;
+import com.se.ebid.controller.TransactionForm;
 import com.se.ebid.entity.Transaction;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface TransactionService {
     public final int ERR_NOT_ENOUGH_QTY = -4;
     
     public Transaction getTransaction(long transactionID);
-    public Transaction setShippingService(long transactionID, String shippingService, String shippingAddress);
+    public Transaction setShipping(TransactionForm transactionForm);
     public int checkOutTransaction(long transactionID);
     public List<Transaction> getBuyTransaction();
     public List<Transaction> getSellTransaction();

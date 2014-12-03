@@ -61,10 +61,20 @@ public class ResetPasswordController {
         }
          if(resetPasswordForm.getNewPassword().equals(resetPasswordForm.getConfirmNewPassword())){
             boolean success = this.memberService.resetPassword(resetPasswordForm);
-            if(success)
-                return "redirect:/signIn";//หน้าเปลี่ยนรหัสผ่านสำเร็จ
-            else
-                return "redirect:/"; //ไม่มีอีเมล์อยู่
+            if(success){
+                model.addAttribute("isSuccess", true);
+                model.addAttribute("text", "แก้ไขรหัสผ่านเรียบร้าย");
+                model.addAttribute("link", "/signIn");
+                model.addAttribute("btnText", "เข้าสู่หน้าเข้าสู่ระบบ");
+                return "showView";
+            }
+            else{
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "เกิดข้อผิดพลาด");
+                model.addAttribute("link", "");
+                model.addAttribute("btnText", "");
+                return "showView";
+            }
          }
          redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.resetPasswordForm", result);
          redirectAttributes.addFlashAttribute("resetPasswordForm", resetPasswordForm);

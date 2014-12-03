@@ -24,20 +24,23 @@
                             <div class="form-group">
                                 <label for="inputAddress" class="col-sm-3 control-label">ที่อยู่จัดส่ง</label>
                                 <div class="col-sm-6">
-                                    <textarea onKeyUp="keyAddress(event, this.value);" type="text" class="form-control" id="inputAddress" placeholder="ที่อยู่">${transactionForm}</textarea>
+                                    <textarea onKeyUp="keyAddress(event, this.value);" type="text" class="form-control" id="inputAddress" placeholder="ที่อยู่">${member.address}</textarea>
                                 </div>
-
                             </div>
+
                             <form:hidden id="address" path="address"/> 
+
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <input class="btn btn-primary" id="confirmAddress" style="width: 100px;" value="ยืนยันที่อยู่"/>
                                 </div>
                             </div>
                             <br>
+
                             <form:hidden id="shippingService-hidden" path="shippingService" />
 
                             <form:hidden id="price-hidden" path="price" />
+
 
 
                             <div class="form-group shipping" hidden="true">
@@ -48,89 +51,70 @@
                                             - เลือก -&nbsp;&nbsp;<span class="caret"></span>
                                         </button>
                                         <ul id="sendingMethod2" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
-
                                             <c:forEach items="${shippingServices}" var="shippingService" varStatus="status">
                                                 <li onclick="$('#shippingService-hidden').val('${shippingService}'),
                                                                 $('#price-hidden').val('${shippingCosts[status.count-1]+item.price*transaction.quantity}'),
-                                                                $('#shippingCost').val('${shippingCosts[status.count-1]}'),
-                                                                $('#totalPrice').val('${shippingCosts[status.count-1]+item.price*transaction.quantity}')" role="presentation"><a role="menuitem" tabindex="-1">${shippingService} : ${shippingCosts[status.index]} บาท</a>
+                                                                $('#shippingCost').text('${shippingCosts[status.count-1]}'),
+                                                                $('#totalPrice').text('${shippingCosts[status.count-1]+item.price*transaction.quantity}')" role="presentation"><a role="menuitem" tabindex="-1">${shippingService} : ${shippingCosts[status.index]} บาท</a>
                                                 </li>
                                             </c:forEach>
+
 
                                         </ul>
                                     </div>
                                 </div>
-
-                                <br>
-                                <div class="form-group shipping" hidden="true">
-                                    <div class="col-sm-offset-3 col-sm-9">
-                                        <input class="btn btn-primary" id="next" style="width: 100px;" value="ต่อไป"/>
+                            </div>
+                            <div class="form-group shipping" hidden="true">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <input class="btn btn-primary" id="next" style="width: 100px;" value="ต่อไป"/>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="row" id="transaction" hidden="true">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-sm-5">รายการ</th>
+                                                <th class="col-sm-1">จำนวน</th>
+                                                <th class="col-sm-3">จำนวนเงินที่ต้องชำระ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>${item.title}</td>
+                                                <td>${transaction.quantity}</td>
+                                                <td>${item.price*transaction.quantity}</td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2">ค่าส่งสินค้า</td>
+                                                <td id="shippingCost" disabled="true">
+                                              
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="2">รวม</td>
+                                                <td id="totalPrice" disabled="true">
+                                           
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div class="col-md-8 col-sm-offset-2 text-center">
+                                        <input type="submit" class=" btn btn-primary" value="ชำระเงิน"/>
+                                        <a class="btn btn-default" id="cancel">ยกเลิก</a>
                                     </div>
                                 </div>
-
-                                <br>
-                                <br>
-                                <div class="row" id="transaction" hidden="true">
-                                    <div class="col-sm-8 col-sm-offset-2">
-                                        <table class="table table-bordered table-striped table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th class="col-sm-5">รายการ</th>
-                                                    <th class="col-sm-1">จำนวน</th>
-                                                    <th class="col-sm-3">จำนวนเงินที่ต้องชำระ</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>${item.title}</td>
-                                                    <td>${transaction.quantity}</td>
-                                                    <td>${item.price*transaction.quantity}</td>
-                                                </tr>
-                                            </tbody>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="2">ค่าส่งสินค้า</td>
-                                                    <td>
-                                                        <input id="shippingCost" disabled="true">
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td colspan="2">รวม</td>
-                                                    <td>
-                                                        <input id="totalPrice" disabled="true">
-                                                    </td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-
-
-                                        <div class="col-md-8 col-sm-offset-2 text-center">
-                                            <input type="submit" class=" btn btn-primary" value="ชำระเงิน"/>
-                                            <a class="btn btn-default" id="cancel">ยกเลิก</a>
-                                        </div>
-                                    </div>
-
-
-
-
-                                </div>
-
-                            </form:form>
-
-
-
-                        </div>
-
+                            </div>
+                        </form:form>
 
                     </div>
-
-
                 </div>
-
-
-
             </div>
             <script>
 

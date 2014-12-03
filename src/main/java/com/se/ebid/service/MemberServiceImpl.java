@@ -96,10 +96,10 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public int register(RegistrationForm registrationForm) {
         if (this.memberDAO.findByUserID(registrationForm.getUserID()) != null) {
-            return -2;
+            return MemberService.ERR_DUP_USER;
         }
         if (this.memberDAO.findByEmail(registrationForm.getEmail()) != null) {
-            return -1;
+            return MemberService.ERR_DUP_EMAIL;
         }
         Member member = new Member();
         member.setFirstName(registrationForm.getFirstName());

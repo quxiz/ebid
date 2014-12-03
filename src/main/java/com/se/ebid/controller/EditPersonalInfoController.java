@@ -89,11 +89,13 @@ public class EditPersonalInfoController {
             model.addAttribute("isSuccess", isSuccess);
 
             if (isSuccess) {
-
+                   /*
                 model.addAttribute("text", "แก้ไขข้อมูลส่วนตัวเรียบร้อย");
                 model.addAttribute("link", "");
                 model.addAttribute("btnText", "");
-                return "showView";
+                
+                return "showView";*/
+                return "redirect:/editPersonalInfo1";
             } else {
                 model.addAttribute("text", "แก้ไขข้อมูลส่วนตัวล้มเหลว");
                 model.addAttribute("link", "/editPersonalInfo");
@@ -145,17 +147,20 @@ public class EditPersonalInfoController {
 
             boolean isSuccess = this.memberService.editPaymentInfo(paymentInfoForm);
             model.addAttribute("isSuccess", isSuccess);
-            if (isSuccess) {
+            if (isSuccess) {/*
 
                 model.addAttribute("text", "เปลี่ยนบัญชี Paypal เรียบร้อย");
                 model.addAttribute("link", "");
-                model.addAttribute("btnText", "");
+                model.addAttribute("btnText", "");*/
+                
+                return "redirect:/editPersonalInfo3";
             } else {
                 model.addAttribute("text", "เกิดปัญหาในการเปลี่ยนบัญชี Paypal");
                 model.addAttribute("link", "/editPersonalInfo3");
                 model.addAttribute("btnText", "กลับไปแก้ไขบัญชีการจ่ายเงินอีกครั้ง");
+                return "showView";
             }
-            return "showView";
+            
         }
     }
 
@@ -169,16 +174,18 @@ public class EditPersonalInfoController {
             boolean isSuccess = this.memberService.editReceivingInfo(receivingInfoForm);
             model.addAttribute("isSuccess", isSuccess);
             if (isSuccess) {
-
+/*
                 model.addAttribute("text", "เปลี่ยนบัญชีรับเงินเรียบร้อย");
                 model.addAttribute("link", "");
-                model.addAttribute("btnText", "");
+                model.addAttribute("btnText", "");*/
+                return "redirect:/editPersonalInfo4";
             } else {
                 model.addAttribute("text", "เกิดปัญหาในการเปลี่ยนบัญชีรับเงิน");
                 model.addAttribute("link", "/editPersonalInfo4");
                 model.addAttribute("btnText", "กลับไปแก้ไขบัญชีการรับเงินอีกครั้ง");
+                return "showView";
             }
-            return "showView";
+            
         }
     }
 

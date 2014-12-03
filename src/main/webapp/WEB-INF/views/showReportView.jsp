@@ -9,6 +9,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+ <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style>
     .dl-horizontal:before, .dl-horizontal:after {
@@ -44,21 +45,21 @@
                             <div class="col-sm-6">
                                 <strong>จำนวนเงินค่าสินค้าทั้งหมดที่ผู้ซื้อชำระ</strong>
                             </div>
-                            <div>${report.buyingAmount} บาท</div>
+                            <div><fmt:formatNumber value="${report.buyingAmount}" type="number" groupingUsed="true" maxFractionDigits="3" /> บาท</div>
                         </div>
                         <br>
                         <div>
                             <div class="col-sm-6">
                                 <strong>รายรับที่ได้จากค่าบริการ</strong>
                             </div>
-                            <div>${report.chargeAmount} บาท</div>
+                            <div><fmt:formatNumber value="${report.chargeAmount}" type="number" groupingUsed="true" maxFractionDigits="3" /> บาท</div>
                         </div>
                         <br>
                         <div>
                             <div class="col-sm-6">
                                 <strong>ค่าสินค้าที่จ่ายให้ผู้ขายหลังหักค่าบริการ</strong>
                             </div>
-                            <div>${report.sellingAmount}</div>
+                            <div><fmt:formatNumber value="${report.sellingAmount}" type="number" groupingUsed="true" maxFractionDigits="3" /> บาท</div>
                         </div>
                         <br>
                         <div>

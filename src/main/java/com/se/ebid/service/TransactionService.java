@@ -14,9 +14,14 @@ import java.util.List;
  * @author Nuttapong
  */
 public interface TransactionService {
+    
+    public final int ERR_NO_TRANSACTION = -2;
+    public final int ERR_ALREADY_COMPLETE = -3;
+    public final int ERR_NOT_ENOUGH_QTY = -4;
+    
     public Transaction getTransaction(long transactionID);
     public Transaction setShippingService(long transactionID, String shippingService);
-    public boolean checkOutTransaction(long transactionID);
+    public int checkOutTransaction(long transactionID);
     public List<Transaction> getBuyTransaction();
     public List<Transaction> getSellTransaction();
 }

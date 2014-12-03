@@ -43,7 +43,7 @@
                 <h3>Paypal (dummy)</h3>
                 <hr>               
                 <div>
-                <a href ="${pageContext.request.contextPath}/checkOut/checkoutTransaction/${transactionID}" class="btn btn-primary">ตกลง</a>
+                <a href ="${pageContext.request.contextPath}/checkoutTransaction/${transactionID}" class="btn btn-primary">ตกลง</a>
                 <a href ="${pageContext.request.contextPath}/checkOut/error" class="btn btn-primary" >มีเงินในบัญชีไม่พอ</a>
                 <a href ="${pageContext.request.contextPath}/checkOut/${transactionID}" class="btn btn-primary">ยกเลิก</a>
                 </div>                       

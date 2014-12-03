@@ -45,7 +45,7 @@
                                                 </td>
                                                 <td>
 
-                                                    ${listBoughtItems[status.count].title}<!--getItemID()-->
+                                                    ${transaction.title} <!--getItemID()-->
                                                 </td>
                                                 <td>
                                                     ${transaction.quantity}<!--getQuatity()-->
@@ -92,7 +92,7 @@
                                                     ${transaction.timestamp}
                                                 </td>
                                                 <td>
-                                                    ${listBoughtItems[status.count].title}<!--getItemID()-->
+                                                    ${transaction.title}<!--getItemID()-->
                                                 </td>
                                                 <td>
                                                     ${transaction.quantity}<!--getQuatity()-->

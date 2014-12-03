@@ -42,8 +42,19 @@ public class ForgotPasswordController {
     }
   
      @RequestMapping(value = "/forgotPassword/submit", method = RequestMethod.POST)
-     public String onSubmitForgotPassword(ForgotPasswordForm form){
-         this.memberService.forgotPassword(form);
-         return "redirect:/";
+     public String onSubmitForgotPassword(ForgotPasswordForm form , Model model){
+         
+         if (this.memberService.forgotPassword(form)) {
+                model.addAttribute("isSuccess", true);
+                model.addAttribute("text", "จัดส่งอีเมลเพื่อแก้ไขรหัสผ่านเรียบร้อย กรุณาตรวจสอบอีเมล");
+                model.addAttribute("link", "");
+                model.addAttribute("btnText", "");
+            } else {
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "ไม่พบอีเมลนี้ในระบบ");
+                model.addAttribute("link", "/forgotPassword");
+                model.addAttribute("btnText", "กลับสู่หน้าลืมรหัสผ่าน");
+            }
+            return "showView";
      }
 }

@@ -77,6 +77,14 @@ public class CheckOutController {
         System.out.println(transactionForm.getTransactionID());
         System.out.println(transactionForm.getAddress());
         System.out.println(transactionForm.getShippingService());
+        System.out.println(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
+        
+//        if (!transaction.getShippingAddress().equals(transactionForm.getAddress())) {
+//            transaction.setShippingAddress(transactionForm.getAddress());
+//        }
+//        if (!transaction.getShippingService().equals(transactionForm.getShippingService())) {
+//            transaction.setShippingService(transactionForm.getShippingService());
+//        }
         transaction.setShippingAddress(new String(transactionForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
         transaction.setShippingService(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
         transaction.setPrice(transactionForm.getPrice());
@@ -89,18 +97,33 @@ public class CheckOutController {
         return "paymentView";
     }
 
-    @RequestMapping(value = "/checkOut/checkoutTransaction/{transactionID}", method = RequestMethod.GET)
+    @RequestMapping(value = "/checkoutTransaction/{transactionID}", method = RequestMethod.GET)
     public String CheckoutTransaction(@PathVariable("transactionID") long transactionID, Model model) {
-        boolean success = this.transactionService.checkOutTransaction(transactionID);
+        int success = this.transactionService.checkOutTransaction(transactionID);
         model.addAttribute("link", "");
         model.addAttribute("btnText", "");
-        if (success) {
+        if (success>0) {
             model.addAttribute("isSuccess", true);
             model.addAttribute("text", "การชำระเงินเสร็จสิ้น");
 
         } else {
-            model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "มีข้อผิดพลาดในการชำระเงิน");
+            if(success == TransactionService.ERR_ALREADY_COMPLETE){
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "รายการสินค้านี้ได้รับการชำระเงินก่อนหน้านี้แล้ว หากมีข้อผิดพลาด กรุณาแจ้งผู้ดูแล");
+            }
+            else if(success == TransactionService.ERR_NO_TRANSACTION){
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "ไม่พบรายการสินค้า หากมีข้อผิดพลาด กรุณาแจ้งผู้ดูแล");
+            }
+            else if(success == TransactionService.ERR_NOT_ENOUGH_QTY){
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "จำนวนสินค้าปัจจุบันไม่เพียงพอ กรุณาติดต่อระบบชำระเงิน(PayPal)เพื่อแจ้งปัญหา และขอรับเงินคืน");
+            }
+            else{
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "มีข้อผิดพลาดในการชำระเงิน หากมีข้อผิดพลาด กรุณาแจ้งผู้แล");
+            }
+            
         }
         return "showView";
     }
@@ -109,8 +132,8 @@ public class CheckOutController {
     public String CheckoutTransaction(Model model) {
         model.addAttribute("isSuccess", false);
         model.addAttribute("text", "เงินในบัญชีของคุณไม่พอในการจ่าย");
-         model.addAttribute("link", "");
-            model.addAttribute("btnText", "");
+        model.addAttribute("link", "");
+        model.addAttribute("btnText", "");
         return "showView";
     }
 

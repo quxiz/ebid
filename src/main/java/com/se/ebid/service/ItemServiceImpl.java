@@ -194,7 +194,7 @@ public class ItemServiceImpl implements ItemService {
             System.out.println("step4");
             if (outBidderID >= 0) {
                 Member outBidder = this.memberDAO.findByMemberID(outBidderID);
-                if (outBidder != null) {
+                if (outBidder != null && outBidderID != memberID) {
                     sendOutbidEmail(outBidder, item);
                     Message message = new Message();
                     message.setSenderID(Common.ADMIN_ID);
@@ -286,6 +286,7 @@ public class ItemServiceImpl implements ItemService {
         transaction.setSellerID(sellerID);
         transaction.setBuyerID(buyerID);
         transaction.setItemID(itemID);
+        transaction.setTitle(item.getTitle());
         transaction.setQuantity(buyForm.getQuantity());
         transaction.setPrice(item.getPrice() * buyForm.getQuantity());
         transaction.setDetail(item.getDetail());
@@ -446,6 +447,7 @@ public class ItemServiceImpl implements ItemService {
         transaction.setBuyerID(buyerID);
         transaction.setItemID(itemID);
         transaction.setSellerName(sellerName);
+        transaction.setTitle(item.getTitle());
         transaction.setBuyerName(buyerName);
         transaction.setQuantity(item.getQuantity());
         transaction.setPrice(item.getPrice());

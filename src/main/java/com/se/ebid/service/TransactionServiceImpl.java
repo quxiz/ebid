@@ -72,18 +72,23 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public boolean checkOutTransaction(long transactionID) {
+    public int checkOutTransaction(long transactionID) {
         Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
         if (transaction == null) {
-            return false;
+            return TransactionService.ERR_NO_TRANSACTION;
+        }
+        if(transaction.isCompleted()){
+            return TransactionService.ERR_ALREADY_COMPLETE;
         }
         transaction.setCompleted(true);
         this.transactionDAO.save(transaction);
 
         System.out.println(transaction.getItemID());
         Item item = this.itemDAO.findByItemID(transaction.getItemID());
-
-        item.setQuantity(item.getQuantity() - 1);
+        if(item.getQuantity()<transaction.getQuantity()){
+            return TransactionService.ERR_NOT_ENOUGH_QTY;
+        }
+        item.setQuantity(item.getQuantity() - transaction.getQuantity());
         this.itemDAO.save(item);
 
         long sellerID = transaction.getSellerID();
@@ -150,7 +155,7 @@ public class TransactionServiceImpl implements TransactionService {
             messageSeller.setSenderName(Common.ADMIN_NAME);
             this.messageDAO.save(messageSeller);
         }
-        return true;
+        return 1;
     }
 
     private boolean sendSellerEmail(Member member, Transaction transaction) {

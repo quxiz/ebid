@@ -8,6 +8,7 @@ package com.se.ebid.controller;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.Date;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Future;
@@ -104,6 +105,16 @@ public class RegisterItemForm {
 
     public SellingType getSellingType() {
         return sellingType;
+    }
+    
+    @AssertTrue(message = "Selling method must be selected")
+    private boolean isValid() {
+        return this.sellingType != null;
+    }
+    
+    @AssertTrue(message = "Price must be higher than 0")
+    private boolean isValid2() {
+        return this.price > 0;
     }
 
     public void setSellingType(SellingType sellingType) {

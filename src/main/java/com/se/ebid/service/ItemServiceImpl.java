@@ -194,7 +194,7 @@ public class ItemServiceImpl implements ItemService {
             System.out.println("step4");
             if (outBidderID >= 0) {
                 Member outBidder = this.memberDAO.findByMemberID(outBidderID);
-                if (outBidder != null) {
+                if (outBidder != null && outBidderID != memberID) {
                     sendOutbidEmail(outBidder, item);
                     Message message = new Message();
                     message.setSenderID(Common.ADMIN_ID);

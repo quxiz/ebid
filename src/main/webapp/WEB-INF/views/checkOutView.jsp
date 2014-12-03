@@ -61,7 +61,7 @@
                                     </div>
                                 </div>
 
-
+                                        <br>
                                 <div class="form-group shipping" hidden="true">
                                     <div class="col-sm-offset-3 col-sm-9">
                                         <input class="btn btn-primary" id="next" style="width: 100px;" value="ต่อไป"/>

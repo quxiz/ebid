@@ -50,6 +50,7 @@ public class ViewSellerController {
             //System.out.println("rating "+i + ": "+sellerFeedback.get(i).getSellerRating());
         }                
         if(sellerFeedback.size()>0)sellerRating = sellerRating/sellerFeedback.size();
+        else sellerRating = -1.0;
         System.out.println("rating "+sellerRating);
         model.addAttribute("sellerFeedBack", sellerFeedback);
         model.addAttribute("sellerRating", sellerRating);

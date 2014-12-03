@@ -60,12 +60,13 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public Transaction setShippingService(long transactionID, String shippingService) {
+    public Transaction setShippingService(long transactionID, String shippingService, String shippingAddress) {
         Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
         if (transaction == null) {
             return null;
         }
         transaction.setShippingService(shippingService);
+        transaction.setShippingAddress(shippingAddress);
         this.transactionDAO.save(transaction);
         return transaction;
     }

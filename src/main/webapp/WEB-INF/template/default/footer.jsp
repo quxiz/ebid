@@ -12,7 +12,7 @@
 
 <hr>
 <ul class="list-inline text-center">
-    <li><a href="#">ติดต่อทีมงาน</a></li>
+    
     <sec:authorize access="isAuthenticated()">
         <li><a href="${pageContext.request.contextPath}/complaint">ร้องเรียน</a></li>
     </sec:authorize>

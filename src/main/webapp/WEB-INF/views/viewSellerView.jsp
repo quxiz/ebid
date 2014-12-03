@@ -51,7 +51,15 @@
 
                     </div>
                 </div>
-                <h3>Rating ${sellerRating}/5.0 </h3>
+                <c:choose>
+                    <c:when test="${sellerRating<0}">
+                        <h3>ไม่มีการให้ feedback</h3>
+                    </c:when>
+                    <c:otherwise>
+                        <h3>Rating ${sellerRating}/5.0 </h3>
+                    </c:otherwise>
+                </c:choose>
+
                 <hr>
                 <div class = "row">
                     <c:forEach items="${sellerFeedback}" var="feedback">

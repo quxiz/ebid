@@ -33,30 +33,35 @@ public class ViewSellerController {
     public void setMemberService(MemberService memberService) {
         this.memberService = memberService;
     }
+
     double roundTwoDecimals(double d) {
-            DecimalFormat twoDForm = new DecimalFormat("#.##");
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
         return Double.valueOf(twoDForm.format(d));
-}
+    }
 
     @RequestMapping(value = "/viewSeller/{sellerID}", method = RequestMethod.GET)
     @SuppressWarnings("empty-statement")
     public String viewSeller(@PathVariable("sellerID") String sellerName, Model model) {
         model.addAttribute("title", "ข้อมูลผู้ขาย");
-        
+
         model.addAttribute("seller", this.memberService.getSeller(sellerName));
         Member seller = this.memberService.getSeller(sellerName);
-       System.out.print(seller.getUserID());
-        long sellerID = seller.getMemberID();        
+        System.out.print(seller.getUserID());
+        long sellerID = seller.getMemberID();
         List<Feedback> sellerFeedback = this.memberService.getSellerFeedback(sellerID);
-        Double sellerRating=0.0;
-        System.out.println("size "+sellerFeedback.size());
-        for(int i=0; i<sellerFeedback.size();i++){
-            sellerRating +=sellerFeedback.get(i).getBuyerRating();
+        Double sellerRating = 0.0;
+        System.out.println("size " + sellerFeedback.size());
+        for (int i = 0; i < sellerFeedback.size(); i++) {
+            sellerRating += sellerFeedback.get(i).getBuyerRating();
             //System.out.println("rating "+i + ": "+sellerFeedback.get(i).getSellerRating());
         }
-        if(sellerFeedback.size()>0)sellerRating = sellerRating/sellerFeedback.size();
-        sellerRating = roundTwoDecimals(sellerRating);
-        System.out.println("rating "+sellerRating);
+        if (sellerFeedback.size() > 0) {
+            sellerRating = sellerRating / sellerFeedback.size();
+            sellerRating = roundTwoDecimals(sellerRating);
+        } else {
+            sellerRating = -1.0;
+        }
+        System.out.println("rating " + sellerRating);
         model.addAttribute("sellerFeedback", sellerFeedback);
         model.addAttribute("sellerRating", sellerRating);
         return "viewSellerView";

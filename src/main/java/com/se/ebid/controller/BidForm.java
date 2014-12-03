@@ -6,6 +6,7 @@
 package com.se.ebid.controller;
 
 import java.math.BigDecimal;
+import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
@@ -17,6 +18,7 @@ import javax.validation.constraints.Size;
 public class BidForm {
     private long itemID;
     
+    @DecimalMax(value = "1000000", message = "Maxbid must be lower than or equal to 1000000")
     @DecimalMin(value = "0.01", message = "Maxbid must be greater than or equal to 0.01")
     @Size(min = 1, message = "Maxbid must not be empty")
     @Digits(integer = 20, fraction = 2, message = "Maxbid is invalid")

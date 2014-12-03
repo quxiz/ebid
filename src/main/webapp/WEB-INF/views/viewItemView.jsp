@@ -59,14 +59,14 @@
 
                         <c:if test = "${fn:length(listPhotos)>0}"> 
                             <div class="item active">
-                                <img src="${listPhotos[0].photoURL}" alt="..." class="carousel-img">
+                                <img src="${listPhotos[0].photoURL}" alt="" class="carousel-img">
                                 <div class="carousel-caption">
                                 </div>
                             </div>
                             <c:if test = "${fn:length(listPhotos)>1}">
                                 <c:forEach var="i" begin="1" end="${fn:length(listPhotos)-1}">
                                     <div class="item">
-                                        <img src="${listPhotos[i].photoURL}" alt="..." class="carousel-img">
+                                        <img src="${listPhotos[i].photoURL}" alt="" class="carousel-img">
                                         <div class="carousel-caption">
                                         </div>
                                     </div>

@@ -77,12 +77,17 @@ public class CheckOutController {
         System.out.println(transactionForm.getTransactionID());
         System.out.println(transactionForm.getAddress());
         System.out.println(transactionForm.getShippingService());
-        if (!transaction.getShippingAddress().equals(transactionForm.getAddress())) {
-            transaction.setShippingAddress(transactionForm.getAddress());
-        }
-        if (!transaction.getShippingService().equals(transactionForm.getShippingService())) {
-            transaction.setShippingService(transactionForm.getShippingService());
-        }
+    
+        System.out.println(new String(transactionForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
+        System.out.println(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
+        transaction.setShippingAddress(new String(transactionForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
+        transaction.setShippingService(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
+//        if (!transaction.getShippingAddress().equals(transactionForm.getAddress())) {
+//            transaction.setShippingAddress(transactionForm.getAddress());
+//        }
+//        if (!transaction.getShippingService().equals(transactionForm.getShippingService())) {
+//            transaction.setShippingService(transactionForm.getShippingService());
+//        }
 // transaction.setShippingAddress(new String(transactionForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
         // transaction.setShippingService(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
         transaction.setPrice(transactionForm.getPrice());

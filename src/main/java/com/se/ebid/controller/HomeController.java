@@ -82,6 +82,7 @@ public class HomeController {
                 listPhotos.add(photos.get(0));
             }
         }
+        
         model.addAttribute("listPhotos", listPhotos); 
         model.addAttribute("maxIndex", listPhotos.size()-1);
         model.addAttribute("listRecentItems",listRecentItems);

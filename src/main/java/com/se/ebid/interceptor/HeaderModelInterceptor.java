@@ -12,6 +12,7 @@ import com.se.ebid.service.CustomUser;
 import com.se.ebid.service.MessageService;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,8 @@ public class HeaderModelInterceptor extends HandlerInterceptorAdapter {
 
                 modelAndView.addObject("categoryList", categoryList);
                 modelAndView.addObject("searchForm", new SearchForm());
+                modelAndView.addObject("currentDate", new Date());
+         
                 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
                 if (!(auth instanceof AnonymousAuthenticationToken)) {
                     CustomUser customUser = (CustomUser) auth.getPrincipal();

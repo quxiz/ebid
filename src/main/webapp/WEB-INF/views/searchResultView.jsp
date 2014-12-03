@@ -53,13 +53,28 @@
                 <div class = "row">
                     <div class="col-sm-4 col-md-4">
                         <div class="thumbnail">
-                            <a href="viewItem/${item.itemID}"><img src="${listPhotos[status.index].photoURL}" alt="..."></a>
+                            <a href="viewItem/${item.itemID}"><img src="${listPhotos[status.index].photoURL}" alt=""></a>
                         </div>
                     </div>
                     <div class="col-sm-8 col-md-8">	
                         <div class="caption">	
                             <a href="viewItem/${item.itemID}"><h3>${item.title}</h3></a>
-                            <h4>${item.price} บาท</h4><h4>${item.sellingType.name}</h4>
+                             <c:choose>
+                                        <c:when test = "${item.sellingType=='BUY'}">
+                                            <h4>${item.price} บาท</h4><h4><span class="label label-success">ซื้อทันที</span></h4>
+                                        </c:when>
+
+
+                                        <c:when test="${currentDate > item.endTime}"> 
+                                            <h4>หมดเวลาประมูล</h4>
+                                            <h4><span class="label label-warning">ประมูล</span></h4>
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <h4>ราคาปัจจุบัน ${item.price} บาท</h4><h4><span class="label label-warning">ประมูล</span></h4>
+                                        </c:otherwise>
+                                    </c:choose>
+                          
                         </div>
                     </div>
                 </div>

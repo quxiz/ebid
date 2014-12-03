@@ -26,18 +26,13 @@
                                 <div class="col-sm-6">
                                     <form:textarea type="text" class="form-control" id="inputAddress" placeholder="ที่อยู่" path="address"/>
                                 </div>
-
                             </div>
-
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <input class="btn btn-primary" id="confirmAddress" style="width: 100px;" value="ยืนยันที่อยู่"/>
                                 </div>
                             </div>
                             <br>
-
-
-
                             <div class="form-group shipping" hidden="true">
                                 <label for="sendingMethod" class="col-sm-3 control-label">วิธีการจัดส่ง</label>
                                 <div class="col-sm-6">
@@ -46,7 +41,6 @@
                                             - เลือก -&nbsp;&nbsp;<span class="caret"></span>
                                         </button>
                                         <ul id="sendingMethod2" class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="dropdownMenu">
-
                                             <c:forEach items="${shippingServices}" var="shippingService" varStatus="status">
                                                 <li onclick="$('#shippingService-hidden').val('${shippingService}'),
                                                                 $('#price-hidden').val('${shippingCosts[status.count-1]+item.price*transaction.quantity}'),
@@ -55,19 +49,16 @@
                                                 </li>
                                             </c:forEach>
                                             <form:hidden id="shippingService-hidden" path="shippingService" />
-
                                             <form:hidden id="price-hidden" path="price" />
                                         </ul>
                                     </div>
                                 </div>
-
-                                        <br>
+                                <br>
                                 <div class="form-group shipping" hidden="true">
                                     <div class="col-sm-offset-3 col-sm-9">
                                         <input class="btn btn-primary" id="next" style="width: 100px;" value="ต่อไป"/>
                                     </div>
                                 </div>
-
                                 <br>
                                 <br>
                                 <div class="row" id="transaction" hidden="true">
@@ -104,47 +95,30 @@
                                                 </tr>
                                             </tfoot>
                                         </table>
-
-
                                         <div class="col-md-8 col-sm-offset-2 text-center">
                                             <input type="submit" class=" btn btn-primary" value="ชำระเงิน"/>
                                             <a class="btn btn-default" id="cancel">ยกเลิก</a>
                                         </div>
                                     </div>
-
-
-
-
                                 </div>
-
                             </form:form>
-
-
-
                         </div>
-
-
                     </div>
-
-
                 </div>
-
-
-
             </div>
             <script>
 
-                $("#confirmAddress").click(function() {
+                $("#confirmAddress").click(function () {
                     $(".shipping").show();
                     document.getElementById('inputAddress').disabled = true;
                     document.getElementById('confirmAddress').disabled = true;
                 });
-                $("#next").click(function() {
+                $("#next").click(function () {
                     $("#transaction").show();
                     document.getElementById('next').disabled = true;
                     document.getElementById('sendingMethod').disabled = true;
                 });
-                $("#cancel").click(function() {
+                $("#cancel").click(function () {
                     $(".shipping").hide();
                     $("#transaction").hide();
                     document.getElementById('inputAddress').disabled = false;

@@ -24,18 +24,20 @@
                             <div class="form-group">
                                 <label for="inputAddress" class="col-sm-3 control-label">ที่อยู่จัดส่ง</label>
                                 <div class="col-sm-6">
-                                    <form:textarea type="text" class="form-control" id="inputAddress" placeholder="ที่อยู่" path="address"/>
+                                    <textarea onKeyUp="keyAddress(event, this.value);" type="text" class="form-control" id="inputAddress" placeholder="ที่อยู่">${transactionForm}</textarea>
                                 </div>
 
                             </div>
-
+                            <form:hidden id="address" path="address"/> 
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <input class="btn btn-primary" id="confirmAddress" style="width: 100px;" value="ยืนยันที่อยู่"/>
                                 </div>
                             </div>
                             <br>
+                            <form:hidden id="shippingService-hidden" path="shippingService" />
 
+                            <form:hidden id="price-hidden" path="price" />
 
 
                             <div class="form-group shipping" hidden="true">
@@ -54,14 +56,12 @@
                                                                 $('#totalPrice').val('${shippingCosts[status.count-1]+item.price*transaction.quantity}')" role="presentation"><a role="menuitem" tabindex="-1">${shippingService} : ${shippingCosts[status.index]} บาท</a>
                                                 </li>
                                             </c:forEach>
-                                            <form:hidden id="shippingService-hidden" path="shippingService" />
 
-                                            <form:hidden id="price-hidden" path="price" />
                                         </ul>
                                     </div>
                                 </div>
 
-                                        <br>
+                                <br>
                                 <div class="form-group shipping" hidden="true">
                                     <div class="col-sm-offset-3 col-sm-9">
                                         <input class="btn btn-primary" id="next" style="width: 100px;" value="ต่อไป"/>
@@ -134,17 +134,17 @@
             </div>
             <script>
 
-                $("#confirmAddress").click(function() {
+                $("#confirmAddress").click(function () {
                     $(".shipping").show();
                     document.getElementById('inputAddress').disabled = true;
                     document.getElementById('confirmAddress').disabled = true;
                 });
-                $("#next").click(function() {
+                $("#next").click(function () {
                     $("#transaction").show();
                     document.getElementById('next').disabled = true;
                     document.getElementById('sendingMethod').disabled = true;
                 });
-                $("#cancel").click(function() {
+                $("#cancel").click(function () {
                     $(".shipping").hide();
                     $("#transaction").hide();
                     document.getElementById('inputAddress').disabled = false;
@@ -152,6 +152,10 @@
                     document.getElementById('next').disabled = false;
                     document.getElementById('sendingMethod').disabled = false;
                 });
+
+                function keyAddress(e, val) {
+                    $('#address').val(val);
+                }
             </script>
         </tiles:putAttribute>
     </tiles:insertDefinition>

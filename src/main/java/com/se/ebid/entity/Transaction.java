@@ -57,6 +57,16 @@ public class Transaction {
     private java.sql.Timestamp timestamp;
     @Column(name="completed")
     private boolean completed;
+    @Column(name="title")
+    private String title;
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 
     public long getTransactionID() {
         return transactionID;

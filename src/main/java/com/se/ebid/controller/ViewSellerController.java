@@ -9,6 +9,7 @@ import com.se.ebid.entity.Feedback;
 import com.se.ebid.entity.Member;
 import com.se.ebid.service.MemberService;
 import com.sun.corba.se.impl.interceptors.PINoOpHandlerImpl;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +33,10 @@ public class ViewSellerController {
     public void setMemberService(MemberService memberService) {
         this.memberService = memberService;
     }
+    double roundTwoDecimals(double d) {
+            DecimalFormat twoDForm = new DecimalFormat("#.##");
+        return Double.valueOf(twoDForm.format(d));
+}
 
     @RequestMapping(value = "/viewSeller/{sellerID}", method = RequestMethod.GET)
     @SuppressWarnings("empty-statement")
@@ -48,10 +53,11 @@ public class ViewSellerController {
         for(int i=0; i<sellerFeedback.size();i++){
             sellerRating +=sellerFeedback.get(i).getBuyerRating();
             //System.out.println("rating "+i + ": "+sellerFeedback.get(i).getSellerRating());
-        }                
+        }
         if(sellerFeedback.size()>0)sellerRating = sellerRating/sellerFeedback.size();
+        sellerRating = roundTwoDecimals(sellerRating);
         System.out.println("rating "+sellerRating);
-        model.addAttribute("sellerFeedBack", sellerFeedback);
+        model.addAttribute("sellerFeedback", sellerFeedback);
         model.addAttribute("sellerRating", sellerRating);
         return "viewSellerView";
     }

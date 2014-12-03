@@ -88,6 +88,7 @@ public class CommentServiceImpl implements CommentService {
         message.setTimestamp(new Timestamp(System.currentTimeMillis()));
         message.setSeen(false);
         message.setSenderName(Common.getUserID());
+
         this.messageDAO.save(message);
 
         return true;

@@ -104,6 +104,7 @@
 
                     <!--buy form-->
                     <c:if test="${item.sellingType=='BUY'}"> 
+
                         <c:url var="addAction" value="/viewItem/${item.itemID}/onSubmitBuyForm" ></c:url>
                         <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="buyForm" method="POST" name="buyForm">
                             <label for="inputQuantity" class="col-xs-2 control-label">จำนวน</label>
@@ -112,9 +113,9 @@
                                 <span class="input-group-addon">/${item.quantity}</span>
 <!--                                    <label for="inputQuantity" class="col-xs-2 control-label">/${item.quantity}</label>-->
                             </div>
-
-                            <input type="submit" class="btn btn-primary" style="width:160px" value="ซื้อทันที"/>
-
+                            <c:if test ="${item.sellerID != yourID}">
+                                <input type="submit" class="btn btn-primary" style="width:160px" value="ซื้อทันที"/>
+                            </c:if>
                         </form:form>
                     </c:if>
                     <!--bid form-->
@@ -128,34 +129,35 @@
                         </div>
                         <br>
                         <c:if test="${showBidForm}">
+                            <c:if test ="${item.sellerID != yourID}">
 
+                                <c:url var="addAction" value="/viewItem/${item.itemID}/onSubmitBidForm" ></c:url>
+                                <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="bidForm" method="POST" name="bidForm">
 
-                            <c:url var="addAction" value="/viewItem/${item.itemID}/onSubmitBidForm" ></c:url>
-                            <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="bidForm" method="POST" name="bidForm">
-
-                                <div class="form-group">
-                                    <label for="maxBid" class="col-sm-5 control-label">จำนวนเงินสูงสุด</label>
-                                    <div class="input-group col-sm-4">
-                                        <form:input type="text" class="form-control" id="maxBid" path="maxBid" />
-                                        <span class="input-group-addon">บาท</span>
+                                    <div class="form-group">
+                                        <label for="maxBid" class="col-sm-5 control-label">จำนวนเงินสูงสุด</label>
+                                        <div class="input-group col-sm-4">
+                                            <form:input type="text" class="form-control" id="maxBid" path="maxBid" />
+                                            <span class="input-group-addon">บาท</span>
+                                        </div>
                                     </div>
-                                </div>
 
 
-                                <div class="form-group">
-                                    <label for="bidIncrement" class="col-sm-5 control-label">จำนวนเงินเพิ่มแต่ละครั้ง</label>
-                                    <div class="input-group col-sm-4">
-                                        <form:input type="text" class="form-control" id="bidIncrement" path="bidIncrement" />
-                                        <span class="input-group-addon">บาท</span>
+                                    <div class="form-group">
+                                        <label for="bidIncrement" class="col-sm-5 control-label">จำนวนเงินเพิ่มแต่ละครั้ง</label>
+                                        <div class="input-group col-sm-4">
+                                            <form:input type="text" class="form-control" id="bidIncrement" path="bidIncrement" />
+                                            <span class="input-group-addon">บาท</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <c:if test ="${item.sellerID == yourID}">
+
                                     <div class="text-center">
                                         <input type="submit" class="btn btn-primary" style="width:160px" value="ประมูล">
                                     </div>
-                                </c:if>
 
-                            </form:form>
+
+                                </form:form>
+                            </c:if>
                         </c:if>
 
                     </c:if>
@@ -270,7 +272,9 @@
 
                 </div>
                 <div class="panel-footer">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#askQuestionModal">สอบถามข้อมูลสินค้า</button>
+                    <c:if test ="${item.sellerID != yourID}">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#askQuestionModal">สอบถามข้อมูลสินค้า</button>
+                    </c:if>
                     <div class="modal fade" id="askQuestionModal">
                         <div class="modal-dialog">
                             <div class="modal-content">

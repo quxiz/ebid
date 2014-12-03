@@ -42,11 +42,15 @@ public class ViewSellerController {
         Member seller = this.memberService.getSeller(sellerName);
        System.out.print(seller.getUserID());
         long sellerID = seller.getMemberID();        
-        List<Feedback> sellerFeedback = new ArrayList<>();
-        sellerFeedback = this.memberService.getSellerFeedback(sellerID);
+        List<Feedback> sellerFeedback = this.memberService.getSellerFeedback(sellerID);
         Double sellerRating=0.0;
-        for(int i=0; i<sellerFeedback.size();i++)sellerRating +=sellerFeedback.get(i).getSellerRating();                ;
+        System.out.println("size "+sellerFeedback.size());
+        for(int i=0; i<sellerFeedback.size();i++){
+            sellerRating +=sellerFeedback.get(i).getBuyerRating();
+            //System.out.println("rating "+i + ": "+sellerFeedback.get(i).getSellerRating());
+        }                
         if(sellerFeedback.size()>0)sellerRating = sellerRating/sellerFeedback.size();
+        System.out.println("rating "+sellerRating);
         model.addAttribute("sellerFeedBack", sellerFeedback);
         model.addAttribute("sellerRating", sellerRating);
         return "viewSellerView";

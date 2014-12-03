@@ -232,8 +232,6 @@
                             </div>
                                      <form:errors path="*" cssClass="errorblock" element="div" />
 
-                            <br>
-                            <form:errors path="*" cssClass="errorblock" element="div" />
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <input type="submit" class="btn btn-primary" value="ประกาศขาย"/>

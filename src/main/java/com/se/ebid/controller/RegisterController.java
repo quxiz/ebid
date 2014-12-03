@@ -73,12 +73,14 @@ public class RegisterController {
                     model.addAttribute("text", "อีเมลนี้ถูกใช้ไปแล้ว");
                     model.addAttribute("link", "/register");
                     model.addAttribute("btnText", "กลับหน้าสมัครสมาชิก");
+                    return "showView";
                 }
                 case MemberService.ERR_DUP_USER: {
                     model.addAttribute("isSuccess", false);
                     model.addAttribute("text", "ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว");
                     model.addAttribute("link", "/register");
                     model.addAttribute("btnText", "กลับหน้าสมัครสมาชิก");
+                    return "showView";
                 }
             }
             if (ret >= 0) {

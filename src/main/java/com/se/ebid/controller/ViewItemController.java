@@ -145,6 +145,7 @@ public class ViewItemController {
         Member member = this.memberService.getMember();
         model.addAttribute("link", "");
         model.addAttribute("btnText", "");
+       
         if (buyForm.getQuantity() <= 0) {
             model.addAttribute("isSuccess", false);
             model.addAttribute("text", "จำนวนสินค้าไม่ถูกต้อง");
@@ -168,8 +169,9 @@ public class ViewItemController {
     @RequestMapping(value = "/buyItem/{itemID}", method = RequestMethod.GET)
     public String buyItem(@ModelAttribute("buyForm") BuyForm buyForm, @PathVariable("itemID") long itemID, Model model) {
         Invoice invoice = this.itemService.buy(buyForm);
-        model.addAttribute("link", "/viewItem/"+itemID);
+        model.addAttribute("link", "/viewItem/" + itemID);
         model.addAttribute("btnText", "กลับหน้าดูข้อมูลสินค้า");
+         model.addAttribute("title", "ยืนยันการซื้อสินค้า");
         if (invoice.getItemID() == ItemService.ERR_BLACKLIST) {
             model.addAttribute("isSuccess", false);
             model.addAttribute("text", "คุณติดบัญชีดำ");
@@ -195,6 +197,7 @@ public class ViewItemController {
     @RequestMapping(value = "/buyItem/{itemID}/confirmBuy", method = RequestMethod.POST)
     public String confirmBuy(@PathVariable("itemID") long itemID, @ModelAttribute("buyForm") BuyForm buyForm) {
         long transactionID = this.itemService.confirmBuy(buyForm);
+
         if (transactionID < 0) {
             return "/viewItem/" + itemID;
         }

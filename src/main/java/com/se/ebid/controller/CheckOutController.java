@@ -73,11 +73,11 @@ public class CheckOutController {
 
     @RequestMapping(value = "/checkOut/submit", method = RequestMethod.POST)
     public String onSubmitCheckout(@ModelAttribute("transactionForm") TransactionForm transactionForm, Model model) throws UnsupportedEncodingException {
-        Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
+        //Transaction transaction = this.transactionService.getTransaction(transactionForm.getTransactionID());
         System.out.println(transactionForm.getTransactionID());
-        System.out.println(transactionForm.getAddress());
-        System.out.println(transactionForm.getShippingService());
-        System.out.println(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
+        //System.out.println(transactionForm.getAddress());
+        //System.out.println(transactionForm.getShippingService());
+        //System.out.println(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
         
 //        if (!transaction.getShippingAddress().equals(transactionForm.getAddress())) {
 //            transaction.setShippingAddress(transactionForm.getAddress());
@@ -85,9 +85,13 @@ public class CheckOutController {
 //        if (!transaction.getShippingService().equals(transactionForm.getShippingService())) {
 //            transaction.setShippingService(transactionForm.getShippingService());
 //        }
-        transaction.setShippingAddress(new String(transactionForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
-        transaction.setShippingService(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
-        transaction.setPrice(transactionForm.getPrice());
+        
+        transactionForm.setAddress(new String(transactionForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
+        transactionForm.setShippingService(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
+        if(transactionService == null){
+            System.out.println("null service");
+        }
+        transactionService.setShipping(transactionForm);
         return "redirect:/payment/" + transactionForm.getTransactionID();
     }
 

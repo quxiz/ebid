@@ -168,6 +168,9 @@ public class ItemServiceImpl implements ItemService {
         if (item == null) {
             return ItemService.ERR_MISSING_ITEM;
         }
+        if (memberID == item.getSellerID()){
+            return ItemService.ERR_SAME_PERSON;
+        }
         System.out.println("step2");
         double newMaxBid = bidForm.getMaxBid();
         if (newMaxBid < item.getPrice()) {
@@ -237,7 +240,8 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public Invoice buy(BuyForm buyForm) {
-        Member member = this.memberDAO.findByMemberID(Common.getMemberID());
+        long memberID = Common.getMemberID();
+        Member member = this.memberDAO.findByMemberID(memberID);
         Invoice invoice = new Invoice();
         if (member == null) {
             invoice.setItemID(ItemService.ERR_MISSING_MEMBER);
@@ -262,6 +266,10 @@ public class ItemServiceImpl implements ItemService {
             invoice.setItemID(ItemService.ERR_NOT_ENOUGH_QTY);
             return invoice;
         }
+        if (item.getSellerID() == memberID){
+            invoice.setItemID(ItemService.ERR_SAME_PERSON);
+            return invoice;
+        }
 
         invoice.setItemID(itemID);
         invoice.setQuantity(buyForm.getQuantity());
@@ -282,9 +290,15 @@ public class ItemServiceImpl implements ItemService {
         if (buyForm.getQuantity() > item.getQuantity()) {
             return -1;
         }
+        if(buyerID == item.getSellerID()){
+            return ItemService.ERR_SAME_PERSON;
+        }
         Transaction transaction = new Transaction();
         transaction.setSellerID(sellerID);
+        transaction.setSellerName(sellerName);
         transaction.setBuyerID(buyerID);
+        transaction.setBuyerName(buyerName);
+        transaction.setSellingType(SellingType.BUY);
         transaction.setItemID(itemID);
         transaction.setTitle(item.getTitle());
         transaction.setQuantity(buyForm.getQuantity());
@@ -449,6 +463,7 @@ public class ItemServiceImpl implements ItemService {
         transaction.setSellerName(sellerName);
         transaction.setTitle(item.getTitle());
         transaction.setBuyerName(buyerName);
+        transaction.setSellingType(SellingType.BID);
         transaction.setQuantity(item.getQuantity());
         transaction.setPrice(item.getPrice());
         transaction.setDetail(item.getDetail());

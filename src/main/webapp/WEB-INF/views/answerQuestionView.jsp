@@ -22,31 +22,45 @@
                         <h3 class="panel-title">ตอบคำถาม</h3>
                     </div>
                     <div class="panel-body">
-                        <form:form modelAttribute="answerForm" method="POST" name="answerForm" onsubmit="return confirmSubmit(this, '${pageContext.request.contextPath}/answerQuestion/onSubmit')">
+                        <form:form class="form-horizontal" modelAttribute="answerForm" method="POST" name="answerForm" onsubmit="return confirmSubmit(this, '${pageContext.request.contextPath}/answerQuestion/onSubmit')">
                             <div class="form-group">
                                 <label for="title" class="col-sm-3 control-label">ชื่อสินค้า</label>
                                 <div class="col-sm-9">
-                                    <div id="title">${itemTitle}</div>
+                                    <h5 id="title">${itemTitle}</h5>
                                 </div>
                             </div>
-                            <label for="detail" class="col-sm-3 control-label">รายละเอียด</label>
-                            <div class="col-sm-9">
-                                ${comment.commentDetail}
+                            <div class="form-group">
+                                <label for="detail" class="col-sm-3 control-label">คำถาม</label>
+                                <div class="col-sm-9">
+                                    <h5 id="detail">${comment.commentDetail}</h5>
+                                </div>
                             </div>
-                            <div class="text-right">
-                                โดย ${comment.commenterName}<!--getCommenterName()-->
+                            <div class="form-group">
+                                <label for="by" class="col-sm-3 control-label">โดย</label>
+                                <div class="col-sm-9">
+                                    <h5 id="by">${comment.commenterName}</h5><!--getCommenterName()-->
+                                </div>
                             </div>
-                            <hr>
-                            <div class="col-sm-9"> 
-                                <form:textarea id="answer" placeholder="คำตอบ" class="form-control" style="resize:vertical;" path ="answer"/><!--คำตอบ-->
+                            <div class="form-group">
+                                <label for="answer" class="col-sm-3 control-label">คำตอบ</label>
+                                <div class="col-sm-8">
+                                    <form:textarea id="answer" placeholder="คำตอบ" class="form-control" path ="answer"/><!--คำตอบ-->
+                                    <!--getCommenterName()-->
+                                </div>
                             </div>
+
                             <form:hidden path="itemID"/>
                             <form:hidden path="parentID"/>
                             <form:hidden path="askerID"/>
-                            <br>
-                            <br>
-                            <br>
-                            <input type="submit" class="btn btn-primary" value="ตอบคำถาม">
+
+                            <div class="form-group">
+
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <input type="submit" class="btn btn-primary" value="ตอบคำถาม">
+                                    <!--getCommenterName()-->
+                                </div>
+                            </div>
+
 
                             <!--submit()-->
                         </form:form>

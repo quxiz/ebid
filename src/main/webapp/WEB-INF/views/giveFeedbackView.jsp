@@ -21,28 +21,30 @@
                         <c:url var="addAction" value="/giveFeedback/submit" ></c:url>
                         <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="feedbackForm" method="POST" name="feedbackForm">
                             <form:hidden path="transactionID" />
-                            <div>
+                            <div class="form-group">
                                 <c:if test="${isSeller}">
-                                    ท่านได้ทำการขายสินค้า
-                                    <a href="${pageContext.request.contextPath}/viewItem/${item.itemID}">${item.title}</a>
+                                    <label for="memberName" class="col-sm-3 control-label">สินค้าที่ซื้อ</label>
                                 </c:if>
                                 <c:if test="${isBuyer}">
-                                    ท่านได้ทำการซื้อสินค้า
-                                    <a href="${pageContext.request.contextPath}/viewItem/${item.itemID}">${item.title}</a>
+                                    <label for="memberName" class="col-sm-3 control-label">สินค้าที่ขาย</label>
                                 </c:if>
+                                <div class="col-sm-9">
+                                    <h5><a href="${pageContext.request.contextPath}/viewItem/${item.itemID}">${item.title}</a></h5>
+                                </div> 
                             </div>
-                            <br/>
+                         
                             <div class="form-group">
                                 <c:if test="${isSeller}">
                                     <label for="memberName" class="col-sm-3 control-label">ผู้ซื้อ</label>
                                     <div class="col-sm-9">
-                                        <input id="memberName" class="form-control" value="${buyerName}" disabled="true">
+                                        <h5 id="memberName">${buyerName}</h5>
                                     </div>    
                                 </c:if>
                                 <c:if test="${isBuyer}">
                                     <label for="memberName" class="col-sm-3 control-label">ผู้ขาย</label>
                                     <div class="col-sm-9">
-                                        <input id="memberName" class="form-control" value="${sellerName}" disabled="true">
+                                        <h5 id="memberName">${sellerName}</h5>
+
                                     </div>     
                                 </c:if>
                             </div>

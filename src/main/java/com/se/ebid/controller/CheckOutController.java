@@ -99,16 +99,27 @@ public class CheckOutController {
 
     @RequestMapping(value = "/checkoutTransaction/{transactionID}", method = RequestMethod.GET)
     public String CheckoutTransaction(@PathVariable("transactionID") long transactionID, Model model) {
-        boolean success = this.transactionService.checkOutTransaction(transactionID);
+        int success = this.transactionService.checkOutTransaction(transactionID);
         model.addAttribute("link", "");
         model.addAttribute("btnText", "");
-        if (success) {
+        if (success>0) {
             model.addAttribute("isSuccess", true);
             model.addAttribute("text", "การชำระเงินเสร็จสิ้น");
 
         } else {
-            model.addAttribute("isSuccess", false);
-            model.addAttribute("text", "มีข้อผิดพลาดในการชำระเงิน");
+            if(success == TransactionService.ERR_ALREADY_COMPLETE){
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "รายการสินค้านี้ได้รับการชำระเงินก่อนหน้านี้แล้ว หากมีข้อผิดพลาด กรุณาแจ้งผู้ดูแล");
+            }
+            else if(success == TransactionService.ERR_NO_TRANSACTION){
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "ไม่พบรายการสินค้า หากมีข้อผิดพลาด กรุณาแจ้งผู้ดูแล");
+            }
+            else{
+                model.addAttribute("isSuccess", false);
+                model.addAttribute("text", "มีข้อผิดพลาดในการชำระเงิน หากมีข้อผิดพลาด กรุณาแจ้งผู้แล");
+            }
+            
         }
         return "showView";
     }

@@ -15,7 +15,6 @@
 <tiles:insertDefinition name="defaultTemplate">
     <tiles:putAttribute name="body">
         <!DOCTYPE html>
-
         <div class="container">
             <div class="col-sm-8 col-md-6" style="float:none; margin-left:auto; margin-right:auto">
                 <div class="panel panel-default">
@@ -31,19 +30,16 @@
                                 </div>
                             </div>
                             <label for="detail" class="col-sm-3 control-label">รายละเอียด</label>
-                                <div class="col-sm-9">
-                                    <textarea type="text" class="form-control" id="detail" placeholder="รายละเอียด" path="detail"/>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                ${comment.commentDetail}<!--getCommentDetail()-->
+                            <div class="col-sm-9">
+                                ${comment.commentDetail}
                             </div>
                             <div class="text-right">
-                                ${comment.commenterName}<!--getCommenterName()-->
+                                โดย ${comment.commenterName}<!--getCommenterName()-->
                             </div>
                             <hr>
-                            <form:textarea id="answer" placeholder="คำตอบ" class="col-sm-12 col-md-12" style="resize:vertical;" path ="answer"/><!--คำตอบ-->
+                            <div class="col-sm-9"> 
+                                <form:textarea id="answer" placeholder="คำตอบ" class="form-control" style="resize:vertical;" path ="answer"/><!--คำตอบ-->
+                            </div>
                             <form:hidden path="itemID"/>
                             <form:hidden path="parentID"/>
                             <form:hidden path="askerID"/>
@@ -58,10 +54,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
         <script>
             function confirmSubmit(submitForm, submitUrl) { // <--- changed here
                 if (confirm("นี่คือคำตอบของท่าน?")) {

@@ -85,8 +85,10 @@ public class TransactionServiceImpl implements TransactionService {
 
         System.out.println(transaction.getItemID());
         Item item = this.itemDAO.findByItemID(transaction.getItemID());
-
-        item.setQuantity(item.getQuantity() - 1);
+        if(item.getQuantity()<transaction.getQuantity()){
+            return TransactionService.ERR_NOT_ENOUGH_QTY;
+        }
+        item.setQuantity(item.getQuantity() - transaction.getQuantity());
         this.itemDAO.save(item);
 
         long sellerID = transaction.getSellerID();

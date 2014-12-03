@@ -72,10 +72,13 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public boolean checkOutTransaction(long transactionID) {
+    public int checkOutTransaction(long transactionID) {
         Transaction transaction = this.transactionDAO.findByTransactionID(transactionID);
         if (transaction == null) {
-            return false;
+            return TransactionService.ERR_NO_TRANSACTION;
+        }
+        if(transaction.isCompleted()){
+            return TransactionService.ERR_ALREADY_COMPLETE;
         }
         transaction.setCompleted(true);
         this.transactionDAO.save(transaction);
@@ -150,7 +153,7 @@ public class TransactionServiceImpl implements TransactionService {
             messageSeller.setSenderName(Common.ADMIN_NAME);
             this.messageDAO.save(messageSeller);
         }
-        return true;
+        return 1;
     }
 
     private boolean sendSellerEmail(Member member, Transaction transaction) {

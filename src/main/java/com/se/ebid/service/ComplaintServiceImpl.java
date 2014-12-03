@@ -76,6 +76,7 @@ public class ComplaintServiceImpl implements ComplaintService{
         complaint.setSolverID(solveComplaintForm.getSolverID());
         complaint.setSolveDetail(solveComplaintForm.getDetail());
         complaint.setSolveTimestamp(new Timestamp(System.currentTimeMillis()));
+        complaint.setSolved(true);
         this.complaintDAO.save(complaint);
         
         Message message = new Message();

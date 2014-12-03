@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.se.ebid.controller;
 
 import com.se.ebid.entity.Item;
@@ -17,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
- 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +26,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
- 
+
 /**
  * Handles requests for the application home page.
  */
 @Controller
 public class HomeController {
-     
+
 //    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 //     
 //    /**
@@ -57,24 +56,27 @@ public class HomeController {
 //        return "homeView";
 //    }
     private ItemService itemService;
-    
+
     @Autowired
-    public void setItemService(ItemService itemService){
+    public void setItemService(ItemService itemService) {
         this.itemService = itemService;
     }
-    
-       @RequestMapping("/")
-    public String viewHome(Model model,HttpServletRequest request) {
+
+    @RequestMapping("/")
+    public String viewHome(Model model, HttpServletRequest request) {
+        if (request.isUserInRole("ROLE_ADMIN")) {
+            return "redirect:/admin";
+        }
         model.addAttribute("title", "หน้าหลัก");
         SearchForm searchForm = new SearchForm();
         searchForm.setCategory(CategoryType.All);
         searchForm.setKeyword("");
-        List<Item> listRecentItems= new ArrayList<>();
+        List<Item> listRecentItems = new ArrayList<>();
         listRecentItems = this.itemService.search(searchForm);
-        List<Photo> listPhotos = new ArrayList<>();        
+        List<Photo> listPhotos = new ArrayList<>();
         for (int i = 0; i < 4 && i < listRecentItems.size(); i++) {
             List<Photo> photos = this.itemService.getPhoto(listRecentItems.get(i).getItemID());
-            if ( (photos.size() == 0) || photos.get(0).getPhotoURL()==null) {
+            if ((photos.size() == 0) || photos.get(0).getPhotoURL() == null) {
                 Photo photo = new Photo();
                 photo.setPhotoURL(request.getContextPath() + "/resources/img/logo.jpg");
                 listPhotos.add(photo);
@@ -82,10 +84,16 @@ public class HomeController {
                 listPhotos.add(photos.get(0));
             }
         }
-        
-        model.addAttribute("listPhotos", listPhotos); 
-        model.addAttribute("maxIndex", listPhotos.size()-1);
-        model.addAttribute("listRecentItems",listRecentItems);
+
+        model.addAttribute("listPhotos", listPhotos);
+        model.addAttribute("maxIndex", listPhotos.size() - 1);
+        model.addAttribute("listRecentItems", listRecentItems);
         return "homeView";
+    }
+
+    @RequestMapping("/admin")
+    public String viewAdmin(Model model, HttpServletRequest request) {
+        
+        return "adminView";
     }
 }

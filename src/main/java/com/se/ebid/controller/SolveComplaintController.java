@@ -61,8 +61,8 @@ public class SolveComplaintController {
         return "solveComplaintView";
     }
 
-    @RequestMapping(value="/solveComplaint/{complaintID}", method = RequestMethod.GET)
-    public String viewSolveComplaintID(@PathVariable("complaintID") long complaintID,Model model) {
+    @RequestMapping(value = "/solveComplaint/{complaintID}", method = RequestMethod.GET)
+    public String viewSolveComplaintID(@PathVariable("complaintID") long complaintID, Model model) {
         model.addAttribute("title", "ตอบข้อร้องเรียน");
         SolveComplaintForm solveComplaintForm = new SolveComplaintForm();
         solveComplaintForm.setComplaintID(complaintID);
@@ -75,7 +75,10 @@ public class SolveComplaintController {
     @RequestMapping(value = "/solveComplaint/submit", method = RequestMethod.POST)
     public String onSubmit(@ModelAttribute("solveComplaintForm") SolveComplaintForm solveComplaintForm, Model model) throws UnsupportedEncodingException {
         solveComplaintForm.setDetail(new String(solveComplaintForm.getDetail().getBytes("iso8859-1"), "UTF-8"));
-        boolean isSuccess = this.complaintService.solveComplaint(solveComplaintForm);
+        boolean isSuccess = false;
+        if (!solveComplaintForm.getDetail().equals("")) {
+            isSuccess = this.complaintService.solveComplaint(solveComplaintForm);
+        }
         model.addAttribute("isSuccess", isSuccess);
         if (isSuccess) {
             model.addAttribute("text", "ตอบข้อร้องเรียนเรียบร้อย ");

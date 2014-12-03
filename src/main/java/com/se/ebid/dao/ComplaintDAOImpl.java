@@ -48,7 +48,9 @@ public class ComplaintDAOImpl implements ComplaintDAO {
     public List<Complaint> getComplaint() {
         Session session = this.sessionFactory.getCurrentSession();
         session.getTransaction().begin();
-        List<Complaint> complaintList = session.createQuery("from Complaint where solved is false").list();
+        List<Complaint> complaintList = session.createQuery("from Complaint").list();
+        
+        //List<Complaint> complaintList = session.createQuery("from Complaint where solved is false").list();
         session.getTransaction().commit();
         return complaintList;
     }

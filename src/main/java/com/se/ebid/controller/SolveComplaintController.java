@@ -51,7 +51,7 @@ public class SolveComplaintController {
         model.addAttribute("listSize", listComplaints.size());
         List<String> listUser = new ArrayList();
         for (Complaint listComplaint : listComplaints) {
-            Member member = this.memberService.getMemberByMemberID(listComplaint.getComplaintID());
+            Member member = this.memberService.getMemberByMemberID(listComplaint.getComplainterID());
             if (member != null) {
                 listUser.add(member.getUserID());
             }

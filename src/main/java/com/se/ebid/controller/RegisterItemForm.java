@@ -119,7 +119,12 @@ public class RegisterItemForm {
     
     @AssertTrue(message = "The difference between end time and current time must be at least 3 minutes")
     private boolean isValid3() {
-        return this.endTime.getTime() - System.currentTimeMillis() > 1000*60*3;
+        if(this.sellingType == SellingType.BID){
+            if(this.endTime == null)
+                return false;
+            return this.endTime.getTime() - System.currentTimeMillis() > 1000*60*3;
+        }
+        return true;
     }
 
     public void setSellingType(SellingType sellingType) {

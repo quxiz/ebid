@@ -51,7 +51,15 @@
 
                     </div>
                 </div>
-                <h3>Rating ${sellerRating}/5.0 </h3>
+                <c:choose>
+                    <c:when test="${sellerRating<0}">
+                        <h3>ไม่มีการให้ feedback</h3>
+                    </c:when>
+                    <c:otherwise>
+                        <h3>Rating ${sellerRating}/5.0 </h3>
+                    </c:otherwise>
+                </c:choose>
+
                 <hr>
                 <div class = "row">
                     <c:forEach items="${sellerFeedback}" var="feedback">
@@ -61,22 +69,22 @@
                             <div class="thumbnail">
                                 <h4>${feedback.buyerName}</h4>
                                 <c:if test ="${feedback.sellerRating > 0}">
-                                <c:forEach begin = "1" end = "${feedback.sellerRaing}" >
-                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                </c:forEach></c:if>
+                                    <c:forEach begin = "1" end = "${feedback.sellerRaing}" >
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                    </c:forEach></c:if>
                                 <c:if test ="${feedback.sellerRating < 5}">
-                                <c:forEach begin = "1" end = "${5-feedback.sellerRaing}" >
-                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
-                                </c:forEach></c:if>
+                                    <c:forEach begin = "1" end = "${5-feedback.sellerRaing}" >
+                                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                                    </c:forEach></c:if>
                                 <p>${feedback.buyerComment}</p>
                             </div>
                         </div>
-                            <hr>
+                        <hr>
                     </c:forEach>                                     
                 </div>
             </div>
             <hr>
-            
+
         </div>
     </tiles:putAttribute>
     <script>

@@ -91,9 +91,9 @@
                     <div class="text-center">
                         <h3>${item.price} บาท</h3>
                         <c:if test="${item.sellingType=='BID'}"> 
-                            <h4>Maxbid User : 
+                            <h4>ผู้ให้ประมูลสูงสุด : 
                                 <c:if test ="${maxbidID == yourID}">
-                                    You </h4>
+                                    คุณ </h4>
                                 </c:if>
                                 <c:if test ="${maxbidID != yourID}">
                                 Anonymous </h4>
@@ -149,9 +149,12 @@
                                         <span class="input-group-addon">บาท</span>
                                     </div>
                                 </div>
-                                <div class="text-center">
-                                    <input type="submit" class="btn btn-primary" style="width:160px" value="ประมูล">
-                                </div>
+                                <c:if test ="${item.sellerID == yourID}">
+                                    <div class="text-center">
+                                        <input type="submit" class="btn btn-primary" style="width:160px" value="ประมูล">
+                                    </div>
+                                </c:if>
+
                             </form:form>
                         </c:if>
 
@@ -239,70 +242,70 @@
                 </div> <!-- col -->
             </div> <!-- row -->
 
-<br>
-        <br>
+            <br>
+            <br>
 
-        <br>
+            <br>
 
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">คำถามเกี่ยวกับสินค้า</h3>
-            </div>
-            <div class="panel-body">
-                <c:forEach items="${listComments}" var="comment">
-                    <c:if test = "${comment.parentID==null}">
-                        <h4 class="media-heading">${comment.commenterName}</h4> <!--name-->
-                        <p>${comment.commentDetail}</p>
-                        <hr>
-                        <!-- Nested media object -->
-                        <c:forEach items="${listComments}" var="nestedComment">
-                            <c:if test ="${nestedComment.parentID == comment.commentID}">
-                                <h4 class="media-heading" style="margin-left:50px">${nestedComment.commenterName}</h4> <!--name-->
-                                <p style="margin-left:50px">${nestedComment.commentDetail}</p>
-                                <hr>
-                            </c:if>
-                        </c:forEach>
-                    </c:if>
-                </c:forEach>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">คำถามเกี่ยวกับสินค้า</h3>
+                </div>
+                <div class="panel-body">
+                    <c:forEach items="${listComments}" var="comment">
+                        <c:if test = "${comment.parentID==null}">
+                            <h4 class="media-heading">${comment.commenterName}</h4> <!--name-->
+                            <p>${comment.commentDetail}</p>
+                            <hr>
+                            <!-- Nested media object -->
+                            <c:forEach items="${listComments}" var="nestedComment">
+                                <c:if test ="${nestedComment.parentID == comment.commentID}">
+                                    <h4 class="media-heading" style="margin-left:50px">${nestedComment.commenterName}</h4> <!--name-->
+                                    <p style="margin-left:50px">${nestedComment.commentDetail}</p>
+                                    <hr>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
+                    </c:forEach>
 
-            </div>
-            <div class="panel-footer">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#askQuestionModal">สอบถามข้อมูลสินค้า</button>
-                <div class="modal fade" id="askQuestionModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                <h4 class="modal-title">สอบถามข้อมูลสินค้า</h4>
-                            </div>
-
-
-                            <c:url var="addAction" value="/viewItem/${itemID}/onSubmitQuestionForm" ></c:url>
-                            <form:form action="${addAction}" modelAttribute="questionForm" method="POST" name="questionForm">
-                                <div class="modal-body">
-                                    <h4>คำถาม</h4>                                   
-                                    <form:textarea class="form-control" rows="3" path="question" />
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#askQuestionModal">สอบถามข้อมูลสินค้า</button>
+                    <div class="modal fade" id="askQuestionModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title">สอบถามข้อมูลสินค้า</h4>
                                 </div>
-                                <div class="modal-footer">
-                                    <!--แก้เป็น link-->
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                    <input type="submit" class="btn btn-primary" value="ส่งคำถาม"/>
-                                </div>
-                            </form:form>
 
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
+
+                                <c:url var="addAction" value="/viewItem/${itemID}/onSubmitQuestionForm" ></c:url>
+                                <form:form action="${addAction}" modelAttribute="questionForm" method="POST" name="questionForm">
+                                    <div class="modal-body">
+                                        <h4>คำถาม</h4>                                   
+                                        <form:textarea class="form-control" rows="3" path="question" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!--แก้เป็น link-->
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                        <input type="submit" class="btn btn-primary" value="ส่งคำถาม"/>
+                                    </div>
+                                </form:form>
+
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                </div>
             </div>
+
+
+
+
+
+
         </div>
 
-
-
-
-
-
-        </div>
-        
         <script>
             $(function () {
                 //ต้องผูกกับ timestamp

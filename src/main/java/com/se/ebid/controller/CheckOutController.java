@@ -85,9 +85,10 @@ public class CheckOutController {
 //        if (!transaction.getShippingService().equals(transactionForm.getShippingService())) {
 //            transaction.setShippingService(transactionForm.getShippingService());
 //        }
-        transaction.setShippingAddress(new String(transactionForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
-        transaction.setShippingService(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
-        transaction.setPrice(transactionForm.getPrice());
+        
+        //transaction.setShippingAddress(new String(transactionForm.getAddress().getBytes("iso8859-1"), "UTF-8"));
+        //transaction.setShippingService(new String(transactionForm.getShippingService().getBytes("iso8859-1"), "UTF-8"));
+        this.transactionService.setShippingService(transactionForm.getTransactionID(), transactionForm.getShippingService(), transactionForm.getAddress());
         return "redirect:/payment/" + transactionForm.getTransactionID();
     }
 

@@ -20,7 +20,7 @@ public interface TransactionService {
     public final int ERR_NOT_ENOUGH_QTY = -4;
     
     public Transaction getTransaction(long transactionID);
-    public Transaction setShippingService(long transactionID, String shippingService);
+    public Transaction setShippingService(long transactionID, String shippingService, String shippingAddress);
     public int checkOutTransaction(long transactionID);
     public List<Transaction> getBuyTransaction();
     public List<Transaction> getSellTransaction();

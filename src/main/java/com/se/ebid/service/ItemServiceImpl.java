@@ -168,6 +168,9 @@ public class ItemServiceImpl implements ItemService {
         if (item == null) {
             return ItemService.ERR_MISSING_ITEM;
         }
+        if (memberID == item.getSellerID()){
+            return ItemService.ERR_SAME_PERSON;
+        }
         System.out.println("step2");
         double newMaxBid = bidForm.getMaxBid();
         if (newMaxBid < item.getPrice()) {
@@ -284,7 +287,10 @@ public class ItemServiceImpl implements ItemService {
         }
         Transaction transaction = new Transaction();
         transaction.setSellerID(sellerID);
+        transaction.setSellerName(sellerName);
         transaction.setBuyerID(buyerID);
+        transaction.setBuyerName(buyerName);
+        transaction.setSellingType(SellingType.BUY);
         transaction.setItemID(itemID);
         transaction.setTitle(item.getTitle());
         transaction.setQuantity(buyForm.getQuantity());
@@ -449,6 +455,7 @@ public class ItemServiceImpl implements ItemService {
         transaction.setSellerName(sellerName);
         transaction.setTitle(item.getTitle());
         transaction.setBuyerName(buyerName);
+        transaction.setSellingType(SellingType.BID);
         transaction.setQuantity(item.getQuantity());
         transaction.setPrice(item.getPrice());
         transaction.setDetail(item.getDetail());

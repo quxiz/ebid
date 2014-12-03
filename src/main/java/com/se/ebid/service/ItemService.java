@@ -29,6 +29,7 @@ public interface ItemService {
     public static final int ERR_NO_PAY_ACC = -6;
     public static final int ERR_NOT_ENOUGH_QTY = -7;
     public static final int ERR_NO_AUTOBID = -8;
+    public static final int ERR_SAME_PERSON = -9;
     
     public List<Item> search(SearchForm searchForm);
     public Item getItem(long itemID);

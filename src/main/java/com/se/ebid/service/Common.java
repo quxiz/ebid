@@ -50,8 +50,8 @@ public class Common {
     public static final boolean sendMail(String to, String subject, String text) {
         System.out.println("!!!!!!!!!!!!!!!!!!! test send email !!!!!!!!!!!!!!!!!!!");
         String host = "smtp.gmail.com";
-        final String user = "noreply.ebid@gmail.com";//change accordingly  
-        final String password = "ebidse2014";//change accordingly  
+        final String user = "ebid.se2014@gmail.com";//change accordingly  
+        final String password = "eBid2014";//change accordingly  
 
         //String to = "iqmathematics@gmail.com";//change accordingly  
 

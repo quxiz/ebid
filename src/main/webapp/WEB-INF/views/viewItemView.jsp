@@ -33,7 +33,7 @@
     <tiles:putAttribute name="body">
 
         <div class="container">
- 
+
             <h1>${item.title}</h1>
             <!--addaction link profile-->
             <a href="${pageContext.request.contextPath}/viewSeller/${item.sellerName}">${item.sellerName}</a> <!--name-->
@@ -87,31 +87,40 @@
                         <h3>${item.price} บาท</h3>
                         <c:if test="${item.sellingType=='BID'}"> 
                             <h4>ผู้ให้ราคาสูงสุด : 
-                                <c:if test ="${maxbidID == yourID}">
-                                    คุณ </h4>
-                                </c:if>
-                                <c:if test ="${maxbidID != yourID}">
-                                Anonymous </h4>
-                            </c:if>
+                                <c:choose>
+                                    <c:when test ="${maxbidID == yourID}">
+                                        คุณ </h4>
+                                    </c:when>
+
+                                <c:when test ="${maxbidID == -1}">
+                                    ยังไม่มีผู้ประมูล </h4>
+
+                                </c:when>
+                                <c:otherwise>
+                                    สมาชิกท่านอื่น </h4>
+
+                                </c:otherwise>
+                            </c:choose>
                         </c:if>
                     </div>
                     <br>
 
                     <!--buy form-->
                     <c:if test="${item.sellingType=='BUY'}"> 
+                        <c:if test ="${item.sellerID != yourID}">
+                            <c:url var="addAction" value="/viewItem/${item.itemID}/onSubmitBuyForm" ></c:url>
+                            <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="buyForm" method="POST" name="buyForm">
+                                <label for="inputQuantity" class="col-xs-2 control-label">จำนวน</label>
+                                <div class="input-group col-xs-4">
+                                    <form:input type="text" class="form-control" id="inputQuantity" placeholder="จำนวน" value="1" path="quantity"/>
+                                    <span class="input-group-addon">/${item.quantity}</span>
+    <!--                                    <label for="inputQuantity" class="col-xs-2 control-label">/${item.quantity}</label>-->
+                                </div>
 
-                        <c:url var="addAction" value="/viewItem/${item.itemID}/onSubmitBuyForm" ></c:url>
-                        <form:form class="form-horizontal" role="form" action="${addAction}" modelAttribute="buyForm" method="POST" name="buyForm">
-                            <label for="inputQuantity" class="col-xs-2 control-label">จำนวน</label>
-                            <div class="input-group col-xs-4">
-                                <form:input type="text" class="form-control" id="inputQuantity" placeholder="จำนวน" value="1" path="quantity"/>
-                                <span class="input-group-addon">/${item.quantity}</span>
-<!--                                    <label for="inputQuantity" class="col-xs-2 control-label">/${item.quantity}</label>-->
-                            </div>
-                            <c:if test ="${item.sellerID != yourID}">
                                 <input type="submit" class="btn btn-primary" style="width:160px" value="ซื้อทันที"/>
-                            </c:if>
-                        </form:form>
+
+                            </form:form>
+                        </c:if>
                     </c:if>
                     <!--bid form-->
                     <c:if test="${item.sellingType=='BID'}">

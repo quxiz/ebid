@@ -54,7 +54,7 @@ public class HeaderModelInterceptor extends HandlerInterceptorAdapter {
                 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
                 if (!(auth instanceof AnonymousAuthenticationToken)) {
                     CustomUser customUser = (CustomUser) auth.getPrincipal();
-//                    modelAndView.addObject("unreadMessageCount", this.messageService.getUnreadCount(customUser.getMemberID()));
+                    modelAndView.addObject("unreadMessageCount", this.messageService.getUnreadCount(customUser.getMemberID()));
                 }
             }
         } catch (NullPointerException e) {

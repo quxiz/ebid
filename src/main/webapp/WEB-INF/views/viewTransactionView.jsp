@@ -28,11 +28,13 @@
                                     <thead>
                                         <tr>
                                             <th class="col-md-1">วันที่</th>
-                                            <th class="col-md-5">สินค้า</th>
+                                            <th class="col-md-3">สินค้า</th>
                                             <th class="col-md-1">จำนวน</th>
                                             <th class="col-md-1">ราคา</th>
                                             <th class="col-md-1">การซื้อ</th>
+                                            <th class="col-md-3">ที่อยู่จัดส่ง</th>
                                             <th class="col-md-1">การจัดส่ง</th>
+                                            
                                             <th class="col-md-1">ผู้ขาย</th>
                                         </tr>
                                     </thead>
@@ -57,8 +59,12 @@
                                                     ${transaction.sellingType}<!--getSellingType()-->
                                                 </td>
                                                 <td>
+                                                    ${transaction.shippingAddress}<!--getShippingService()-->
+                                                </td>
+                                                <td>
                                                     ${transaction.shippingService}<!--getShippingService()-->
                                                 </td>
+                                                
                                                 <td>
                                                     <a href="${pageContext.request.contextPath}/viewSeller/${transaction.sellerName}">${transaction.sellerName}</a><!--ชื่อผู้แจ้ง getSellerID()-->
                                                 </td>
@@ -76,11 +82,13 @@
                                     <thead>
                                         <tr>
                                             <th class="col-md-1">วันที่</th>
-                                            <th class="col-md-5">สินค้า</th>
+                                            <th class="col-md-3">สินค้า</th>
                                             <th class="col-md-1">จำนวน</th>
                                             <th class="col-md-1">ราคา</th>
                                             <th class="col-md-1">การขาย</th>
+                                            <th class="col-md-3">ที่อยู่จัดส่ง</th>
                                             <th class="col-md-1">การจัดส่ง</th>
+                                            
                                             <th class="col-md-1">ผู้ซื้อ</th>
                                         </tr>
                                     </thead>
@@ -104,8 +112,12 @@
                                                     ${transaction.sellingType}<!--getSellingType()-->
                                                 </td>
                                                 <td>
+                                                    ${transaction.shippingAddress}<!--getShippingService()-->
+                                                </td>
+                                                <td>
                                                     ${transaction.shippingService}<!--getShippingService()-->
                                                 </td>
+                                                
                                                 <td>
                                                     <a href="${pageContext.request.contextPath}/viewSeller/${transaction.buyerName}">${transaction.buyerName}</a><!--ชื่อผู้แจ้ง getBuyerID()-->
                                                 </td>

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -57,7 +58,7 @@ public class ViewItemController {
     }
 
     @RequestMapping(value = "/viewItem/{itemID}", method = RequestMethod.GET)
-    public String viewItem(@PathVariable("itemID") long itemID, Model model) {
+    public String viewItem(@PathVariable("itemID") long itemID, Model model, HttpServletRequest request) {
         QuestionForm questionForm = new QuestionForm();
         Item item = this.itemService.getItem(itemID);
         BuyForm buyForm = new BuyForm();
@@ -68,8 +69,16 @@ public class ViewItemController {
         model.addAttribute("bidForm", bidForm);
         model.addAttribute("questionForm", questionForm);
         model.addAttribute("item", item);
-        model.addAttribute("listPhotos", this.itemService.getPhoto(itemID));
+
         model.addAttribute("listComments", this.itemService.getComment(itemID));
+        List<Photo> listPhotos = this.itemService.getPhoto(itemID);
+
+        if (listPhotos.size() == 0) {
+            Photo photo = new Photo();
+            photo.setPhotoURL(request.getContextPath() + "/resources/img/logo.jpg");
+            listPhotos.add(photo);
+        }
+        model.addAttribute("listPhotos", listPhotos);
         if (item.getShippingService() != null && item.getShippingCost() != null) {
             String[] shippingServices = item.getShippingService().split(" ");
             String[] shippingCosts = item.getShippingCost().split(" ");
@@ -86,12 +95,14 @@ public class ViewItemController {
         }
         if (item.getSellingType() == SellingType.BID) {
             model.addAttribute("maxbidID", this.itemService.getMaxBidderID(itemID));
-            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            if (!(auth instanceof AnonymousAuthenticationToken)) {
-                CustomUser customUser = (CustomUser) auth.getPrincipal();
-                model.addAttribute("yourID", customUser.getMemberID());
-            }
+
         }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            CustomUser customUser = (CustomUser) auth.getPrincipal();
+            model.addAttribute("yourID", customUser.getMemberID());
+        }
+
         return "viewItemView";
 
     }
@@ -145,7 +156,7 @@ public class ViewItemController {
         Member member = this.memberService.getMember();
         model.addAttribute("link", "");
         model.addAttribute("btnText", "");
-       
+
         if (buyForm.getQuantity() <= 0) {
             model.addAttribute("isSuccess", false);
             model.addAttribute("text", "จำนวนสินค้าไม่ถูกต้อง");
@@ -171,7 +182,7 @@ public class ViewItemController {
         Invoice invoice = this.itemService.buy(buyForm);
         model.addAttribute("link", "/viewItem/" + itemID);
         model.addAttribute("btnText", "กลับหน้าดูข้อมูลสินค้า");
-         model.addAttribute("title", "ยืนยันการซื้อสินค้า");
+        model.addAttribute("title", "ยืนยันการซื้อสินค้า");
         if (invoice.getItemID() == ItemService.ERR_BLACKLIST) {
             model.addAttribute("isSuccess", false);
             model.addAttribute("text", "คุณติดบัญชีดำ");

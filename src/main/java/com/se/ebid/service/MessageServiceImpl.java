@@ -48,4 +48,6 @@ public class MessageServiceImpl implements MessageService{
     public long getUnreadCount(long memberID) {
         return this.messageDAO.getUnreadCount(memberID);
     }
+    
+     
 }

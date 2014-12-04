@@ -116,17 +116,17 @@ public class TransactionServiceImpl implements TransactionService {
             Message messageBuyer = new Message();
             messageBuyer.setSenderID(Common.ADMIN_ID);
             messageBuyer.setReceiverID(buyerID);
-            if (item.getSellingType() == BUY) {
+            //if (item.getSellingType() == BUY) {
                 messageBuyer.setMessage("Transaction is completed!<br/>"
                         + "<a href=\"" + Common.BASE_URL + Common.VIEW_ITEM_URL + item.getItemID() + "\">"
                         + item.getTitle() + "</a><br/><br/>"
                         + "<a href=\"" + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID() + "\">"
                         + "Click to enter the feedback for your seller" + "</a>");
-            }
+            /*}
             if (item.getSellingType() == BID) {
                 messageBuyer.setMessage("The transaction is completed!"
                         + "The transaction ID " + transaction.getTransactionID() + " is completed.");
-            }
+            }*/
             messageBuyer.setTimestamp(new Timestamp(System.currentTimeMillis()));
             messageBuyer.setSeen(false);
             messageBuyer.setSenderName(Common.ADMIN_NAME);

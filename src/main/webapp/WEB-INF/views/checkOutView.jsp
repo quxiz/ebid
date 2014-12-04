@@ -24,7 +24,7 @@
                             <div class="form-group">
                                 <label for="inputAddress" class="col-sm-3 control-label">ที่อยู่จัดส่ง</label>
                                 <div class="col-sm-6">
-                                    <textarea onKeyUp="keyAddress(event, this.value);" type="text" class="form-control" id="inputAddress" placeholder="ที่อยู่">${member.address}</textarea>
+                                    <textarea onKeyUp="keyAddress(event, this.value);" type="text" class="form-control" id="inputAddress" placeholder="ที่อยู่">${address}</textarea>
                                 </div>
                             </div>
 

@@ -59,7 +59,7 @@ public class CheckOutController {
         transactionForm.setTransactionID(transactionID);
         transactionForm.setAddress(member.getAddress());
         model.addAttribute("transactionForm", transactionForm);
-        model.addAttribute("member", member);
+        model.addAttribute("address", member.getAddress()+" "+member.getCountry());
         model.addAttribute("transaction", transaction);
         model.addAttribute("item", item);
         if (item.getShippingService() != null && item.getShippingCost() != null) {

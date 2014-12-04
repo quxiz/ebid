@@ -32,7 +32,7 @@
     <tiles:putAttribute name="body">
 
         <div class="container">
-            <div class="col-sm-8" style="float:none; margin-left:auto; margin-right:auto">
+            <div class="col-sm-10 col-md-8" style="float:none; margin-left:auto; margin-right:auto">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">สมัครสมาชิก</h3>
@@ -41,29 +41,29 @@
                         <c:url var="addAction" value="/register/submit" ></c:url>
                         <form:form action="${addAction}" class="form-horizontal" role="form" modelAttribute="registrationForm" method="POST" name="registrationForm">
                             <div class="form-group">
-                                <label for="inputName" class="col-sm-3 control-label">ชื่อจริง</label>
-                                <div class="col-sm-4">
+                                <label for="inputName" class="col-sm-4 col-md-3 control-label">ชื่อจริง</label>
+                                <div class="col-sm-6 col-md-4">
                                     <form:input type="text" class="form-control" id="inputName" placeholder="ชื่อ" path="firstName" required="true"/>
                                     <form:errors path="firstName" cssClass="error" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputSurname" class="col-sm-3 control-label">นามสกุล</label>
-                                <div class="col-sm-4">
+                                <label for="inputSurname" class="col-sm-4 col-md-3 control-label">นามสกุล</label>
+                                <div class="col-sm-6 col-md-4">
                                     <form:input type="text" class="form-control" id="inputSurname" placeholder="นามสกุล" path="lastName" required="true"/>
                                     <form:errors path="lastName" cssClass="error" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputAddress" class="col-sm-3 control-label">ที่อยู่</label>
-                                <div class="col-sm-8">
+                                <label for="inputAddress" class="col-sm-4 col-md-3 control-label">ที่อยู่</label>
+                                <div class="col-sm-6 col-md-4">
                                     <form:textarea class="form-control" id="inputAddress" placeholder="ที่อยู่" path="address"></form:textarea>
                                     <form:errors path="address" cssClass="error" />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputCountry" class="col-sm-3 control-label">ประเทศ</label>
-                                <div class="col-sm-9">
+                                <label for="inputCountry" class="col-sm-4 col-md-3 control-label">ประเทศ</label>
+                                <div class="col-sm-7">
                                     <div class="dropdown">
                                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownCountry" data-toggle="dropdown">
                                             - เลือก -&nbsp;&nbsp;<span class="caret"></span>
@@ -81,34 +81,34 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="inputEmail" class="col-sm-3 control-label">อีเมล</label>
-                                <div class="col-sm-4">
+                                <label for="inputEmail" class="col-sm-4 col-md-3 control-label">อีเมล</label>
+                                <div class="col-sm-6 col-md-4">
                                     <form:input type="email" class="form-control" id="inputEmail" placeholder="อีเมล" path="email" required="true"/>
                                 </div>
 
                             </div>
                             <div class="form-group">
-                                <label for="inputTel" class="col-sm-3 control-label">หมายเลขโทรศัพท์</label>
-                                <div class="col-sm-4">
+                                <label for="inputTel" class="col-sm-4 col-md-3 control-label">หมายเลขโทรศัพท์</label>
+                                <div class="col-sm-6 col-md-4">
                                     <form:input type="text" class="form-control" id="inputTel" placeholder="หมายเลขโทรศัพท์" path="phoneNo" required="true"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputUserID" class="col-sm-3 control-label">ชื่อผู้ใช้</label>
-                                <div class="col-sm-4">
+                                <label for="inputUserID" class="col-sm-4 col-md-3 control-label">ชื่อผู้ใช้</label>
+                                <div class="col-sm-6 col-md-4">
                                     <form:input type="text" class="form-control" id="inputUserID" placeholder="ชื่อผู้ใช้" path="userID" required="true"/>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="inputPassword" class="col-sm-3 control-label">รหัสผ่าน</label>
-                                <div class="col-sm-4">
+                                <label for="inputPassword" class="col-sm-4 col-md-3 control-label">รหัสผ่าน</label>
+                                <div class="col-sm-6 col-md-4">
                                     <form:input type="password" class="form-control" id="inputPassword" placeholder="รหัสผ่าน" path="password" required="true"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inputPassword2" class="col-sm-3 control-label">ยืนยันรหัสผ่าน</label>
-                                <div class="col-sm-4">
+                                <label for="inputPassword2" class="col-sm-4 col-md-3 control-label">ยืนยันรหัสผ่าน</label>
+                                <div class="col-sm-6 col-md-4">
                                     <form:input type="password" class="form-control" id="inputPassword2" placeholder="ยืนยันรหัสผ่าน" path="confirmPassword" required="true"/>
                                     <br>
                                 </div>
@@ -117,7 +117,7 @@
                             <form:errors path="*" cssClass="errorblock" element="div" />
 
                             <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
+                                <div class="col-sm-offset-4 col-md-offset-3 col-sm-9">
                                     <input type="submit" class="btn btn-primary" value="สมัครสมาชิก"/>
                                 </div>
                             </div>

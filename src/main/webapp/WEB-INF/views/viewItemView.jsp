@@ -33,12 +33,7 @@
     <tiles:putAttribute name="body">
 
         <div class="container">
-            <ol class="breadcrumb">
-                <li><a href="${pageContext.request.contextPath}">หน้าแรก</a></li>
-                <li><a href="${pageContext.request.contextPath}/search?category=All">สินค้า</a></li>
-                <li><a href="${pageContext.request.contextPath}/search?category=${item.category}" class="active">${item.category.name}</a></li> <!--ติดไว้ก่อนรอ search-->
-            </ol>
-
+ 
             <h1>${item.title}</h1>
             <!--addaction link profile-->
             <a href="${pageContext.request.contextPath}/viewSeller/${item.sellerName}">${item.sellerName}</a> <!--name-->

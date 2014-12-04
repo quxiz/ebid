@@ -41,8 +41,10 @@ public class ReportBidResultJob extends QuartzJobBean {
         } else {
             System.out.println("itemService not null");
         }
-        this.itemService.reportBidResult(itemID);
+        boolean isSuccess = this.itemService.reportBidResult(itemID);
         System.out.println("itemService call finish");
+        System.out.println("reportBidResult " + isSuccess);
+        
         } catch(Exception e){
             System.out.println(e.getCause());
         }

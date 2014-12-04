@@ -482,10 +482,12 @@ public class ItemServiceImpl implements ItemService {
         System.out.println("bidResult 5");
         Member buyer = this.memberDAO.findByMemberID(buyerID);
         if (buyer == null) {
+            System.out.println("bidResult 5.1");
             return false;
         }
         if (!sendBuyerEmail(buyer, transaction)) {
-            return false;
+            System.out.println("bidResult 5.2");
+            //return false;
         }
         System.out.println("bidResult 6");
         Message messageBuyer = new Message();
@@ -503,10 +505,12 @@ public class ItemServiceImpl implements ItemService {
         System.out.println("bidResult 7");
         Member seller = this.memberDAO.findByMemberID(sellerID);
         if (seller == null) {
+            System.out.println("bidResult 7.1");
             return false;
         }
         if (!sendSellerEmail(seller, transaction)) {
-            return false;
+            System.out.println("bidResult 7.2");
+            //return false;
         }
         System.out.println("bidResult 8");
         Message messageSeller = new Message();

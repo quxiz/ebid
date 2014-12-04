@@ -165,7 +165,7 @@ public class EditPersonalInfoController {
     }
 
     @RequestMapping(value = "/editPersonalInfo/editReceivingInfo/onSubmit", method = RequestMethod.POST)
-    public String onSubmitRecievingInfo(@Valid @ModelAttribute("receivingInfoForm") ReceivingInfoForm receivingInfoForm, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String onSubmitReceivingInfo(@Valid @ModelAttribute("receivingInfoForm") ReceivingInfoForm receivingInfoForm, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.receivingInfoForm", result);
             redirectAttributes.addFlashAttribute("receivingInfoForm", receivingInfoForm);

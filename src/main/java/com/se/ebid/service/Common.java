@@ -88,8 +88,12 @@ public class Common {
             System.out.println("message sent successfully...");
 
         } catch (Exception e) {
+            System.out.println("!!! message catch error !!!");
+            e.printStackTrace();
+            System.out.println(e.getCause());
+            System.out.println(e.getMessage());
             return false;
-            //e.printStackTrace();
+            
         }
         return true;
     } 

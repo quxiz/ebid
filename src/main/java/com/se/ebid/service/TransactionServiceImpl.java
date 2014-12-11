@@ -167,8 +167,8 @@ public class TransactionServiceImpl implements TransactionService {
         long itemID = transaction.getItemID();
         Item item = this.itemDAO.findByItemID(itemID);
         if (item.getSellingType() == BUY) {
-            return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed!",
-                    "To enter the feedback for your seller, click on the link below (or copy and paste the URL into your browser): \n"
+            return Common.sendMail(member.getEmail(), "[ebid] The transaction is completed! Item sold",
+                    "To enter the feedback for your buyer, click on the link below (or copy and paste the URL into your browser): \n"
                     + Common.BASE_URL + Common.GIVE_FEEDBACK_URL + transaction.getTransactionID());
         }
         if (item.getSellingType() == BID) {
